@@ -1,0 +1,91 @@
+---
+title: "Report Transformative Change Literature Search Chapter 2"
+author: Rainer M Krug [Rainer.Krug@Senckenberg.de](mailto:Rainer.Krug@Senckenberg.de)
+format:
+    html:
+        toc: true
+        embed-resources: true
+        code-fold: true
+        code-summary: "Show the code"
+    docx:
+        toc: true
+        number-sections: true
+        highlight-style: github
+    pdf:
+        toc: true
+        number-sections: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(knitr)
+```
+
+# Metadata
+
+## Working Title
+TfC Ch 2
+
+## Contact Points
+
+[Sebastian Villasante](mailto:s.villasante.arg@gmail.com)
+
+## CC
+
+[TfC tsu](mailto:ipbes-tsu-transformative-change@umontpellier.fr)
+
+lynne.shannon@uct.ac.za
+laurence.perianin@umontpellier.fr
+
+aidin.niamir@senckenberg.de
+
+## Data Online
+[TODO Google Drive folder]()
+
+
+## Code repo
+
+[Github - private](https://github.com/rkrug/IPBES---TfC-Ch-3)
+
+# Introduction
+
+
+TS=(("transformative change" or "deliberate transformation*" or "transformative turn*" or “transition*” or “social-ecological change*” or “deep change” or “fundamental alteration” or “profound change” or “profound transformation” or “radical transformation” or “transformational change” or “complete change” or “complete transformation” or “drastic change” or “in-depth transformation” or “progressive change” or “radical alteration” or “radical change” or “revolutionary change” or “significant modification” or “total transformation” or “transition” or “pathway” or “power” or “agency” or “scal*” or “lever*” or “context” or “process” or “regime” or “shift” or “views” or “value*” or “structure*” or “institution*”or “deliberate” OR “structural” OR “fundamental” OR “system*” OR “deep” OR “radical” OR “profound” OR “drastic” OR “widespread” OR “politic*” OR “economic*” OR “structur*” OR “complete” OR “progressive” OR “revolutionary” OR “substanti*” OR “significan*”) AND (“transformati*” OR “alteration” OR  “change” OR “turn” OR “action” “transition” OR “shift”) AND
+ 
+("sustainab*" or "environ*" or "resilien*" or "conserv*" or "biodivers*" or “ecosystem*” or “nature*” OR “planet*” OR “Earth” OR “biosphere”)  AND 
+
+(“vision” or “future” or “visionar*”or “scenarios” or “imagination” or “imager*” or “creativity” or “desire”  or “wish*” or “visioning” or “process” or “participatory process*” or “deliberate process*” or “polic*” or “target” or  “view*” or ”value” or “cosmovision” or  “cosmocentric” or “dream*” or “fiction” or “hope” or “mission” or “objective” or “story” or “worldview*” or “aspiration*” or “action” or “plan*” or “strateg*” or “intention” or “model*” or “solution*” or  “innovation*” or “perspective” or “platform” or “collective action” or “cooperation” or “consultation”or “coalition*” or “response” or “movement” or “effort” or “initiative” or “activity” or “reaction” or “performance” or “operation” or “effect*” or “task” or “project” or “influence” o “moment” or “discourse” or “motivation” or “iteration” or “roadmap” or “agenda” or “project” or “programm” or “government” or “technique”  or “inspiration” or “culture” or “universe*” or “reality” or “fantasy” or “perception” or “visualization” or “approach” or “image” or “arquetype” or “existence” or “cosmolog*” or “co-production” or “knowledge” or “dialogue” or “transmission” or “conceptual*” or “ceremon*” or “relationships” or  “respect” or “reciprocity” or  “responsibilities” or “solidarity” or “harmony” or “self-determination” or “communit*” or “spiritual*” or “languague” or “territory” or “opportunit*” or “sight” or “foresight” or “idea” or “appearance”))
+
+
+
+
+
+https://www.webofscience.com/wos/alldb/summary/9cc620dd-dfc6-4414-acc0-983d4a56314c-a1bdf5a4/relevance/1
+
+1,237,718 hits
+
+
+AND (“case stud*” or “case” or “study area*” or “example*” or “evaluation” or “concrete” or “empirical”, or “practical” OR “initiative*”)
+
+https://www.webofscience.com/wos/alldb/summary/f6d3094a-0cc2-4662-9b05-0a671c71c86a-a1be094a/relevance/1
+
+296,551 hits, i.e. about 1,100,000 without case studies
+
+# TODO
+
+- Transformative Change Query term identical between chapters 2 and 5
+- Nature Query terms identical between chapters between chapters 2 and 5
+- 
+
+- Randomly 100 papers from R1
+- add large number of articles to Zotero
+- all open acces articles only for now.
+
+## R3
+- get all pdfs which are available from R3
+- Results, Discussion and Conclusion - Vision, geograph, country name, words from transformative change
+
+# Look into translation into OpenAlex
+
