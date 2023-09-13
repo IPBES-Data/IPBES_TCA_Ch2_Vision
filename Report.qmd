@@ -14,19 +14,31 @@ format:
     pdf:
         toc: true
         number-sections: true
+params:
+    s_tfc: '("transformative change" OR "deliberate transformation*" OR "transformative turn*" OR “transition*” OR “social-ecological change*” OR “deep change” OR “fundamental alteration” OR “profound change” OR “profound transformation” OR “radical transformation” OR “transformational change” OR “complete change” OR “complete transformation” OR “drastic change” OR “in-depth transformation” OR “progressive change” OR “radical alteration” OR “radical change” OR “revolutionary change” OR “significant modification” OR “total transformation” OR “transition” OR “pathway” OR “power” OR “agency” OR “scal*” OR “lever*” OR “context” OR “process” OR “regime” OR “shift” OR “views” OR “value*” OR “structure*” OR “institution*”or “deliberate” OR “structural” OR “fundamental” OR “system*” OR “deep” OR “radical” OR “profound” OR “drastic” OR “widespread” OR “politic*” OR “economic*” OR “structur*” OR “complete” OR “progressive” OR “revolutionary” OR “substanti*” OR “significan*”) AND (“transformati*” OR “alteration” OR  “change” OR “turn” OR “action” “transition” OR “shift”)'
+    s_tfc_5: '("transformative change" OR "deliberate transformation*" OR "transformative turn*" OR "transition*” OR "social-ecological change*” OR "deep change" OR "fundamental alteration” OR "profound change” OR "profound transformation” OR "radical transformation” OR "transformational change” OR "complete change" OR "complete transformation” OR "drastic change” OR "in-depth transformation” OR "progressive change” OR "radical alteration” OR "radical change” OR "revolutionary change” OR "significant modification” OR "total transformation” OR "transformational shift” OR "radical shift”)'
+    s_nat: '("sustainab*" OR "environ*" OR "resilien*" OR "conserv*" OR "biodivers*" OR “ecosystem*” OR “nature*” OR “planet*” OR “Earth” OR “biosphere”)' 
+    s_nat_5:	("sustainab*" OR "environ*" OR "resilien*" OR "conserv*" OR "biodivers*" OR "ecosystem*” OR "nature*”)
+    s_vis: '(“vision” OR “future” OR “visionar*”or “scenarios” OR “imagination” OR “imager*” OR “creativity” OR “desire”  OR “wish*” OR “visioning” OR “process” OR “participatory process*” OR “deliberate process*” OR “polic*” OR “target” OR  “view*” OR ”value” OR “cosmovision” OR  “cosmocentric” OR “dream*” OR “fiction” OR “hope” OR “mission” OR “objective” OR “story” OR “worldview*” OR “aspiration*” OR “action” OR “plan*” OR “strateg*” OR “intention” OR “model*” OR “solution*” OR  “innovation*” OR “perspective” OR “platform” OR “collective action” OR “cooperation” OR “consultation”or “coalition*” OR “response” OR “movement” OR “effort” OR “initiative” OR “activity” OR “reaction” OR “performance” OR “operation” OR “effect*” OR “task” OR “project” OR “influence” o “moment” OR “discourse” OR “motivation” OR “iteration” OR “roadmap” OR “agenda” OR “project” OR “programm” OR “government” OR “technique”  OR “inspiration” OR “culture” OR “universe*” OR “reality” OR “fantasy” OR “perception” OR “visualization” OR “approach” OR “image” OR “arquetype” OR “existence” OR “cosmolog*” OR “co-production” OR “knowledge” OR “dialogue” OR “transmission” OR “conceptual*” OR “ceremon*” OR “relationships” OR  “respect” OR “reciprocity” OR  “responsibilities” OR “solidarity” OR “harmony” OR “self-determination” OR “communit*” OR “spiritual*” OR “languague” OR “territory” OR “opportunit*” OR “sight” OR “foresight” OR “idea” OR “appearance”)'
 ---
 
 ```{r}
 #| label: setup
 #| include: false
+#| 
 
+if (!exists("params")){
+    params <- rmarkdown::yaml_front_matter('~/Documents_Local/git/IPBES_data_tsu/Transformative Change/RMK - TFC Ch 2/Report.qmd')$params
+}
+library(openalexR)
 library(knitr)
+library(dplyr)
 ```
 
 # Metadata
 
 ## Working Title
-TfC Ch 2
+TfC Ch 2 Vision
 
 ## Contact Points
 
@@ -42,32 +54,60 @@ laurence.perianin@umontpellier.fr
 aidin.niamir@senckenberg.de
 
 ## Data Online
-[TODO Google Drive folder]()
-
+[TODO Google Drive folder](https://drive.google.com/drive/folders/1IiALbIOAjYeL_IrlkZd-E7U7hr72iggx?usp=share_link)
+### additional
+- linked to in google folder https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69EibD_x05GE/edit
 
 ## Code repo
 
-[Github - private](https://github.com/rkrug/IPBES---TfC-Ch-3)
+[Github - private](https://github.com/rkrug/IPBES-TfC-Ch-2-Vision)
 
 # Introduction
 
+# Search Term Definition
+## [About Transformative change] Transformative change synonyms
+This should be aligned with TfC Ch 5 search
 
-TS=(("transformative change" or "deliberate transformation*" or "transformative turn*" or “transition*” or “social-ecological change*” or “deep change” or “fundamental alteration” or “profound change” or “profound transformation” or “radical transformation” or “transformational change” or “complete change” or “complete transformation” or “drastic change” or “in-depth transformation” or “progressive change” or “radical alteration” or “radical change” or “revolutionary change” or “significant modification” or “total transformation” or “transition” or “pathway” or “power” or “agency” or “scal*” or “lever*” or “context” or “process” or “regime” or “shift” or “views” or “value*” or “structure*” or “institution*”or “deliberate” OR “structural” OR “fundamental” OR “system*” OR “deep” OR “radical” OR “profound” OR “drastic” OR “widespread” OR “politic*” OR “economic*” OR “structur*” OR “complete” OR “progressive” OR “revolutionary” OR “substanti*” OR “significan*”) AND (“transformati*” OR “alteration” OR  “change” OR “turn” OR “action” “transition” OR “shift”) AND
- 
-("sustainab*" or "environ*" or "resilien*" or "conserv*" or "biodivers*" or “ecosystem*” or “nature*” OR “planet*” OR “Earth” OR “biosphere”)  AND 
+```{r}
+params$s_tfc
+``` 
 
-(“vision” or “future” or “visionar*”or “scenarios” or “imagination” or “imager*” or “creativity” or “desire”  or “wish*” or “visioning” or “process” or “participatory process*” or “deliberate process*” or “polic*” or “target” or  “view*” or ”value” or “cosmovision” or  “cosmocentric” or “dream*” or “fiction” or “hope” or “mission” or “objective” or “story” or “worldview*” or “aspiration*” or “action” or “plan*” or “strateg*” or “intention” or “model*” or “solution*” or  “innovation*” or “perspective” or “platform” or “collective action” or “cooperation” or “consultation”or “coalition*” or “response” or “movement” or “effort” or “initiative” or “activity” or “reaction” or “performance” or “operation” or “effect*” or “task” or “project” or “influence” o “moment” or “discourse” or “motivation” or “iteration” or “roadmap” or “agenda” or “project” or “programm” or “government” or “technique”  or “inspiration” or “culture” or “universe*” or “reality” or “fantasy” or “perception” or “visualization” or “approach” or “image” or “arquetype” or “existence” or “cosmolog*” or “co-production” or “knowledge” or “dialogue” or “transmission” or “conceptual*” or “ceremon*” or “relationships” or  “respect” or “reciprocity” or  “responsibilities” or “solidarity” or “harmony” or “self-determination” or “communit*” or “spiritual*” or “languague” or “territory” or “opportunit*” or “sight” or “foresight” or “idea” or “appearance”))
+This is the one from TfC Ch 5:
+
+```{r}
+params$s_tfc_5
+```
+
+## AND (nature synonyms) [use dictionary suggested by Aidin]
+```{r}
+params$s_nat
+```
+
+## AND (visions) [Ch 2 Key terms, https://www.ipbes.net/glossary-tag/vision, Oxford Dictionary]
+
+```{r}
+params$s_vis
+```
+
+## Final search terms
+
+```{r}  
+s_wos <- paste0("TS = ( ", params$s_tfc, " AND ", params$s_nat, " AND ", params$s_vis, " )")
+s_oa  <- paste0(params$s_tfc, " AND ", params$s_nat, " AND ", params$s_vis)
+```
 
 
+# Results WoS
 
-
+## R1
 
 https://www.webofscience.com/wos/alldb/summary/9cc620dd-dfc6-4414-acc0-983d4a56314c-a1bdf5a4/relevance/1
 
 1,237,718 hits
 
+## R2
 
-AND (“case stud*” or “case” or “study area*” or “example*” or “evaluation” or “concrete” or “empirical”, or “practical” OR “initiative*”)
+AND (“case stud*” OR “case” OR “study area*” OR “example*” OR “evaluation” OR “concrete” OR “empirical”, OR “practical” OR “initiative*”)
 
 https://www.webofscience.com/wos/alldb/summary/f6d3094a-0cc2-4662-9b05-0a671c71c86a-a1be094a/relevance/1
 
@@ -89,3 +129,72 @@ https://www.webofscience.com/wos/alldb/summary/f6d3094a-0cc2-4662-9b05-0a671c71c
 
 # Look into translation into OpenAlex
 
+# Results OpenAlex
+
+## Transformative Change Ch 2
+```{r}
+hits <- rbind(
+    openalexR::oa_query(search = params$s_tfc,)  |> oa_request(count_only = TRUE) |> unlist(),
+    openalexR::oa_query(search = params$s_tfc_5) |> oa_request(count_only = TRUE) |> unlist(),  
+    openalexR::oa_query(search = params$s_nat)   |> oa_request(count_only = TRUE) |> unlist(),
+    openalexR::oa_query(search = params$s_nat_5) |> oa_request(count_only = TRUE) |> unlist(),    
+    openalexR::oa_query(search = params$s_vis)   |> oa_request(count_only = TRUE) |> unlist(),
+    openalexR::oa_query(
+        search = paste0(
+            "(", params$s_tfc, ")", " AND ",
+            "(", params$s_nat, ")"
+        )
+    )  |>  oa_request(count_only = TRUE) |> unlist(),
+    openalexR::oa_query(
+        search = paste0(
+            "(", params$s_nat, ")", " AND ",
+            "(", params$s_vis, ")"
+        )
+    )  |>  oa_request(count_only = TRUE) |> unlist()
+) |> 
+    as.data.frame() |>
+    mutate(query = c("Transform Ch", "Transform Ch 5", "Nature", "Nature Ch 5", "Visions", "TfC & Nature", "Nature & Vision")) |>
+    mutate(page = NULL, per_page = NULL) |>
+    mutate(count = formatC(count, format="f", big.mark=",", digits=0)) |>
+    relocate(query, .before = count)
+
+hits |>
+    knitr::kable( 
+        caption = "Number of hits",
+    )
+```
+
+```{r}
+openalexR::oa_query(
+        search = paste0(
+            "(", params$s_tfc, ")", " AND ",
+            "(", params$s_nat, ")"
+        )
+    )  |>  
+    oa_request(count_only = FALSE, verbose = TRUE) |>
+    saveRDS(file = file.path(".", "tfc_nature.rds" )
+
+openalexR::oa_query(
+        search = paste0(
+            "(", params$s_nat, ")", " AND ",
+            "(", params$s_vis, ")"
+        )
+    )  |>  
+    oa_request(count_only = FALSE, verbose = TRUE) |>
+    saveRDS(file = file.path(".", "nature_vision.rds" )
+
+```
+
+```{r}
+ openalexR::oa_query(
+    title.search = params$s_tfc, 
+    options = list(
+        select = c("doi")
+        )
+    ) |> 
+    oa_request(
+        per_page = 200,
+        count_only = FALSE, 
+        verbose = TRUE
+    )
+ ```
