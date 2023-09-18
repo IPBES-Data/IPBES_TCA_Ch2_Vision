@@ -1,12 +1,12 @@
 ---
-title: "Report Transformative Change Literature Search Chapter 2"
+title: 'Report Transformative Change Literature Search Chapter 2'
 author: Rainer M Krug [Rainer.Krug@Senckenberg.de](mailto:Rainer.Krug@Senckenberg.de)
 format:
     html:
         toc: true
         embed-resources: true
         code-fold: true
-        code-summary: "Show the code"
+        code-summary: 'Show the code'
     docx:
         toc: true
         number-sections: true
@@ -15,11 +15,12 @@ format:
         toc: true
         number-sections: true
 params:
-    s_tfc: '("transformative change" OR "deliberate transformation*" OR "transformative turn*" OR “transition*” OR “social-ecological change*” OR “deep change” OR “fundamental alteration” OR “profound change” OR “profound transformation” OR “radical transformation” OR “transformational change” OR “complete change” OR “complete transformation” OR “drastic change” OR “in-depth transformation” OR “progressive change” OR “radical alteration” OR “radical change” OR “revolutionary change” OR “significant modification” OR “total transformation” OR “transition” OR “pathway” OR “power” OR “agency” OR “scal*” OR “lever*” OR “context” OR “process” OR “regime” OR “shift” OR “views” OR “value*” OR “structure*” OR “institution*”or “deliberate” OR “structural” OR “fundamental” OR “system*” OR “deep” OR “radical” OR “profound” OR “drastic” OR “widespread” OR “politic*” OR “economic*” OR “structur*” OR “complete” OR “progressive” OR “revolutionary” OR “substanti*” OR “significan*”) AND (“transformati*” OR “alteration” OR  “change” OR “turn” OR “action” “transition” OR “shift”)'
-    s_tfc_5: '("transformative change" OR "deliberate transformation*" OR "transformative turn*" OR "transition*” OR "social-ecological change*” OR "deep change" OR "fundamental alteration” OR "profound change” OR "profound transformation” OR "radical transformation” OR "transformational change” OR "complete change" OR "complete transformation” OR "drastic change” OR "in-depth transformation” OR "progressive change” OR "radical alteration” OR "radical change” OR "revolutionary change” OR "significant modification” OR "total transformation” OR "transformational shift” OR "radical shift”)'
-    s_nat: '("sustainab*" OR "environ*" OR "resilien*" OR "conserv*" OR "biodivers*" OR “ecosystem*” OR “nature*” OR “planet*” OR “Earth” OR “biosphere”)' 
-    s_nat_5:	("sustainab*" OR "environ*" OR "resilien*" OR "conserv*" OR "biodivers*" OR "ecosystem*” OR "nature*”)
-    s_vis: '(“vision” OR “future” OR “visionar*”or “scenarios” OR “imagination” OR “imager*” OR “creativity” OR “desire”  OR “wish*” OR “visioning” OR “process” OR “participatory process*” OR “deliberate process*” OR “polic*” OR “target” OR  “view*” OR ”value” OR “cosmovision” OR  “cosmocentric” OR “dream*” OR “fiction” OR “hope” OR “mission” OR “objective” OR “story” OR “worldview*” OR “aspiration*” OR “action” OR “plan*” OR “strateg*” OR “intention” OR “model*” OR “solution*” OR  “innovation*” OR “perspective” OR “platform” OR “collective action” OR “cooperation” OR “consultation”or “coalition*” OR “response” OR “movement” OR “effort” OR “initiative” OR “activity” OR “reaction” OR “performance” OR “operation” OR “effect*” OR “task” OR “project” OR “influence” o “moment” OR “discourse” OR “motivation” OR “iteration” OR “roadmap” OR “agenda” OR “project” OR “programm” OR “government” OR “technique”  OR “inspiration” OR “culture” OR “universe*” OR “reality” OR “fantasy” OR “perception” OR “visualization” OR “approach” OR “image” OR “arquetype” OR “existence” OR “cosmolog*” OR “co-production” OR “knowledge” OR “dialogue” OR “transmission” OR “conceptual*” OR “ceremon*” OR “relationships” OR  “respect” OR “reciprocity” OR  “responsibilities” OR “solidarity” OR “harmony” OR “self-determination” OR “communit*” OR “spiritual*” OR “languague” OR “territory” OR “opportunit*” OR “sight” OR “foresight” OR “idea” OR “appearance”)'
+    s_tfc: "('transformative change' OR 'deliberate transformation*' OR 'transformative turn*' OR 'transition*' OR 'social-ecological change*' OR 'deep change' OR 'fundamental alteration' OR 'profound change' OR 'profound transformation' OR 'radical transformation' OR 'transformational change' OR 'complete change' OR 'complete transformation' OR 'drastic change' OR 'in-depth transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'revolutionary change' OR 'significant modification' OR 'total transformation' OR 'transition' OR 'pathway' OR 'power' OR 'agency' OR 'scal*' OR 'lever*' OR 'context' OR 'process' OR 'regime' OR 'shift' OR 'views' OR 'value*' OR 'structure*' OR 'institution*' OR 'deliberate' OR 'structural' OR 'fundamental' OR 'system*' OR 'deep' OR 'radical' OR 'profound' OR 'drastic' OR 'widespread' OR 'politic*' OR 'economic*' OR 'structur*' OR 'complete' OR 'progressive' OR 'revolutionary' OR 'substanti*' OR 'significan*') AND ('transformati*' OR 'alteration' OR  'change' OR 'turn' OR 'action' OR 'transition' OR 'shift')"
+    s_tfc_5: "('transformative change' OR 'deliberate transformation*' OR 'transformative turn*' OR 'transition*' OR 'social-ecological change*' OR 'deep change' OR 'fundamental alteration' OR 'profound change' OR 'profound transformation' OR 'radical transformation' OR 'transformational change' OR 'complete change' OR 'complete transformation' OR 'drastic change' OR 'in-depth transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'revolutionary change' OR 'significant modification' OR 'total transformation' OR 'transformational shift' OR 'radical shift')"
+    s_nat: "('sustainab*' OR 'environ*' OR 'resilien*' OR 'conserv*' OR 'biodivers*' OR 'ecosystem*' OR 'nature*' OR 'planet*' OR 'Earth' OR 'biosphere')"
+    s_nat_5:	"('sustainab*' OR 'environ*' OR 'resilien*' OR 'conserv*' OR 'biodivers*' OR 'ecosystem*' OR 'nature*')"
+    s_vis: "('vision' OR 'future' OR 'visionar*' OR 'scenarios' OR 'imagination' OR 'imager*' OR 'creativity' OR 'desire'  OR 'wish*' OR 'visioning' OR 'process' OR 'participatory process*' OR 'deliberate process*' OR 'polic*' OR 'target' OR  'view*' OR 'value' OR 'cosmovision' OR  'cosmocentric' OR 'dream*' OR 'fiction' OR 'hope' OR 'mission' OR 'objective' OR 'story' OR 'worldview*' OR 'aspiration*' OR 'action' OR 'plan*' OR 'strateg*' OR 'intention' OR 'model*' OR 'solution*' OR  'innovation*' OR 'perspective' OR 'platform' OR 'collective action' OR 'cooperation' OR 'consultation' OR 'coalition*' OR 'response' OR 'movement' OR 'effort' OR 'initiative' OR 'activity' OR 'reaction' OR 'performance' OR 'operation' OR 'effect*' OR 'task' OR 'project' OR 'influence' o 'moment' OR 'discourse' OR 'motivation' OR 'iteration' OR 'roadmap' OR 'agenda' OR 'project' OR 'programm' OR 'government' OR 'technique'  OR 'inspiration' OR 'culture' OR 'universe*' OR 'reality' OR 'fantasy' OR 'perception' OR 'visualization' OR 'approach' OR 'image' OR 'arquetype' OR 'existence' OR 'cosmolog*' OR 'co-production' OR 'knowledge' OR 'dialogue' OR 'transmission' OR 'conceptual*' OR 'ceremon*' OR 'relationships' OR  'respect' OR 'reciprocity' OR  'responsibilities' OR 'solidarity' OR 'harmony' OR 'self-determination' OR 'communit*' OR 'spiritual*' OR 'languague' OR 'territory' OR 'opportunit*' OR 'sight' OR 'foresight' OR 'idea' OR 'appearance')"
+
 ---
 
 ```{r}
@@ -27,12 +28,13 @@ params:
 #| include: false
 #| 
 
-if (!exists("params")){
+if (!exists('params')){
     params <- rmarkdown::yaml_front_matter('~/Documents_Local/git/IPBES_data_tsu/Transformative Change/RMK - TFC Ch 2/Report.qmd')$params
 }
 library(openalexR)
 library(knitr)
 library(dplyr)
+library(tictoc)
 ```
 
 # Metadata
@@ -69,31 +71,117 @@ aidin.niamir@senckenberg.de
 This should be aligned with TfC Ch 5 search
 
 ```{r}
-params$s_tfc
+x <- strsplit(params$s_tfc, split = " AND " )
+data.frame(
+    Transformation = x[[1]][1] |>
+        gsub(pattern = "'|\\)|\\(", replacement = "") |>
+        strsplit(split = " OR ") |>
+        unlist() |>
+        sort()
+) |>
+    knitr::kable()
+```
+**AND**
+
+```{r}
+data.frame(
+    Transformation = x[[1]][2] |>
+        gsub(pattern = "'|\\)|\\(", replacement = "") |>
+        strsplit(split = " OR ") |>
+        unlist() |>
+        sort()
+) |>
+    knitr::kable()
 ``` 
 
 This is the one from TfC Ch 5:
 
 ```{r}
-params$s_tfc_5
+data.frame(
+    Transformation = params$s_tfc_5 |>
+        gsub(pattern = "'|\\)|\\(", replacement = "") |>
+        strsplit(split = " OR ") |>
+        unlist() |>
+        sort()
+) |>
+    knitr::kable()
 ```
+
+```{r}
+
+tfc_new <- c(
+    'complete change',
+    'complete transformation',
+    'deep change',
+    'deliberate transformation*',
+    'drastic change',
+    'fundamental alteration',
+    'in-depth transformation',
+    'profound change',
+    'profound transformation',
+    'progressive change',
+    'radical alteration',
+    'radical change',
+    'radical shift',
+    'radical transformation',
+    'revolutionary change',
+    'significant modification',
+    'social-ecological change*',
+    'total transformation',
+    'transform* change',
+    'transform* shift',
+    '',
+    'transform* turn*',
+    'transition*'
+)
+
+data.frame(
+    TfC_5 = params$s_tfc_5 |>
+        gsub(pattern = "'|\\)|\\(", replacement = "") |>
+        strsplit(split = " OR ") |>
+        unlist() |>
+        sort(),
+    TfC_new = tfc_new
+) |>
+    knitr::kable()
+
+tfc_new <- tfc_new[tfc_new != ""]
+tfc_new <- paste0(paste0("'", tfc_new, "'"), collapse = ' OR ')
+tfc_new <- paste0("( ", tfc_new, " )")
+```
+
 
 ## AND (nature synonyms) [use dictionary suggested by Aidin]
 ```{r}
-params$s_nat
+data.frame(
+    Transformation = params$s_nat |>
+        gsub(pattern = "'|\\)|\\(", replacement = "") |>
+        strsplit(split = " OR ") |>
+        unlist() |>
+        sort()
+) |>
+    knitr::kable()
 ```
 
 ## AND (visions) [Ch 2 Key terms, https://www.ipbes.net/glossary-tag/vision, Oxford Dictionary]
 
 ```{r}
-params$s_vis
+data.frame(
+    Transformation = params$s_vis |>
+        gsub(pattern = "'|\\)|\\(", replacement = "") |>
+        strsplit(split = " OR ") |>
+        unlist() |>
+        sort()
+) |>
+    knitr::kable()
 ```
 
 ## Final search terms
 
 ```{r}  
-s_wos <- paste0("TS = ( ", params$s_tfc, " AND ", params$s_nat, " AND ", params$s_vis, " )")
-s_oa  <- paste0(params$s_tfc, " AND ", params$s_nat, " AND ", params$s_vis)
+s_wos <- paste0('TS = ( ', params$s_tfc, ' AND ', params$s_nat, ' AND ', params$s_vis, ' )')
+s_oa  <- paste0(params$s_tfc, ' AND ', params$s_nat, ' AND ', params$s_vis)
+s_oa_5  <- paste0(params$s_tfc_5, ' AND ', params$s_nat_5, ' AND ', params$s_vis)
 ```
 
 
@@ -101,7 +189,7 @@ s_oa  <- paste0(params$s_tfc, " AND ", params$s_nat, " AND ", params$s_vis)
 
 ## R1
 
-https://www.webofscience.com/wos/alldb/summary/9cc620dd-dfc6-4414-acc0-983d4a56314c-a1bdf5a4/relevance/1
+[R1 WoS](https://www.webofscience.com/wos/alldb/summary/9cc620dd-dfc6-4414-acc0-983d4a56314c-a1bdf5a4/relevance/1)
 
 1,237,718 hits
 
@@ -109,9 +197,27 @@ https://www.webofscience.com/wos/alldb/summary/9cc620dd-dfc6-4414-acc0-983d4a563
 
 AND (“case stud*” OR “case” OR “study area*” OR “example*” OR “evaluation” OR “concrete” OR “empirical”, OR “practical” OR “initiative*”)
 
-https://www.webofscience.com/wos/alldb/summary/f6d3094a-0cc2-4662-9b05-0a671c71c86a-a1be094a/relevance/1
+[R2 WoS](https://www.webofscience.com/wos/alldb/summary/f6d3094a-0cc2-4662-9b05-0a671c71c86a-a1be094a/relevance/1)
 
 296,551 hits, i.e. about 1,100,000 without case studies
+
+# 20 key papers
+20 key papers were selected by Sebastian Villasante. These were manually checked if they are in the R2 corpus.
+
+The DOIS are:
+
+```{r}
+key_papers <- read.csv('20 papers by Sebastian.csv')[,c('DOI', 'Title')]
+key_papers$in_R2 <- c('Y', 'Y', 'n', '', 'n', 'n', 'Y', '', 'Y', 'Y', 'n', 'n', 'n', 'Y', 'n', 'n', 'Y', 'n', 'Y', 'n', 'Y', 'n', 'n', 'n')
+key_papers <- key_papers[, c(1, 3, 2)]
+knitr::kable(
+    key_papers,
+    caption = '20 papers by Sebastian Villasante',
+    col.names = c('DOI', 'Title', 'In R1')
+)
+```
+
+
 
 # TODO
 
@@ -133,68 +239,121 @@ https://www.webofscience.com/wos/alldb/summary/f6d3094a-0cc2-4662-9b05-0a671c71c
 
 ## Transformative Change Ch 2
 ```{r}
-hits <- rbind(
-    openalexR::oa_query(search = params$s_tfc,)  |> oa_request(count_only = TRUE) |> unlist(),
-    openalexR::oa_query(search = params$s_tfc_5) |> oa_request(count_only = TRUE) |> unlist(),  
-    openalexR::oa_query(search = params$s_nat)   |> oa_request(count_only = TRUE) |> unlist(),
-    openalexR::oa_query(search = params$s_nat_5) |> oa_request(count_only = TRUE) |> unlist(),    
-    openalexR::oa_query(search = params$s_vis)   |> oa_request(count_only = TRUE) |> unlist(),
-    openalexR::oa_query(
-        search = paste0(
-            "(", params$s_tfc, ")", " AND ",
-            "(", params$s_nat, ")"
-        )
-    )  |>  oa_request(count_only = TRUE) |> unlist(),
-    openalexR::oa_query(
-        search = paste0(
-            "(", params$s_nat, ")", " AND ",
-            "(", params$s_vis, ")"
-        )
-    )  |>  oa_request(count_only = TRUE) |> unlist()
-) |> 
-    as.data.frame() |>
-    mutate(query = c("Transform Ch", "Transform Ch 5", "Nature", "Nature Ch 5", "Visions", "TfC & Nature", "Nature & Vision")) |>
-    mutate(page = NULL, per_page = NULL) |>
-    mutate(count = formatC(count, format="f", big.mark=",", digits=0)) |>
-    relocate(query, .before = count)
+#| label: get_hits
+#|
 
-hits |>
-    knitr::kable( 
+tic()
+fn <- file.path(".", "data", "no_hits.rds")
+if (file.exists(fn)) {
+    no_hits <- readRDS(fn)
+} else {
+    no_hits <- rbind(
+        openalexR::oa_query(search = params$s_tfc, ) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(search = params$s_tfc_5) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(search = tfc_new, ) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(search = params$s_nat) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(search = params$s_nat_5) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(search = params$s_vis) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(
+            search = paste0(
+                "(", params$s_tfc, ")", " AND ",
+                "(", params$s_nat, ")"
+            )
+        ) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(
+            search = paste0(
+                "(", params$s_tfc_5, ")", " AND ",
+                "(", params$s_nat_5, ")"
+            )
+        ) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(
+            search = paste0(
+                "(", tfc_new, ")", " AND ",
+                # '(', params$s_nat_5, ')', ' AND ',
+                "(", params$s_vis, ")"
+            )
+        ) |> oa_request(count_only = TRUE) |> unlist(),
+        openalexR::oa_query(
+            search = paste0(
+                "(", params$s_nat_5, ")", " AND ",
+                "(", params$s_vis, ")"
+            )
+        ) |> oa_request(count_only = TRUE) |> unlist()
+    ) |>
+        as.data.frame() |>
+        mutate(
+            query = c(
+                "Transform",
+                "Transform Ch 5",
+                "Transform New",
+                "Nature",
+                "Nature Ch 5",
+                "Visions",
+                "TfC & Nature",
+                "(TfC & Nature) Ch 5",
+                "TfC New & Nature Ch 5",
+                "(Nature & Vision) Ch 5"
+            )
+        ) |>
+        mutate(page = NULL, per_page = NULL) |>
+        mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0)) |>
+        relocate(query, .before = count)
+    saveRDS(no_hits, file = fn)
+}
+toc()
+
+openalexR::oa_query(search = params$s_tfc_p1, doi = "") |> oa_request(count_only = TRUE)
+
+no_hits |>
+    knitr::kable(
         caption = "Number of hits",
     )
 ```
 
 ```{r}
+#| label: get_works_tfc_nature
+#| eval: false
+#| 
+
+tic()
 openalexR::oa_query(
         search = paste0(
-            "(", params$s_tfc, ")", " AND ",
-            "(", params$s_nat, ")"
+            '(', params$s_tfc, ')', ' AND ',
+            '(', params$s_nat, ')'
         )
     )  |>  
-    oa_request(count_only = FALSE, verbose = TRUE) |>
-    saveRDS(file = file.path(".", "tfc_nature.rds" )
+    openalexR::oa_request(count_only = FALSE, verbose = TRUE) |>
+    saveRDS(file = file.path('.', 'tfc_nature.rds'))
+toc()
 
+tic()
 openalexR::oa_query(
         search = paste0(
-            "(", params$s_nat, ")", " AND ",
-            "(", params$s_vis, ")"
+            '(', params$s_nat, ')', ' AND ',
+            '(', params$s_vis, ')'
         )
     )  |>  
-    oa_request(count_only = FALSE, verbose = TRUE) |>
-    saveRDS(file = file.path(".", "nature_vision.rds" )
-
+    openalexR::oa_request(count_only = FALSE, verbose = TRUE) |>
+    saveRDS(file = file.path('.', 'nature_vision.rds'))
+toc()
 ```
 
 ```{r}
- openalexR::oa_query(
-    title.search = params$s_tfc, 
-    options = list(
-        select = c("doi")
-        )
-    ) |> 
-    oa_request(
-        per_page = 200,
-        count_only = FALSE, 
-        verbose = TRUE
-    )
- ```
+#| label: get_doi_tfc_nature
+#| eval: false
+#|
+
+tic()
+fn <- file.path('.', 'data', 'tfc_5.rds')
+if (file.exists(fn)) {
+    tfc_5 <- readRDS(fn)
+} else {
+    tfc_5 <- openalexR::oa_query(
+        search = params$s_tfc_5
+    ) |>
+        openalexR::oa_request(count_only = FALSE, verbose = TRUE) |>
+        saveRDS(tfc_5, file = fn)
+}
+toc()
+tfc_5 <- works2df(tfc_5)
+```
