@@ -2993,6 +2993,7 @@ vertical-align: -.125em;
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#search-term-definition" id="toc-search-term-definition" class="nav-link" data-scroll-target="#search-term-definition">Search Term Definition</a>
   <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
   <li><a href="#about-transformative-change-transformative-change-synonyms" id="toc-about-transformative-change-transformative-change-synonyms" class="nav-link" data-scroll-target="#about-transformative-change-transformative-change-synonyms">[About Transformative change] Transformative change synonyms</a></li>
   <li><a href="#and-nature-synonyms-use-dictionary-suggested-by-aidin" id="toc-and-nature-synonyms-use-dictionary-suggested-by-aidin" class="nav-link" data-scroll-target="#and-nature-synonyms-use-dictionary-suggested-by-aidin">AND (nature synonyms) [use dictionary suggested by Aidin]</a></li>
   <li><a href="#and-visions-ch-2-key-terms-httpswww.ipbes.netglossary-tagvision-oxford-dictionary" id="toc-and-visions-ch-2-key-terms-httpswww.ipbes.netglossary-tagvision-oxford-dictionary" class="nav-link" data-scroll-target="#and-visions-ch-2-key-terms-httpswww.ipbes.netglossary-tagvision-oxford-dictionary">AND (visions) [Ch 2 Key terms, https://www.ipbes.net/glossary-tag/vision, Oxford Dictionary]</a></li>
@@ -3072,185 +3073,464 @@ vertical-align: -.125em;
 </section>
 <section id="search-term-definition" class="level1">
 <h1>Search Term Definition</h1>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;.&quot;</span>, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;no_hits.rds&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fn)) {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    no_hits <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fn)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    no_hits <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_tfc, ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_tfc_5) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> tfc_new, ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_nat) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_nat_5) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_vis) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">search =</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_tfc, <span class="st">&quot;)&quot;</span>, <span class="st">&quot; AND &quot;</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_nat, <span class="st">&quot;)&quot;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">search =</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_tfc_5, <span class="st">&quot;)&quot;</span>, <span class="st">&quot; AND &quot;</span>,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_nat_5, <span class="st">&quot;)&quot;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">search =</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, tfc_new, <span class="st">&quot;)&quot;</span>, <span class="st">&quot; AND &quot;</span>,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>                <span class="co"># &#39;(&#39;, params$s_nat_5, &#39;)&#39;, &#39; AND &#39;,</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_vis, <span class="st">&quot;)&quot;</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">search =</span> <span class="fu">paste0</span>(</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_nat_5, <span class="st">&quot;)&quot;</span>, <span class="st">&quot; AND &quot;</span>,</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_vis, <span class="st">&quot;)&quot;</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>            <span class="at">query =</span> <span class="fu">c</span>(</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Transform&quot;</span>,</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Transform Ch 5&quot;</span>,</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Transform New&quot;</span>,</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Nature&quot;</span>,</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Nature Ch 5&quot;</span>,</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Visions&quot;</span>,</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;TfC &amp; Nature&quot;</span>,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(TfC &amp; Nature) Ch 5&quot;</span>,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;TfC New &amp; Nature Ch 5&quot;</span>,</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(Nature &amp; Vision) Ch 5&quot;</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">page =</span> <span class="cn">NULL</span>, <span class="at">per_page =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>        <span class="fu">relocate</span>(query, <span class="at">.before =</span> count)</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(no_hits, <span class="at">file =</span> fn)</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.001 sec elapsed</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_tfc_p1, <span class="at">doi =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>$count
+[1] 0
+
+$db_response_time_ms
+[1] 12
+
+$page
+[1] 1
+
+$per_page
+[1] 1</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>no_hits <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">&quot;Number of hits&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<caption>Number of hits</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">query</th>
+<th style="text-align: left;">count</th>
+<th style="text-align: right;">db_response_time_ms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Transform</td>
+<td style="text-align: left;">8,463,108</td>
+<td style="text-align: right;">3108</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Transform Ch 5</td>
+<td style="text-align: left;">2,954,888</td>
+<td style="text-align: right;">650</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Transform New</td>
+<td style="text-align: left;">25,799,429</td>
+<td style="text-align: right;">1880</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nature</td>
+<td style="text-align: left;">23,095,202</td>
+<td style="text-align: right;">547</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nature Ch 5</td>
+<td style="text-align: left;">20,775,142</td>
+<td style="text-align: right;">593</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Visions</td>
+<td style="text-align: left;">25,047,713</td>
+<td style="text-align: right;">7047</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TfC &amp; Nature</td>
+<td style="text-align: left;">3,745,258</td>
+<td style="text-align: right;">3533</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(TfC &amp; Nature) Ch 5</td>
+<td style="text-align: left;">1,456,804</td>
+<td style="text-align: right;">639</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TfC New &amp; Nature Ch 5</td>
+<td style="text-align: left;">7,855,813</td>
+<td style="text-align: right;">3553</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">(Nature &amp; Vision) Ch 5</td>
+<td style="text-align: left;">6,274,829</td>
+<td style="text-align: right;">5763</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
 <section id="about-transformative-change-transformative-change-synonyms" class="level2">
 <h2 class="anchored" data-anchor-id="about-transformative-change-transformative-change-synonyms">[About Transformative change] Transformative change synonyms</h2>
 <p>This should be aligned with TfC Ch 5 search</p>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(params<span class="sc">$</span>s_tfc, <span class="at">split =</span> <span class="st">&quot; AND &quot;</span> )</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Transformation =</span> x[[<span class="dv">1</span>]][<span class="dv">1</span>] <span class="sc">|&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sort</span>()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">strsplit</span>(params<span class="sc">$</span>s_tfc, <span class="at">split =</span> <span class="st">&quot; AND &quot;</span> )</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">1</span>]][<span class="dv">1</span>] <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sort</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> <span class="fu">paste0</span>(<span class="st">&quot;&#39;&quot;</span>, x, <span class="st">&quot;&#39;&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                <span class="fu">unlist</span>()</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(count)) <span class="sc">|&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">per_page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Transformation</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">count</th>
+<th style="text-align: right;">db_response_time_ms</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">agency</td>
+<td style="text-align: left;">system*</td>
+<td style="text-align: left;">49,930,699</td>
+<td style="text-align: right;">661</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">complete</td>
+<td style="text-align: left;">process</td>
+<td style="text-align: left;">44,584,484</td>
+<td style="text-align: right;">586</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">complete change</td>
+<td style="text-align: left;">value*</td>
+<td style="text-align: left;">44,179,448</td>
+<td style="text-align: right;">592</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">complete transformation</td>
+<td style="text-align: left;">structure*</td>
+<td style="text-align: left;">33,790,292</td>
+<td style="text-align: right;">512</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">complete</td>
+<td style="text-align: left;">25,799,395</td>
+<td style="text-align: right;">377</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">views</td>
+<td style="text-align: left;">23,562,108</td>
+<td style="text-align: right;">331</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">power</td>
+<td style="text-align: left;">19,571,486</td>
+<td style="text-align: right;">324</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">complete change</td>
+<td style="text-align: left;">16,340,704</td>
+<td style="text-align: right;">1269</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">context</td>
+<td style="text-align: left;">14,266,186</td>
+<td style="text-align: right;">290</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">shift</td>
+<td style="text-align: left;">13,128,027</td>
+<td style="text-align: right;">189</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">structural</td>
+<td style="text-align: left;">11,814,272</td>
+<td style="text-align: right;">196</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">deep</td>
+<td style="text-align: left;">10,991,196</td>
+<td style="text-align: right;">164</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">deep change</td>
+<td style="text-align: left;">transition</td>
+<td style="text-align: left;">10,922,709</td>
+<td style="text-align: right;">175</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">deliberate</td>
+<td style="text-align: left;">transition*</td>
+<td style="text-align: left;">10,922,709</td>
+<td style="text-align: right;">169</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">deliberate transformation*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">drastic</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">drastic change</td>
+<td style="text-align: left;">institution*</td>
+<td style="text-align: left;">10,828,210</td>
+<td style="text-align: right;">172</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">economic*</td>
+<td style="text-align: left;">10,673,127</td>
+<td style="text-align: right;">238</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">fundamental</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">fundamental alteration</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">in-depth transformation</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">institution*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">lever*</td>
+<td style="text-align: left;">9,753,587</td>
+<td style="text-align: right;">175</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">pathway</td>
+<td style="text-align: left;">7,870,471</td>
+<td style="text-align: right;">210</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">politic*</td>
+<td style="text-align: left;">transformative change</td>
+<td style="text-align: left;">7,071,347</td>
+<td style="text-align: right;">632</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">power</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">process</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">profound</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">profound change</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">profound transformation</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">progressive</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">progressive change</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">radical</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">radical alteration</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">radical change</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">radical transformation</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">regime</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">revolutionary</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">revolutionary change</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">scal*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">shift</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">significan*</td>
+<td style="text-align: left;">deep change</td>
+<td style="text-align: left;">7,048,556</td>
+<td style="text-align: right;">936</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">significant modification</td>
+<td style="text-align: left;">6,093,588</td>
+<td style="text-align: right;">979</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">social-ecological change*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">structur*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">structural</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">structure*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">substanti*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">system*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">total transformation</td>
+<td style="text-align: left;">progressive</td>
+<td style="text-align: left;">5,834,651</td>
+<td style="text-align: right;">131</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">transformational change</td>
+<td style="text-align: left;">5,469,206</td>
+<td style="text-align: right;">519</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">transformative change</td>
+<td style="text-align: left;">agency</td>
+<td style="text-align: left;">4,987,612</td>
+<td style="text-align: right;">212</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">radical</td>
+<td style="text-align: left;">4,732,796</td>
+<td style="text-align: right;">131</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">regime</td>
+<td style="text-align: left;">4,699,522</td>
+<td style="text-align: right;">118</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">widespread</td>
+<td style="text-align: left;">4,531,576</td>
+<td style="text-align: right;">165</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">progressive change</td>
+<td style="text-align: left;">4,139,382</td>
+<td style="text-align: right;">486</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">total transformation</td>
+<td style="text-align: left;">3,938,923</td>
+<td style="text-align: right;">502</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">complete transformation</td>
+<td style="text-align: left;">3,267,248</td>
+<td style="text-align: right;">412</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">transformative turn*</td>
+<td style="text-align: left;">3,241,342</td>
+<td style="text-align: right;">414</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">transition</td>
+<td style="text-align: left;">radical change</td>
+<td style="text-align: left;">3,070,989</td>
+<td style="text-align: right;">412</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">transition*</td>
+<td style="text-align: left;">profound</td>
+<td style="text-align: left;">2,934,854</td>
+<td style="text-align: right;">100</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">value*</td>
+<td style="text-align: left;">drastic</td>
+<td style="text-align: left;">2,427,130</td>
+<td style="text-align: right;">104</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">views</td>
+<td style="text-align: left;">profound change</td>
+<td style="text-align: left;">2,177,473</td>
+<td style="text-align: right;">588</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">widespread</td>
+<td style="text-align: left;">drastic change</td>
+<td style="text-align: left;">1,929,228</td>
+<td style="text-align: right;">396</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">deliberate</td>
+<td style="text-align: left;">1,736,391</td>
+<td style="text-align: right;">237</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">politic*</td>
+<td style="text-align: left;">1,494,344</td>
+<td style="text-align: right;">115</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">in-depth transformation</td>
+<td style="text-align: left;">1,143,597</td>
+<td style="text-align: right;">378</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">radical transformation</td>
+<td style="text-align: left;">814,647</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">revolutionary</td>
+<td style="text-align: left;">794,702</td>
+<td style="text-align: right;">70</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">social-ecological change*</td>
+<td style="text-align: left;">667,707</td>
+<td style="text-align: right;">407</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fundamental alteration</td>
+<td style="text-align: left;">567,294</td>
+<td style="text-align: right;">410</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">revolutionary change</td>
+<td style="text-align: left;">551,454</td>
+<td style="text-align: right;">209</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">profound transformation</td>
+<td style="text-align: left;">516,383</td>
+<td style="text-align: right;">184</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lever*</td>
+<td style="text-align: left;">463,038</td>
+<td style="text-align: right;">92</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">radical alteration</td>
+<td style="text-align: left;">431,482</td>
+<td style="text-align: right;">224</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">deliberate transformation*</td>
+<td style="text-align: left;">306,684</td>
+<td style="text-align: right;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">scal*</td>
+<td style="text-align: left;">64,292</td>
+<td style="text-align: right;">82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">significan*</td>
+<td style="text-align: left;">28,022</td>
+<td style="text-align: right;">65</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">structur*</td>
+<td style="text-align: left;">13,742</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">substanti*</td>
+<td style="text-align: left;">3,819</td>
+<td style="text-align: right;">40</td>
 </tr>
 </tbody>
 </table>
@@ -3260,43 +3540,72 @@ vertical-align: -.125em;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Transformation =</span> x[[<span class="dv">1</span>]][<span class="dv">2</span>] <span class="sc">|&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sort</span>()</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x[[<span class="dv">1</span>]][<span class="dv">2</span>] <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sort</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> <span class="fu">paste0</span>(<span class="st">&quot;&#39;&quot;</span>, x, <span class="st">&quot;&#39;&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">unlist</span>()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(count)) <span class="sc">|&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">per_page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Transformation</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">count</th>
+<th style="text-align: right;">db_response_time_ms</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">change</td>
+<td style="text-align: left;">45,579,090</td>
+<td style="text-align: right;">552</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">action</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">alteration</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">shift</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">transformati*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">transition</td>
+<td style="text-align: left;">15,879,552</td>
+<td style="text-align: right;">239</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">turn</td>
+<td style="text-align: left;">15,724,909</td>
+<td style="text-align: right;">192</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">shift</td>
+<td style="text-align: left;">13,128,027</td>
+<td style="text-align: right;">189</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">transition</td>
+<td style="text-align: left;">10,922,709</td>
+<td style="text-align: right;">175</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">alteration</td>
+<td style="text-align: left;">4,808,810</td>
+<td style="text-align: right;">237</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">transformati*</td>
+<td style="text-align: left;">1,054</td>
+<td style="text-align: right;">39</td>
 </tr>
 </tbody>
 </table>
@@ -3306,91 +3615,152 @@ vertical-align: -.125em;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Transformation =</span> params<span class="sc">$</span>s_tfc_5 <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sort</span>()</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>params<span class="sc">$</span>s_tfc_5 <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sort</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>            openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> <span class="fu">paste0</span>(<span class="st">&quot;&#39;&quot;</span>, x, <span class="st">&quot;&#39;&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">unlist</span>()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(count)) <span class="sc">|&gt;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">per_page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Transformation</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">count</th>
+<th style="text-align: right;">db_response_time_ms</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">complete change</td>
+<td style="text-align: left;">16,340,704</td>
+<td style="text-align: right;">1269</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">complete transformation</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">deep change</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">deliberate transformation*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">drastic change</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">fundamental alteration</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">in-depth transformation</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">profound change</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">profound transformation</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">progressive change</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">radical alteration</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">radical change</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">radical shift</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">radical transformation</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">revolutionary change</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">significant modification</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">social-ecological change*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">total transformation</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">transformational change</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">transformational shift</td>
+<td style="text-align: left;">transition*</td>
+<td style="text-align: left;">10,922,709</td>
+<td style="text-align: right;">169</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">transformative change</td>
+<td style="text-align: left;">7,071,347</td>
+<td style="text-align: right;">632</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">deep change</td>
+<td style="text-align: left;">7,048,556</td>
+<td style="text-align: right;">936</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">significant modification</td>
+<td style="text-align: left;">6,093,588</td>
+<td style="text-align: right;">979</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">transformational change</td>
+<td style="text-align: left;">5,469,206</td>
+<td style="text-align: right;">519</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">progressive change</td>
+<td style="text-align: left;">4,139,382</td>
+<td style="text-align: right;">486</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">total transformation</td>
+<td style="text-align: left;">3,938,923</td>
+<td style="text-align: right;">502</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">complete transformation</td>
+<td style="text-align: left;">3,267,248</td>
+<td style="text-align: right;">412</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">transformative turn*</td>
+<td style="text-align: left;">3,241,342</td>
+<td style="text-align: right;">414</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">transition*</td>
+<td style="text-align: left;">radical change</td>
+<td style="text-align: left;">3,070,989</td>
+<td style="text-align: right;">412</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">transformational shift</td>
+<td style="text-align: left;">2,201,963</td>
+<td style="text-align: right;">319</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">profound change</td>
+<td style="text-align: left;">2,177,473</td>
+<td style="text-align: right;">588</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">drastic change</td>
+<td style="text-align: left;">1,929,228</td>
+<td style="text-align: right;">396</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">radical shift</td>
+<td style="text-align: left;">1,269,944</td>
+<td style="text-align: right;">363</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">in-depth transformation</td>
+<td style="text-align: left;">1,143,597</td>
+<td style="text-align: right;">378</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">radical transformation</td>
+<td style="text-align: left;">814,647</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">social-ecological change*</td>
+<td style="text-align: left;">667,707</td>
+<td style="text-align: right;">407</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fundamental alteration</td>
+<td style="text-align: left;">567,294</td>
+<td style="text-align: right;">410</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">revolutionary change</td>
+<td style="text-align: left;">551,454</td>
+<td style="text-align: right;">209</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">profound transformation</td>
+<td style="text-align: left;">516,383</td>
+<td style="text-align: right;">184</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">radical alteration</td>
+<td style="text-align: left;">431,482</td>
+<td style="text-align: right;">224</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">deliberate transformation*</td>
+<td style="text-align: left;">306,684</td>
+<td style="text-align: right;">143</td>
 </tr>
 </tbody>
 </table>
@@ -3399,41 +3769,41 @@ vertical-align: -.125em;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;complete change&#39;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;complete transformation&#39;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;deep change&#39;</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;deliberate transformation*&#39;</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;drastic change&#39;</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;fundamental alteration&#39;</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;in-depth transformation&#39;</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;profound change&#39;</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;profound transformation&#39;</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;progressive change&#39;</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;radical alteration&#39;</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;radical change&#39;</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;radical shift&#39;</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;radical transformation&#39;</span>,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;revolutionary change&#39;</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;significant modification&#39;</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;social-ecological change*&#39;</span>,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;total transformation&#39;</span>,</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transform* change&#39;</span>,</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transform* shift&#39;</span>,</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&#39;</span>,</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transform* turn*&#39;</span>,</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transition*&#39;</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">TfC_5 =</span> params<span class="sc">$</span>s_tfc_5 <span class="sc">|&gt;</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sort</span>(),</span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">TfC_new =</span> tfc_new</span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;complete change&#39;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;complete transformation&#39;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;deep change&#39;</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;deliberate transformation*&#39;</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;drastic change&#39;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;fundamental alteration&#39;</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;in-depth transformation&#39;</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;profound change&#39;</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;profound transformation&#39;</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;progressive change&#39;</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;radical alteration&#39;</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;radical change&#39;</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;radical shift&#39;</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;radical transformation&#39;</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;revolutionary change&#39;</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;significant modification&#39;</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;social-ecological change*&#39;</span>,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;total transformation&#39;</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transform* change&#39;</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transform* shift&#39;</span>,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;&#39;</span>,</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transform* turn*&#39;</span>,</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">&#39;transition*&#39;</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">TfC_5 =</span> params<span class="sc">$</span>s_tfc_5 <span class="sc">|&gt;</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>        <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sort</span>(),</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">TfC_new =</span> tfc_new</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -3541,10 +3911,159 @@ vertical-align: -.125em;
 </div>
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="ot">&lt;-</span> tfc_new[tfc_new <span class="sc">!=</span> <span class="st">&quot;&quot;</span>]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">paste0</span>(<span class="st">&quot;&#39;&quot;</span>, tfc_new, <span class="st">&quot;&#39;&quot;</span>), <span class="at">collapse =</span> <span class="st">&#39; OR &#39;</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;( &quot;</span>, tfc_new, <span class="st">&quot; )&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="ot">&lt;-</span> tfc_new[tfc_new <span class="sc">!=</span> <span class="st">&quot;&quot;</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">paste0</span>(<span class="st">&quot;&#39;&quot;</span>, tfc_new, <span class="st">&quot;&#39;&quot;</span>), <span class="at">collapse =</span> <span class="st">&#39; OR &#39;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;( &quot;</span>, tfc_new, <span class="st">&quot; )&quot;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>tfc_new <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sort</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>            openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> <span class="fu">paste0</span>(<span class="st">&quot;&#39;&quot;</span>, x, <span class="st">&quot;&#39;&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">unlist</span>()</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(count)) <span class="sc">|&gt;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">per_page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">count</th>
+<th style="text-align: right;">db_response_time_ms</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">complete change</td>
+<td style="text-align: left;">16,340,658</td>
+<td style="text-align: right;">1284</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">transition*</td>
+<td style="text-align: left;">10,922,706</td>
+<td style="text-align: right;">237</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">transform* change</td>
+<td style="text-align: left;">7,071,339</td>
+<td style="text-align: right;">866</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">deep change</td>
+<td style="text-align: left;">7,048,556</td>
+<td style="text-align: right;">936</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">significant modification</td>
+<td style="text-align: left;">6,093,588</td>
+<td style="text-align: right;">979</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">progressive change</td>
+<td style="text-align: left;">4,139,382</td>
+<td style="text-align: right;">486</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">total transformation</td>
+<td style="text-align: left;">3,938,923</td>
+<td style="text-align: right;">502</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">complete transformation</td>
+<td style="text-align: left;">3,267,248</td>
+<td style="text-align: right;">412</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">transform* turn*</td>
+<td style="text-align: left;">3,241,337</td>
+<td style="text-align: right;">376</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">radical change</td>
+<td style="text-align: left;">3,070,989</td>
+<td style="text-align: right;">412</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">transform* shift</td>
+<td style="text-align: left;">2,954,890</td>
+<td style="text-align: right;">338</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">profound change</td>
+<td style="text-align: left;">2,177,473</td>
+<td style="text-align: right;">588</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">drastic change</td>
+<td style="text-align: left;">1,929,228</td>
+<td style="text-align: right;">396</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">radical shift</td>
+<td style="text-align: left;">1,269,944</td>
+<td style="text-align: right;">363</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">in-depth transformation</td>
+<td style="text-align: left;">1,143,597</td>
+<td style="text-align: right;">378</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">radical transformation</td>
+<td style="text-align: left;">814,647</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">social-ecological change*</td>
+<td style="text-align: left;">667,707</td>
+<td style="text-align: right;">407</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fundamental alteration</td>
+<td style="text-align: left;">567,294</td>
+<td style="text-align: right;">410</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">revolutionary change</td>
+<td style="text-align: left;">551,454</td>
+<td style="text-align: right;">209</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">profound transformation</td>
+<td style="text-align: left;">516,383</td>
+<td style="text-align: right;">184</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">radical alteration</td>
+<td style="text-align: left;">431,482</td>
+<td style="text-align: right;">224</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">deliberate transformation*</td>
+<td style="text-align: left;">306,684</td>
+<td style="text-align: right;">143</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </section>
 <section id="and-nature-synonyms-use-dictionary-suggested-by-aidin" class="level2">
@@ -3552,52 +4071,87 @@ vertical-align: -.125em;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Transformation =</span> params<span class="sc">$</span>s_nat <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sort</span>()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>params<span class="sc">$</span>s_nat <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sort</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>            openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> <span class="fu">paste0</span>(<span class="st">&quot;&#39;&quot;</span>, x, <span class="st">&quot;&#39;&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">unlist</span>()</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(count)) <span class="sc">|&gt;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">per_page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Transformation</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">count</th>
+<th style="text-align: right;">db_response_time_ms</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">biodivers*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">biosphere</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">conserv*</td>
+<td style="text-align: left;">nature*</td>
+<td style="text-align: left;">19,400,042</td>
+<td style="text-align: right;">301</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Earth</td>
+<td style="text-align: left;">3,596,066</td>
+<td style="text-align: right;">112</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ecosystem*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">environ*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">nature*</td>
+<td style="text-align: left;">1,789,086</td>
+<td style="text-align: right;">77</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">planet*</td>
+<td style="text-align: left;">707,710</td>
+<td style="text-align: right;">112</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">environ*</td>
+<td style="text-align: left;">368,532</td>
+<td style="text-align: right;">72</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">biosphere</td>
+<td style="text-align: left;">188,224</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">conserv*</td>
+<td style="text-align: left;">8,371</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">biodivers*</td>
+<td style="text-align: left;">2,549</td>
+<td style="text-align: right;">26</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">resilien*</td>
+<td style="text-align: left;">1,282</td>
+<td style="text-align: right;">47</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">sustainab*</td>
+<td style="text-align: left;">715</td>
+<td style="text-align: right;">53</td>
 </tr>
 </tbody>
 </table>
@@ -3609,307 +4163,512 @@ vertical-align: -.125em;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">Transformation =</span> params<span class="sc">$</span>s_vis <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sort</span>()</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>params<span class="sc">$</span>s_vis <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;&#39;|</span><span class="sc">\\</span><span class="st">)|</span><span class="sc">\\</span><span class="st">(&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">strsplit</span>(<span class="at">split =</span> <span class="st">&quot; OR &quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sort</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">FUN =</span> <span class="cf">function</span>(x) {</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> <span class="fu">paste0</span>(<span class="st">&quot;&#39;&quot;</span>, x, <span class="st">&quot;&#39;&quot;</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>                <span class="fu">unlist</span>()</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(count)) <span class="sc">|&gt;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">per_page =</span> <span class="cn">NULL</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>)</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: left;">Transformation</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">count</th>
+<th style="text-align: right;">db_response_time_ms</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">cosmocentric</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">innovation*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">respect</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">responsibilities</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">view*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">action</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">activity</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">agenda</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">appearance</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">approach</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">arquetype</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">aspiration*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ceremon*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">co-production</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">coalition*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">collective action</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">communit*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">conceptual*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">consultation</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">cooperation</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">cosmolog*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">cosmovision</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">creativity</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">culture</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">deliberate process*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">desire</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">dialogue</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">discourse</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">dream*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">effect*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">effort</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">existence</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">fantasy</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">fiction</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">foresight</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">future</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">government</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">harmony</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">hope</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">idea</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">image</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">imager*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">imagination</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">influence o moment</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">initiative</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">inspiration</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">intention</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">iteration</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">knowledge</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">languague</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">mission</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">model*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">motivation</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">movement</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">objective</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">operation</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">opportunit*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">participatory process*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">perception</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">performance</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">perspective</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">plan*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">platform</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">polic*</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">process</td>
+<td style="text-align: left;">44,584,484</td>
+<td style="text-align: right;">586</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">programm</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">project</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">project</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">reaction</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">reality</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">reciprocity</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">relationships</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">response</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">roadmap</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">scenarios</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">self-determination</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">sight</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">solidarity</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">solution*</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">spiritual*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">story</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">strateg*</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">target</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">task</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">technique</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">territory</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">transmission</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">universe*</td>
+<td style="text-align: left;">effect.</td>
+<td style="text-align: left;">44,286,783</td>
+<td style="text-align: right;">553</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">value</td>
+<td style="text-align: left;">44,179,355</td>
+<td style="text-align: right;">565</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">vision</td>
+<td style="text-align: left;">model.</td>
+<td style="text-align: left;">41,915,106</td>
+<td style="text-align: right;">616</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">visionar*</td>
+<td style="text-align: left;">approach</td>
+<td style="text-align: left;">33,989,246</td>
+<td style="text-align: right;">559</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">visioning</td>
+<td style="text-align: left;">activity</td>
+<td style="text-align: left;">27,056,741</td>
+<td style="text-align: right;">394</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">technique.</td>
+<td style="text-align: left;">26,371,249</td>
+<td style="text-align: right;">388</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">solution.</td>
+<td style="text-align: left;">25,472,620</td>
+<td style="text-align: right;">351</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">response</td>
+<td style="text-align: left;">25,371,707</td>
+<td style="text-align: right;">363</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X.view.</td>
+<td style="text-align: left;">23,562,108</td>
+<td style="text-align: right;">276</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">relationships</td>
+<td style="text-align: left;">23,407,161</td>
+<td style="text-align: right;">326</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">performance</td>
+<td style="text-align: left;">21,178,953</td>
+<td style="text-align: right;">503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">future</td>
+<td style="text-align: left;">20,669,191</td>
+<td style="text-align: right;">281</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">knowledge</td>
+<td style="text-align: left;">18,531,957</td>
+<td style="text-align: right;">231</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">objective</td>
+<td style="text-align: left;">17,347,072</td>
+<td style="text-align: right;">232</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X.respect</td>
+<td style="text-align: left;">16,952,284</td>
+<td style="text-align: right;">236</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">reaction</td>
+<td style="text-align: left;">16,912,199</td>
+<td style="text-align: right;">242</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">imager.</td>
+<td style="text-align: left;">16,603,938</td>
+<td style="text-align: right;">266</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">image</td>
+<td style="text-align: left;">16,603,917</td>
+<td style="text-align: right;">267</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">target</td>
+<td style="text-align: left;">16,506,232</td>
+<td style="text-align: right;">349</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">action</td>
+<td style="text-align: left;">15,879,552</td>
+<td style="text-align: right;">239</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">project</td>
+<td style="text-align: left;">14,920,652</td>
+<td style="text-align: right;">201</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">project.1</td>
+<td style="text-align: left;">14,920,652</td>
+<td style="text-align: right;">201</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">operation</td>
+<td style="text-align: left;">14,318,389</td>
+<td style="text-align: right;">230</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">effort</td>
+<td style="text-align: left;">14,065,270</td>
+<td style="text-align: right;">190</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">plan.</td>
+<td style="text-align: left;">13,434,755</td>
+<td style="text-align: right;">186</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">idea</td>
+<td style="text-align: left;">12,782,150</td>
+<td style="text-align: right;">188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">culture</td>
+<td style="text-align: left;">12,077,440</td>
+<td style="text-align: right;">172</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">task</td>
+<td style="text-align: left;">10,563,756</td>
+<td style="text-align: right;">194</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">desire.</td>
+<td style="text-align: left;">10,118,685</td>
+<td style="text-align: right;">149</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">perspective</td>
+<td style="text-align: left;">9,722,822</td>
+<td style="text-align: right;">175</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">existence</td>
+<td style="text-align: left;">9,375,125</td>
+<td style="text-align: right;">207</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">movement</td>
+<td style="text-align: left;">8,885,907</td>
+<td style="text-align: right;">149</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">government</td>
+<td style="text-align: left;">8,055,698</td>
+<td style="text-align: right;">135</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">transmission</td>
+<td style="text-align: left;">7,255,833</td>
+<td style="text-align: right;">182</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">appearance</td>
+<td style="text-align: left;">7,095,378</td>
+<td style="text-align: right;">195</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">wish.</td>
+<td style="text-align: left;">6,549,934</td>
+<td style="text-align: right;">114</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">hope</td>
+<td style="text-align: left;">6,312,085</td>
+<td style="text-align: right;">184</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">scenarios</td>
+<td style="text-align: left;">5,524,806</td>
+<td style="text-align: right;">194</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">perception</td>
+<td style="text-align: left;">5,386,009</td>
+<td style="text-align: right;">147</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">platform</td>
+<td style="text-align: left;">5,073,261</td>
+<td style="text-align: right;">124</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">reality</td>
+<td style="text-align: left;">4,912,423</td>
+<td style="text-align: right;">116</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">visualization</td>
+<td style="text-align: left;">4,747,204</td>
+<td style="text-align: right;">97</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">wish*</td>
+<td style="text-align: left;">X.responsibilities</td>
+<td style="text-align: left;">4,736,328</td>
+<td style="text-align: right;">122</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">worldview*</td>
+<td style="text-align: left;">co.production</td>
+<td style="text-align: left;">4,670,478</td>
+<td style="text-align: right;">698</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">iteration</td>
+<td style="text-align: left;">4,103,452</td>
+<td style="text-align: right;">87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">vision</td>
+<td style="text-align: left;">4,008,973</td>
+<td style="text-align: right;">139</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">visioning</td>
+<td style="text-align: left;">4,008,968</td>
+<td style="text-align: right;">93</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">motivation</td>
+<td style="text-align: left;">3,931,728</td>
+<td style="text-align: right;">139</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">story</td>
+<td style="text-align: left;">3,878,484</td>
+<td style="text-align: right;">119</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">conceptual.</td>
+<td style="text-align: left;">3,661,666</td>
+<td style="text-align: right;">107</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">X.innovation.</td>
+<td style="text-align: left;">3,473,097</td>
+<td style="text-align: right;">155</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">initiative</td>
+<td style="text-align: left;">3,319,788</td>
+<td style="text-align: right;">97</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cooperation</td>
+<td style="text-align: left;">2,956,049</td>
+<td style="text-align: right;">78</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">intention</td>
+<td style="text-align: left;">2,923,429</td>
+<td style="text-align: right;">116</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mission</td>
+<td style="text-align: left;">2,255,001</td>
+<td style="text-align: right;">143</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">polic.</td>
+<td style="text-align: left;">2,157,741</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">discourse</td>
+<td style="text-align: left;">2,049,528</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">territory</td>
+<td style="text-align: left;">1,911,802</td>
+<td style="text-align: right;">57</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">collective.action</td>
+<td style="text-align: left;">1,722,013</td>
+<td style="text-align: right;">374</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">agenda</td>
+<td style="text-align: left;">1,707,627</td>
+<td style="text-align: right;">97</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">self.determination</td>
+<td style="text-align: left;">1,703,422</td>
+<td style="text-align: right;">702</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sight</td>
+<td style="text-align: left;">1,689,954</td>
+<td style="text-align: right;">91</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">consultation</td>
+<td style="text-align: left;">1,681,114</td>
+<td style="text-align: right;">94</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aspiration.</td>
+<td style="text-align: left;">1,573,088</td>
+<td style="text-align: right;">95</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">dialogue</td>
+<td style="text-align: left;">1,502,613</td>
+<td style="text-align: right;">87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">deliberate.process.</td>
+<td style="text-align: left;">1,228,988</td>
+<td style="text-align: right;">417</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">spiritual.</td>
+<td style="text-align: left;">1,086,922</td>
+<td style="text-align: right;">110</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dream.</td>
+<td style="text-align: left;">1,014,336</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">inspiration</td>
+<td style="text-align: left;">995,449</td>
+<td style="text-align: right;">71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">universe.</td>
+<td style="text-align: left;">991,213</td>
+<td style="text-align: right;">99</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">imagination</td>
+<td style="text-align: left;">963,466</td>
+<td style="text-align: right;">34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">influence.o.moment</td>
+<td style="text-align: left;">942,511</td>
+<td style="text-align: right;">514</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">creativity</td>
+<td style="text-align: left;">854,463</td>
+<td style="text-align: right;">82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fiction</td>
+<td style="text-align: left;">816,549</td>
+<td style="text-align: right;">90</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">harmony</td>
+<td style="text-align: left;">723,955</td>
+<td style="text-align: right;">62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">coalition.</td>
+<td style="text-align: left;">571,999</td>
+<td style="text-align: right;">48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">solidarity</td>
+<td style="text-align: left;">499,861</td>
+<td style="text-align: right;">79</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">fantasy</td>
+<td style="text-align: left;">432,575</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">participatory.process.</td>
+<td style="text-align: left;">376,259</td>
+<td style="text-align: right;">333</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">reciprocity</td>
+<td style="text-align: left;">370,317</td>
+<td style="text-align: right;">71</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">worldview.</td>
+<td style="text-align: left;">283,427</td>
+<td style="text-align: right;">63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">roadmap</td>
+<td style="text-align: left;">218,978</td>
+<td style="text-align: right;">86</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">foresight</td>
+<td style="text-align: left;">148,650</td>
+<td style="text-align: right;">90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">programm</td>
+<td style="text-align: left;">64,853</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">strateg.</td>
+<td style="text-align: left;">5,121</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cosmovision</td>
+<td style="text-align: left;">4,805</td>
+<td style="text-align: right;">72</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">communit.</td>
+<td style="text-align: left;">4,057</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">opportunit.</td>
+<td style="text-align: left;">3,655</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">visionar.</td>
+<td style="text-align: left;">1,223</td>
+<td style="text-align: right;">46</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">X.cosmocentric</td>
+<td style="text-align: left;">530</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">languague</td>
+<td style="text-align: left;">278</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cosmolog.</td>
+<td style="text-align: left;">272</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ceremon.</td>
+<td style="text-align: left;">196</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">arquetype</td>
+<td style="text-align: left;">17</td>
+<td style="text-align: right;">18</td>
 </tr>
 </tbody>
 </table>
@@ -3921,9 +4680,9 @@ vertical-align: -.125em;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>s_wos <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&#39;TS = ( &#39;</span>, params<span class="sc">$</span>s_tfc, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_nat, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_vis, <span class="st">&#39; )&#39;</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>s_oa  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(params<span class="sc">$</span>s_tfc, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_nat, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_vis)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>s_oa_5  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(params<span class="sc">$</span>s_tfc_5, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_nat_5, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_vis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>s_wos <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&#39;TS = ( &#39;</span>, params<span class="sc">$</span>s_tfc, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_nat, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_vis, <span class="st">&#39; )&#39;</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>s_oa  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(params<span class="sc">$</span>s_tfc, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_nat, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_vis)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>s_oa_5  <span class="ot">&lt;-</span> <span class="fu">paste0</span>(params<span class="sc">$</span>s_tfc_5, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_nat_5, <span class="st">&#39; AND &#39;</span>, params<span class="sc">$</span>s_vis)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
@@ -3949,14 +4708,14 @@ vertical-align: -.125em;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>key_papers <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;20 papers by Sebastian.csv&#39;</span>)[,<span class="fu">c</span>(<span class="st">&#39;DOI&#39;</span>, <span class="st">&#39;Title&#39;</span>)]</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>key_papers<span class="sc">$</span>in_R2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Y&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>key_papers <span class="ot">&lt;-</span> key_papers[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>)]</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    key_papers,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;20 papers by Sebastian Villasante&#39;</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;DOI&#39;</span>, <span class="st">&#39;Title&#39;</span>, <span class="st">&#39;In R1&#39;</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>key_papers <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&#39;20 papers by Sebastian.csv&#39;</span>)[,<span class="fu">c</span>(<span class="st">&#39;DOI&#39;</span>, <span class="st">&#39;Title&#39;</span>)]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>key_papers<span class="sc">$</span>in_R2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Y&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;Y&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>, <span class="st">&#39;n&#39;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>key_papers <span class="ot">&lt;-</span> key_papers[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>)]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    key_papers,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;20 papers by Sebastian Villasante&#39;</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;DOI&#39;</span>, <span class="st">&#39;Title&#39;</span>, <span class="st">&#39;In R1&#39;</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -4127,204 +4886,47 @@ vertical-align: -.125em;
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;.&quot;</span>, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;no_hits.rds&quot;</span>)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fn)) {</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    no_hits <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fn)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    no_hits <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_tfc, ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_tfc_5) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> tfc_new, ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_nat) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_nat_5) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_vis) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">search =</span> <span class="fu">paste0</span>(</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_tfc, <span class="st">&quot;)&quot;</span>, <span class="st">&quot; AND &quot;</span>,</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_nat, <span class="st">&quot;)&quot;</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">search =</span> <span class="fu">paste0</span>(</span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_tfc_5, <span class="st">&quot;)&quot;</span>, <span class="st">&quot; AND &quot;</span>,</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_nat_5, <span class="st">&quot;)&quot;</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">search =</span> <span class="fu">paste0</span>(</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, tfc_new, <span class="st">&quot;)&quot;</span>, <span class="st">&quot; AND &quot;</span>,</span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>                <span class="co"># &#39;(&#39;, params$s_nat_5, &#39;)&#39;, &#39; AND &#39;,</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_vis, <span class="st">&quot;)&quot;</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>(),</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">search =</span> <span class="fu">paste0</span>(</span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_nat_5, <span class="st">&quot;)&quot;</span>, <span class="st">&quot; AND &quot;</span>,</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_vis, <span class="st">&quot;)&quot;</span></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> <span class="fu">unlist</span>()</span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(</span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>            <span class="at">query =</span> <span class="fu">c</span>(</span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Transform&quot;</span>,</span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Transform Ch 5&quot;</span>,</span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Transform New&quot;</span>,</span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Nature&quot;</span>,</span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Nature Ch 5&quot;</span>,</span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;Visions&quot;</span>,</span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;TfC &amp; Nature&quot;</span>,</span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(TfC &amp; Nature) Ch 5&quot;</span>,</span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;TfC New &amp; Nature Ch 5&quot;</span>,</span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>                <span class="st">&quot;(Nature &amp; Vision) Ch 5&quot;</span></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">page =</span> <span class="cn">NULL</span>, <span class="at">per_page =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a>        <span class="fu">relocate</span>(query, <span class="at">.before =</span> count)</span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(no_hits, <span class="at">file =</span> fn)</span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>0.002 sec elapsed</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> params<span class="sc">$</span>s_tfc_p1, <span class="at">doi =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span> <span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>$count
-[1] 0
-
-$db_response_time_ms
-[1] 12
-
-$page
-[1] 1
-
-$per_page
-[1] 1</code></pre>
-</div>
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>no_hits <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">&quot;Number of hits&quot;</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<table class="table table-sm table-striped small">
-<caption>Number of hits</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;">query</th>
-<th style="text-align: left;">count</th>
-<th style="text-align: right;">db_response_time_ms</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Transform</td>
-<td style="text-align: left;">8,459,786</td>
-<td style="text-align: right;">3229</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Transform Ch 5</td>
-<td style="text-align: left;">2,954,147</td>
-<td style="text-align: right;">674</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Transform New</td>
-<td style="text-align: left;">25,788,685</td>
-<td style="text-align: right;">2460</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Nature</td>
-<td style="text-align: left;">23,085,147</td>
-<td style="text-align: right;">660</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Nature Ch 5</td>
-<td style="text-align: left;">20,765,980</td>
-<td style="text-align: right;">570</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Visions</td>
-<td style="text-align: left;">25,033,630</td>
-<td style="text-align: right;">7393</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">TfC &amp; Nature</td>
-<td style="text-align: left;">3,743,885</td>
-<td style="text-align: right;">3438</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(TfC &amp; Nature) Ch 5</td>
-<td style="text-align: left;">1,456,598</td>
-<td style="text-align: right;">602</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">TfC nNw &amp; Nature Ch 5</td>
-<td style="text-align: left;">7,853,533</td>
-<td style="text-align: right;">5603</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">(Nature &amp; Vision) Ch 5</td>
-<td style="text-align: left;">6,272,925</td>
-<td style="text-align: right;">2747</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="cell">
-<details>
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">search =</span> <span class="fu">paste0</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;(&#39;</span>, params<span class="sc">$</span>s_tfc, <span class="st">&#39;)&#39;</span>, <span class="st">&#39; AND &#39;</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;(&#39;</span>, params<span class="sc">$</span>s_nat, <span class="st">&#39;)&#39;</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    )  <span class="sc">|&gt;</span>  </span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">FALSE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">file.path</span>(<span class="st">&#39;.&#39;</span>, <span class="st">&#39;tfc_nature.rds&#39;</span>))</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">search =</span> <span class="fu">paste0</span>(</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;(&#39;</span>, params<span class="sc">$</span>s_nat, <span class="st">&#39;)&#39;</span>, <span class="st">&#39; AND &#39;</span>,</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;(&#39;</span>, params<span class="sc">$</span>s_vis, <span class="st">&#39;)&#39;</span></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    )  <span class="sc">|&gt;</span>  </span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">FALSE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">file.path</span>(<span class="st">&#39;.&#39;</span>, <span class="st">&#39;nature_vision.rds&#39;</span>))</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">search =</span> <span class="fu">paste0</span>(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;(&#39;</span>, params<span class="sc">$</span>s_tfc, <span class="st">&#39;)&#39;</span>, <span class="st">&#39; AND &#39;</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;(&#39;</span>, params<span class="sc">$</span>s_nat, <span class="st">&#39;)&#39;</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    )  <span class="sc">|&gt;</span>  </span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">FALSE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">file.path</span>(<span class="st">&#39;.&#39;</span>, <span class="st">&#39;tfc_nature.rds&#39;</span>))</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">search =</span> <span class="fu">paste0</span>(</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;(&#39;</span>, params<span class="sc">$</span>s_nat, <span class="st">&#39;)&#39;</span>, <span class="st">&#39; AND &#39;</span>,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">&#39;(&#39;</span>, params<span class="sc">$</span>s_vis, <span class="st">&#39;)&#39;</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    )  <span class="sc">|&gt;</span>  </span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">FALSE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(<span class="at">file =</span> <span class="fu">file.path</span>(<span class="st">&#39;.&#39;</span>, <span class="st">&#39;nature_vision.rds&#39;</span>))</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&#39;.&#39;</span>, <span class="st">&#39;data&#39;</span>, <span class="st">&#39;tfc_5.rds&#39;</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fn)) {</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    tfc_5 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fn)</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    tfc_5 <span class="ot">&lt;-</span> openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">search =</span> params<span class="sc">$</span>s_tfc_5</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">FALSE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">saveRDS</span>(tfc_5, <span class="at">file =</span> fn)</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>tfc_5 <span class="ot">&lt;-</span> <span class="fu">works2df</span>(tfc_5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">#|</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tic</span>()</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&#39;.&#39;</span>, <span class="st">&#39;data&#39;</span>, <span class="st">&#39;tfc_5.rds&#39;</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">file.exists</span>(fn)) {</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    tfc_5 <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fn)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    tfc_5 <span class="ot">&lt;-</span> openalexR<span class="sc">::</span><span class="fu">oa_query</span>(</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">search =</span> params<span class="sc">$</span>s_tfc_5</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>        openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">FALSE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>        <span class="fu">saveRDS</span>(tfc_5, <span class="at">file =</span> fn)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>tfc_5 <span class="ot">&lt;-</span> <span class="fu">works2df</span>(tfc_5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
