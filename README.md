@@ -44,6 +44,7 @@ Once finalised, the final repo will be published on Zenodo
 
 ## Project Description
 
+See [here](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69EibD_x05GE) for further info.
 
 
 ## Status
@@ -51,4 +52,4 @@ Once finalised, the final repo will be published on Zenodo
 
 
 ## Reports
-- [Example Report](Report.html)
+- [Status Report](Status.html)
