@@ -7,13 +7,6 @@ format:
         embed-resources: true
         code-fold: true
         code-summary: 'Show the code'
-    docx:
-        toc: true
-        number-sections: true
-        highlight-style: github
-    pdf:
-        toc: true
-        number-sections: true
 params:
     s_tfc: "('transformative change' OR 'deliberate transformation*' OR 'transformative turn*' OR 'transition*' OR 'social-ecological change*' OR 'deep change' OR 'fundamental alteration' OR 'profound change' OR 'profound transformation' OR 'radical transformation' OR 'transformational change' OR 'complete change' OR 'complete transformation' OR 'drastic change' OR 'in-depth transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'revolutionary change' OR 'significant modification' OR 'total transformation' OR 'transition' OR 'pathway' OR 'power' OR 'agency' OR 'scal*' OR 'lever*' OR 'context' OR 'process' OR 'regime' OR 'shift' OR 'views' OR 'value*' OR 'structure*' OR 'institution*' OR 'deliberate' OR 'structural' OR 'fundamental' OR 'system*' OR 'deep' OR 'radical' OR 'profound' OR 'drastic' OR 'widespread' OR 'politic*' OR 'economic*' OR 'structur*' OR 'complete' OR 'progressive' OR 'revolutionary' OR 'substanti*' OR 'significan*') AND ('transformati*' OR 'alteration' OR  'change' OR 'turn' OR 'action' OR 'transition' OR 'shift')"
     s_tfc_5: "('transformative change' OR 'deliberate transformation*' OR 'transformative turn*' OR 'transition*' OR 'social-ecological change*' OR 'deep change' OR 'fundamental alteration' OR 'profound change' OR 'profound transformation' OR 'radical transformation' OR 'transformational change' OR 'complete change' OR 'complete transformation' OR 'drastic change' OR 'in-depth transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'revolutionary change' OR 'significant modification' OR 'total transformation' OR 'transformational shift' OR 'radical shift')"

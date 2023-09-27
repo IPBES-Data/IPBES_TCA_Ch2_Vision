@@ -33,8 +33,10 @@ Once finalised, the final repo will be published on Zenodo
   - <laurence.perianin@umontpellier.fr>
   - ...
 
-- **Github Repo**: [IPBES_xxx_Chy_project_template](https://github.com/IPBES-Data/IPBES_TFC_Ch2_Vision)
-- **Googl Drive Folder**: [Google Drive Folder](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69EibD_x05GE/edit)
+- **Github Repo**: [IPBES_TFC_Ch2_Visione](https://github.com/IPBES-Data/IPBES_TFC_Ch2_Vision)
+- **Googl Drive Folder**: [Google Drive Folder](https://drive.google.com/drive/folders/1IiALbIOAjYeL_IrlkZd-E7U7hr72iggx)
+
+- **`Further Info**: [Document on Google Drive]([Google Drive Folder](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69EibD_x05GE)
 
 ## Folders
 
