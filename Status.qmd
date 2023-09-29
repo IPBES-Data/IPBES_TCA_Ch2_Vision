@@ -140,6 +140,71 @@ no_hits |>
     )
 ```
 
+## 20 key papers
+20 key papers were selected by Sebastian Villasante. These were manually checked if they are in the R2 corpus.
+
+The DOIS are:
+
+```{r}
+#| label: get_keypaper
+#| 
+
+key_papers <- read.csv("20 papers by Sebastian.csv")[, c("DOI", "Title")] |>
+    select(DOI) |>
+    filter(DOI != "") |>
+    unlist(use.names = FALSE)
+
+fn <- file.path(".", "data", "hits_key_papers.rds")
+if (file.exists(fn)) {
+    hits_keypapers <- readRDS(fn)
+} else {
+    key_papers <- tolower(key_papers)
+
+    hits_keypapers <- cbind(
+        In_OA      = get_count(search_term = "", dois = key_papers),
+        R1_tf      = get_count(search_term = params$s_tfc, dois = key_papers),
+        R1_tf_Ch5  = get_count(search_term = params$s_tfc_5, dois = key_papers),
+        R1_nat     = get_count(search_term = params$s_nat, dois = key_papers),
+        R1_nat_Ch5 = get_count(search_term = params$s_nat_5, dois = key_papers),
+        R1_nat_VA  = get_count(search_term = params$s_nat_va_new, dois = key_papers),
+        R1_vis     = get_count(search_term = params$s_vis, dois = key_papers)
+    ) |>
+        as.data.frame()
+
+
+    hits_keypapers <- cbind(
+        hits_keypapers,
+        Total = rowSums(hits_keypapers)
+    ) |>
+        mutate(Total = ifelse(In_OA >= 1, Total - 1, Total))
+
+
+    hits_keypapers <- rbind(
+        hits_keypapers,
+        colSums(hits_keypapers)
+    )
+
+    rownames(hits_keypapers)[[nrow(hits_keypapers)]] <- "Total"
+
+    saveRDS(hits_keypapers, file = fn)
+}
+
+
+rownames(hits_keypapers) <- paste0("<a href='https://doi.org/", rownames(hits_keypapers), "' target='_blank'>", rownames(hits_keypapers), "</a>")
+
+
+hits_keypapers |> 
+    arrange(Total) |>
+    apply(c(1, 2), function(x) {
+        ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
+    }
+) |>
+knitr::kable(
+    caption = '20 papers by Sebastian Villasante (two without DOI - not included here!)'
+)
+```
+
+
 
 ## Differences Transformative Change terms
 
@@ -286,71 +351,6 @@ data.frame(
   knitr::kable(
     caption = "Search terms for Case Study definitions"
   )
-```
-
-
-# 20 key papers
-20 key papers were selected by Sebastian Villasante. These were manually checked if they are in the R2 corpus.
-
-The DOIS are:
-
-```{r}
-#| label: get_keypaper
-#| 
-
-key_papers <- read.csv("20 papers by Sebastian.csv")[, c("DOI", "Title")] |>
-    select(DOI) |>
-    filter(DOI != "") |>
-    unlist(use.names = FALSE)
-
-fn <- file.path(".", "data", "hits_key_papers.rds")
-if (file.exists(fn)) {
-    hits_keypapers <- readRDS(fn)
-} else {
-    key_papers <- tolower(key_papers)
-
-    hits_keypapers <- cbind(
-        In_OA      = get_count(search_term = "", dois = key_papers),
-        R1_tf      = get_count(search_term = params$s_tfc, dois = key_papers),
-        R1_tf_Ch5  = get_count(search_term = params$s_tfc_5, dois = key_papers),
-        R1_nat     = get_count(search_term = params$s_nat, dois = key_papers),
-        R1_nat_Ch5 = get_count(search_term = params$s_nat_5, dois = key_papers),
-        R1_nat_VA  = get_count(search_term = params$s_nat_va_new, dois = key_papers),
-        R1_vis     = get_count(search_term = params$s_vis, dois = key_papers)
-    ) |>
-        as.data.frame()
-
-
-    hits_keypapers <- cbind(
-        hits_keypapers,
-        Total = rowSums(hits_keypapers)
-    ) |>
-        mutate(Total = ifelse(In_OA >= 1, Total - 1, Total))
-
-
-    hits_keypapers <- rbind(
-        hits_keypapers,
-        colSums(hits_keypapers)
-    )
-
-    rownames(hits_keypapers)[[nrow(hits_keypapers)]] <- "Total"
-
-    saveRDS(hits_keypapers, file = fn)
-}
-
-
-rownames(hits_keypapers) <- paste0("<a href='https://doi.org/", rownames(hits_keypapers), "' target='_blank'>", rownames(hits_keypapers), "</a>")
-
-
-hits_keypapers |> 
-    arrange(Total) |>
-    apply(c(1, 2), function(x) {
-        ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
-    }
-) |>
-knitr::kable(
-    caption = '20 papers by Sebastian Villasante (two without DOI - not included here!)'
-)
 ```
 
 
