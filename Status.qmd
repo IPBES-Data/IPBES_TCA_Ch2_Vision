@@ -13,9 +13,9 @@ params:
     s_tfc_new: "( 'complete change' OR 'complete transformation' OR 'deep change' OR 'deliberate transformation*' OR 'drastic change' OR 'fundamental alteration' OR 'in-depth transformation' OR 'profound change' OR 'profound transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'radical shift' OR 'radical transformation' OR 'revolutionary change' OR 'significant modification' OR 'social-ecological change*' OR 'total transformation' OR 'transform* change' OR 'transform* shift' OR 'transform* turn*' OR 'transition*' )"
     s_nat: "('sustainab*' OR 'environ*' OR 'resilien*' OR 'conserv*' OR 'biodivers*' OR 'ecosystem*' OR 'nature*' OR 'planet*' OR 'Earth' OR 'biosphere')"
     s_nat_5: "('sustainab*' OR 'environ*' OR 'resilien*' OR 'conserv*' OR 'biodivers*' OR 'ecosystem*' OR 'nature*')"
-    s_nat_va: "(nature NOT 'nature of' NOT 'by its nature' OR biodiversity OR marine OR terrestrial OR forest* NOT 'random forest' OR woodland* OR grassland* OR savanna* OR shrubland* OR peatland OR ecosystem* OR lake* OR river* OR sea OR ocean* OR meadow* OR heathland* OR mires OR bog* OR tundra OR biosphere OR desert* OR mountain* OR 'natural resource*' OR estuar* OR fjord* OR fauna OR flora OR soil* OR 'coastal waters' OR 'wetland*' OR “freshwater” OR “marshland” OR “marches” OR “dryland*” OR seascape* OR landscape* OR 'coast*' OR 'arable land*' OR 'agricultural land*' OR 'natural environment*' OR 'environmental resource*' OR 'agroforest*' OR 'agro-forest*' OR 'plantation*' OR “protected areas” OR chaparral)"
-    s_nat_va_new: "(nature NOT 'by its nature' OR biodiversity OR marine OR terrestrial OR forest* NOT 'random forest' OR woodland* OR grassland* OR savanna* OR shrubland* OR peatland OR ecosystem* OR lake* OR river* OR sea OR ocean* OR meadow* OR heathland* OR mires OR bog* OR tundra OR biosphere OR desert* OR mountain* OR 'natural resource*' OR estuar* OR fjord* OR fauna OR flora OR soil* OR 'coastal waters' OR 'wetland*' OR “freshwater” OR “marshland” OR “marches” OR “dryland*” OR seascape* OR landscape* OR 'coast*' OR 'arable land*' OR 'agricultural land*' OR 'natural environment*' OR 'environmental resource*' OR 'agroforest*' OR 'agro-forest*' OR 'plantation*' OR “protected areas” OR chaparral)"
-    s_vis: "('vision' OR 'future' OR 'visionar*' OR 'scenarios' OR 'imagination' OR 'imager*' OR 'creativity' OR 'desire'  OR 'wish*' OR 'visioning' OR 'process' OR 'participatory process*' OR 'deliberate process*' OR 'polic*' OR 'target' OR  'view*' OR 'value' OR 'cosmovision' OR  'cosmocentric' OR 'dream*' OR 'fiction' OR 'hope' OR 'mission' OR 'objective' OR 'story' OR 'worldview*' OR 'aspiration*' OR 'action' OR 'plan*' OR 'strateg*' OR 'intention' OR 'model*' OR 'solution*' OR  'innovation*' OR 'perspective' OR 'platform' OR 'collective action' OR 'cooperation' OR 'consultation' OR 'coalition*' OR 'response' OR 'movement' OR 'effort' OR 'initiative' OR 'activity' OR 'reaction' OR 'performance' OR 'operation' OR 'effect*' OR 'task' OR 'project' OR 'influence' o 'moment' OR 'discourse' OR 'motivation' OR 'iteration' OR 'roadmap' OR 'agenda' OR 'project' OR 'programm' OR 'government' OR 'technique'  OR 'inspiration' OR 'culture' OR 'universe*' OR 'reality' OR 'fantasy' OR 'perception' OR 'visualization' OR 'approach' OR 'image' OR 'arquetype' OR 'existence' OR 'cosmolog*' OR 'co-production' OR 'knowledge' OR 'dialogue' OR 'transmission' OR 'conceptual*' OR 'ceremon*' OR 'relationships' OR  'respect' OR 'reciprocity' OR  'responsibilities' OR 'solidarity' OR 'harmony' OR 'self-determination' OR 'communit*' OR 'spiritual*' OR 'languague' OR 'territory' OR 'opportunit*' OR 'sight' OR 'foresight' OR 'idea' OR 'appearance')"
+    s_nat_va: "(nature NOT 'nature of' NOT 'by its nature' OR biodiversity OR marine OR terrestrial OR forest* NOT 'random forest' OR woodland* OR grassland* OR savanna* OR shrubland* OR peatland OR ecosystem* OR lake* OR river* OR sea OR ocean* OR meadow* OR heathland* OR mires OR bog* OR tundra OR biosphere OR desert* OR mountain* OR 'natural resource*' OR estuar* OR fjord* OR fauna OR flora OR soil* OR 'coastal waters' OR 'wetland*' OR 'freshwater' OR 'marshland' OR 'marches' OR 'dryland*' OR seascape* OR landscape* OR 'coast*' OR 'arable land*' OR 'agricultural land*' OR 'natural environment*' OR 'environmental resource*' OR 'agroforest*' OR 'agro-forest*' OR 'plantation*' OR 'protected areas' OR chaparral)"
+    s_nat_va_new: "(nature NOT 'by its nature' OR biodiversity OR marine OR terrestrial OR forest* NOT 'random forest' OR woodland* OR grassland* OR savanna* OR shrubland* OR peatland OR ecosystem* OR lake* OR river* OR sea OR ocean* OR meadow* OR heathland* OR mires OR bog* OR tundra OR biosphere OR desert* OR mountain* OR 'natural resource*' OR estuary OR fjord* OR fauna OR flora OR soil* OR 'coastal waters' OR 'wetland*' OR 'freshwater' OR 'marshland' OR 'marches' OR 'dryland*' OR seascape* OR landscape* OR 'coast*' OR 'arable land*' OR 'agricultural land*' OR 'natural environment*' OR 'environmental resource*' OR 'agroforest*' OR 'agro-forest*' OR 'plantation*' OR 'protected areas' OR chaparral OR 'socio-ecological')"
+    s_vis: "('vision' OR 'future' OR 'visionar*' OR 'scenarios' OR 'imagination' OR 'imager*' OR 'creativity' OR 'desire'  OR 'wish*' OR 'visioning' OR 'process' OR 'participatory process*' OR 'deliberate process*' OR 'polic*' OR 'target' OR  'view*' OR 'value' OR 'cosmovision' OR  'cosmocentric' OR 'dream*' OR 'fiction' OR 'hope' OR 'mission' OR 'objective' OR 'story' OR 'worldview*' OR 'aspiration*' OR 'action' OR 'plan*' OR 'strateg*' OR 'intention' OR 'model*' OR 'solution*' OR  'innovation*' OR 'perspective' OR 'platform' OR 'collective action' OR 'cooperation' OR 'consultation' OR 'coalition*' OR 'response' OR 'movement' OR 'effort' OR 'initiative' OR 'activity' OR 'reaction' OR 'performance' OR 'operation' OR 'effect*' OR 'task' OR 'project' OR 'influence' OR 'moment' OR 'discourse' OR 'motivation' OR 'iteration' OR 'roadmap' OR 'agenda' OR 'project' OR 'programm' OR 'government' OR 'technique'  OR 'inspiration' OR 'culture' OR 'universe*' OR 'reality' OR 'fantasy' OR 'perception' OR 'visualization' OR 'approach' OR 'image' OR 'arquetype' OR 'existence' OR 'cosmolog*' OR 'co-production' OR 'knowledge' OR 'dialogue' OR 'transmission' OR 'conceptual*' OR 'ceremon*' OR 'relationships' OR  'respect' OR 'reciprocity' OR  'responsibilities' OR 'solidarity' OR 'harmony' OR 'self-determination' OR 'communit*' OR 'spiritual*' OR 'languague' OR 'territory' OR 'opportunit*' OR 'sight' OR 'foresight' OR 'idea' OR 'appearance')"
     s_case: "('case stud*' OR 'case' OR 'study area*' OR 'example*' OR 'evaluation' OR 'concrete' OR 'empirical', OR 'practical' OR 'initiative*')"
 
 ---
@@ -98,7 +98,7 @@ if (file.exists(fn)) {
         ) |> oa_request(count_only = TRUE) |> unlist(),
         openalexR::oa_query(
             search = paste0(
-                "(", tfc_new, ")", " AND ",
+                "(", params$s_tfc_new, ")", " AND ",
                 # '(', params$s_nat_5, ')', ' AND ',
                 "(", params$s_vis, ")"
             )
@@ -138,6 +138,64 @@ no_hits |>
     knitr::kable(
         caption = "Number of hits",
     )
+```
+
+## Differences Nature terms
+
+```{r}
+nat <- list(
+  nat = params$s_nat |>
+    gsub(pattern = "\\)|\\(", replacement = "") |>
+    strsplit(split = " OR ") |>
+    unlist() |>
+    sort(),
+  nat_5 = params$s_nat_5 |>
+    gsub(pattern = "\\)|\\(", replacement = "") |>
+    strsplit(split = " OR ") |>
+    unlist() |>
+    sort(),
+  nat_va = params$s_nat_va |>
+    gsub(pattern = "\\)|\\(", replacement = "") |>
+    strsplit(split = " OR ") |>
+    unlist() |>
+    sort(),
+  nat_va_new = params$s_nat_va_new |>
+    gsub(pattern = "\\)|\\(", replacement = "") |>
+    strsplit(split = " OR ") |>
+    unlist() |>
+    sort()
+)
+
+nat$all <- unique(c(nat$nat, nat$nat_5, nat$nat_va, nat$nat_va_new)) |>
+    sort()
+
+present <- data.frame(
+    nat = (nat$all %in% nat$nat) |> as.numeric(),
+    nat = (nat$all %in% nat$nat_5) |> as.numeric(),
+    nat = (nat$all %in% nat$nat_va) |> as.numeric(),
+    nat = (nat$all %in% nat$nat_va_new) |> as.numeric()
+)
+rownames(present) <- nat$all
+
+present <- cbind(
+  present,
+  Total = rowSums(present)
+)
+
+present <- rbind(
+  present,
+  colSums(present)
+)
+
+rownames(present)[[nrow(present)]] <- "Total"
+
+present |>
+  apply(c(1, 2), function(x) {
+    ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
+  }) |>
+  knitr::kable(
+    caption = "Search terms as in the different Nature definitions"
+  )
 ```
 
 # 20 key papers
@@ -210,6 +268,8 @@ knitr::kable(
 ## [About Transformative change] Transformative change synonyms
 This should be aligned with TfC Ch 5 search
 
+### Chapter 2
+
 ```{r}
 #| label: get_tfc
 #| 
@@ -279,7 +339,7 @@ if (file.exists(fn)) {
 knitr::kable(dat)
 ``` 
 
-This is the one from TfC Ch 5:
+### Chapter 5
 
 ```{r}
 #| label: get_tfc_5
@@ -316,7 +376,7 @@ knitr::kable(dat)
 ```
 
 
-
+### New
 ```{r}
 #| label: get_tfc_new
 #| 
@@ -357,12 +417,12 @@ knitr::kable(dat)
 #| label: get_tfc_nat
 #| 
 
-fn <- file.path(".", "data", "tfc_nat.rds")
+fn <- file.path(".", "data", "tfc_nat_va_new.rds")
 if (file.exists(fn)) {
     dat <- readRDS(fn)
 } else {
-    dat  <- params$s_nat |>
-    gsub(pattern = "'|\\)|\\(", replacement = "") |>
+    dat  <- params$s_nat_va_new |>
+    gsub(pattern = "\\)|\\(", replacement = "") |>
     strsplit(split = " OR ") |>
     unlist() |>
     sort() |>
@@ -397,7 +457,7 @@ fn <- file.path(".", "data", "tfc_vis.rds")
 if (file.exists(fn)) {
     dat <- readRDS(fn)
 } else {
-    dat  <- params$s_vis |>
+    dat <- params$s_vis |>
     gsub(pattern = "'|\\)|\\(", replacement = "") |>
     strsplit(split = " OR ") |>
     unlist() |>
@@ -525,7 +585,7 @@ s_oa_5  <- paste0(params$s_tfc_5, ' AND ', params$s_nat_5, ' AND ', params$s_vis
 
 ## R2
 
-AND (“case stud*” OR “case” OR “study area*” OR “example*” OR “evaluation” OR “concrete” OR “empirical”, OR “practical” OR “initiative*”)
+AND ('case stud*' OR 'case' OR 'study area*' OR 'example*' OR 'evaluation' OR 'concrete' OR 'empirical', OR 'practical' OR 'initiative*')
 
 [R2 WoS](https://www.webofscience.com/wos/alldb/summary/f6d3094a-0cc2-4662-9b05-0a671c71c86a-a1be094a/relevance/1)
 
