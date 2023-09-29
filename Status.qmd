@@ -46,7 +46,7 @@ The following terminology is used:
 #| 
 
 if (!exists("params")){
-    params <- rmarkdown::yaml_front_matter('~/Documents_Local/git/IPBES_data_tsu/Transformative Change/RMK - TFC Ch 2/Report.qmd')$params
+    params <- rmarkdown::yaml_front_matter('~/Documents_Local/git/IPBES_data_tsu/Assessments/Transformative Change/IPBES_TFC_Ch2_Vision/Status.qmd')$params
 }
 
 library(openalexR)
@@ -54,6 +54,14 @@ library(dplyr)
 
 library(knitr)
 library(tictoc)
+
+if (!require("IPBES.R")){
+    install.packages("IPBES.R", repos = c("https://ipbes-data.r-universe.dev", "https://cloud.r-project.org"))
+    if (!require("IPBES.R")){
+        stop("Package `IPBES.R` is not available and could not be installed!")
+    }
+
+}
 ```
 
 # Search Term Definition
@@ -150,6 +158,8 @@ fn <- file.path(".", "data", "hits_key_papers.rds")
 if (file.exists(fn)) {
     hits_keypapers <- readRDS(fn)
 } else {
+    key_papers <- tolower(key_papers)
+
     hits_keypapers <- cbind(
         R1_transform     = get_count(search_term = params$s_tfc, dois = key_papers),
         R1_transform_Ch5 = get_count(search_term = params$s_tfc_5, dois = key_papers),
@@ -164,6 +174,12 @@ if (file.exists(fn)) {
         hits_keypapers,
         colSums(hits_keypapers)
     )
+
+    hits_keypapers <- cbind(
+        hits_keypapers,
+        Total = rowSums(hits_keypapers)
+    )
+
     rownames(hits_keypapers)[[nrow(hits_keypapers)]] <- "Total"
 
     saveRDS(hits_keypapers, file = fn)
@@ -173,9 +189,10 @@ if (file.exists(fn)) {
 rownames(hits_keypapers) <- paste0("<a href='https://doi.org/", rownames(hits_keypapers), "' target='_blank'>", rownames(hits_keypapers), "</a>")
 
 
-hits_keypapers |>
+hits_keypapers |> 
+    arrange(Total) |>
     apply(c(1, 2), function(x) {
-        ifelse(x == 0, "<font color='green'>0</font>", paste0("<font color='red'>", x, "</font>"))
+        ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
     }
 ) |>
 knitr::kable(
