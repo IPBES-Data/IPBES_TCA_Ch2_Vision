@@ -140,6 +140,66 @@ no_hits |>
     )
 ```
 
+
+## Differences Transformative Change terms
+
+```{r}
+tfc <- list(
+  tfc = params$s_tfc |>
+    gsub(pattern = "\\)|\\(", replacement = "") |>
+    strsplit(split = " AND ") |>
+    lapply(
+        strsplit,
+        split = " OR "
+    ),
+  tfc_5 = params$s_tfc_5 |>
+    gsub(pattern = "\\)|\\(", replacement = "") |>
+    strsplit(split = " OR ") |>
+    unlist() |>
+    sort(),
+  tfc_new = params$s_tfc_new |>
+    gsub(pattern = "\\)|\\(", replacement = "") |>
+    strsplit(split = " OR ") |>
+    unlist() |>
+    sort()
+)
+
+tfc$tfc <- c(
+    tfc$tfc[[1]][[1]],
+    paste0("Z_AND ", tfc$tfc[[1]][[2]])
+)
+
+tfc$all <- unique(c(tfc$tfc, tfc$tfc_5, tfc$tfc_new)) |>
+    sort()
+
+present <- data.frame(
+    TfC = (tfc$all %in% tfc$tfc) |> as.numeric(),
+    TfC_Ch_5 = (tfc$all %in% tfc$tfc_5) |> as.numeric(),
+    TfC_new = (tfc$all %in% tfc$tfc_new) |> as.numeric()
+)
+rownames(present) <- tfc$all
+
+present <- cbind(
+  present,
+  Total = rowSums(present)
+)
+
+present <- rbind(
+  present,
+  colSums(present)
+)
+
+rownames(present)[[nrow(present)]] <- "Total"
+
+present |>
+  apply(c(1, 2), function(x) {
+    ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
+  }) |>
+  knitr::kable(
+    caption = "Search terms as in the different Transformativ Change definitions"
+  )
+```
+
 ## Differences Nature terms
 
 ```{r}
@@ -170,10 +230,10 @@ nat$all <- unique(c(nat$nat, nat$nat_5, nat$nat_va, nat$nat_va_new)) |>
     sort()
 
 present <- data.frame(
-    nat = (nat$all %in% nat$nat) |> as.numeric(),
-    nat = (nat$all %in% nat$nat_5) |> as.numeric(),
-    nat = (nat$all %in% nat$nat_va) |> as.numeric(),
-    nat = (nat$all %in% nat$nat_va_new) |> as.numeric()
+    Nature        = (nat$all %in% nat$nat) |> as.numeric(),
+    Nature_Ch_5   = (nat$all %in% nat$nat_5) |> as.numeric(),
+    Nature_VA     = (nat$all %in% nat$nat_va) |> as.numeric(),
+    Nature_VA_new = (nat$all %in% nat$nat_va_new) |> as.numeric()
 )
 rownames(present) <- nat$all
 
