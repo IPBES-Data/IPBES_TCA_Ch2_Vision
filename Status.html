@@ -3142,7 +3142,7 @@ vertical-align: -.125em;
 <span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="fu">toc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>0.001 sec elapsed</code></pre>
+<pre><code>0.002 sec elapsed</code></pre>
 </div>
 <details>
 <summary>Code</summary>
@@ -3247,65 +3247,69 @@ vertical-align: -.125em;
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    key_papers <span class="ot">&lt;-</span> <span class="fu">tolower</span>(key_papers)</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    hits_keypapers <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_transform     =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_tfc, <span class="at">dois =</span> key_papers),</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_transform_Ch5 =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_tfc_5, <span class="at">dois =</span> key_papers),</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_nature        =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_nat, <span class="at">dois =</span> key_papers),</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_nature_Ch5    =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_nat_5, <span class="at">dois =</span> key_papers),</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_nature_VA     =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_nat_va_new, <span class="at">dois =</span> key_papers),</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_vis           =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_vis, <span class="at">dois =</span> key_papers)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>()</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    hits_keypapers <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        hits_keypapers,</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">colSums</span>(hits_keypapers)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    hits_keypapers <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        hits_keypapers,</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">Total =</span> <span class="fu">rowSums</span>(hits_keypapers)</span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames</span>(hits_keypapers)[[<span class="fu">nrow</span>(hits_keypapers)]] <span class="ot">&lt;-</span> <span class="st">&quot;Total&quot;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">In_OA      =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> <span class="st">&quot;&quot;</span>, <span class="at">dois =</span> key_papers),</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_tf      =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_tfc, <span class="at">dois =</span> key_papers),</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_tf_Ch5  =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_tfc_5, <span class="at">dois =</span> key_papers),</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_nat     =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_nat, <span class="at">dois =</span> key_papers),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_nat_Ch5 =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_nat_5, <span class="at">dois =</span> key_papers),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_nat_VA  =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_nat_va_new, <span class="at">dois =</span> key_papers),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">R1_vis     =</span> <span class="fu">get_count</span>(<span class="at">search_term =</span> params<span class="sc">$</span>s_vis, <span class="at">dois =</span> key_papers)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>()</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    hits_keypapers <span class="ot">&lt;-</span> <span class="fu">cbind</span>(</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        hits_keypapers,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">Total =</span> <span class="fu">rowSums</span>(hits_keypapers)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">Total =</span> <span class="fu">ifelse</span>(In_OA <span class="sc">&gt;=</span> <span class="dv">1</span>, Total <span class="sc">-</span> <span class="dv">1</span>, Total))</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    hits_keypapers <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        hits_keypapers,</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="fu">colSums</span>(hits_keypapers)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(hits_keypapers, <span class="at">file =</span> fn)</span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(hits_keypapers) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;&lt;a href=&#39;https://doi.org/&quot;</span>, <span class="fu">rownames</span>(hits_keypapers), <span class="st">&quot;&#39; target=&#39;_blank&#39;&gt;&quot;</span>, <span class="fu">rownames</span>(hits_keypapers), <span class="st">&quot;&lt;/a&gt;&quot;</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames</span>(hits_keypapers)[[<span class="fu">nrow</span>(hits_keypapers)]] <span class="ot">&lt;-</span> <span class="st">&quot;Total&quot;</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(hits_keypapers, <span class="at">file =</span> fn)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>hits_keypapers <span class="sc">|&gt;</span> </span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(Total) <span class="sc">|&gt;</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apply</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="cf">function</span>(x) {</span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;&lt;font color=&#39;red&#39;&gt;0&lt;/font&gt;&quot;</span>, <span class="fu">paste0</span>(<span class="st">&quot;&lt;font color=&#39;green&#39;&gt;&quot;</span>, x, <span class="st">&quot;&lt;/font&gt;&quot;</span>))</span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;20 papers by Sebastian Villasante (two without DOI - not included here!)&#39;</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(hits_keypapers) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;&lt;a href=&#39;https://doi.org/&quot;</span>, <span class="fu">rownames</span>(hits_keypapers), <span class="st">&quot;&#39; target=&#39;_blank&#39;&gt;&quot;</span>, <span class="fu">rownames</span>(hits_keypapers), <span class="st">&quot;&lt;/a&gt;&quot;</span>)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>hits_keypapers <span class="sc">|&gt;</span> </span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(Total) <span class="sc">|&gt;</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">apply</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="cf">function</span>(x) {</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ifelse</span>(x <span class="sc">==</span> <span class="dv">0</span>, <span class="st">&quot;&lt;font color=&#39;red&#39;&gt;0&lt;/font&gt;&quot;</span>, <span class="fu">paste0</span>(<span class="st">&quot;&lt;font color=&#39;green&#39;&gt;&quot;</span>, x, <span class="st">&quot;&lt;/font&gt;&quot;</span>))</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">&#39;20 papers by Sebastian Villasante (two without DOI - not included here!)&#39;</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <caption>20 papers by Sebastian Villasante (two without DOI - not included here!)</caption>
 <colgroup>
-<col style="width: 37%">
-<col style="width: 9%">
-<col style="width: 8%">
-<col style="width: 9%">
-<col style="width: 9%">
+<col style="width: 33%">
 <col style="width: 8%">
 <col style="width: 8%">
-<col style="width: 9%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
 </colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
-<th style="text-align: left;">R1_transform</th>
-<th style="text-align: left;">R1_transform_Ch5</th>
-<th style="text-align: left;">R1_nature</th>
-<th style="text-align: left;">R1_nature_Ch5</th>
-<th style="text-align: left;">R1_nature_VA</th>
+<th style="text-align: left;">In_OA</th>
+<th style="text-align: left;">R1_tf</th>
+<th style="text-align: left;">R1_tf_Ch5</th>
+<th style="text-align: left;">R1_nat</th>
+<th style="text-align: left;">R1_nat_Ch5</th>
+<th style="text-align: left;">R1_nat_VA</th>
 <th style="text-align: left;">R1_vis</th>
 <th style="text-align: left;">Total</th>
 </tr>
@@ -3313,6 +3317,7 @@ vertical-align: -.125em;
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.1126/sciadv.abj8093" target="_blank">10.1126/sciadv.abj8093</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
@@ -3323,6 +3328,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="https://doi.org/10.5751/es-12078-250439" target="_blank">10.5751/es-12078-250439</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
@@ -3333,6 +3339,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.1111/conl.12713" target="_blank">10.1111/conl.12713</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
@@ -3343,6 +3350,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="https://doi.org/10.1016/j.biocon.2023.109933" target="_blank">10.1016/j.biocon.2023.109933</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
@@ -3353,6 +3361,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.1016/j.jclepro.2016.12.048" target="_blank">10.1016/j.jclepro.2016.12.048</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3363,6 +3372,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="https://doi.org/10.1057/dev.2011.86" target="_blank">10.1057/dev.2011.86</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3373,6 +3383,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.1016/j.marpol.2020.104059" target="_blank">10.1016/j.marpol.2020.104059</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3383,6 +3394,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="https://doi.org/10.1038/s41893-018-0021-4" target="_blank">10.1038/s41893-018-0021-4</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3394,6 +3406,7 @@ vertical-align: -.125em;
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.1016/s2542-5196(17)30028-1" target="_blank">10.1016/s2542-5196(17)30028-1</a></td>
 <td style="text-align: left;"><font color="green">1</font></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
@@ -3404,6 +3417,7 @@ vertical-align: -.125em;
 <tr class="even">
 <td style="text-align: left;"><a href="https://doi.org/10.1038/s41893-020-0587-5" target="_blank">10.1038/s41893-020-0587-5</a></td>
 <td style="text-align: left;"><font color="green">1</font></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
@@ -3413,6 +3427,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.1126/sciadv.aaw2869" target="_blank">10.1126/sciadv.aaw2869</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3423,6 +3438,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="https://doi.org/10.3390/su14052976" target="_blank">10.3390/su14052976</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3437,12 +3453,14 @@ vertical-align: -.125em;
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">4</font></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="https://doi.org/10.1016/j.oneear.2023.06.006" target="_blank">10.1016/j.oneear.2023.06.006</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3457,12 +3475,14 @@ vertical-align: -.125em;
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">4</font></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><a href="https://doi.org/10.2305/iucn.ch.2013.parks-19-2.hl.en" target="_blank">10.2305/iucn.ch.2013.parks-19-2.hl.en</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3473,6 +3493,7 @@ vertical-align: -.125em;
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.1007/s13280-021-01679-8" target="_blank">10.1007/s13280-021-01679-8</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3488,11 +3509,13 @@ vertical-align: -.125em;
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">5</font></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.3389/fcosc.2021.761292" target="_blank">10.3389/fcosc.2021.761292</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3508,11 +3531,13 @@ vertical-align: -.125em;
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="red">0</font></td>
 <td style="text-align: left;"><font color="green">5</font></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/10.1038/531435a" target="_blank">10.1038/531435a</a></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
@@ -3529,10 +3554,12 @@ vertical-align: -.125em;
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">1</font></td>
+<td style="text-align: left;"><font color="green">1</font></td>
 <td style="text-align: left;"><font color="green">6</font></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><a href="https://doi.org/Total" target="_blank">Total</a></td>
+<td style="text-align: left;"><font color="green">22</font></td>
 <td style="text-align: left;"><font color="green">12</font></td>
 <td style="text-align: left;"><font color="green">7</font></td>
 <td style="text-align: left;"><font color="green">18</font></td>

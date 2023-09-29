@@ -161,23 +161,27 @@ if (file.exists(fn)) {
     key_papers <- tolower(key_papers)
 
     hits_keypapers <- cbind(
-        R1_transform     = get_count(search_term = params$s_tfc, dois = key_papers),
-        R1_transform_Ch5 = get_count(search_term = params$s_tfc_5, dois = key_papers),
-        R1_nature        = get_count(search_term = params$s_nat, dois = key_papers),
-        R1_nature_Ch5    = get_count(search_term = params$s_nat_5, dois = key_papers),
-        R1_nature_VA     = get_count(search_term = params$s_nat_va_new, dois = key_papers),
-        R1_vis           = get_count(search_term = params$s_vis, dois = key_papers)
+        In_OA      = get_count(search_term = "", dois = key_papers),
+        R1_tf      = get_count(search_term = params$s_tfc, dois = key_papers),
+        R1_tf_Ch5  = get_count(search_term = params$s_tfc_5, dois = key_papers),
+        R1_nat     = get_count(search_term = params$s_nat, dois = key_papers),
+        R1_nat_Ch5 = get_count(search_term = params$s_nat_5, dois = key_papers),
+        R1_nat_VA  = get_count(search_term = params$s_nat_va_new, dois = key_papers),
+        R1_vis     = get_count(search_term = params$s_vis, dois = key_papers)
     ) |>
         as.data.frame()
 
-    hits_keypapers <- rbind(
-        hits_keypapers,
-        colSums(hits_keypapers)
-    )
 
     hits_keypapers <- cbind(
         hits_keypapers,
         Total = rowSums(hits_keypapers)
+    ) |>
+        mutate(Total = ifelse(In_OA >= 1, Total - 1, Total))
+
+
+    hits_keypapers <- rbind(
+        hits_keypapers,
+        colSums(hits_keypapers)
     )
 
     rownames(hits_keypapers)[[nrow(hits_keypapers)]] <- "Total"
