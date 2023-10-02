@@ -9,6 +9,9 @@ format:
         code-summary: 'Show the code'
 params:
     s_tfc: "('transformative change' OR 'deliberate transformation*' OR 'transformative turn*' OR 'transition*' OR 'social-ecological change*' OR 'deep change' OR 'fundamental alteration' OR 'profound change' OR 'profound transformation' OR 'radical transformation' OR 'transformational change' OR 'complete change' OR 'complete transformation' OR 'drastic change' OR 'in-depth transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'revolutionary change' OR 'significant modification' OR 'total transformation' OR 'transition' OR 'pathway' OR 'power' OR 'agency' OR 'scal*' OR 'lever*' OR 'context' OR 'process' OR 'regime' OR 'shift' OR 'views' OR 'value*' OR 'structure*' OR 'institution*' OR 'deliberate' OR 'structural' OR 'fundamental' OR 'system*' OR 'deep' OR 'radical' OR 'profound' OR 'drastic' OR 'widespread' OR 'politic*' OR 'economic*' OR 'structur*' OR 'complete' OR 'progressive' OR 'revolutionary' OR 'substanti*' OR 'significan*') AND ('transformati*' OR 'alteration' OR 'change' OR 'turn' OR 'action' OR 'transition' OR 'shift')"
+
+
+    s_tfc_tsu: "('transformative change' OR 'deliberate transformation*' OR 'transformative turn*' OR 'transition*' OR 'social-ecological change*' OR 'deep change' OR 'fundamental alteration' OR 'profound change' OR 'profound transformation' OR 'radical transformation' OR 'transformational change' OR 'complete change' OR 'complete transformation' OR 'drastic change' OR 'in-depth transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'revolutionary change' OR 'significant modification' OR 'total transformation' OR 'transition' OR 'pathway' OR 'power' OR 'agency' OR 'scal*' OR 'lever*' OR 'context' OR 'process' OR 'regime' OR 'shift' OR 'views' OR 'value*' OR 'structure*' OR 'institution*' OR 'deliberate' OR 'structural' OR 'fundamental' OR 'system*' OR 'deep' OR 'radical' OR 'profound' OR 'drastic' OR 'widespread' OR 'politic*' OR 'economic*' OR 'structur*' OR 'complete' OR 'progressive' OR 'revolutionary' OR 'substanti*' OR 'significan*' OR 'radical shift', 'transform shift' OR 'transform turn)"
     s_tfc_5: "('transformative change' OR 'deliberate transformation*' OR 'transformative turn*' OR 'transition*' OR 'social-ecological change*' OR 'deep change' OR 'fundamental alteration' OR 'profound change' OR 'profound transformation' OR 'radical transformation' OR 'transformational change' OR 'complete change' OR 'complete transformation' OR 'drastic change' OR 'in-depth transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'revolutionary change' OR 'significant modification' OR 'total transformation' OR 'transformational shift' OR 'radical shift')"
     s_tfc_new: "( 'complete change' OR 'complete transformation' OR 'deep change' OR 'deliberate transformation*' OR 'drastic change' OR 'fundamental alteration' OR 'in-depth transformation' OR 'profound change' OR 'profound transformation' OR 'progressive change' OR 'radical alteration' OR 'radical change' OR 'radical shift' OR 'radical transformation' OR 'revolutionary change' OR 'significant modification' OR 'social-ecological change*' OR 'total transformation' OR 'transform* change' OR 'transform* shift' OR 'transform* turn*' OR 'transition*' )"
     s_nat: "('sustainab*' OR 'environ*' OR 'resilien*' OR 'conserv*' OR 'biodivers*' OR 'ecosystem*' OR 'nature*' OR 'planet*' OR 'Earth' OR 'biosphere')"
@@ -682,4 +685,37 @@ AND ('case stud*' OR 'case' OR 'study area*' OR 'example*' OR 'evaluation' OR 'c
 
 296,551 hits, i.e. about 1,100,000 without case studies
 
+# New search strategy
 ```{r}
+#| eval: false
+#| lebel new_search_strategy_test
+
+openalexR::oa_query(search = params$s_tfc_tsu) |>
+  openalexR::oa_request(count_only = TRUE) |>
+  unlist()
+
+x <- (openalexR::oa_query(doi = key_papers) |> openalexR::oa_request(count_only = FALSE) |> oa2df(entity = "works"))
+
+concepts <- sapply(
+    x$concepts,
+    function(x){
+        # x$display_name[x$score > 0.6]
+        x$id[x$score > 0.6]
+    }
+) |>
+  unlist() |>
+  unique() |> 
+  sort()
+
+
+
+f1 <- function(dois = NULL) {
+    openalexR::oa_query(
+        search = params$s_tfc_tsu,
+        filter = list(concepts.id = concepts), 
+        doi = dois
+    ) |>
+  openalexR::oa_request(count_only = TRUE) |>
+  unlist()
+}
+```
