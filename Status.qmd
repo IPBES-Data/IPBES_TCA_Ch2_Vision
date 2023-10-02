@@ -20,7 +20,7 @@ params:
     s_nat_va_new: "(nature NOT 'by its nature' OR biodiversity OR marine OR terrestrial OR forest* NOT 'random forest' OR woodland* OR grassland* OR savanna* OR shrubland* OR peatland OR ecosystem* OR lake* OR river* OR sea OR ocean* OR meadow* OR heathland* OR mires OR bog* OR tundra OR biosphere OR desert* OR mountain* OR 'natural resource*' OR estuary OR fjord* OR fauna OR flora OR soil* OR 'coastal waters' OR 'wetland*' OR 'freshwater' OR 'marshland' OR 'marches' OR 'dryland*' OR seascape* OR landscape* OR 'coast*' OR 'arable land*' OR 'agricultural land*' OR 'natural environment*' OR 'environmental resource*' OR 'agroforest*' OR 'agro-forest*' OR 'plantation*' OR 'protected areas' OR chaparral OR 'socio-ecological')"
     s_vis: "('vision' OR 'future' OR 'visionar*' OR 'scenarios' OR 'imagination' OR 'imager*' OR 'creativity' OR 'desire' OR 'wish*' OR 'visioning' OR 'process' OR 'participatory process*' OR 'deliberate process*' OR 'polic*' OR 'target' OR 'view*' OR 'value' OR 'cosmovision' OR 'cosmocentric' OR 'dream*' OR 'fiction' OR 'hope' OR 'mission' OR 'objective' OR 'story' OR 'worldview*' OR 'aspiration*' OR 'action' OR 'plan*' OR 'strateg*' OR 'intention' OR 'model*' OR 'solution*' OR 'innovation*' OR 'perspective' OR 'platform' OR 'collective action' OR 'cooperation' OR 'consultation' OR 'coalition*' OR 'response' OR 'movement' OR 'effort' OR 'initiative' OR 'activity' OR 'reaction' OR 'performance' OR 'operation' OR 'effect*' OR 'task' OR 'project' OR 'influence' OR 'moment' OR 'discourse' OR 'motivation' OR 'iteration' OR 'roadmap' OR 'agenda' OR 'project' OR 'programm' OR 'government' OR 'technique'  OR 'inspiration' OR 'culture' OR 'universe*' OR 'reality' OR 'fantasy' OR 'perception' OR 'visualization' OR 'approach' OR 'image' OR 'arquetype' OR 'existence' OR 'cosmolog*' OR 'co-production' OR 'knowledge' OR 'dialogue' OR 'transmission' OR 'conceptual*' OR 'ceremon*' OR 'relationships' OR 'respect' OR 'reciprocity' OR 'responsibilities' OR 'solidarity' OR 'harmony' OR 'self-determination' OR 'communit*' OR 'spiritual*' OR 'languague' OR 'territory' OR 'opportunit*' OR 'sight' OR 'foresight' OR 'idea' OR 'appearance')"
     s_case: "('case stud*' OR 'case' OR 'study area*' OR 'example*' OR 'evaluation' OR 'concrete' OR 'empirical', OR 'practical' OR 'initiative*')"
-
+    concept_cuttoff: 0.6
 ---
 
 
@@ -146,52 +146,89 @@ no_hits |>
 ## 20 key papers
 20 key papers were selected by Sebastian Villasante. These were manually checked if they are in the R2 corpus.
 
+```{r}
+#| label: prepare_keypaper
+#| 
+
+key_papers <- read.csv("20 papers by Sebastian.csv")[, c("DOI", "Title")] |>
+  select(DOI) |>
+  filter(DOI != "") |>
+  unlist(use.names = FALSE)
+
+fn <- file.path(".", "data", "hits_key_papers.rds")
+if (!file.exists(fn)) {
+  key_papers <- tolower(key_papers)
+
+  hits_keypapers <- cbind(
+    In_OA      = get_count(search_term = "", dois = key_papers),
+    R1_tf      = get_count(search_term = params$s_tfc, dois = key_papers),
+    R1_tf_Ch5  = get_count(search_term = params$s_tfc_5, dois = key_papers),
+    R1_nat     = get_count(search_term = params$s_nat, dois = key_papers),
+    R1_nat_Ch5 = get_count(search_term = params$s_nat_5, dois = key_papers),
+    R1_nat_VA  = get_count(search_term = params$s_nat_va_new, dois = key_papers),
+    R1_vis     = get_count(search_term = params$s_vis, dois = key_papers)
+  ) |>
+    as.data.frame()
+
+  hits_keypapers <- cbind(
+    hits_keypapers,
+    Total = rowSums(hits_keypapers)
+  ) |>
+    mutate(Total = ifelse(In_OA >= 1, Total - 1, Total))
+
+  hits_keypapers <- rbind(
+    hits_keypapers,
+    colSums(hits_keypapers)
+  )
+
+  rownames(hits_keypapers)[[nrow(hits_keypapers)]] <- "Total"
+
+  saveRDS(hits_keypapers, file = fn)
+
+  unlink(file.path(".", "data", "key_works.rds"))
+  unlink(file.path(".", "data", "key_works_df.rds"))
+}
+key_paper <- readRDS(file = fn)
+
+fn <- file.path(".", "data", "key_works.rds")
+if (!file.exists(fn)) {
+    key_works <- openalexR::oa_query(doi = key_papers) |>
+      openalexR::oa_request(count_only = FALSE) |>
+      saveRDS(file = fn)
+    key_works |> 
+        oa2df(entity = "works") |>
+        saveRDS(file = file.path(".", "data", "key_works_df.rds"))
+}
+key_works <- readRDS(file = fn)
+key_works_df <- readRDS(file.path(".", "data", "key_works_df.rds"))
+
+## Concepts
+
+fn <- file.path(".", "data", "key_works_concepts.rds")
+if (!file.exists(fn)){
+concepts <- sapply(
+  key_works_df$concepts,
+  function(x) {
+    # x$display_name[x$score > 0.6]
+    x$id[x$score > params$concept_cuttoff]
+  }
+) |>
+  unlist() |>
+  unique() |>
+  sort() |>
+  saveRDS(file = fn)
+}
+key_concepts <- readRDS(file = fn)
+```
+
 The DOIS are:
 
 ```{r}
 #| label: get_keypaper
 #| 
 
-key_papers <- read.csv("20 papers by Sebastian.csv")[, c("DOI", "Title")] |>
-    select(DOI) |>
-    filter(DOI != "") |>
-    unlist(use.names = FALSE)
 
-fn <- file.path(".", "data", "hits_key_papers.rds")
-if (file.exists(fn)) {
-    hits_keypapers <- readRDS(fn)
-} else {
-    key_papers <- tolower(key_papers)
-
-    hits_keypapers <- cbind(
-        In_OA      = get_count(search_term = "", dois = key_papers),
-        R1_tf      = get_count(search_term = params$s_tfc, dois = key_papers),
-        R1_tf_Ch5  = get_count(search_term = params$s_tfc_5, dois = key_papers),
-        R1_nat     = get_count(search_term = params$s_nat, dois = key_papers),
-        R1_nat_Ch5 = get_count(search_term = params$s_nat_5, dois = key_papers),
-        R1_nat_VA  = get_count(search_term = params$s_nat_va_new, dois = key_papers),
-        R1_vis     = get_count(search_term = params$s_vis, dois = key_papers)
-    ) |>
-        as.data.frame()
-
-
-    hits_keypapers <- cbind(
-        hits_keypapers,
-        Total = rowSums(hits_keypapers)
-    ) |>
-        mutate(Total = ifelse(In_OA >= 1, Total - 1, Total))
-
-
-    hits_keypapers <- rbind(
-        hits_keypapers,
-        colSums(hits_keypapers)
-    )
-
-    rownames(hits_keypapers)[[nrow(hits_keypapers)]] <- "Total"
-
-    saveRDS(hits_keypapers, file = fn)
-}
-
+hits_keypapers <- readRDS(file.path(".", "data", "hits_key_papers.rds"))
 
 rownames(hits_keypapers) <- paste0("<a href='https://doi.org/", rownames(hits_keypapers), "' target='_blank'>", rownames(hits_keypapers), "</a>")
 
@@ -687,8 +724,8 @@ AND ('case stud*' OR 'case' OR 'study area*' OR 'example*' OR 'evaluation' OR 'c
 
 # New search strategy
 ```{r}
+#| lebel: new_search_strategy_test
 #| eval: false
-#| lebel new_search_strategy_test
 
 openalexR::oa_query(search = params$s_tfc_tsu) |>
   openalexR::oa_request(count_only = TRUE) |>
@@ -700,7 +737,7 @@ concepts <- sapply(
     x$concepts,
     function(x){
         # x$display_name[x$score > 0.6]
-        x$id[x$score > 0.6]
+        x$id[x$score > params$concept_cuttoff]
     }
 ) |>
   unlist() |>
