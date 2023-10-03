@@ -134,6 +134,8 @@ if (file.exists(fn)) {
         mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0)) |>
         relocate(query, .before = count)
     saveRDS(no_hits, file = fn)
+} else {
+    no_hits <- readRDS(fn)
 }
 toc()
 
@@ -143,82 +145,130 @@ no_hits |>
     )
 ```
 
-## 20 key papers
-20 key papers were selected by Sebastian Villasante. These were manually checked if they are in the R2 corpus.
+## Key papers
+Key papers were selected by Sebastian, Victoria and Hannah. 
 
 ```{r}
-#| label: prepare_keypaper
+#| label: get_key_papers
 #| 
 
-key_papers <- read.csv("20 papers by Sebastian.csv")[, c("DOI", "Title")] |>
-  select(DOI) |>
-  filter(DOI != "") |>
-  unlist(use.names = FALSE)
+key_papers <- list(
+    Hannah = read.csv("key paper Hannah.csv")[, c("DOI", "Title")] |>
+        mutate(source = "Hannah"),
+    Sebastian = read.csv("key paper Sebastian.csv")[, c("DOI", "Title")] |>
+        mutate(source = "Sebastian"),
+    Victoria = read.csv("key paper Victoria.csv")[, c("DOI", "Title")] |>
+        mutate(source = "Victoria")
+)    
+```
+
+```{r}
+#| label: hits_key_papers
+#| 
+# TODO TO CHECK
 
 fn <- file.path(".", "data", "hits_key_papers.rds")
 if (!file.exists(fn)) {
-  key_papers <- tolower(key_papers)
+  hits_key_papers <- lapply(
+    key_papers,
+    function(kp) {
+      dois <- key_papers |>
+        select(DOI) |>
+        filter(DOI != "") |>
+        distinct() |>
+        unique() |>
+        tolower()
 
-  hits_keypapers <- cbind(
-    In_OA      = get_count(search_term = "", dois = key_papers),
-    R1_tf      = get_count(search_term = params$s_tfc, dois = key_papers),
-    R1_tf_Ch5  = get_count(search_term = params$s_tfc_5, dois = key_papers),
-    R1_nat     = get_count(search_term = params$s_nat, dois = key_papers),
-    R1_nat_Ch5 = get_count(search_term = params$s_nat_5, dois = key_papers),
-    R1_nat_VA  = get_count(search_term = params$s_nat_va_new, dois = key_papers),
-    R1_vis     = get_count(search_term = params$s_vis, dois = key_papers)
-  ) |>
-    as.data.frame()
+      hits_keypapers <- cbind(
+        In_OA = get_count(search_term = "", dois = dois),
+        R1_tf = get_count(search_term = params$s_tfc, dois = dois),
+        R1_tf_Ch5 = get_count(search_term = params$s_tfc_5, dois = dois),
+        R1_nat = get_count(search_term = params$s_nat, dois = dois),
+        R1_nat_Ch5 = get_count(search_term = params$s_nat_5, dois = dois),
+        R1_nat_VA = get_count(search_term = params$s_nat_va_new, dois = dois),
+        R1_vis = get_count(search_term = params$s_vis, dois = dois)
+      ) |>
+        as.data.frame()
 
-  hits_keypapers <- cbind(
-    hits_keypapers,
-    Total = rowSums(hits_keypapers)
-  ) |>
-    mutate(Total = ifelse(In_OA >= 1, Total - 1, Total))
+      hits_keypapers <- cbind(
+        hits_keypapers,
+        Total = rowSums(hits_keypapers)
+      ) |>
+        mutate(Total = ifelse(In_OA >= 1, Total - 1, Total))
 
-  hits_keypapers <- rbind(
-    hits_keypapers,
-    colSums(hits_keypapers)
+      hits_keypapers <- rbind(
+        hits_keypapers,
+        colSums(hits_keypapers)
+      )
+
+      rownames(hits_keypapers)[[nrow(hits_keypapers)]] <- "Total"
+    }
   )
 
-  rownames(hits_keypapers)[[nrow(hits_keypapers)]] <- "Total"
-
-  saveRDS(hits_keypapers, file = fn)
+  saveRDS(hits_key_papers, file = fn)
 
   unlink(file.path(".", "data", "key_works.rds"))
   unlink(file.path(".", "data", "key_works_df.rds"))
+} else {
+  key_paper <- readRDS(file = fn)
 }
-key_paper <- readRDS(file = fn)
+```
+
+```{r}
+#| label: key_works
+#| 
+# TODO TO CHECK
 
 fn <- file.path(".", "data", "key_works.rds")
 if (!file.exists(fn)) {
-    key_works <- openalexR::oa_query(doi = key_papers) |>
-      openalexR::oa_request(count_only = FALSE) |>
-      saveRDS(file = fn)
-    key_works |> 
-        oa2df(entity = "works") |>
-        saveRDS(file = file.path(".", "data", "key_works_df.rds"))
-}
-key_works <- readRDS(file = fn)
-key_works_df <- readRDS(file.path(".", "data", "key_works_df.rds"))
+  lapply(
+    key_papers,
+    function(kp) {
+      key_works <- openalexR::oa_query(doi = kp$DOI) |>
+        openalexR::oa_request(count_only = FALSE)
+    }
+  )
+  saveRDS(key_works, file = fn)
 
-## Concepts
+  key_works_df <- lapply(
+    key_works,
+    oa2df,
+    entity = "works"
+  )
+  saveRDS(key_works_df, file.path(".", "data", "key_works_df.rds"))
+} else {
+  key_works <- readRDS(file = fn)
+  key_works_df <- readRDS(file.path(".", "data", "key_works_df.rds"))
+}
+```
+
+```{r}
+#| label: key_works_concepts
+#| 
+# TODO TO CHECK
 
 fn <- file.path(".", "data", "key_works_concepts.rds")
-if (!file.exists(fn)){
-concepts <- sapply(
-  key_works_df$concepts,
-  function(x) {
-    # x$display_name[x$score > 0.6]
-    x$id[x$score > params$concept_cuttoff]
-  }
-) |>
-  unlist() |>
-  unique() |>
-  sort() |>
-  saveRDS(file = fn)
+if (!file.exists(fn)) {
+  key_concepts <- lapply(
+    key_works_df,
+    function(kwdf) {
+      sapply(
+        key_works_df$concepts,
+        function(x) {
+          # x$display_name[x$score > 0.6]
+          x$id[x$score > params$concept_cuttoff]
+        }
+      ) |>
+        unlist() |>
+        unique() |>
+        sort()
+    }
+  )
+  saveRDS(key_concepts, file = fn)
+} else {
+  key_concepts <- readRDS(file = fn)
 }
-key_concepts <- readRDS(file = fn)
+
 ```
 
 The DOIS are:
@@ -226,7 +276,7 @@ The DOIS are:
 ```{r}
 #| label: get_keypaper
 #| 
-
+# TODO TO CHECK from here
 
 hits_keypapers <- readRDS(file.path(".", "data", "hits_key_papers.rds"))
 
@@ -240,7 +290,7 @@ hits_keypapers |>
     }
 ) |>
 knitr::kable(
-    caption = '20 papers by Sebastian Villasante (two without DOI - not included here!)'
+    caption = 'Key Paper Sebastian Villasante (two without DOI - not included here!)'
 )
 ```
 
