@@ -63,8 +63,7 @@ fn <- file.path(".", "data", "tmp_search.rds")
 if (file.exists(fn)) {
   search <- readRDS(fn)
 } else {
-  source(file.path("R", "oa_query_new.R"))
-  search <- oa_query_new(
+  search <- oa_query(
     search = paste0(
       "(", params$s_tfc_5, ")", " AND ",
       "(", params$s_nat_5, ")"
