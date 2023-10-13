@@ -15,58 +15,609 @@ params:
     
     # s_tfc_rev: "('transformative change'  OR  'deliberate transformation*'  OR  'transformative turn*'  OR  'transition*'  OR  'social-ecological change*'  OR  'deep change'  OR  'fundamental alteration'  OR  'profound change'  OR  'profound transformation'  OR  'radical transformation'  OR  'transformational change'  OR  'complete change'  OR  'complete transformation'  OR  'drastic change'  OR  'in-depth transformation'  OR  'progressive change'  OR  'radical alteration'  OR  'radical change'  OR  'revolutionary change'  OR  'significant modification'  OR  'total transformation'  OR  'transition'  OR  'pathway'  OR  'power'  OR  'agency'  OR  'scale'  OR  'leverage'  OR  'context'  OR  'process'  OR  'regime'  OR  'shift'  OR  'views'  OR  'value*'  OR  'structure*'  OR  'institution*' OR  'deliberate'  OR  'structural'  OR  'fundamental'  OR  'system*'  OR  'deep'  OR  'radical'  OR  'profound'  OR  'drastic'  OR  'widespread'  OR  'political'  OR  'economical'  OR  'structur*'  OR  'complete'  OR  'progressive'  OR  'revolutionary'  OR  'substantial'  OR  'significant') AND ('transformation'  OR  'alteration'  OR  'change'  OR  'turn'  OR  'action' OR  'transition'  OR  'shift' )"
  
-    s_transformative_change: "(transformation OR transition* OR ((shift OR change) AND (fundamental OR deep OR radical))) AND (socio OR social OR politics OR political OR governance OR economical OR cultural OR system* OR technological OR inner OR personal)   OR   ( ( 'transformative change'  OR  'deliberate transformation*'  OR  'transformative turn*'  OR  'transition*'  OR  'social-ecological change*'  OR  'deep change'  OR  'fundamental alteration'  OR  'profound change'  OR  'profound transformation'  OR  'radical transformation'  OR  'transformational change'  OR  'complete change'  OR  'complete transformation'  OR  'drastic change'  OR  'in-depth transformation'  OR  'progressive change'  OR  'radical alteration'  OR  'radical change'  OR  'revolutionary change'  OR  'significant modification'  OR  'total transformation'  OR  'transition'  OR  'pathway'  OR  'power'  OR  'agency'  OR  'scale'  OR  'leverage'  OR  'context'  OR  'process'  OR  'regime'  OR  'shift'  OR  'views'  OR  'value*'  OR  'structure*'  OR  'institution*' OR  'deliberate'  OR  'structural'  OR  'fundamental'  OR  'system*'  OR  'deep'  OR  'radical'  OR  'profound'  OR  'drastic'  OR  'widespread'  OR  'political'  OR  'economical'  OR  'structur*'  OR  'complete'  OR  'progressive'  OR  'revolutionary'  OR  'substantial'  OR  'significant') AND ('transformation'  OR  'alteration'  OR  'change'  OR  'turn'  OR  'action' OR  'transition'  OR  'shift' ) ) "
+    s_1_oa: ""
 
-    s_nature_environment: "biodiversity OR marine OR terrestrial OR forest* OR woodland* OR grassland* OR savanna* OR shrubland* OR peatland OR ecosystem* OR lake* OR river* OR sea OR ocean* OR meadow* OR heathland* OR mires OR bog* OR tundra OR biosphere OR desert* OR mountain* OR 'natural resource*' OR estuary OR fjord* OR fauna OR flora OR soil* OR 'coastal waters' OR wetland* OR freshwater OR marshland OR marches OR dryland* OR seascape* OR landscape* OR coast* OR 'arable land*' OR 'agricultural land*' OR 'natural environment*' OR 'environmental resource*' OR agroforest* OR 'agro-forest*' OR plantation* OR 'protected areas' OR chaparral OR sustainable OR environment OR resilience OR conservation OR ecosystem* OR nature* OR planet* OR Earth OR biosphere OR ecological OR 'socio-ecological' OR restoration OR wildlife OR landscape OR species OR bioeconomy OR 'resource system' OR 'coupled system' OR nature"
+    s_1_transformative_change: >-
+      (
+          (
+              (
+                  transformation
+                  OR transition *
+                  OR transformative
+                  OR "transformative change"
+              )
+              OR (
+                  (
+                      shift
+                      OR change
+                  )
+                  AND (
+                      fundamental
+                      OR deep
+                      OR radical
+                  )
+              )
+          )
+          AND (
+              socio
+              OR social
+              OR politics
+              OR political
+              OR governance
+              OR economical
+              OR cultural
+              OR system *
+              OR technological
+              OR inner
+              OR personal
+          )
+      )
+      OR (
+          (
+              "transformative change"
+              OR "deliberate transformation*"
+              OR "transformative turn*"
+              OR transition *
+              OR "social-ecological change*"
+              OR "deep change"
+              OR "fundamental alteration"
+              OR "profound change"
+              OR "profound transformation"
+              OR "radical transformation"
+              OR "transformational change"
+              OR "complete change"
+              OR "complete transformation"
+              OR "drastic change"
+              OR "in-depth transformation"
+              OR "progressive change"
+              OR "radical alteration"
+              OR "radical change"
+              OR "revolutionary change"
+              OR "significant modification"
+              OR "total transformation"
+              OR transition
+              OR pathway
+              OR power
+              OR agency
+              OR scale
+              OR leverage
+              OR context
+              OR process
+              OR regime
+              OR shift
+              OR views
+              OR value *
+              OR structure *
+              OR institution *
+              OR deliberate
+              OR structural
+              OR fundamental
+              OR system *
+              OR deep
+              OR radical
+              OR profound
+              OR drastic
+              OR widespread
+              OR political
+              OR economical
+              OR structur *
+              OR complete
+              OR progressive
+              OR revolutionary
+              OR substantial
+              OR significant
+          )
+          AND (
+              transformation
+              OR alteration
+              OR change
+              OR turn
+              OR action
+              OR transition
+              OR shift
+          )
+      )
 
-    s_ch1_01: ((root OR underlying OR indirect) AND (driver* OR cause*))
-    s_ch1_02:( equity OR inequity OR just* OR unjust* OR inequality OR equality OR Fair* OR unfair*)
-    s_ch1_03: (scal* OR impact* OR leapfrog* OR transfer*)
-    s_ch1_04: (inclusi* OR particip* OR engagement* OR democratic* OR coproduct* OR transdisc* OR multiactor OR multi-actor OR integrat*)
-    s_ch1_05: (evaluat* OR reflex* OR reflect* OR monitor* OR adapt* OR learn*)
-    s_ch1_06: (responsib* OR accountab* OR rights OR steward* OR reciproc* OR interdependen* OR (relation* OR plural OR divers* OR sustainability-aligned OR (care AND (value* OR ethic*)))
-)
-    s_ch2:  (“vision” OR “future” OR “visionar*”OR “scenarios” OR “imagination” OR “imager*” OR “creativity” OR “desire”  OR “wish*” OR “visioning” OR “process” OR “participatORy process*” OR “deliberate process*” OR “polic*” OR “target” OR  “view*” OR ”value” OR “cosmovision” OR  “cosmocentric” OR “dream*” OR “fiction” OR “hope” OR “mission” OR “objective” OR “stORy” OR “wORldview*” OR “aspiration*” OR “action” OR “plan*” OR “strateg*” OR “intention” OR “model*” OR “solution*” OR  “innovation*” OR “perspective” OR “platfORm” OR “collective action” OR “cooperation” OR “consultation”OR “coalition*” OR “response” OR “movement” OR “effORt” OR “initiative” OR “activity” OR “reaction” OR “perfORmance” OR “operation” OR “effect*” OR “task” OR “project” OR “influence” o “moment” OR “discourse” OR “motivation” OR “iteration” OR “roadmap” OR “agenda” OR “project” OR “programm” OR “government” OR “technique”  OR “inspiration” OR “culture” OR “universe*” OR “reality” OR “fantasy” OR “perception” OR “visualization” OR “approach” OR “image” OR “arquetype” OR “existence” OR “cosmolog*” OR “co-production” OR “knowledge” OR “dialogue” OR “transmission” OR “conceptual*” OR “ceremon*” OR “relationships” OR  “respect” OR “reciprocity” OR  “responsibilities” OR “solidarity” OR “harmony” OR “self-determination” OR “communit*” OR “spiritual*” OR “languague” OR “territORy” OR “oppORtunit*” OR “sight” OR “fOResight” OR “idea” OR “appearance”)
+    s_1_nature_environment: >-
+      biodiversity
+      OR marine
+      OR terrestrial
+      OR forest*
+      OR woodland*
+      OR grassland*
+      OR savanna*
+      OR shrubland*
+      OR peatland
+      OR ecosystem*
+      OR lake*
+      OR river*
+      OR sea
+      OR ocean*
+      OR meadow*
+      OR heathland*
+      OR mires
+      OR bog*
+      OR tundra
+      OR biosphere
+      OR desert*
+      OR mountain*
+      OR "natural resource*"
+      OR estuary
+      OR fjord*
+      OR fauna
+      OR flora
+      OR soil*
+      OR "coastal waters"
+      OR wetland*
+      OR freshwater
+      OR marshland
+      OR marches
+      OR dryland*
+      OR seascape*
+      OR landscape*
+      OR coast*
+      OR "arable land*"
+      OR "agricultural land*"
+      OR "natural environment*"
+      OR "environmental resource*"
+      OR agroforest*
+      OR "agro-forest*"
+      OR plantation*
+      OR "protected areas"
+      OR chaparral
+      OR sustainable
+      OR environment
+      OR resilience
+      OR conservation
+      OR ecosystem*
+      OR nature*
+      OR planet*
+      OR Earth
+      OR biosphere
+      OR ecological
+      OR "socio-ecological"
+      OR restoration
+      OR wildlife
+      OR landscape
+      OR species
+      OR bioeconomy
+      OR "resource system"
+      OR "coupled system"
+      OR nature
 
-    s_ch3_01: (Technolog* OR Science* OR science-society OR science-technology OR Solution)
-    s_ch3_02: (co-creat* OR solution* OR knowledge* OR sistem* OR t-lab* OR educat* OR socio-technic*)
-    s_ch3_03: (System* OR pathways OR connect* OR Agroecolog* OR Institutional OR Institutions OR Government*)
-    s_ch3_04: (inner OR Personal OR Religio* OR Love OR Lov* OR Feelings OR Stewardship OR Care OR Beliefs OR Belie* OR Awareness OR Self-Awareness)
-    s_ch3_05: (Worldviews OR Grassroot* OR Community-based OR Indigenous OR Leadership OR Critical Science OR Econfeminism OR Political Ecology OR Power OR Agency OR Environment*)
-    s_ch3_06: (Economi* Or Political Economy OR institution* OR institutions OR govern* OR econom* OR governance OR governm* OR globalization OR states OR colonial OR coloniali* OR labour OR organization*)
+#    s_1_f_trans_nat: !expr function(){paste0("(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")")}
+
+    s_1_ch1_01: >-
+      (
+          root
+          OR underlying
+          OR indirect
+      )
+      AND (
+          driver*
+          OR cause*
+      )
+
+    s_1_ch1_02: >-
+      equity
+      OR inequity
+      OR just*
+      OR unjust*
+      OR inequality
+      OR equality
+      OR Fair*
+      OR unfair*
+
+    s_1_ch1_03: >-
+      scal*
+      OR impact*
+      OR leapfrog*
+      OR transfer*
+
+    s_1_ch1_04: >-
+      inclusi*
+      OR particip*
+      OR engagement*
+      OR democratic*
+      OR coproduct*
+      OR transdisc*
+      OR multiactor
+      OR "multi-actor"
+      OR integrat*
+
+    s_ch1_05: >-
+      evaluat*
+      OR reflex*
+      OR reflect*
+      OR monitor*
+      OR adapt*
+      OR learn*
+
+    s_1_ch1_06: >-
+      responsib*
+      OR accountab*
+      OR rights
+      OR steward*
+      OR reciproc*
+      OR interdependen*
+      OR (
+          relation*
+          OR plural
+          OR divers*
+          OR "sustainability-aligned"
+          OR (
+              care
+              AND (
+                  value*
+                  OR ethic*
+              )
+          )
+      )      
+    
+    s_1_ch2: >-
+      vision
+      OR future
+      OR visionar*
+      OR scenarios
+      OR imagination
+      OR imager*
+      OR creativity
+      OR desire
+      OR wish*
+      OR "visioning"
+      OR "process"
+      OR "participaory process*"
+      OR "deliberate process*"
+      OR "polic*"
+      OR "target"
+      OR "view*"
+      OR "value"
+      OR "cosmovision"
+      OR "cosmocentric"
+      OR "dream*"
+      OR "fiction"
+      OR "hope"
+      OR "mission"
+      OR "objective"
+      OR "stORy"
+      OR "wORldview*"
+      OR "aspiration*"
+      OR "action"
+      OR "plan*"
+      OR "strateg*"
+      OR "intention"
+      OR "model*"
+      OR "solution*"
+      OR "innovation*"
+      OR "perspective"
+      OR "platfORm"
+      OR "collective action"
+      OR "cooperation"
+      OR "consultation"
+      OR "coalition*"
+      OR "response"
+      OR "movement"
+      OR "effORt"
+      OR "initiative"
+      OR "activity"
+      OR "reaction"
+      OR "perfORmance"
+      OR "operation"
+      OR "effect*"
+      OR "task"
+      OR "project"
+      OR "influence" o "moment"
+      OR "discourse"
+      OR "motivation"
+      OR "iteration"
+      OR "roadmap"
+      OR "agenda"
+      OR "project"
+      OR "programm"
+      OR "government"
+      OR "technique"
+      OR "inspiration"
+      OR "culture"
+      OR "universe*"
+      OR "reality"
+      OR "fantasy"
+      OR "perception"
+      OR "visualization"
+      OR "approach"
+      OR "image"
+      OR "arquetype"
+      OR "existence"
+      OR "cosmolog*"
+      OR "co-production"
+      OR "knowledge"
+      OR "dialogue"
+      OR "transmission"
+      OR "conceptual*"
+      OR "ceremon*"
+      OR "relationships"
+      OR "respect"
+      OR "reciprocity"
+      OR "responsibilities"
+      OR "solidarity"
+      OR "harmony"
+      OR "self-determination"
+      OR "communit*"
+      OR "spiritual*"
+      OR "languague"
+      OR "territORy"
+      OR "oppORtunit*"
+      OR "sight"
+      OR "fOResight"
+      OR "idea"
+      OR "appearance"
+
+    s_1_ch3_01: >-
+      Technolog*
+      OR Science*
+      OR "science-society"
+      OR science-technology
+      OR Solution
+
+    s_1_ch3_02: >-
+      "co-create"
+      OR "co-creation"
+      OR solution*
+      OR knowledge*
+      OR system*
+      OR "t-lab*"
+      OR "technology laboratory"
+      OR educat*
+      OR "socio-technic*"
+
+    s_1_ch3_03: >-
+      System*
+      OR pathways
+      OR connect*
+      OR Agroecolog*
+      OR Institutional
+      OR Institutions
+      OR Government*
+
+    s_1_ch3_04: >-
+      inner
+      OR Personal
+      OR Religio*
+      OR Love
+      OR Lov*
+      OR Feelings
+      OR Stewardship
+      OR Care
+      OR Beliefs
+      OR Belie*
+      OR Awareness
+      OR "Self-Awareness"
+
+    s_1_ch3_05: >-
+      Worldviews
+      OR Grassroot*
+      OR "Community-based"
+      OR Indigenous
+      OR Leadership
+      OR "Critical Science"
+      OR Econfeminism
+      OR "Political Ecology"
+      OR Power
+      OR Agency
+      OR Environment*
+
+    s_1_ch3_06: >-
+      Economi*
+      OR "Political Economy"
+      OR institution*
+      OR institutions      
+      OR govern*
+      OR econom*
+      OR governance
+      OR governm*
+      OR globalization
+      OR states
+      OR colonial
+      OR coloniali*
+      OR labour
+      OR organization*
 
 
-    s_ch4_01:  (challenge* OR barrier* OR obstacle* OR hinder* OR hindrance* OR block* OR prevent* OR deter* OR inertia* OR path dependence* OR path dependency* OR stasis* OR lock-in* OR trap* OR habits* OR habitual* OR status quo* OR power* OR  "limiting factOR*") AND (economic inequality OR Wealth concentration OR Socioeconomic inequality OR financialization OR uneven development OR Financialization OR Structural adjustment OR Sovereign Debt OR inequality OR Policy effectiveness)
-    s_ch4_02:  (challenge* OR barrier* OR obstacle* OR hinder* OR hindrance* OR block* OR prevent* OR deter* OR inertia* OR path dependence* OR path dependency* OR stasis* OR lock-in* OR trap* OR habits* OR habitual* OR status quo* OR power* OR  "limiting factor*") AND   ( "clean technolog*"  OR  "clean innovation*"  OR  "sustainable innovation"  OR  "sustainable technological innovation*" ) AND ( "limited access"  OR  "limited availability"  OR  "lack of access"  OR "unavailability" )
+    s_1_ch4_01: >-
+      (
+          challenge*
+          OR barrier*
+          OR obstacle*
+          OR hinder*
+          OR hindrance*
+          OR block*
+          OR prevent*
+          OR deter*
+          OR inertia*
+          OR "path dependence*"
+          OR "path dependency*"
+          OR stasis*
+          OR "lock-in*"
+          OR trap*
+          OR habits*
+          OR habitual*
+          OR "status quo*"
+          OR power*
+          OR "limiting factOR*"
+      )
+      AND (
+          economic inequality
+          OR Wealth concentration
+          OR Socioeconomic inequality
+          OR financialization
+          OR uneven development
+          OR Financialization
+          OR Structural adjustment
+          OR Sovereign Debt
+          OR inequality
+          OR Policy effectiveness
+      )
 
-    s_ch5_01:  params$s_vision
-    s_ch5_02:  params$s_vision AND params$s_case    
+    s_1_ch4_02: >-
+      (
+          challenge*
+          OR barrier*
+          OR obstacle*
+          OR hinder*
+          OR hindrance*
+          OR block*
+          OR prevent*
+          OR deter*
+          OR inertia*
+          OR path dependence*
+          OR path dependency*
+          OR stasis*
+          OR lock-in*
+          OR trap*
+          OR habits*
+          OR habitual*
+          OR status quo*
+          OR power*
+          OR "limiting factor*"
+      )
+      AND (
+          "clean technolog*"
+          OR "clean innovation*"
+          OR "sustainable innovation"
+          OR "sustainable technological innovation*"
+      )
+      AND (
+          "limited access"
+          OR "limited availability"
+          OR "lack of access"
+          OR "unavailability"
+      )
+     
+    s_1_f_ch5_01: !expr function(){params$s_vision}
+
+    s_f_ch5_02: !expr function(){paste0("(", params$s_vision, ") AND (", params$s_case, ")")}
+
+    s_1_vision: >- 
+      vision
+      OR future
+      OR visionar*
+      OR scenarios
+      OR imagination
+      OR imager*
+      OR creativity
+      OR desire
+      OR wish*
+      OR visioning
+      OR process
+      OR "participatory process*"
+      OR "deliberate process*"
+      OR polic*
+      OR target
+      OR view*
+      OR value
+      OR cosmovision
+      OR cosmocentric
+      OR dream*
+      OR fiction
+      OR hope
+      OR mission
+      OR objective
+      OR story
+      OR worldview*
+      OR aspiration*
+      OR action
+      OR plan*
+      OR strateg*
+      OR intention
+      OR model*
+      OR solution*
+      OR innovation*
+      OR perspective
+      OR platform
+      OR "collective action"
+      OR cooperation
+      OR consultation
+      OR coalition*
+      OR response
+      OR movement
+      OR effort
+      OR initiative
+      OR activity
+      OR reaction
+      OR performance
+      OR operation
+      OR effect*
+      OR task
+      OR project
+      OR influence
+      OR moment
+      OR discourse
+      OR motivation
+      OR iteration
+      OR roadmap
+      OR agenda
+      OR project
+      OR programm
+      OR government
+      OR technique
+      OR inspiration
+      OR culture
+      OR universe*
+      OR reality
+      OR fantasy
+      OR perception
+      OR visualization
+      OR approach
+      OR image
+      OR arquetype
+      OR existence
+      OR cosmolog*
+      OR co - production
+      OR knowledge
+      OR dialogue
+      OR transmission
+      OR conceptual*
+      OR ceremon*
+      OR relationships
+      OR respect
+      OR reciprocity
+      OR responsibilities
+      OR solidarity
+      OR harmony
+      OR self - determination
+      OR communit*
+      OR spiritual*
+      OR languague
+      OR territory
+      OR opportunit*
+      OR sight
+      OR foresight
+      OR idea
+      OR appearance
+      
+    s_1_case: >-
+      "case study*"
+      OR case
+      OR "study area*"
+      OR example*
+      OR evaluation
+      OR concrete
+      OR empirical
+      OR practical
+      OR initiative*
    
-    s_vision: "('vision' OR 'future' OR 'visionar*' OR 'scenarios' OR 'imagination' OR 'imager*' OR 'creativity' OR 'desire' OR 'wish*' OR 'visioning' OR 'process' OR 'participatory process*' OR 'deliberate process*' OR 'polic*' OR 'target' OR 'view*' OR 'value' OR 'cosmovision' OR 'cosmocentric' OR 'dream*' OR 'fiction' OR 'hope' OR 'mission' OR 'objective' OR 'story' OR 'worldview*' OR 'aspiration*' OR 'action' OR 'plan*' OR 'strateg*' OR 'intention' OR 'model*' OR 'solution*' OR 'innovation*' OR 'perspective' OR 'platform' OR 'collective action' OR 'cooperation' OR 'consultation' OR 'coalition*' OR 'response' OR 'movement' OR 'effort' OR 'initiative' OR 'activity' OR 'reaction' OR 'performance' OR 'operation' OR 'effect*' OR 'task' OR 'project' OR 'influence' OR 'moment' OR 'discourse' OR 'motivation' OR 'iteration' OR 'roadmap' OR 'agenda' OR 'project' OR 'programm' OR 'government' OR 'technique'  OR 'inspiration' OR 'culture' OR 'universe*' OR 'reality' OR 'fantasy' OR 'perception' OR 'visualization' OR 'approach' OR 'image' OR 'arquetype' OR 'existence' OR 'cosmolog*' OR 'co-production' OR 'knowledge' OR 'dialogue' OR 'transmission' OR 'conceptual*' OR 'ceremon*' OR 'relationships' OR 'respect' OR 'reciprocity' OR 'responsibilities' OR 'solidarity' OR 'harmony' OR 'self-determination' OR 'communit*' OR 'spiritual*' OR 'languague' OR 'territory' OR 'opportunit*' OR 'sight' OR 'foresight' OR 'idea' OR 'appearance')"
-
-    s_case: "('case stud*' OR 'case' OR 'study area*' OR 'example*' OR 'evaluation' OR 'concrete' OR 'empirical', OR 'practical' OR 'initiative*')"
-
     concept_cuttoff: 0.6
 
     key_papers:
-      - "./key papers /Ch 1 - Arun.csv"
-      - "./key papers /Ch 2 - Sebastian.csv"
-      - "./key papers /Ch 5 - Hannah.csv"
-      - "./key papers /Ch 5 - Victoria.csv"
+      - "./key papers/Ch 1 - Arun.csv"
+      - "./key papers/Ch 2 - Sebastian.csv"
+      - "./key papers/Ch 5 - Hannah.csv"
+      - "./key papers/Ch 5 - Victoria.csv"
 
     mc.cores: 8
 ---
 
-``` css
-.fullwidth {
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-}
-```
-
 # Working Title
 TfC Ch 2 Vision
-
 
 ## Code repo
 
@@ -98,6 +649,16 @@ library(dplyr)
 library(knitr)
 library(tictoc)
 
+# Function to make the search strings compacter
+compact <- function(x){
+  x |>
+    gsub(pattern = "\n", replacement = " ") |>
+    gsub(pattern = "\\*", replacement = "") |>
+    gsub(pattern = "\\s+", replacement = " ") |>
+    gsub(pattern = "\\( ", replacement = "(") |>    
+    gsub(pattern = " )", replacement = ")")
+}
+
 if (!require("IPBES.R")){
     install.packages("IPBES.R", repos = c("https://ipbes-data.r-universe.dev", "https://cloud.r-project.org"))
     if (!require("IPBES.R")){
@@ -106,10 +667,7 @@ if (!require("IPBES.R")){
 
 }
 
-s_tfc_tsu <- paste0("'", params$tfc_tsu, "'", collapse = " OR ")
 ```
-
-
 
 # Suggested New search strategy
 
@@ -128,6 +686,7 @@ The suggested search strategy is a combination of a keyword based search Results
 #' @param count_only PARAM_DESCRIPTION, Default: TRUE
 #' @param verbose PARAM_DESCRIPTION, Default: FALSE
 #' @param return_call PARAM_DESCRIPTION, Default: FALSE
+#' @param results_per_doi PARAM_DESCRIPTION, Default: FALSE
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
 #' @examples 
@@ -147,79 +706,55 @@ get_search_combined <- function(
     dois = NULL,
     count_only = TRUE,
     verbose = FALSE,
-    return_call = FALSE) {
+    return_call = FALSE,
+    results_per_doi = FALSE){
 
-    # if (length(concepts.id > 1)){
-    #   concepts.id <- paste0(concepts.id, collapse = "|")
-    # }
-
-    if (length(dois > 1)) {
-        dois <- paste0(dois, collapse = "|")
+    if (length(concepts.id > 1)){
+      concepts.id <- paste0(concepts.id, collapse = "|")
     }
 
-    query <- oa_query(
-        search = search,
-        filter = list(concepts.id = concepts.id, from_publication_date = "1980-01-01", to_publication_date = "2023-12-30"),
-        doi = dois,
-        verbose = verbose
+    if (!results_per_doi){
+      if (length(dois > 1)) {
+        dois <- paste0(dois, collapse = "|")
+      }
+    }
+    query <- lapply(
+        dois,
+        function(doi) {
+            oa_query(
+                search = search,
+                filter = list(concepts.id = concepts.id, from_publication_date = "1980-01-01", to_publication_date = "2023-12-30"),
+                doi = doi,
+                verbose = verbose
+            )
+        }
     )
+    names(query) <- dois
 
     if (return_call) {
         return(query)
     }
 
-    result <- query |>
-        openalexR::oa_request(count_only = count_only, verbose = verbose)
-
-    if (count_only) {
-        result <- unlist(result)
+    result <- lapply(
+        query,
+        function(q) {
+            result <- openalexR::oa_request(q, count_only = count_only, verbose = verbose)
+            if (count_only) {
+                result <- unlist(result)
+            }
+        }
+    )
+    if (count_only){
+      result <- do.call(rbind, result) |>
+        as.data.frame() 
+      result <- result[1] |> 
+      t() |>
+      unlist()
     }
-
+   
     return(result)
 }
 ```
-
-
-```{r}
-#| label: TMP_search_combined_test
-#| eval: false
-
-ids <- key_works_concepts |>
-  do.call(what = rbind) |>
-  filter(level <= 1) |>
-  arrange(desc(score)) |>
-  distinct(id, .keep_all = TRUE) |>
-  select(id) |>
-  # slice(1:50) |>
-  unlist() |>
-  as.vector()
-
-
-dois <- key_works_df |>
-  do.call(what = rbind) |>
-  select(doi) |>
-  unlist() |>
-  unique() |>
-  as.vector()
-
-
-
-get_search_combined(
-  # search = paste0( "(", params$s_tsf_comb, ")" ),
-  search = paste0( "(", params$s_tsf_comb, ") AND (",  params$s_nat_rev, ")" ),
-  concepts.id = paste0(ids, collapse = "|"),
-#  dois = dois,
-  count_only = TRUE,
-  verbose = TRUE
-)
-
-openalexR::oa_query(search = s_tfc_tsu) |>
-  openalexR::oa_request(count_only = TRUE) |>
-  unlist()
-
-x <- (openalexR::oa_query(doi = key_papers) |> openalexR::oa_request(count_only = FALSE) |> oa2df(entity = "works"))
-```
-
 
 # Get and calculate Data
 ## Search Term Definition
@@ -231,63 +766,51 @@ x <- (openalexR::oa_query(doi = key_papers) |> openalexR::oa_request(count_only 
 tic()
 fn <- file.path(".", "data", "search_term_hits.rds")
 if (!file.exists(fn)) {
-    search_term_hits <- rbind(
-        openalexR::oa_query(search = "") |> openalexR::oa_request(count_only = TRUE) |> unlist(),
-        openalexR::oa_query(search = params$s_tsf_comb) |> openalexR::oa_request(count_only = TRUE) |> unlist(),
-        openalexR::oa_query(search = params$s_nat_rev) |> openalexR::oa_request(count_only = TRUE) |> unlist()
-        # openalexR::oa_query(search = s_tfc_tsu) |> openalexR::oa_request(count_only = TRUE) |> unlist(),
-        # openalexR::oa_query(search = params$s_nat) |> openalexR::oa_request(count_only = TRUE) |> unlist(),
-        # openalexR::oa_query(search = params$s_nat_5) |> openalexR::oa_request(count_only = TRUE) |> unlist(),
-        # openalexR::oa_query(search = params$s_nat_va) |> openalexR::oa_request(count_only = TRUE) |> unlist(),
-        # openalexR::oa_query(search = params$s_nat_va_new) |> openalexR::oa_request(count_only = TRUE) |> unlist(),
-        # openalexR::oa_query(search = params$s_vis) |> openalexR::oa_request(count_only = TRUE) |> unlist(),
-        openalexR::oa_query(
-            search = paste0(
-                "(", params$s_tsf_comb, ")", " AND ",
-                "(", params$s_nat_rev, ")"
-            )
-        ) |> oa_request(count_only = TRUE) |> unlist(),
-        # openalexR::oa_query(
-        #     search = paste0(
-        #         "(", params$s_tfc_5, ")", " AND ",
-        #         "(", params$s_nat_5, ")"
-        #     )
-        # ) |> oa_request(count_only = TRUE) |> unlist(),
-        # openalexR::oa_query(
-        #     search = paste0(
-        #         "(", params$s_tfc_new, ")", " AND ",
-        #         # '(', params$s_nat_5, ')', ' AND ',
-        #         "(", params$s_vis, ")"
-        #     )
-        # ) |> oa_request(count_only = TRUE) |> unlist(),
-        # openalexR::oa_query(
-        #     search = paste0(
-        #         "(", params$s_nat_5, ")", " AND ",
-        #         "(", params$s_vis, ")"
-        #     )
-        # ) |> oa_request(count_only = TRUE) |> unlist()
-    ) |>
-    as.data.frame() |>
-        mutate(
+    search_term_hits <-
+        sapply(
+            grep("s_1_", names(params), value = TRUE),
+            function(stn) {
+                message("getting '", stn, "' ...")
+                if (grepl("_f_", stn)){
+                  search <- params[[stn]]()
+                } else {
+                  search <- params[[stn]]
+                }
+                search <- compact(search)
+                openalexR::oa_query(search = search) |>
+                    openalexR::oa_request(count_only = TRUE) |>
+                    unlist()
+            }
+        ) |>
+        t() |>
+        as.data.frame() |>
+        dplyr::mutate(
             query = c(
                 "In OA",
                 "Transform",
-                "Transform Ch 5",
-                "Transform tsu",
                 "Nature",
-                "Nature Ch 5",
-                "Nature Va",
-                "Nature Va New",
-                "Visions",
-                "TfC & Nature",
-                "(TfC & Nature) Ch 5",
-                "TfC New & Nature Ch 5",
-                "(Nature & Vision) Ch 5"
+                "Ch1 01",
+                "Ch1 02",
+                "Ch1 03",
+                "Ch1 04",
+                "Ch1 06",
+                "Ch2",
+                "Ch3 01",
+                "Ch3 02",
+                "Ch3 03",
+                "Ch3 04",
+                "Ch3 05",
+                "Ch3 06",
+                "Ch4 01",
+                "Ch4 02",
+                "Ch5_01",
+                "Vision",
+                "Case"
             )
         ) |>
-        mutate(page = NULL, per_page = NULL) |>
-        mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0)) |>
-        relocate(query, .before = count)
+        dplyr::mutate(page = NULL, per_page = NULL) |>
+        dplyr::mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0)) |>
+        dplyr::relocate(query, .before = count)
     saveRDS(search_term_hits, file = fn)
 } else {
     search_term_hits <- readRDS(fn)
@@ -304,7 +827,6 @@ Key papers were selected by Sebastian, Victoria and Hannah.
 ```{r}
 #| label: get_key_papers
 #| 
-
 fn <- file.path(".", "data", "key_papers.rds")
 if (!file.exists(fn)) {
   key_papers <- lapply(
@@ -316,6 +838,12 @@ if (!file.exists(fn)) {
       arrange(desc(Year))
     }
   )
+  names(key_papers) <- params$key_papers |>
+      basename() |>
+      gsub(pattern = "\\.csv", replacement = "") |>
+      gsub(pattern = " ", replacement = "") |>
+      gsub(pattern = "-", replacement = "_")
+
   saveRDS(key_papers, file = fn)
 } else {
   key_papers <- readRDS(fn)
@@ -365,16 +893,19 @@ if (!all(file.exists(fn_kw, fn_kw_df))) {
 #| 
 
 fn <- file.path(".", "data", "key_works_concepts.rds")
-key_works_concepts <- lapply(
-    key_works_df,
-    function(kw_df) {
-        do.call(rbind, kw_df$concepts) |>
-            filter(score > params$concept_cuttoff) |>
-            arrange(desc(score))
-    }
-)
-saveRDS(key_works_concepts, file = fn)
-
+if (!file.exists(fn)) {
+    key_works_concepts <- lapply(
+        key_works_df,
+        function(kw_df) {
+            do.call(rbind, kw_df$concepts) |>
+                # filter(score > params$concept_cuttoff) |>
+                arrange(desc(score))
+        }
+    )
+    saveRDS(key_works_concepts, file = fn)
+} else {
+    key_works_concepts <- readRDS(file = fn)
+}
 ```
 
 ### key_works_hits
@@ -396,25 +927,27 @@ if (!file.exists(fn)) {
         unique() |>
         tolower()
 
-      kw_h <- cbind(
-        In_OA = get_count(search_term = "", dois = dois),
-        R1_tf_level1 = get_count(search_term = params$s_level_1, dois = dois),
-        R1_tf_rev = get_count(search_term = params$s_tfc_rev, dois = dois),
-        R1_tf_comb = get_count(search_term = params$s_tfc_comb, dois = dois),
-        R1_nat_rev = get_count(search_term = params$s_nat_rev, dois = dois)
-        # R1_comb = get_count(search_term = paste0("(",  params$s_tfc_comb, ") AND (", params$s_nat_rev, ")"), dois = dois)
-        # R1_nat = get_count(search_term = params$s_nat, dois = dois),
-        # R1_nat_Ch5 = get_count(search_term = params$s_nat_5, dois = dois),
-        # R1_nat_VA = get_count(search_term = params$s_nat_va_new, dois = dois),
-        # R1_vis = get_count(search_term = params$s_vis, dois = dois)
-      ) |>
+      kw_h <-  sapply(
+            grep("s_1_", names(params), value = TRUE),
+            function(stn) {
+                message("getting '", stn, "' ...")
+                if (grepl("_f_", stn)) {
+                    search <- params[[stn]]()
+                } else {
+                    search <- params[[stn]]
+                }
+                search <- params[[stn]]
+                search <- compact(search)
+                get_count(search_term = search, dois = dois)
+            }
+        ) |>
         as.data.frame()
 
       kw_h <- cbind(
         kw_h,
         Total = rowSums(kw_h)
       ) |>
-        mutate(Total = ifelse(In_OA >= 1, Total - 1, Total))
+        mutate(Total = Total - 1)
 
       kw_h <- rbind(
         kw_h,
@@ -442,6 +975,7 @@ if (!file.exists(fn)) {
 #| label: hits_per_search_term_table
 search_term_hits |>
     knitr::kable(
+      row.names = FALSE,
         caption = "Number of hits",
     )
 ```
@@ -465,25 +999,26 @@ Here we show the number of hits for the key papers in the different corpi. The c
 #| 
 
 tbl <- lapply(
-  names(key_works_hits),
-  function(n) {
-    kwh <- key_works_hits[[n]]
-    total <- grepl("Total", rownames(kwh))
-    rownames(kwh)[!total] <- paste0(n, " - <a href='https://doi.org/", rownames(kwh)[!total], "' target='_blank'>Click here</a>")
-    rownames(kwh)[total] <- paste0("**", n, " - Total**")
-    kwh |>
-      arrange(Total) |>
-      apply(
-        c(1, 2),
-        function(x) {
-          ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
-        }
-      ) |> as.data.frame()
-  }
+    names(key_works_hits),
+    function(n) {
+        kwh <- key_works_hits[[n]]
+        total <- grepl("Total", rownames(kwh))
+        rownames(kwh)[!total] <- paste0(n, " - <a href='https://doi.org/", rownames(kwh)[!total], "' target='_blank'>Click here</a>")
+        rownames(kwh)[total] <- paste0("**", n, " - Total**")
+        kwh |>
+            arrange(Total) |>
+            apply(
+                c(1, 2),
+                function(x) {
+                    ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
+                }
+            ) |>
+            as.data.frame()
+    }
 ) |>
-do.call(what = rbind)
+    do.call(what = rbind)
 
-rbind(
+detail <- rbind(
     "**overall**" = paste0(
         "**",
         c(
@@ -497,379 +1032,80 @@ rbind(
         "**"
     ),
     tbl
-) |>
-    knitr::kable()
+)
+
 ```
 
+### Key Papers in corpi based on new search strategy
+
+
+
+```{r}
+#| label: TMP_search_combined_test
+#| eval: false
+
+ids <- key_works_concepts |>
+  do.call(what = rbind) |>
+  filter(level == 0) |>
+  arrange(desc(score)) |>
+  distinct(id, .keep_all = TRUE) |>
+  select(display_name) |>
+  # slice(1:50) |>
+  unlist() |>
+  as.vector() |> unique()
+
+
+dois <- key_works_df |>
+  do.call(what = rbind) |>
+  select(doi) |>
+  unlist() |>
+  unique() |>
+  as.vector()
+
+
+
+get_search_combined(
+  # search = paste0( "(", params$s_tsf_comb, ")" ),
+  search = paste0( "(", params$s_tsf_comb, ") AND (",  params$s_nat_rev, ")" ),
+  concepts.id = paste0(ids, collapse = "|"),
+#  dois = dois,
+  count_only = TRUE,
+  verbose = TRUE
+)
+
+openalexR::oa_query(concepts.id = "https://openalex.org/c86803240|https://openalex.org/c39432304") |>
+  openalexR::oa_request(count_only = TRUE) |>
+  unlist()
+
+x <- (openalexR::oa_query(doi = key_papers) |> openalexR::oa_request(count_only = FALSE) |> oa2df(entity = "works"))
+```
+
+
+
+#### Summary
+```{r}
+in_summary <- grepl("Total|overall", rownames(detail))
+knitr::kable(detail[in_summary,])
+```
+
+#### Detail
+```{r}
+knitr::kable(detail)
+```
 
 ## Search Terms
 ### Differences Transformative Change terms
 
-```{r}
-tfc <- list(
-  tfc = params$s_tfc |>
-    gsub(pattern = "\\)|\\(", replacement = "") |>
-    strsplit(split = " AND ") |>
-    lapply(
-        strsplit,
-        split = " OR "
-    ),
-  tfc_5 = params$s_tfc_5 |>
-    gsub(pattern = "\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort(),
-  tfc_new = params$s_tfc_new |>
-    gsub(pattern = "\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort()
-)
-
-tfc$tfc <- c(
-    tfc$tfc[[1]][[1]],
-    paste0("Z_AND ", tfc$tfc[[1]][[2]])
-)
-
-tfc$all <- unique(c(tfc$tfc, tfc$tfc_5, tfc$tfc_new)) |>
-    sort()
-
-present <- data.frame(
-    TfC = (tfc$all %in% tfc$tfc) |> as.numeric(),
-    TfC_Ch_5 = (tfc$all %in% tfc$tfc_5) |> as.numeric(),
-    TfC_new = (tfc$all %in% tfc$tfc_new) |> as.numeric()
-)
-rownames(present) <- tfc$all
-
-present <- cbind(
-  present,
-  Total = rowSums(present)
-)
-
-present <- rbind(
-  present,
-  colSums(present)
-)
-
-rownames(present)[[nrow(present)]] <- "Total"
-
-present |>
-  apply(c(1, 2), function(x) {
-    ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
-  }) |>
-  knitr::kable(
-    caption = "Search terms as in the different Transformativ Change definitions"
-  )
-```
-
 ### Differences Nature terms
-
-```{r}
-nat <- list(
-  nat = params$s_nat |>
-    gsub(pattern = "\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort(),
-  nat_5 = params$s_nat_5 |>
-    gsub(pattern = "\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort(),
-  nat_va = params$s_nat_va |>
-    gsub(pattern = "\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort(),
-  nat_va_new = params$s_nat_va_new |>
-    gsub(pattern = "\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort()
-)
-
-nat$all <- unique(c(nat$nat, nat$nat_5, nat$nat_va, nat$nat_va_new)) |>
-    sort()
-
-present <- data.frame(
-    Nature        = (nat$all %in% nat$nat) |> as.numeric(),
-    Nature_Ch_5   = (nat$all %in% nat$nat_5) |> as.numeric(),
-    Nature_VA     = (nat$all %in% nat$nat_va) |> as.numeric(),
-    Nature_VA_new = (nat$all %in% nat$nat_va_new) |> as.numeric()
-)
-rownames(present) <- nat$all
-
-present <- cbind(
-  present,
-  Total = rowSums(present)
-)
-
-present <- rbind(
-  present,
-  colSums(present)
-)
-
-rownames(present)[[nrow(present)]] <- "Total"
-
-present |>
-  apply(c(1, 2), function(x) {
-    ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
-  }) |>
-  knitr::kable(
-    caption = "Search terms as in the different Nature definitions"
-  )
-```
 
 ### Vision Terms
 
-```{r}
-data.frame(
-  Terms = params$s_vis |>
-   gsub(pattern = "\\)|\\(", replacement = "") |>
-     strsplit(split = " OR ") |>
-     unlist() |>
-     sort()
-) |>
-  knitr::kable(
-    caption = "Search terms for Vision definitions"
-  )
-```
-
 ### Case Study Terms
 
-```{r}
-data.frame(
-  Terms = params$s_case |>
-   gsub(pattern = "\\)|\\(", replacement = "") |>
-     strsplit(split = " OR ") |>
-     unlist() |>
-     sort()
-) |>
-  knitr::kable(
-    caption = "Search terms for Case Study definitions"
-  )
-```
-
-
-#W# Detailed Search Terms
+## Detailed Search Terms
 
 ### [About Transformative change] Transformative change synonyms
-This should be aligned with TfC Ch 5 search
 
-### Chapter 2
-
-```{r}
-#| label: get_tfc
-#| 
-
-fn <- file.path(".", "data", "tfc.rds")
-if (file.exists(fn)) {
-    dat <- readRDS(fn)
-} else {
-    x <- strsplit(params$s_tfc, split = " AND ")
-    dat <- x[[1]][1] |>
-        gsub(pattern = "'|\\)|\\(", replacement = "") |>
-        strsplit(split = " OR ") |>
-        unlist() |>
-        sort() |>
-        sapply(
-            FUN = function(x) {
-                openalexR::oa_query(search = paste0("'", x, "'")) |>
-                    oa_request(count_only = TRUE) |>
-                    unlist()
-            }
-        ) |>
-        t() |>
-        as.data.frame() |>
-        dplyr::arrange(desc(count)) |>
-        mutate(
-            page = NULL,
-            per_page = NULL,
-            count = formatC(count, format = "f", big.mark = ",", digits = 0)
-        )
-    saveRDS(dat, file = fn)
-}
-knitr::kable(dat)
-```
-**AND**
-
-```{r}
-#| label: get_tfc_2
-#| 
-
-fn <- file.path(".", "data", "tfc_2.rds")
-if (file.exists(fn)) {
-    dat <- readRDS(fn)
-} else {
-    dat <- x[[1]][2] |>
-        gsub(pattern = "'|\\)|\\(", replacement = "") |>
-        strsplit(split = " OR ") |>
-        unlist() |>
-        sort() |>
-        sapply(
-            FUN = function(x) {
-                openalexR::oa_query(search = paste0("'", x, "'")) |>
-                    oa_request(count_only = TRUE) |>
-                    unlist()
-            }
-        ) |>
-        t() |>
-        as.data.frame() |>
-        dplyr::arrange(desc(count)) |>
-        mutate(
-            page = NULL,
-            per_page = NULL,
-            count = formatC(count, format = "f", big.mark = ",", digits = 0)
-        )
-    saveRDS(dat, file = fn)
-}
-
-knitr::kable(dat)
-``` 
-
-### Chapter 5
-
-```{r}
-#| label: get_tfc_5
-#| 
-
-fn <- file.path(".", "data", "tfc_5.rds")
-if (file.exists(fn)) {
-    dat <- readRDS(fn)
-} else {
-    dat  <- params$s_tfc_5 |>
-    gsub(pattern = "'|\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort() |>
-    sapply(
-        FUN = function(x) {
-            openalexR::oa_query(search = paste0("'", x, "'")) |>
-                oa_request(count_only = TRUE) |>
-                unlist()
-        }
-    ) |>
-    t() |>
-    as.data.frame() |>
-    dplyr::arrange(desc(count)) |>
-    mutate(
-        page = NULL,
-        per_page = NULL,
-        count = formatC(count, format = "f", big.mark = ",", digits = 0)
-    )
-    saveRDS(dat, file = fn)
-}
-    
-knitr::kable(dat)
-```
-
-
-### New
-```{r}
-#| label: get_tfc_new
-#| 
-
-fn <- file.path(".", "data", "tfc_new.rds")
-if (file.exists(fn)) {
-    dat <- readRDS(fn)
-} else {
-    dat  <- params$s_tfc_new |>
-    gsub(pattern = "'|\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort() |>
-    sapply(
-        FUN = function(x) {
-            openalexR::oa_query(search = paste0("'", x, "'")) |>
-                oa_request(count_only = TRUE) |>
-                unlist()
-        }
-    ) |>
-    t() |>
-    as.data.frame() |>
-    dplyr::arrange(desc(count)) |>
-    mutate(
-        page = NULL,
-        per_page = NULL,
-        count = formatC(count, format = "f", big.mark = ",", digits = 0)
-    )
-    saveRDS(dat, file = fn)
-}
- 
-knitr::kable(dat)
-```
-
-
-## AND (nature synonyms) [use dictionary suggested by Aidin]
-```{r}
-#| label: get_tfc_nat
-#| 
-
-fn <- file.path(".", "data", "tfc_nat_va_new.rds")
-if (file.exists(fn)) {
-    dat <- readRDS(fn)
-} else {
-    dat  <- params$s_nat_va_new |>
-    gsub(pattern = "\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort() |>
-    sapply(
-        FUN = function(x) {
-            openalexR::oa_query(search = paste0("'", x, "'")) |>
-                oa_request(count_only = TRUE) |>
-                unlist()
-        }
-    ) |>
-    t() |>
-    as.data.frame() |>
-    dplyr::arrange(desc(count)) |>
-    mutate(
-        page = NULL,
-        per_page = NULL,
-        count = formatC(count, format = "f", big.mark = ",", digits = 0)
-    )
-    saveRDS(dat, file = fn)
- }
- 
-knitr::kable(dat)
-```
-
-## AND (visions) [Ch 2 Key terms, https://www.ipbes.net/glossary-tag/vision, Oxford Dictionary]
-
-```{r}
-#| label: get_tfc_vis
-#| 
-
-fn <- file.path(".", "data", "tfc_vis.rds")
-if (file.exists(fn)) {
-    dat <- readRDS(fn)
-} else {
-    dat <- params$s_vis |>
-    gsub(pattern = "'|\\)|\\(", replacement = "") |>
-    strsplit(split = " OR ") |>
-    unlist() |>
-    sort() |>
-    sapply(
-        FUN = function(x) {
-            openalexR::oa_query(search = paste0("'", x, "'")) |>
-                oa_request(count_only = TRUE) |>
-                unlist()
-        }
-    ) |>
-    t() |>
-    as.data.frame() |>
-    dplyr::arrange(desc(count)) |>
-    mutate(
-        page = NULL,
-        per_page = NULL,
-        count = formatC(count, format = "f", big.mark = ",", digits = 0)
-    )
-    saveRDS(dat, file = fn)
- }
- 
-knitr::kable(dat)
-```
 
 
 
