@@ -225,7 +225,7 @@ params:
       OR "multi-actor"
       OR integrat*
 
-    s_ch1_05: >-
+    s_1_ch1_05: >-
       evaluat*
       OR reflex*
       OR reflect*
@@ -355,7 +355,7 @@ params:
       Technolog*
       OR Science*
       OR "science-society"
-      OR science-technology
+      OR "science-technology"
       OR Solution
 
     s_1_ch3_02: >-
@@ -492,11 +492,7 @@ params:
           OR "unavailability"
       )
      
-    s_1_f_ch5_01: !expr function(){params$s_vision}
-
-    s_f_ch5_02: !expr function(){paste0("(", params$s_vision, ") AND (", params$s_case, ")")}
-
-    s_1_vision: >- 
+    s_1_ch5_vision: >- 
       vision
       OR future
       OR visionar*
@@ -571,7 +567,7 @@ params:
       OR arquetype
       OR existence
       OR cosmolog*
-      OR co - production
+      OR "co-production"
       OR knowledge
       OR dialogue
       OR transmission
@@ -583,7 +579,7 @@ params:
       OR responsibilities
       OR solidarity
       OR harmony
-      OR self - determination
+      OR "self-determination"
       OR communit*
       OR spiritual*
       OR languague
@@ -593,8 +589,10 @@ params:
       OR foresight
       OR idea
       OR appearance
-      
-    s_1_case: >-
+  
+    s_1_f_ch5_vision_case: !expr function(){paste0("(", params$s_1_ch5_vision, ") AND (", params$s_case, ")")}
+
+    s_case: >-
       "case study*"
       OR case
       OR "study area*"
@@ -624,15 +622,12 @@ TfC Ch 2 Vision
 [Github - private](https://github.com/IPBES-Data/IPBES-TfC-Ch-2-Vision)
 
 # Introduction
-The following terminology is used:
+The following terminology is used in this document:
 
-- **R1** - the first round of the literature search, i.e. (R1-transform) AND (R1-nature) AND (R1-vision)
-    - **R1-transform** results of R1 only using the Transform search term
-    - **R1-transform VA** results of R1 only using the Transform search term from the Values Assessment
-    - **R1-nature** results of R1 only using the Nature search term
-    - **R1-vision** results of R1 only using the Vision search term
-    - **R1-X** results of R1 using the X search term
-- **R2** - the second round of the literature search, i.e. R1 AND (search term for Case)
+- **Individual corpus**: The corpus resulting from one search term, e.g. `transformative` or `nature` or `ChX_Y`
+- **Assessment Corpus**: The corpus resulting from the search terms `transformative AND nature`
+- **Chapter corpus**: The corpus resulting from `transformative AND Nature AND ChX_Y` 
+
 
 ```{r}
 #| label: setup
@@ -666,16 +661,548 @@ if (!require("IPBES.R")){
     }
 
 }
-
 ```
 
-# Suggested New search strategy
 
-The suggested search strategy is a combination of a keyword based search Results (see @key_papers_in_corpi) and a concepts based filter. The concepts terms are selected by using their score, i.e. all concepts with a score higher than {r params$concept_cuttoff} are used. Please see section @concepts_selected for the list of concepts.
+## Search Terms {#sec-search_terms}
+Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu to adopt them for OpenAlex.
+
+### Transformative Change {#sec-transform}
+
+
+
+```{r}
+#| label: s_1_transformative_change
+
+cat(params$s_1_transformative_change)
+```
+
+
+
+### Nature {#sec-nature}
+
+
+
+```{r}
+#| label: s_1_nature_environment
+#| 
+
+cat(params$s_1_nature_environment)
+```
+
+
+
+### Chapter 1
+
+#### 01 {#sec-ch1-01}
+
+
+
+```{r}
+#| label: s_1_ch1_01
+#| 
+
+cat(params$s_1_ch1_01)
+```
+
+
+
+#### 02 {#sec-ch1-02}
+
+
+
+```{r}
+#| label: s_1_ch1_02
+#| 
+
+cat(params$s_1_ch1_02)
+```
+
+
+
+#### 03 {#sec-ch1-03}
+
+
+
+```{r}
+#| label: s_1_ch1_03
+#| 
+
+cat(params$s_1_ch1_03)
+```
+
+
+
+#### 04 {#sec-ch1-04}
+
+
+
+```{r}
+#| label: s_1_ch1_04
+#| 
+
+cat(params$s_1_ch1_04)
+```
+
+
+
+#### 05 {#sec-ch1-05}
+
+
+
+```{r}
+#| label: s_1_ch1_05
+#| 
+
+cat(params$s_1_ch1_05)
+```
+
+
+
+#### 06 {#sec-ch1-06}
+
+
+
+```{r}
+#| label: s_1_ch1_06
+#| 
+
+cat(params$s_1_ch1_06)
+```
+
+
+
+### Chapter 2 {#sec-ch2}
+
+
+
+```{r} 
+#| label: s_1_ch2
+#| 
+
+cat(params$s_1_ch2)
+```
+
+
+
+### Chapter 3
+
+#### 01 {#sec-ch3-01}
+
+
+
+```{r}
+#| label: s_1_ch3_01
+#| 
+
+cat(params$s_1_ch3_01)
+```
+
+
+
+#### 02 {#sec-ch3-02}
+
+
+
+```{r}
+#| label: s_1_ch3_02
+#|
+
+cat(params$s_1_ch3_02)
+```
+
+
+
+#### 03 {#sec-ch3-03}
+
+
+
+```{r}
+#| label: s_1_ch3_03
+#| 
+
+cat(params$s_1_ch3_03)
+```
+
+
+
+#### 04 {#sec-ch3-04}
+
+
+
+```{r}
+#| label: s_1_ch3_04
+#| 
+
+cat(params$s_1_ch3_04)
+```
+
+
+
+#### 05 {#sec-ch3-05}
+
+```{r}
+#| label: s_1_ch3_05
+#| 
+
+cat(params$s_1_ch3_05)
+```
+
+
+#### 06 {#sec-ch3-06}
+
+
+
+```{r}
+#| label: s_1_ch3_06
+#| 
+
+cat(params$s_1_ch3_06)
+```
+
+
+### Chapter 4
+
+#### 01 {#sec-ch4-01}
+
+
+```{r}
+#| label: s_1_ch4_01
+#| 
+
+cat(params$s_1_ch4_01)
+```
+
+
+#### 02 {#sec-ch4-02}
+
+
+```{r}
+#| label: s_1_ch4_02
+#| 
+
+cat(params$s_1_ch4_02)
+```
+
+
+### Chapter 5
+
+#### Vision {#sec-ch5_vision}
+
+
+
+```{r}
+#| label: s_1_ch5_vision
+#| 
+
+cat(params$s_1_ch5_vision)
+```
+
+
+#### Vision & Case {#sec-ch5_vision_case}
+
+
+
+```{r}
+#| label: s_1_f_ch5_vision_case
+#| 
+
+cat(params$s_1_f_ch5_vision_case())
+```
+
+
+
+
+# Get and calculate Data
+In this section, the data is retrieved from OpenAlex and the calculations are done. It contains the code used.
+No resiults are shown here, so this section can be skipped.
+
+```{r}
+#| label: get_search_term_hits
+#|
+
+fn <- file.path(".", "data", "search_term_hits.rds")
+if (!file.exists(fn)) {
+    search_term_hits <-
+        sapply(
+            grep("s_1_", names(params), value = TRUE),
+            function(stn) {
+                message("getting '", stn, "' ...")
+                if (grepl("_f_", stn)){
+                  search <- params[[stn]]()
+                } else {
+                  search <- params[[stn]]
+                }
+                search <- compact(search)
+                openalexR::oa_query(search = search) |>
+                    openalexR::oa_request(count_only = TRUE) |>
+                    unlist()
+            }
+        ) |>
+        t() |>
+        as.data.frame() |>
+        dplyr::mutate(page = NULL, per_page = NULL) |>
+        dplyr::mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0))
+    rownames(search_term_hits)  <- rownames(search_term_hits) |>
+      gsub(pattern = "s_1_", replacement = "" ) |>
+      gsub(pattern = "f_", replacement = "" ) |>
+      gsub(pattern = "^ch", replacement = "Chapter " ) |>
+      gsub(pattern = "_", replacement = " " )
+    saveRDS(search_term_hits, file = fn)
+} else {
+    search_term_hits <- readRDS(fn)
+}
+```
+
+
+```{r}
+#| label: get_key_papers
+#| 
+fn <- file.path(".", "data", "key_papers.rds")
+if (!file.exists(fn)) {
+  key_papers <- lapply(
+    params$key_papers,
+    function(fn){
+      read.csv(fn) |>
+      select(Author, Publication.Year, Title, Publication.Title, DOI) |>
+      rename(Year = Publication.Year, Journal = Publication.Title) |>
+      arrange(desc(Year))
+    }
+  )
+  names(key_papers) <- params$key_papers |>
+      basename() |>
+      gsub(pattern = "\\.csv", replacement = "") |>
+      gsub(pattern = " ", replacement = "") |>
+      gsub(pattern = "-", replacement = "_")
+
+  saveRDS(key_papers, file = fn)
+} else {
+  key_papers <- readRDS(fn)
+}
+```
+
+
+```{r}
+#| label: key_works
+#| 
+
+fn_kw <- file.path(".", "data", "key_works.rds")
+fn_kw_df <- file.path(".", "data", "key_works_df.rds")
+if (!all(file.exists(fn_kw, fn_kw_df))) {
+  key_works <- lapply(
+    key_papers,
+    function(kp) {
+      dois <- kp |>
+        select(DOI) |>
+        filter(DOI != "") |>
+        unlist() |>
+        tolower() |>
+        unique()
+      openalexR::oa_query(doi = dois) |>
+        openalexR::oa_request(count_only = FALSE)
+    }
+  )
+  saveRDS(key_works, file = fn_kw)
+
+  key_works_df <- lapply(
+    key_works,
+    oa2df,
+    entity = "works"
+  )
+  saveRDS(key_works_df, fn_kw_df)
+} else {
+  key_works <- readRDS(file = fn_kw)
+  key_works_df <- readRDS(fn_kw_df)
+}
+```
+
+```{r}
+#| label: key_works_concepts
+#| 
+
+fn <- file.path(".", "data", "key_works_concepts.rds")
+if (!file.exists(fn)) {
+    key_works_concepts <- lapply(
+        key_works_df,
+        function(kw_df) {
+            do.call(rbind, kw_df$concepts) |>
+                # filter(score > params$concept_cuttoff) |>
+                arrange(desc(score))
+        }
+    )
+    saveRDS(key_works_concepts, file = fn)
+} else {
+    key_works_concepts <- readRDS(file = fn)
+}
+```
+
+
+```{r}
+#| label: key_works_hits
+#| 
+
+fn <- file.path(".", "data", "key_works_hits.rds")
+if (!file.exists(fn)) {
+  key_works_hits <- lapply(
+    key_works_df,
+    function(kw_df) {
+      message("Getting one key paper set... ")
+      dois <- kw_df |>
+        select(doi) |>
+        distinct() |>
+        unlist() |>
+        unique() |>
+        tolower()
+
+      kw_h <-  sapply(
+            grep("s_1_", names(params), value = TRUE),
+            function(stn) {
+                message("getting '", stn, "' ...")
+                if (grepl("_f_", stn)) {
+                    search <- params[[stn]]()
+                } else {
+                    search <- params[[stn]]
+                }
+                search <- compact(search)
+                get_count(search_term = search, dois = dois)
+            }
+        ) |>
+        as.data.frame()
+
+      kw_h <- cbind(
+        kw_h,
+        Total = rowSums(kw_h)
+      ) |>
+        mutate(Total = Total - 1)
+
+      kw_h <- rbind(
+        kw_h,
+        colSums(kw_h)
+      )
+
+      rownames(kw_h)[[nrow(kw_h)]] <- "Total"
+      return(kw_h)
+    }
+  )
+
+  saveRDS(key_works_hits, file = fn)
+} else {
+  key_works_hits <- readRDS(file = fn)
+}
+```
+
+
+# Results
+
+## Number of Hits per Individual Corpus
+
+Here we show the number of hits for the key papers in the different individual corpi. The columns represent the different search terms as defined in @sec-search_terms.
+
+```{r}
+#| label: hits_per_search_term_table
+search_term_hits |>
+    knitr::kable(
+        caption = "Number of hits",
+    )
+```
+
+### Key papers in different iIndividual Corpi {#key_papers_in_corpi}
+
+
+
+
+```{r}
+#| label: key_paper_hits_in_corpi
+#| 
+
+tbl <- lapply(
+    names(key_works_hits),
+    function(n) {
+        kwh <- key_works_hits[[n]]
+        total <- grepl("Total", rownames(kwh))
+        rownames(kwh)[!total] <- paste0(n, " - <a href='https://doi.org/", rownames(kwh)[!total], "' target='_blank'>Click here</a>")
+        rownames(kwh)[total] <- paste0("**", n, " - Total**")
+        kwh |>
+            arrange(Total) |>
+            apply(
+                c(1, 2),
+                function(x) {
+                    ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
+                }
+            ) |>
+            as.data.frame()
+    }
+) |>
+    do.call(what = rbind)
+
+detail <- rbind(
+    "**overall**" = c(
+        paste0(
+            "**",
+            search_term_hits |>
+                select(count) |>
+                unlist() |>
+                as.vector(),
+              "**"
+        ),
+        ""
+    ),
+    tbl
+)
+
+detail <- detail |>
+    dplyr::rename(
+        "Transformative Change @sec-transform" = s_1_transformative_change,
+        "Nature @sec-nature" = s_1_nature_environment,
+        "Ch1 01 @sec-ch1-01" = s_1_ch1_01,
+        "Ch1 02 @sec-ch1-02" = s_1_ch1_02,
+        "Ch1 03 @sec-ch1-03" = s_1_ch1_03,
+        "Ch1 04 @sec-ch1-04" = s_1_ch1_04,
+        "Ch1 05 @sec-ch1-05" = s_1_ch1_05,
+        "Ch1 06 @sec-ch1-06" = s_1_ch1_06,
+        "Ch2  @sec-ch2" = s_1_ch2,
+        "Ch3 01 @sec-ch3-01" = s_1_ch3_01,
+        "Ch3 02 @sec-ch3-02" = s_1_ch3_02,
+        "Ch3 03 @sec-ch3-03" = s_1_ch3_03,
+        "Ch3 04 @sec-ch3-04" = s_1_ch3_04,
+        "Ch3 05 @sec-ch3-05" = s_1_ch3_05,
+        "Ch3 06 @sec-ch3-06" = s_1_ch3_06,
+        "Ch4 01 @sec-ch4-01" = s_1_ch4_01,
+        "Ch4 02 @sec-ch4-02" = s_1_ch4_02,
+        "Ch5 Vision @sec-ch5_vision" = s_1_ch5_vision,
+        "Ch5 Vision Case @sec-ch5_vision_case" = s_1_f_ch5_vision_case
+    )
+```
+
+### Key Papers in Individual Corpi
+
+#### Summary
+Each column is a different search term, and each row consists of the key papers of a specific chapter and the author who provided the key papers. The number is the number of key papers occurring in the Individual Corpus.
+```{r}
+
+in_summary <- grepl("Total|overall", rownames(detail))
+knitr::kable(
+  detail[in_summary,]
+)
+```
+
+#### Detail
+```{r}
+knitr::kable(detail)
+```
+
+
+
+
+# ==== APPENDIX ====
+
+## Possible New Search Strategy
+
+The possible new search strategy is a combination of a keyword based search Results and a concepts based filter. The concepts terms are selected by using their score, i.e. all concepts with a score higher than {r params$concept_cuttoff} are used. Please see section @concepts_selected for the list of concepts.
 
 ```{r}
 #| label: search_combined 
-#| 
+#| eval: false
 
 #' @title FUNCTION_TITLE
 #' @description FUNCTION_DESCRIPTION
@@ -756,289 +1283,6 @@ get_search_combined <- function(
 }
 ```
 
-# Get and calculate Data
-## Search Term Definition
-### search_term_hits
-```{r}
-#| label: get_search_term_hits
-#|
-
-tic()
-fn <- file.path(".", "data", "search_term_hits.rds")
-if (!file.exists(fn)) {
-    search_term_hits <-
-        sapply(
-            grep("s_1_", names(params), value = TRUE),
-            function(stn) {
-                message("getting '", stn, "' ...")
-                if (grepl("_f_", stn)){
-                  search <- params[[stn]]()
-                } else {
-                  search <- params[[stn]]
-                }
-                search <- compact(search)
-                openalexR::oa_query(search = search) |>
-                    openalexR::oa_request(count_only = TRUE) |>
-                    unlist()
-            }
-        ) |>
-        t() |>
-        as.data.frame() |>
-        dplyr::mutate(
-            query = c(
-                "In OA",
-                "Transform",
-                "Nature",
-                "Ch1 01",
-                "Ch1 02",
-                "Ch1 03",
-                "Ch1 04",
-                "Ch1 06",
-                "Ch2",
-                "Ch3 01",
-                "Ch3 02",
-                "Ch3 03",
-                "Ch3 04",
-                "Ch3 05",
-                "Ch3 06",
-                "Ch4 01",
-                "Ch4 02",
-                "Ch5_01",
-                "Vision",
-                "Case"
-            )
-        ) |>
-        dplyr::mutate(page = NULL, per_page = NULL) |>
-        dplyr::mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0)) |>
-        dplyr::relocate(query, .before = count)
-    saveRDS(search_term_hits, file = fn)
-} else {
-    search_term_hits <- readRDS(fn)
-}
-toc()
-```
-
-
-## Key Papers and Works
-
-### key_papers
-Key papers were selected by Sebastian, Victoria and Hannah. 
-
-```{r}
-#| label: get_key_papers
-#| 
-fn <- file.path(".", "data", "key_papers.rds")
-if (!file.exists(fn)) {
-  key_papers <- lapply(
-    params$key_papers,
-    function(fn){
-      read.csv(fn) |>
-      select(Author, Publication.Year, Title, Publication.Title, DOI) |>
-      rename(Year = Publication.Year, Journal = Publication.Title) |>
-      arrange(desc(Year))
-    }
-  )
-  names(key_papers) <- params$key_papers |>
-      basename() |>
-      gsub(pattern = "\\.csv", replacement = "") |>
-      gsub(pattern = " ", replacement = "") |>
-      gsub(pattern = "-", replacement = "_")
-
-  saveRDS(key_papers, file = fn)
-} else {
-  key_papers <- readRDS(fn)
-}
-```
-
-### key_works
-
-```{r}
-#| label: key_works
-#| 
-
-fn_kw <- file.path(".", "data", "key_works.rds")
-fn_kw_df <- file.path(".", "data", "key_works_df.rds")
-if (!all(file.exists(fn_kw, fn_kw_df))) {
-  key_works <- lapply(
-    key_papers,
-    function(kp) {
-      dois <- kp |>
-        select(DOI) |>
-        filter(DOI != "") |>
-        unlist() |>
-        tolower() |>
-        unique()
-      openalexR::oa_query(doi = dois) |>
-        openalexR::oa_request(count_only = FALSE)
-    }
-  )
-  saveRDS(key_works, file = fn_kw)
-
-  key_works_df <- lapply(
-    key_works,
-    oa2df,
-    entity = "works"
-  )
-  saveRDS(key_works_df, fn_kw_df)
-} else {
-  key_works <- readRDS(file = fn_kw)
-  key_works_df <- readRDS(fn_kw_df)
-}
-```
-
-### key_works_concepts
-
-```{r}
-#| label: key_works_concepts
-#| 
-
-fn <- file.path(".", "data", "key_works_concepts.rds")
-if (!file.exists(fn)) {
-    key_works_concepts <- lapply(
-        key_works_df,
-        function(kw_df) {
-            do.call(rbind, kw_df$concepts) |>
-                # filter(score > params$concept_cuttoff) |>
-                arrange(desc(score))
-        }
-    )
-    saveRDS(key_works_concepts, file = fn)
-} else {
-    key_works_concepts <- readRDS(file = fn)
-}
-```
-
-### key_works_hits
-
-```{r}
-#| label: key_works_hits
-#| 
-
-fn <- file.path(".", "data", "key_works_hits.rds")
-if (!file.exists(fn)) {
-  key_works_hits <- lapply(
-    key_works_df,
-    function(kw_df) {
-      message("Getting one key paper set... ")
-      dois <- kw_df |>
-        select(doi) |>
-        distinct() |>
-        unlist() |>
-        unique() |>
-        tolower()
-
-      kw_h <-  sapply(
-            grep("s_1_", names(params), value = TRUE),
-            function(stn) {
-                message("getting '", stn, "' ...")
-                if (grepl("_f_", stn)) {
-                    search <- params[[stn]]()
-                } else {
-                    search <- params[[stn]]
-                }
-                search <- params[[stn]]
-                search <- compact(search)
-                get_count(search_term = search, dois = dois)
-            }
-        ) |>
-        as.data.frame()
-
-      kw_h <- cbind(
-        kw_h,
-        Total = rowSums(kw_h)
-      ) |>
-        mutate(Total = Total - 1)
-
-      kw_h <- rbind(
-        kw_h,
-        colSums(kw_h)
-      )
-
-      rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-      return(kw_h)
-    }
-  )
-
-  saveRDS(key_works_hits, file = fn)
-} else {
-  key_works_hits <- readRDS(file = fn)
-}
-```
-
-
-# Results
-
-## Key Papers
-### Number of Hits per Search Term
-
-```{r}
-#| label: hits_per_search_term_table
-search_term_hits |>
-    knitr::kable(
-      row.names = FALSE,
-        caption = "Number of hits",
-    )
-```
-
-### Key papers in different corpi {#key_papers_in_corpi}
-
-Here we show the number of hits for the key papers in the different corpi. The columns are:
-
-- **In_OA**: is paper in OpenAlex?
-- **R1_tf**: Is paper in Transformatifa Change Chapter 2
-- **R1_tf_Ch5** Is paper in Transformative Change Chapter 5?
-- **R1_tf_ts5** Is paper in Transformative Change definition as derived by the TSU?
-- **R1_nat** Is paper in Nature Chapter 2?
-- **R1_nat_Ch5**:  Is paper in Nature Chapter 5?
-- **R1_nat_VA**: Is paper in Nature as defined in the Values Assessment?
-- **R1_vis**: Is paper in Vision Chapter 2?
-- **Total**: Total number of hits per row
-
-```{r}
-#| label: key_paper_hits_in_corpi
-#| 
-
-tbl <- lapply(
-    names(key_works_hits),
-    function(n) {
-        kwh <- key_works_hits[[n]]
-        total <- grepl("Total", rownames(kwh))
-        rownames(kwh)[!total] <- paste0(n, " - <a href='https://doi.org/", rownames(kwh)[!total], "' target='_blank'>Click here</a>")
-        rownames(kwh)[total] <- paste0("**", n, " - Total**")
-        kwh |>
-            arrange(Total) |>
-            apply(
-                c(1, 2),
-                function(x) {
-                    ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
-                }
-            ) |>
-            as.data.frame()
-    }
-) |>
-    do.call(what = rbind)
-
-detail <- rbind(
-    "**overall**" = paste0(
-        "**",
-        c(
-            search_term_hits |>
-                slice(c(1:6, 8:9)) |>
-                select(count) |>
-                unlist() |>
-                as.vector(),
-            ""
-        ),
-        "**"
-    ),
-    tbl
-)
-
-```
-
-### Key Papers in corpi based on new search strategy
-
-
 
 ```{r}
 #| label: TMP_search_combined_test
@@ -1081,64 +1325,3 @@ x <- (openalexR::oa_query(doi = key_papers) |> openalexR::oa_request(count_only 
 ```
 
 
-
-#### Summary
-```{r}
-in_summary <- grepl("Total|overall", rownames(detail))
-knitr::kable(detail[in_summary,])
-```
-
-#### Detail
-```{r}
-knitr::kable(detail)
-```
-
-## Search Terms
-### Differences Transformative Change terms
-
-### Differences Nature terms
-
-### Vision Terms
-
-### Case Study Terms
-
-## Detailed Search Terms
-
-### [About Transformative change] Transformative change synonyms
-
-
-
-
-# TODO
-
-- Transformative Change Query term identical between chapters 2 and 5
-- Nature Query terms identical between chapters between chapters 2 and 5
-- 
-
-- Randomly 100 papers from R1
-- add large number of articles to Zotero
-- all open acces articles only for now.
-
-## R3
-- get all pdfs which are available from R3
-- Results, Discussion and Conclusion - Vision, geograph, country name, words from transformative change
-
-# ==== APPENDIX ====
-
-
-## Results WoS
-
-### R1
-
-[R1 WoS](https://www.webofscience.com/wos/alldb/summary/9cc620dd-dfc6-4414-acc0-983d4a56314c-a1bdf5a4/relevance/1)
-
-1,237,718 hits
-
-### R2
-
-AND ('case stud*' OR 'case' OR 'study area*' OR 'example*' OR 'evaluation' OR 'concrete' OR 'empirical', OR 'practical' OR 'initiative*')
-
-[R2 WoS](https://www.webofscience.com/wos/alldb/summary/f6d3094a-0cc2-4662-9b05-0a671c71c86a-a1be094a/relevance/1)
-
-296,551 hits, i.e. about 1,100,000 without case studies
-```
