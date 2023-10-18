@@ -290,7 +290,7 @@ params:
       OR "solution*"
       OR "innovation*"
       OR "perspective"
-      OR "platfORm"
+      OR "platform"
       OR "collective action"
       OR "cooperation"
       OR "consultation"
@@ -306,7 +306,8 @@ params:
       OR "effect*"
       OR "task"
       OR "project"
-      OR "influence" o "moment"
+      OR "influence" 
+      OR "moment"
       OR "discourse"
       OR "motivation"
       OR "iteration"
@@ -613,26 +614,13 @@ params:
 
     mc.cores: 8
 ---
-
-# Working Title
-TfC Ch 2 Vision
-
-## Code repo
-
-[Github - private](https://github.com/IPBES-Data/IPBES-TfC-Ch-2-Vision)
-
-# Introduction
-The following terminology is used in this document:
-
-- **Individual corpus**: The corpus resulting from one search term, e.g. `transformative` or `nature` or `ChX_Y`
-- **Assessment Corpus**: The corpus resulting from the search terms `transformative AND nature`
-- **Chapter corpus**: The corpus resulting from `transformative AND Nature AND ChX_Y` 
-
-
 ```{r}
 #| label: setup
 #| include: false
 #| 
+build <- as.integer(readLines("buildNo"))
+build <- build + 1
+writeLines(as.character(build), "buildNo")
 
 if (!exists("params")){
     params <- rmarkdown::yaml_front_matter('~/Documents_Local/git/IPBES_data_tsu/Assessments/Transformative Change/IPBES_TFC_Ch2_Vision/Status.qmd')$params
@@ -662,6 +650,25 @@ if (!require("IPBES.R")){
 
 }
 ```
+
+# Working Title
+TfC Ch 2 Vision
+
+## Code repo
+
+[Github - private](https://github.com/IPBES-Data/IPBES-TfC-Ch-2-Vision)
+
+## Build No: ``r build``
+
+# Introduction
+The following terminology is used in this document:
+
+- **Individual corpus**: The corpus resulting from one search term, e.g. `transformative` or `nature` or `ChX_Y`
+- **Assessment Corpus**: The corpus resulting from the search terms `transformative AND nature`
+- **Chapter corpus**: The corpus resulting from `transformative AND Nature AND ChX_Y` 
+
+
+
 
 
 ## Search Terms {#sec-search_terms}
