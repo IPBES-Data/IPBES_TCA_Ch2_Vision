@@ -593,7 +593,7 @@ params:
   
     s_1_f_ch5_vision_case: !expr function(){paste0("(", params$s_1_ch5_vision, ") AND (", params$s_case, ")")}
 
-    s_case: >-
+    s_1_case: >-
       "case study*"
       OR case
       OR "study area*"
@@ -656,7 +656,7 @@ TfC Ch 2 Vision
 
 ## Code repo
 
-[Github - private](https://github.com/IPBES-Data/IPBES-TfC-Ch-2-Vision)
+[Github - private](https://github.com/IPBES-Data/IPBES_TFC_Ch2_Vision)
 
 ## Build No: ``r build``
 
@@ -1332,3 +1332,17 @@ x <- (openalexR::oa_query(doi = key_papers) |> openalexR::oa_request(count_only 
 ```
 
 
+TODO: one search term per chapter with OR
+TODO: CH 5 search terms missing - check in emails
+
+TODO: 
+- Tranformative
+- Nature
+- Ch1 01-06 OR 
+- Ch2 
+- Ch3 01-06 OR
+- Ch4 01-02 OR
+- Ch5 MISSING (Options?)
+- Case-Studies
+
+TODO: which key papers are still missing?
