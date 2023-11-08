@@ -654,6 +654,10 @@ library(parallel)
 library(pbmcapply)
 library(pbapply)
 
+library(knitr)
+library(flextable)
+library(tibble)
+
 # Function to make the search strings compacter
 compact <- function(x) {
     x |>
@@ -955,34 +959,35 @@ No resiults are shown here, so this section can be skipped.
 
 fn <- file.path(".", "data", "search_term_hits.rds")
 if (!file.exists(fn)) {
-    search_term_hits <-
-        parallel::mclapply(
-            grep("s_1_", names(params), value = TRUE),
-            function(stn) {
-                message("getting '", stn, "' ...")
-                if (grepl("_f_", stn)) {
-                    search <- params[[stn]]()
-                } else {
-                    search <- params[[stn]]
-                }
-                search <- compact(search)
-                openalexR::oa_query(search = search) |>
-                    openalexR::oa_request(count_only = TRUE) |>
-                    unlist()
-            },
-            mc.cores = params$mc.cores,
-            mc.preschedule = FALSE
-        ) |>
+    s_t <- grep("s_1_", names(params), value = TRUE)
+    search_term_hits <- parallel::mclapply(
+        s_t,
+        function(stn) {
+            message("getting '", stn, "' ...")
+            if (grepl("_f_", stn)) {
+                search <- params[[stn]]()
+            } else {
+                search <- params[[stn]]
+            }
+            search <- compact(search)
+            openalexR::oa_query(search = search) |>
+                openalexR::oa_request(count_only = TRUE) |>
+                unlist()
+        },
+        mc.cores = params$mc.cores,
+        mc.preschedule = FALSE
+    ) |>
         do.call(what = cbind) |>
         t() |>
         as.data.frame() |>
         dplyr::mutate(page = NULL, per_page = NULL) |>
         dplyr::mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0))
-    rownames(search_term_hits) <- rownames(search_term_hits) |>
+    rownames(search_term_hits) <- s_t |>
         gsub(pattern = "s_1_", replacement = "") |>
         gsub(pattern = "f_", replacement = "") |>
         gsub(pattern = "^ch", replacement = "Chapter ") |>
         gsub(pattern = "_", replacement = " ")
+
     saveRDS(search_term_hits, file = fn)
 } else {
     search_term_hits <- readRDS(fn)
@@ -1130,7 +1135,7 @@ if (!file.exists(fn)) {
             ) |>
                 do.call(what = cbind) |>
                 as.data.frame()
-                
+
             names(kw_h) <- s_t
 
             # if (ncol(kw_h) == 1){
@@ -1256,17 +1261,31 @@ detail <- detail |>
 #### Summary
 Each column is a different search term, and each row consists of the key papers of a specific chapter and the author who provided the key papers. The number is the number of key papers occurring in the Individual Corpus.
 ```{r}
-
 in_summary <- grepl("Total|overall", rownames(detail))
 knitr::kable(
     detail[in_summary, ]
 )
 ```
 
+```{r}
+#| eval: FALSE
+key_works_hits[[1]] |>
+    tibble::rownames_to_column("key paper") |>
+    flextable() |>
+    set_table_properties(
+        opts_html = list(
+            extra_css = ".tabwid tbody tr > :first-child {position: sticky;z-index: 1;left: 0;background: #ddd;}",
+            scroll = list(height = "500px")
+        )
+    ) # |>
+# bg(bg = scales::col_numeric(palette = "viridis", domain = c(0, 1)))
+```
+
 #### Detail
 ```{r}
 knitr::kable(detail)
 ```
+
 
 
 

@@ -3095,7 +3095,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
   <li><a href="#working-title" id="toc-working-title" class="nav-link active" data-scroll-target="#working-title">Working Title</a>
   <ul>
   <li><a href="#code-repo" id="toc-code-repo" class="nav-link" data-scroll-target="#code-repo">Code repo</a></li>
-  <li><a href="#build-no-60" id="toc-build-no-60" class="nav-link" data-scroll-target="#build-no-60">Build No: <code>60</code></a></li>
+  <li><a href="#build-no-62" id="toc-build-no-62" class="nav-link" data-scroll-target="#build-no-62">Build No: <code>62</code></a></li>
   </ul></li>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a>
   <ul>
@@ -3187,8 +3187,8 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <h2 class="anchored" data-anchor-id="code-repo">Code repo</h2>
 <p><a href="https://github.com/IPBES-Data/IPBES_TFC_Ch2_Vision">Github - private</a></p>
 </section>
-<section id="build-no-60" class="level2">
-<h2 class="anchored" data-anchor-id="build-no-60">Build No: <code>60</code></h2>
+<section id="build-no-62" class="level2">
+<h2 class="anchored" data-anchor-id="build-no-62">Build No: <code>62</code></h2>
 </section>
 </section>
 <section id="introduction" class="level1">
@@ -3667,38 +3667,39 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>fn <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">&quot;.&quot;</span>, <span class="st">&quot;data&quot;</span>, <span class="st">&quot;search_term_hits.rds&quot;</span>)</span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(fn)) {</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    search_term_hits <span class="ot">&lt;-</span></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>        parallel<span class="sc">::</span><span class="fu">mclapply</span>(</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">grep</span>(<span class="st">&quot;s_1_&quot;</span>, <span class="fu">names</span>(params), <span class="at">value =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">function</span>(stn) {</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">message</span>(<span class="st">&quot;getting &#39;&quot;</span>, stn, <span class="st">&quot;&#39; ...&quot;</span>)</span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> (<span class="fu">grepl</span>(<span class="st">&quot;_f_&quot;</span>, stn)) {</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>                    search <span class="ot">&lt;-</span> params[[stn]]()</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>                } <span class="cf">else</span> {</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>                    search <span class="ot">&lt;-</span> params[[stn]]</span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>                }</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>                search <span class="ot">&lt;-</span> <span class="fu">compact</span>(search)</span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>                openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> search) <span class="sc">|&gt;</span></span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>                    openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">unlist</span>()</span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>            },</span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">mc.cores =</span> params<span class="sc">$</span>mc.cores,</span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">mc.preschedule =</span> <span class="cn">FALSE</span></span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>        ) <span class="sc">|&gt;</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>    s_t <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">&quot;s_1_&quot;</span>, <span class="fu">names</span>(params), <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    search_term_hits <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">mclapply</span>(</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>        s_t,</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">function</span>(stn) {</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">message</span>(<span class="st">&quot;getting &#39;&quot;</span>, stn, <span class="st">&quot;&#39; ...&quot;</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (<span class="fu">grepl</span>(<span class="st">&quot;_f_&quot;</span>, stn)) {</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>                search <span class="ot">&lt;-</span> params[[stn]]()</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>            } <span class="cf">else</span> {</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>                search <span class="ot">&lt;-</span> params[[stn]]</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>            search <span class="ot">&lt;-</span> <span class="fu">compact</span>(search)</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>            openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">search =</span> search) <span class="sc">|&gt;</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>                openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">unlist</span>()</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">mc.cores =</span> params<span class="sc">$</span>mc.cores,</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">mc.preschedule =</span> <span class="cn">FALSE</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
 <span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>        <span class="fu">do.call</span>(<span class="at">what =</span> cbind) <span class="sc">|&gt;</span></span>
 <span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
 <span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
 <span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">page =</span> <span class="cn">NULL</span>, <span class="at">per_page =</span> <span class="cn">NULL</span>) <span class="sc">|&gt;</span></span>
 <span id="cb39-27"><a href="#cb39-27" aria-hidden="true" tabindex="-1"></a>        dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">count =</span> <span class="fu">formatC</span>(count, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">big.mark =</span> <span class="st">&quot;,&quot;</span>, <span class="at">digits =</span> <span class="dv">0</span>))</span>
-<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames</span>(search_term_hits) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(search_term_hits) <span class="sc">|&gt;</span></span>
+<span id="cb39-28"><a href="#cb39-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rownames</span>(search_term_hits) <span class="ot">&lt;-</span> s_t <span class="sc">|&gt;</span></span>
 <span id="cb39-29"><a href="#cb39-29" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;s_1_&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb39-30"><a href="#cb39-30" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;f_&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;&quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb39-31"><a href="#cb39-31" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;^ch&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;Chapter &quot;</span>) <span class="sc">|&gt;</span></span>
 <span id="cb39-32"><a href="#cb39-32" aria-hidden="true" tabindex="-1"></a>        <span class="fu">gsub</span>(<span class="at">pattern =</span> <span class="st">&quot;_&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(search_term_hits, <span class="at">file =</span> fn)</span>
-<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
-<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>    search_term_hits <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fn)</span>
-<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-33"><a href="#cb39-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-34"><a href="#cb39-34" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(search_term_hits, <span class="at">file =</span> fn)</span>
+<span id="cb39-35"><a href="#cb39-35" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb39-36"><a href="#cb39-36" aria-hidden="true" tabindex="-1"></a>    search_term_hits <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(fn)</span>
+<span id="cb39-37"><a href="#cb39-37" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
@@ -3842,7 +3843,7 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <span id="cb43-32"><a href="#cb43-32" aria-hidden="true" tabindex="-1"></a>            ) <span class="sc">|&gt;</span></span>
 <span id="cb43-33"><a href="#cb43-33" aria-hidden="true" tabindex="-1"></a>                <span class="fu">do.call</span>(<span class="at">what =</span> cbind) <span class="sc">|&gt;</span></span>
 <span id="cb43-34"><a href="#cb43-34" aria-hidden="true" tabindex="-1"></a>                <span class="fu">as.data.frame</span>()</span>
-<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb43-35"><a href="#cb43-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-36"><a href="#cb43-36" aria-hidden="true" tabindex="-1"></a>            <span class="fu">names</span>(kw_h) <span class="ot">&lt;-</span> s_t</span>
 <span id="cb43-37"><a href="#cb43-37" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-38"><a href="#cb43-38" aria-hidden="true" tabindex="-1"></a>            <span class="co"># if (ncol(kw_h) == 1){</span></span>
@@ -3892,94 +3893,116 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <caption>Number of hits</caption>
 <thead>
 <tr class="header">
+<th style="text-align: left;"></th>
 <th style="text-align: left;">count</th>
 <th style="text-align: right;">db_response_time_ms</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">245,959,830</td>
-<td style="text-align: right;">48</td>
+<td style="text-align: left;">oa</td>
+<td style="text-align: left;">245,962,651</td>
+<td style="text-align: right;">39</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">61,236,967</td>
-<td style="text-align: right;">15278</td>
+<td style="text-align: left;">transformative change</td>
+<td style="text-align: left;">61,240,962</td>
+<td style="text-align: right;">14659</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">55,198,432</td>
-<td style="text-align: right;">9944</td>
+<td style="text-align: left;">nature environment</td>
+<td style="text-align: left;">55,205,626</td>
+<td style="text-align: right;">10389</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">10,347,573</td>
-<td style="text-align: right;">1011</td>
+<td style="text-align: left;">Chapter 1 01</td>
+<td style="text-align: left;">10,345,852</td>
+<td style="text-align: right;">593</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">19,005,078</td>
-<td style="text-align: right;">986</td>
+<td style="text-align: left;">Chapter 1 02</td>
+<td style="text-align: left;">19,006,721</td>
+<td style="text-align: right;">740</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">33,179,896</td>
-<td style="text-align: right;">877</td>
+<td style="text-align: left;">Chapter 1 03</td>
+<td style="text-align: left;">33,180,242</td>
+<td style="text-align: right;">808</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">3,905,446</td>
-<td style="text-align: right;">1137</td>
+<td style="text-align: left;">Chapter 1 04</td>
+<td style="text-align: left;">3,906,350</td>
+<td style="text-align: right;">820</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">41,037,696</td>
-<td style="text-align: right;">1256</td>
+<td style="text-align: left;">Chapter 1 05</td>
+<td style="text-align: left;">41,039,547</td>
+<td style="text-align: right;">1006</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">24,768,724</td>
-<td style="text-align: right;">1835</td>
+<td style="text-align: left;">Chapter 1 06</td>
+<td style="text-align: left;">24,770,412</td>
+<td style="text-align: right;">1589</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">125,530,661</td>
-<td style="text-align: right;">14300</td>
+<td style="text-align: left;">Chapter 2</td>
+<td style="text-align: left;">125,534,472</td>
+<td style="text-align: right;">14888</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">38,479,187</td>
-<td style="text-align: right;">2036</td>
+<td style="text-align: left;">Chapter 3 01</td>
+<td style="text-align: left;">38,484,275</td>
+<td style="text-align: right;">2123</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">67,219,473</td>
-<td style="text-align: right;">3778</td>
+<td style="text-align: left;">Chapter 3 02</td>
+<td style="text-align: left;">67,225,972</td>
+<td style="text-align: right;">3935</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">64,051,323</td>
-<td style="text-align: right;">1662</td>
+<td style="text-align: left;">Chapter 3 03</td>
+<td style="text-align: left;">64,058,587</td>
+<td style="text-align: right;">1776</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">32,030,672</td>
-<td style="text-align: right;">1994</td>
+<td style="text-align: left;">Chapter 3 04</td>
+<td style="text-align: left;">32,032,558</td>
+<td style="text-align: right;">2340</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">37,928,142</td>
-<td style="text-align: right;">3344</td>
+<td style="text-align: left;">Chapter 3 05</td>
+<td style="text-align: left;">37,935,132</td>
+<td style="text-align: right;">3825</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">38,896,077</td>
-<td style="text-align: right;">2467</td>
+<td style="text-align: left;">Chapter 3 06</td>
+<td style="text-align: left;">38,902,587</td>
+<td style="text-align: right;">3525</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">1,526,325</td>
-<td style="text-align: right;">3904</td>
+<td style="text-align: left;">Chapter 4 01</td>
+<td style="text-align: left;">1,526,615</td>
+<td style="text-align: right;">4586</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">1,155</td>
-<td style="text-align: right;">3022</td>
+<td style="text-align: left;">Chapter 4 02</td>
+<td style="text-align: left;">1,159</td>
+<td style="text-align: right;">3697</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">125,530,661</td>
-<td style="text-align: right;">10990</td>
+<td style="text-align: left;">Chapter 5 vision</td>
+<td style="text-align: left;">125,534,472</td>
+<td style="text-align: right;">10415</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">70,906,655</td>
-<td style="text-align: right;">13787</td>
+<td style="text-align: left;">Chapter 5 vision case</td>
+<td style="text-align: left;">70,912,759</td>
+<td style="text-align: right;">14169</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">76,073,329</td>
-<td style="text-align: right;">5756</td>
+<td style="text-align: left;">case</td>
+<td style="text-align: left;">76,078,943</td>
+<td style="text-align: right;">5222</td>
 </tr>
 </tbody>
 </table>
@@ -4128,27 +4151,27 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>overall</strong></td>
-<td style="text-align: left;"><strong>245,959,830</strong></td>
-<td style="text-align: left;"><strong>61,236,967</strong></td>
-<td style="text-align: left;"><strong>55,198,432</strong></td>
-<td style="text-align: left;"><strong>10,347,573</strong></td>
-<td style="text-align: left;"><strong>19,005,078</strong></td>
-<td style="text-align: left;"><strong>33,179,896</strong></td>
-<td style="text-align: left;"><strong>3,905,446</strong></td>
-<td style="text-align: left;"><strong>41,037,696</strong></td>
-<td style="text-align: left;"><strong>24,768,724</strong></td>
-<td style="text-align: left;"><strong>125,530,661</strong></td>
-<td style="text-align: left;"><strong>38,479,187</strong></td>
-<td style="text-align: left;"><strong>67,219,473</strong></td>
-<td style="text-align: left;"><strong>64,051,323</strong></td>
-<td style="text-align: left;"><strong>32,030,672</strong></td>
-<td style="text-align: left;"><strong>37,928,142</strong></td>
-<td style="text-align: left;"><strong>38,896,077</strong></td>
-<td style="text-align: left;"><strong>1,526,325</strong></td>
-<td style="text-align: left;"><strong>1,155</strong></td>
-<td style="text-align: left;"><strong>125,530,661</strong></td>
-<td style="text-align: left;"><strong>70,906,655</strong></td>
-<td style="text-align: left;"><strong>76,073,329</strong></td>
+<td style="text-align: left;"><strong>245,962,651</strong></td>
+<td style="text-align: left;"><strong>61,240,962</strong></td>
+<td style="text-align: left;"><strong>55,205,626</strong></td>
+<td style="text-align: left;"><strong>10,345,852</strong></td>
+<td style="text-align: left;"><strong>19,006,721</strong></td>
+<td style="text-align: left;"><strong>33,180,242</strong></td>
+<td style="text-align: left;"><strong>3,906,350</strong></td>
+<td style="text-align: left;"><strong>41,039,547</strong></td>
+<td style="text-align: left;"><strong>24,770,412</strong></td>
+<td style="text-align: left;"><strong>125,534,472</strong></td>
+<td style="text-align: left;"><strong>38,484,275</strong></td>
+<td style="text-align: left;"><strong>67,225,972</strong></td>
+<td style="text-align: left;"><strong>64,058,587</strong></td>
+<td style="text-align: left;"><strong>32,032,558</strong></td>
+<td style="text-align: left;"><strong>37,935,132</strong></td>
+<td style="text-align: left;"><strong>38,902,587</strong></td>
+<td style="text-align: left;"><strong>1,526,615</strong></td>
+<td style="text-align: left;"><strong>1,159</strong></td>
+<td style="text-align: left;"><strong>125,534,472</strong></td>
+<td style="text-align: left;"><strong>70,912,759</strong></td>
+<td style="text-align: left;"><strong>76,078,943</strong></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
@@ -4605,13 +4628,28 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 </table>
 </div>
 </div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>key_works_hits[[<span class="dv">1</span>]] <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    tibble<span class="sc">::</span><span class="fu">rownames_to_column</span>(<span class="st">&quot;key paper&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">flextable</span>() <span class="sc">|&gt;</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">set_table_properties</span>(</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">opts_html =</span> <span class="fu">list</span>(</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">extra_css =</span> <span class="st">&quot;.tabwid tbody tr &gt; :first-child {position: sticky;z-index: 1;left: 0;background: #ddd;}&quot;</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">scroll =</span> <span class="fu">list</span>(<span class="at">height =</span> <span class="st">&quot;500px&quot;</span>)</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    ) <span class="co"># |&gt;</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a><span class="co"># bg(bg = scales::col_numeric(palette = &quot;viridis&quot;, domain = c(0, 1)))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 </section>
 <section id="detail" class="level4">
 <h4 class="anchored" data-anchor-id="detail">Detail</h4>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(detail)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(detail)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -4670,27 +4708,27 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>overall</strong></td>
-<td style="text-align: left;"><strong>245,959,830</strong></td>
-<td style="text-align: left;"><strong>61,236,967</strong></td>
-<td style="text-align: left;"><strong>55,198,432</strong></td>
-<td style="text-align: left;"><strong>10,347,573</strong></td>
-<td style="text-align: left;"><strong>19,005,078</strong></td>
-<td style="text-align: left;"><strong>33,179,896</strong></td>
-<td style="text-align: left;"><strong>3,905,446</strong></td>
-<td style="text-align: left;"><strong>41,037,696</strong></td>
-<td style="text-align: left;"><strong>24,768,724</strong></td>
-<td style="text-align: left;"><strong>125,530,661</strong></td>
-<td style="text-align: left;"><strong>38,479,187</strong></td>
-<td style="text-align: left;"><strong>67,219,473</strong></td>
-<td style="text-align: left;"><strong>64,051,323</strong></td>
-<td style="text-align: left;"><strong>32,030,672</strong></td>
-<td style="text-align: left;"><strong>37,928,142</strong></td>
-<td style="text-align: left;"><strong>38,896,077</strong></td>
-<td style="text-align: left;"><strong>1,526,325</strong></td>
-<td style="text-align: left;"><strong>1,155</strong></td>
-<td style="text-align: left;"><strong>125,530,661</strong></td>
-<td style="text-align: left;"><strong>70,906,655</strong></td>
-<td style="text-align: left;"><strong>76,073,329</strong></td>
+<td style="text-align: left;"><strong>245,962,651</strong></td>
+<td style="text-align: left;"><strong>61,240,962</strong></td>
+<td style="text-align: left;"><strong>55,205,626</strong></td>
+<td style="text-align: left;"><strong>10,345,852</strong></td>
+<td style="text-align: left;"><strong>19,006,721</strong></td>
+<td style="text-align: left;"><strong>33,180,242</strong></td>
+<td style="text-align: left;"><strong>3,906,350</strong></td>
+<td style="text-align: left;"><strong>41,039,547</strong></td>
+<td style="text-align: left;"><strong>24,770,412</strong></td>
+<td style="text-align: left;"><strong>125,534,472</strong></td>
+<td style="text-align: left;"><strong>38,484,275</strong></td>
+<td style="text-align: left;"><strong>67,225,972</strong></td>
+<td style="text-align: left;"><strong>64,058,587</strong></td>
+<td style="text-align: left;"><strong>32,032,558</strong></td>
+<td style="text-align: left;"><strong>37,935,132</strong></td>
+<td style="text-align: left;"><strong>38,902,587</strong></td>
+<td style="text-align: left;"><strong>1,526,615</strong></td>
+<td style="text-align: left;"><strong>1,159</strong></td>
+<td style="text-align: left;"><strong>125,534,472</strong></td>
+<td style="text-align: left;"><strong>70,912,759</strong></td>
+<td style="text-align: left;"><strong>76,078,943</strong></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
@@ -10109,122 +10147,122 @@ return!"\t\n\x0B\f\r                　\u2028\u2029
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @title FUNCTION_TITLE</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @description FUNCTION_DESCRIPTION</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param search PARAM_DESCRIPTION, Default: NULL</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param concepts character vector. The search will be done by using `AND`, Default: NULL</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param dois character vector. dois which should be filtered for. If</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;   longer than 1, these are collapsed into an `OR`. Default: NULL</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param count_only PARAM_DESCRIPTION, Default: TRUE</span></span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param verbose PARAM_DESCRIPTION, Default: FALSE</span></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param return_call PARAM_DESCRIPTION, Default: FALSE</span></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param results_per_doi PARAM_DESCRIPTION, Default: FALSE</span></span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return OUTPUT_DESCRIPTION</span></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @details DETAILS</span></span>
-<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
-<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; \dontrun{</span></span>
-<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; if (interactive()) {</span></span>
-<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;     # EXAMPLE1</span></span>
-<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; }</span></span>
-<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; }</span></span>
-<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @seealso</span></span>
-<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;  \code{\link[openalexR]{oa_query}}, \code{\link[openalexR]{oa_request}}</span></span>
-<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @rdname get_search_combined</span></span>
-<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
-<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @importFrom openalexR oa_query oa_request</span></span>
-<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>get_search_combined <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
-<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">search =</span> <span class="cn">NULL</span>,</span>
-<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">concepts.id =</span> <span class="cn">NULL</span>,</span>
-<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">dois =</span> <span class="cn">NULL</span>,</span>
-<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_only =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">return_call =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">results_per_doi =</span> <span class="cn">FALSE</span>) {</span>
-<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(concepts.id <span class="sc">&gt;</span> <span class="dv">1</span>)) {</span>
-<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a>        concepts.id <span class="ot">&lt;-</span> <span class="fu">paste0</span>(concepts.id, <span class="at">collapse =</span> <span class="st">&quot;|&quot;</span>)</span>
-<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>results_per_doi) {</span>
-<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(dois <span class="sc">&gt;</span> <span class="dv">1</span>)) {</span>
-<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a>            dois <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dois, <span class="at">collapse =</span> <span class="st">&quot;|&quot;</span>)</span>
-<span id="cb48-39"><a href="#cb48-39" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb48-40"><a href="#cb48-40" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb48-41"><a href="#cb48-41" aria-hidden="true" tabindex="-1"></a>    query <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
-<span id="cb48-42"><a href="#cb48-42" aria-hidden="true" tabindex="-1"></a>        dois,</span>
-<span id="cb48-43"><a href="#cb48-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">function</span>(doi) {</span>
-<span id="cb48-44"><a href="#cb48-44" aria-hidden="true" tabindex="-1"></a>            <span class="fu">oa_query</span>(</span>
-<span id="cb48-45"><a href="#cb48-45" aria-hidden="true" tabindex="-1"></a>                <span class="at">search =</span> search,</span>
-<span id="cb48-46"><a href="#cb48-46" aria-hidden="true" tabindex="-1"></a>                <span class="at">filter =</span> <span class="fu">list</span>(<span class="at">concepts.id =</span> concepts.id, <span class="at">from_publication_date =</span> <span class="st">&quot;1980-01-01&quot;</span>, <span class="at">to_publication_date =</span> <span class="st">&quot;2023-12-30&quot;</span>),</span>
-<span id="cb48-47"><a href="#cb48-47" aria-hidden="true" tabindex="-1"></a>                <span class="at">doi =</span> doi,</span>
-<span id="cb48-48"><a href="#cb48-48" aria-hidden="true" tabindex="-1"></a>                <span class="at">verbose =</span> verbose</span>
-<span id="cb48-49"><a href="#cb48-49" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb48-50"><a href="#cb48-50" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb48-51"><a href="#cb48-51" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb48-52"><a href="#cb48-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(query) <span class="ot">&lt;-</span> dois</span>
-<span id="cb48-53"><a href="#cb48-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-54"><a href="#cb48-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (return_call) {</span>
-<span id="cb48-55"><a href="#cb48-55" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(query)</span>
-<span id="cb48-56"><a href="#cb48-56" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb48-57"><a href="#cb48-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-58"><a href="#cb48-58" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
-<span id="cb48-59"><a href="#cb48-59" aria-hidden="true" tabindex="-1"></a>        query,</span>
-<span id="cb48-60"><a href="#cb48-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">function</span>(q) {</span>
-<span id="cb48-61"><a href="#cb48-61" aria-hidden="true" tabindex="-1"></a>            result <span class="ot">&lt;-</span> openalexR<span class="sc">::</span><span class="fu">oa_request</span>(q, <span class="at">count_only =</span> count_only, <span class="at">verbose =</span> verbose)</span>
-<span id="cb48-62"><a href="#cb48-62" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (count_only) {</span>
-<span id="cb48-63"><a href="#cb48-63" aria-hidden="true" tabindex="-1"></a>                result <span class="ot">&lt;-</span> <span class="fu">unlist</span>(result)</span>
-<span id="cb48-64"><a href="#cb48-64" aria-hidden="true" tabindex="-1"></a>            }</span>
-<span id="cb48-65"><a href="#cb48-65" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb48-66"><a href="#cb48-66" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb48-67"><a href="#cb48-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (count_only) {</span>
-<span id="cb48-68"><a href="#cb48-68" aria-hidden="true" tabindex="-1"></a>        result <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, result) <span class="sc">|&gt;</span></span>
-<span id="cb48-69"><a href="#cb48-69" aria-hidden="true" tabindex="-1"></a>            <span class="fu">as.data.frame</span>()</span>
-<span id="cb48-70"><a href="#cb48-70" aria-hidden="true" tabindex="-1"></a>        result <span class="ot">&lt;-</span> result[<span class="dv">1</span>] <span class="sc">|&gt;</span></span>
-<span id="cb48-71"><a href="#cb48-71" aria-hidden="true" tabindex="-1"></a>            <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
-<span id="cb48-72"><a href="#cb48-72" aria-hidden="true" tabindex="-1"></a>            <span class="fu">unlist</span>()</span>
-<span id="cb48-73"><a href="#cb48-73" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb48-74"><a href="#cb48-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-75"><a href="#cb48-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(result)</span>
-<span id="cb48-76"><a href="#cb48-76" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @title FUNCTION_TITLE</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @description FUNCTION_DESCRIPTION</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param search PARAM_DESCRIPTION, Default: NULL</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param concepts character vector. The search will be done by using `AND`, Default: NULL</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param dois character vector. dois which should be filtered for. If</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;   longer than 1, these are collapsed into an `OR`. Default: NULL</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param count_only PARAM_DESCRIPTION, Default: TRUE</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param verbose PARAM_DESCRIPTION, Default: FALSE</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param return_call PARAM_DESCRIPTION, Default: FALSE</span></span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @param results_per_doi PARAM_DESCRIPTION, Default: FALSE</span></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @return OUTPUT_DESCRIPTION</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @details DETAILS</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @examples</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; \dontrun{</span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; if (interactive()) {</span></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;     # EXAMPLE1</span></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; }</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; }</span></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @seealso</span></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39;  \code{\link[openalexR]{oa_query}}, \code{\link[openalexR]{oa_request}}</span></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @rdname get_search_combined</span></span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @export</span></span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&#39; @importFrom openalexR oa_query oa_request</span></span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>get_search_combined <span class="ot">&lt;-</span> <span class="cf">function</span>(</span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">search =</span> <span class="cn">NULL</span>,</span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">concepts.id =</span> <span class="cn">NULL</span>,</span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">dois =</span> <span class="cn">NULL</span>,</span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_only =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">return_call =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">results_per_doi =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(concepts.id <span class="sc">&gt;</span> <span class="dv">1</span>)) {</span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a>        concepts.id <span class="ot">&lt;-</span> <span class="fu">paste0</span>(concepts.id, <span class="at">collapse =</span> <span class="st">&quot;|&quot;</span>)</span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-36"><a href="#cb49-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>results_per_doi) {</span>
+<span id="cb49-37"><a href="#cb49-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">length</span>(dois <span class="sc">&gt;</span> <span class="dv">1</span>)) {</span>
+<span id="cb49-38"><a href="#cb49-38" aria-hidden="true" tabindex="-1"></a>            dois <span class="ot">&lt;-</span> <span class="fu">paste0</span>(dois, <span class="at">collapse =</span> <span class="st">&quot;|&quot;</span>)</span>
+<span id="cb49-39"><a href="#cb49-39" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb49-40"><a href="#cb49-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-41"><a href="#cb49-41" aria-hidden="true" tabindex="-1"></a>    query <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb49-42"><a href="#cb49-42" aria-hidden="true" tabindex="-1"></a>        dois,</span>
+<span id="cb49-43"><a href="#cb49-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">function</span>(doi) {</span>
+<span id="cb49-44"><a href="#cb49-44" aria-hidden="true" tabindex="-1"></a>            <span class="fu">oa_query</span>(</span>
+<span id="cb49-45"><a href="#cb49-45" aria-hidden="true" tabindex="-1"></a>                <span class="at">search =</span> search,</span>
+<span id="cb49-46"><a href="#cb49-46" aria-hidden="true" tabindex="-1"></a>                <span class="at">filter =</span> <span class="fu">list</span>(<span class="at">concepts.id =</span> concepts.id, <span class="at">from_publication_date =</span> <span class="st">&quot;1980-01-01&quot;</span>, <span class="at">to_publication_date =</span> <span class="st">&quot;2023-12-30&quot;</span>),</span>
+<span id="cb49-47"><a href="#cb49-47" aria-hidden="true" tabindex="-1"></a>                <span class="at">doi =</span> doi,</span>
+<span id="cb49-48"><a href="#cb49-48" aria-hidden="true" tabindex="-1"></a>                <span class="at">verbose =</span> verbose</span>
+<span id="cb49-49"><a href="#cb49-49" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb49-50"><a href="#cb49-50" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb49-51"><a href="#cb49-51" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb49-52"><a href="#cb49-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">names</span>(query) <span class="ot">&lt;-</span> dois</span>
+<span id="cb49-53"><a href="#cb49-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-54"><a href="#cb49-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (return_call) {</span>
+<span id="cb49-55"><a href="#cb49-55" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(query)</span>
+<span id="cb49-56"><a href="#cb49-56" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-57"><a href="#cb49-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-58"><a href="#cb49-58" aria-hidden="true" tabindex="-1"></a>    result <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb49-59"><a href="#cb49-59" aria-hidden="true" tabindex="-1"></a>        query,</span>
+<span id="cb49-60"><a href="#cb49-60" aria-hidden="true" tabindex="-1"></a>        <span class="cf">function</span>(q) {</span>
+<span id="cb49-61"><a href="#cb49-61" aria-hidden="true" tabindex="-1"></a>            result <span class="ot">&lt;-</span> openalexR<span class="sc">::</span><span class="fu">oa_request</span>(q, <span class="at">count_only =</span> count_only, <span class="at">verbose =</span> verbose)</span>
+<span id="cb49-62"><a href="#cb49-62" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (count_only) {</span>
+<span id="cb49-63"><a href="#cb49-63" aria-hidden="true" tabindex="-1"></a>                result <span class="ot">&lt;-</span> <span class="fu">unlist</span>(result)</span>
+<span id="cb49-64"><a href="#cb49-64" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb49-65"><a href="#cb49-65" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb49-66"><a href="#cb49-66" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb49-67"><a href="#cb49-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (count_only) {</span>
+<span id="cb49-68"><a href="#cb49-68" aria-hidden="true" tabindex="-1"></a>        result <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, result) <span class="sc">|&gt;</span></span>
+<span id="cb49-69"><a href="#cb49-69" aria-hidden="true" tabindex="-1"></a>            <span class="fu">as.data.frame</span>()</span>
+<span id="cb49-70"><a href="#cb49-70" aria-hidden="true" tabindex="-1"></a>        result <span class="ot">&lt;-</span> result[<span class="dv">1</span>] <span class="sc">|&gt;</span></span>
+<span id="cb49-71"><a href="#cb49-71" aria-hidden="true" tabindex="-1"></a>            <span class="fu">t</span>() <span class="sc">|&gt;</span></span>
+<span id="cb49-72"><a href="#cb49-72" aria-hidden="true" tabindex="-1"></a>            <span class="fu">unlist</span>()</span>
+<span id="cb49-73"><a href="#cb49-73" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb49-74"><a href="#cb49-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-75"><a href="#cb49-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(result)</span>
+<span id="cb49-76"><a href="#cb49-76" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> key_works_concepts <span class="sc">|&gt;</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">do.call</span>(<span class="at">what =</span> rbind) <span class="sc">|&gt;</span></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(level <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(score)) <span class="sc">|&gt;</span></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(id, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(display_name) <span class="sc">|&gt;</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># slice(1:50) |&gt;</span></span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>() <span class="sc">|&gt;</span></span>
-<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>()</span>
-<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>dois <span class="ot">&lt;-</span> key_works_df <span class="sc">|&gt;</span></span>
-<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">do.call</span>(<span class="at">what =</span> rbind) <span class="sc">|&gt;</span></span>
-<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(doi) <span class="sc">|&gt;</span></span>
-<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>() <span class="sc">|&gt;</span></span>
-<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>()</span>
-<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a><span class="fu">get_search_combined</span>(</span>
-<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># search = paste0( &quot;(&quot;, params$s_tsf_comb, &quot;)&quot; ),</span></span>
-<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">search =</span> <span class="fu">paste0</span>(<span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_tsf_comb, <span class="st">&quot;) AND (&quot;</span>, params<span class="sc">$</span>s_nat_rev, <span class="st">&quot;)&quot;</span>),</span>
-<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">concepts.id =</span> <span class="fu">paste0</span>(ids, <span class="at">collapse =</span> <span class="st">&quot;|&quot;</span>),</span>
-<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  dois = dois,</span></span>
-<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_only =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
-<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb49-30"><a href="#cb49-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-31"><a href="#cb49-31" aria-hidden="true" tabindex="-1"></a>openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">concepts.id =</span> <span class="st">&quot;https://openalex.org/c86803240|https://openalex.org/c39432304&quot;</span>) <span class="sc">|&gt;</span></span>
-<span id="cb49-32"><a href="#cb49-32" aria-hidden="true" tabindex="-1"></a>    openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb49-33"><a href="#cb49-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>()</span>
-<span id="cb49-34"><a href="#cb49-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-35"><a href="#cb49-35" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> (openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">doi =</span> key_papers) <span class="sc">|&gt;</span> openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">oa2df</span>(<span class="at">entity =</span> <span class="st">&quot;works&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> key_works_concepts <span class="sc">|&gt;</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">do.call</span>(<span class="at">what =</span> rbind) <span class="sc">|&gt;</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(level <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(score)) <span class="sc">|&gt;</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(id, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(display_name) <span class="sc">|&gt;</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># slice(1:50) |&gt;</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>() <span class="sc">|&gt;</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>()</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>dois <span class="ot">&lt;-</span> key_works_df <span class="sc">|&gt;</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">do.call</span>(<span class="at">what =</span> rbind) <span class="sc">|&gt;</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(doi) <span class="sc">|&gt;</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unique</span>() <span class="sc">|&gt;</span></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.vector</span>()</span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a><span class="fu">get_search_combined</span>(</span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># search = paste0( &quot;(&quot;, params$s_tsf_comb, &quot;)&quot; ),</span></span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">search =</span> <span class="fu">paste0</span>(<span class="st">&quot;(&quot;</span>, params<span class="sc">$</span>s_tsf_comb, <span class="st">&quot;) AND (&quot;</span>, params<span class="sc">$</span>s_nat_rev, <span class="st">&quot;)&quot;</span>),</span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">concepts.id =</span> <span class="fu">paste0</span>(ids, <span class="at">collapse =</span> <span class="st">&quot;|&quot;</span>),</span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  dois = dois,</span></span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">count_only =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">concepts.id =</span> <span class="st">&quot;https://openalex.org/c86803240|https://openalex.org/c39432304&quot;</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a>    openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unlist</span>()</span>
+<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> (openalexR<span class="sc">::</span><span class="fu">oa_query</span>(<span class="at">doi =</span> key_papers) <span class="sc">|&gt;</span> openalexR<span class="sc">::</span><span class="fu">oa_request</span>(<span class="at">count_only =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">oa2df</span>(<span class="at">entity =</span> <span class="st">&quot;works&quot;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>TODO: one search term per chapter with OR TODO: CH 5 search terms missing - check in emails</p>
