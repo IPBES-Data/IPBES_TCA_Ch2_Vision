@@ -9,6 +9,8 @@ format:
         embed-resources: true
         code-fold: true
         code-summary: 'Show the code'
+execute:
+  message: NA
 params:
 
     # s_level_1: (transformation OR transition* OR ((shift OR change) AND (fundamental OR deep OR radical))) AND (socio OR social OR politics OR political OR governance OR economical OR cultural OR system* OR technological OR inner OR personal)  
@@ -591,7 +593,7 @@ params:
       OR idea
       OR appearance
   
-    s_1_f_ch5_vision_case: !expr function(){paste0("(", params$s_1_ch5_vision, ") AND (", params$s_case, ")")}
+    s_1_f_ch5_vision_case: !expr function(){paste0("(", params$s_1_ch5_vision, ") AND (", params$s_1_case, ")")}
 
     s_1_case: >-
       "case study*"
@@ -607,23 +609,39 @@ params:
     concept_cuttoff: 0.6
 
     key_papers:
-      - "./key papers/Ch 1 - Arun.csv"
-      - "./key papers/Ch 2 - Sebastian.csv"
-      - "./key papers/Ch 5 - Hannah.csv"
-      - "./key papers/Ch 5 - Victoria.csv"
+      - "./inputs/key papers/Ch 1 - Arun.csv"
+#      - "./inputs/key papers/Ch 1 - pdf.csv"
+      - "./inputs/key papers/Ch 1 - word.csv"
+      - "./inputs/key papers/Ch 2 - pdf.csv"
+      - "./inputs/key papers/Ch 2 - Sebastian.csv"
+      - "./inputs/key papers/Ch 3 - Cl1.csv"
+      - "./inputs/key papers/Ch 3 - Cl3.csv"
+      - "./inputs/key papers/Ch 3 - Cl4.csv"
+      - "./inputs/key papers/Ch 3 - Cl5.csv"
+      - "./inputs/key papers/Ch 3 - Cl6.csv"
+      - "./inputs/key papers/Ch 3 - pdf.csv"
+      - "./inputs/key papers/Ch 4 - Challenge 1.csv"
+      - "./inputs/key papers/Ch 4 - Challenge 2.csv"
+      - "./inputs/key papers/Ch 4 - Challenge 3.csv"
+      - "./inputs/key papers/Ch 4 - Challenge 4.csv"
+      - "./inputs/key papers/Ch 4 - Challenge 5.csv"
+      - "./inputs/key papers/Ch 5 - Hannah.csv"
+      - "./inputs/key papers/Ch 5 - Victoria.csv"
+      - "./inputs/key papers/Ch 5.csv"
 
     mc.cores: 8
 ---
 ```{r}
 #| label: setup
 #| include: false
-#| 
+knitr::opts_chunk$set(message = NA)
+
 build <- as.integer(readLines("buildNo"))
 build <- build + 1
 writeLines(as.character(build), "buildNo")
 
-if (!exists("params")){
-    params <- rmarkdown::yaml_front_matter('~/Documents_Local/git/IPBES_data_tsu/Assessments/Transformative Change/IPBES_TFC_Ch2_Vision/Status.qmd')$params
+if (!exists("params")) {
+    params <- rmarkdown::yaml_front_matter("~/Documents_Local/git/IPBES_data_tsu/Assessments/Transformative Change/IPBES_TFC_Ch2_Vision/Status.qmd")$params
 }
 
 library(openalexR)
@@ -632,23 +650,30 @@ library(dplyr)
 library(knitr)
 library(tictoc)
 
+library(parallel)
+library(pbmcapply)
+library(pbapply)
+
 # Function to make the search strings compacter
-compact <- function(x){
-  x |>
-    gsub(pattern = "\n", replacement = " ") |>
-    gsub(pattern = "\\*", replacement = "") |>
-    gsub(pattern = "\\s+", replacement = " ") |>
-    gsub(pattern = "\\( ", replacement = "(") |>    
-    gsub(pattern = " )", replacement = ")")
+compact <- function(x) {
+    x |>
+        gsub(pattern = "\n", replacement = " ") |>
+        gsub(pattern = "\\*", replacement = "") |>
+        gsub(pattern = "\\s+", replacement = " ") |>
+        gsub(pattern = "\\( ", replacement = "(") |>
+        gsub(pattern = " )", replacement = ")")
 }
 
-if (!require("IPBES.R")){
+if (!require("IPBES.R")) {
     install.packages("IPBES.R", repos = c("https://ipbes-data.r-universe.dev", "https://cloud.r-project.org"))
-    if (!require("IPBES.R")){
+    if (!require("IPBES.R")) {
         stop("Package `IPBES.R` is not available and could not be installed!")
     }
-
 }
+
+# A single core request is needed to make multicore parallel processing work
+x <- oa_request(oa_query("bidiversity"), count_only = TRUE)
+rm(x)
 ```
 
 # Working Title
@@ -692,7 +717,7 @@ cat(params$s_1_transformative_change)
 
 ```{r}
 #| label: s_1_nature_environment
-#| 
+#|
 
 cat(params$s_1_nature_environment)
 ```
@@ -707,7 +732,7 @@ cat(params$s_1_nature_environment)
 
 ```{r}
 #| label: s_1_ch1_01
-#| 
+#|
 
 cat(params$s_1_ch1_01)
 ```
@@ -720,7 +745,7 @@ cat(params$s_1_ch1_01)
 
 ```{r}
 #| label: s_1_ch1_02
-#| 
+#|
 
 cat(params$s_1_ch1_02)
 ```
@@ -733,7 +758,7 @@ cat(params$s_1_ch1_02)
 
 ```{r}
 #| label: s_1_ch1_03
-#| 
+#|
 
 cat(params$s_1_ch1_03)
 ```
@@ -746,7 +771,7 @@ cat(params$s_1_ch1_03)
 
 ```{r}
 #| label: s_1_ch1_04
-#| 
+#|
 
 cat(params$s_1_ch1_04)
 ```
@@ -759,7 +784,7 @@ cat(params$s_1_ch1_04)
 
 ```{r}
 #| label: s_1_ch1_05
-#| 
+#|
 
 cat(params$s_1_ch1_05)
 ```
@@ -772,7 +797,7 @@ cat(params$s_1_ch1_05)
 
 ```{r}
 #| label: s_1_ch1_06
-#| 
+#|
 
 cat(params$s_1_ch1_06)
 ```
@@ -785,7 +810,7 @@ cat(params$s_1_ch1_06)
 
 ```{r} 
 #| label: s_1_ch2
-#| 
+#|
 
 cat(params$s_1_ch2)
 ```
@@ -800,7 +825,7 @@ cat(params$s_1_ch2)
 
 ```{r}
 #| label: s_1_ch3_01
-#| 
+#|
 
 cat(params$s_1_ch3_01)
 ```
@@ -826,7 +851,7 @@ cat(params$s_1_ch3_02)
 
 ```{r}
 #| label: s_1_ch3_03
-#| 
+#|
 
 cat(params$s_1_ch3_03)
 ```
@@ -839,7 +864,7 @@ cat(params$s_1_ch3_03)
 
 ```{r}
 #| label: s_1_ch3_04
-#| 
+#|
 
 cat(params$s_1_ch3_04)
 ```
@@ -850,7 +875,7 @@ cat(params$s_1_ch3_04)
 
 ```{r}
 #| label: s_1_ch3_05
-#| 
+#|
 
 cat(params$s_1_ch3_05)
 ```
@@ -862,7 +887,7 @@ cat(params$s_1_ch3_05)
 
 ```{r}
 #| label: s_1_ch3_06
-#| 
+#|
 
 cat(params$s_1_ch3_06)
 ```
@@ -875,7 +900,7 @@ cat(params$s_1_ch3_06)
 
 ```{r}
 #| label: s_1_ch4_01
-#| 
+#|
 
 cat(params$s_1_ch4_01)
 ```
@@ -886,7 +911,7 @@ cat(params$s_1_ch4_01)
 
 ```{r}
 #| label: s_1_ch4_02
-#| 
+#|
 
 cat(params$s_1_ch4_02)
 ```
@@ -900,7 +925,7 @@ cat(params$s_1_ch4_02)
 
 ```{r}
 #| label: s_1_ch5_vision
-#| 
+#|
 
 cat(params$s_1_ch5_vision)
 ```
@@ -912,7 +937,7 @@ cat(params$s_1_ch5_vision)
 
 ```{r}
 #| label: s_1_f_ch5_vision_case
-#| 
+#|
 
 cat(params$s_1_f_ch5_vision_case())
 ```
@@ -931,30 +956,33 @@ No resiults are shown here, so this section can be skipped.
 fn <- file.path(".", "data", "search_term_hits.rds")
 if (!file.exists(fn)) {
     search_term_hits <-
-        sapply(
+        parallel::mclapply(
             grep("s_1_", names(params), value = TRUE),
             function(stn) {
                 message("getting '", stn, "' ...")
-                if (grepl("_f_", stn)){
-                  search <- params[[stn]]()
+                if (grepl("_f_", stn)) {
+                    search <- params[[stn]]()
                 } else {
-                  search <- params[[stn]]
+                    search <- params[[stn]]
                 }
                 search <- compact(search)
                 openalexR::oa_query(search = search) |>
                     openalexR::oa_request(count_only = TRUE) |>
                     unlist()
-            }
+            },
+            mc.cores = params$mc.cores,
+            mc.preschedule = FALSE
         ) |>
+        do.call(what = cbind) |>
         t() |>
         as.data.frame() |>
         dplyr::mutate(page = NULL, per_page = NULL) |>
         dplyr::mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0))
-    rownames(search_term_hits)  <- rownames(search_term_hits) |>
-      gsub(pattern = "s_1_", replacement = "" ) |>
-      gsub(pattern = "f_", replacement = "" ) |>
-      gsub(pattern = "^ch", replacement = "Chapter " ) |>
-      gsub(pattern = "_", replacement = " " )
+    rownames(search_term_hits) <- rownames(search_term_hits) |>
+        gsub(pattern = "s_1_", replacement = "") |>
+        gsub(pattern = "f_", replacement = "") |>
+        gsub(pattern = "^ch", replacement = "Chapter ") |>
+        gsub(pattern = "_", replacement = " ")
     saveRDS(search_term_hits, file = fn)
 } else {
     search_term_hits <- readRDS(fn)
@@ -964,77 +992,99 @@ if (!file.exists(fn)) {
 
 ```{r}
 #| label: get_key_papers
-#| 
+#|
 fn <- file.path(".", "data", "key_papers.rds")
 if (!file.exists(fn)) {
-  key_papers <- lapply(
-    params$key_papers,
-    function(fn){
-      read.csv(fn) |>
-      select(Author, Publication.Year, Title, Publication.Title, DOI) |>
-      rename(Year = Publication.Year, Journal = Publication.Title) |>
-      arrange(desc(Year))
-    }
-  )
-  names(key_papers) <- params$key_papers |>
-      basename() |>
-      gsub(pattern = "\\.csv", replacement = "") |>
-      gsub(pattern = " ", replacement = "") |>
-      gsub(pattern = "-", replacement = "_")
+    key_papers <- lapply(
+        params$key_papers,
+        function(fn) {
+            message("Processing '", fn, "' ...")
+            read.csv(fn) |>
+                select(DOI) # |>
+            # rename(Year = Publication.Year, Journal = Publication.Title) |>
+            # arrange(desc(Year))
+        }
+    )
+    names(key_papers) <- params$key_papers |>
+        basename() |>
+        gsub(pattern = "\\.csv", replacement = "") |>
+        gsub(pattern = " - ", replacement = "_") |>
+        gsub(pattern = "-", replacement = "_") |>
+        gsub(pattern = " ", replacement = "_")
 
-  saveRDS(key_papers, file = fn)
+    saveRDS(key_papers, file = fn)
 } else {
-  key_papers <- readRDS(fn)
+    key_papers <- readRDS(fn)
 }
 ```
 
 
 ```{r}
 #| label: key_works
-#| 
+#|
 
 fn_kw <- file.path(".", "data", "key_works.rds")
 fn_kw_df <- file.path(".", "data", "key_works_df.rds")
 if (!all(file.exists(fn_kw, fn_kw_df))) {
-  key_works <- lapply(
-    key_papers,
-    function(kp) {
-      dois <- kp |>
-        select(DOI) |>
-        filter(DOI != "") |>
-        unlist() |>
-        tolower() |>
-        unique()
-      openalexR::oa_query(doi = dois) |>
-        openalexR::oa_request(count_only = FALSE)
-    }
-  )
-  saveRDS(key_works, file = fn_kw)
+    key_works <- lapply(
+        key_papers,
+        function(kp) {
+            dois <- kp |>
+                select(DOI) |>
+                filter(DOI != "") |>
+                unlist() |>
+                tolower() |>
+                unique()
+            openalexR::oa_query(doi = dois) |>
+                openalexR::oa_request(count_only = FALSE)
+        }
+    )
 
-  key_works_df <- lapply(
-    key_works,
-    oa2df,
-    entity = "works"
-  )
-  saveRDS(key_works_df, fn_kw_df)
+    found <- sapply(
+        key_works,
+        function(x) {
+            length(x) > 0
+        }
+    )
+
+    key_works <- key_works[found]
+
+    print("The following key paper sets were excluded as they contained no papers in OpenAlex:\n")
+    print(names(found)[!found])
+
+    saveRDS(key_works, file = fn_kw)
+
+    key_works_df <- lapply(
+        key_works,
+        oa2df,
+        entity = "works"
+    )
+    saveRDS(key_works_df, fn_kw_df)
 } else {
-  key_works <- readRDS(file = fn_kw)
-  key_works_df <- readRDS(fn_kw_df)
+    key_works <- readRDS(file = fn_kw)
+    key_works_df <- readRDS(fn_kw_df)
 }
 ```
 
+
 ```{r}
 #| label: key_works_concepts
-#| 
+#|
 
 fn <- file.path(".", "data", "key_works_concepts.rds")
 if (!file.exists(fn)) {
+    nms <- names(key_works_df)
     key_works_concepts <- lapply(
-        key_works_df,
-        function(kw_df) {
-            do.call(rbind, kw_df$concepts) |>
-                # filter(score > params$concept_cuttoff) |>
-                arrange(desc(score))
+        nms,
+        function(nm) {
+            message("Processing '", nm, "' ...")
+            ifelse(
+                is.na(key_works_df[[nm]]),
+                list(NULL),
+                do.call(rbind, key_works_df[[nm]]$concepts) |>
+                    # filter(score > params$concept_cuttoff) |>
+                    arrange(desc(score))
+            )
         }
     )
     saveRDS(key_works_concepts, file = fn)
@@ -1046,55 +1096,69 @@ if (!file.exists(fn)) {
 
 ```{r}
 #| label: key_works_hits
-#| 
+#|
 
 fn <- file.path(".", "data", "key_works_hits.rds")
 if (!file.exists(fn)) {
-  key_works_hits <- lapply(
-    key_works_df,
-    function(kw_df) {
-      message("Getting one key paper set... ")
-      dois <- kw_df |>
-        select(doi) |>
-        distinct() |>
-        unlist() |>
-        unique() |>
-        tolower()
+    nms <- names(key_works_df)
+    key_works_hits <- pbapply::pblapply(
+        nms,
+        function(nm) {
+            message("Getting key paper set for ", nm, " ...")
+            dois <- key_works_df[[nm]] |>
+                select(doi) |>
+                distinct() |>
+                unlist() |>
+                unique() |>
+                tolower()
 
-      kw_h <-  sapply(
-            grep("s_1_", names(params), value = TRUE),
-            function(stn) {
-                message("getting '", stn, "' ...")
-                if (grepl("_f_", stn)) {
-                    search <- params[[stn]]()
-                } else {
-                    search <- params[[stn]]
-                }
-                search <- compact(search)
-                get_count(search_term = search, dois = dois)
-            }
-        ) |>
-        as.data.frame()
+            s_t <- grep("s_1_", names(params), value = TRUE)
+            kw_h <- parallel::mclapply(
+                s_t,
+                function(stn) {
+                    message("  getting '", stn, "' ...")
+                    if (grepl("_f_", stn)) {
+                        search <- params[[stn]]()
+                    } else {
+                        search <- params[[stn]]
+                    }
+                    search <- compact(search)
+                    get_count(search_term = search, dois = dois)
+                },
+                mc.cores = params$mc.cores,
+                mc.preschedule = FALSE
+            ) |>
+                do.call(what = cbind) |>
+                as.data.frame()
+                
+            names(kw_h) <- s_t
 
-      kw_h <- cbind(
-        kw_h,
-        Total = rowSums(kw_h)
-      ) |>
-        mutate(Total = Total - 1)
+            # if (ncol(kw_h) == 1){
+            #     kw_h <- t(kw_h)
+            #     rownames(kw_h) <- dois
+            # }
 
-      kw_h <- rbind(
-        kw_h,
-        colSums(kw_h)
-      )
 
-      rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-      return(kw_h)
-    }
-  )
+            kw_h <- cbind(
+                kw_h,
+                Total = rowSums(kw_h)
+            ) |>
+                mutate(Total = Total - 1)
 
-  saveRDS(key_works_hits, file = fn)
+            kw_h <- rbind(
+                kw_h,
+                colSums(kw_h)
+            )
+
+            rownames(kw_h)[[nrow(kw_h)]] <- "Total"
+            return(kw_h)
+        }
+    )
+    names(key_works_hits) <- nms
+
+    saveRDS(key_works_hits, file = fn)
 } else {
-  key_works_hits <- readRDS(file = fn)
+    key_works_hits <- readRDS(file = fn)
 }
 ```
 
@@ -1120,27 +1184,33 @@ search_term_hits |>
 
 ```{r}
 #| label: key_paper_hits_in_corpi
-#| 
+#|
 
 tbl <- lapply(
     names(key_works_hits),
     function(n) {
         kwh <- key_works_hits[[n]]
-        total <- grepl("Total", rownames(kwh))
-        rownames(kwh)[!total] <- paste0(n, " - <a href='https://doi.org/", rownames(kwh)[!total], "' target='_blank'>Click here</a>")
-        rownames(kwh)[total] <- paste0("**", n, " - Total**")
-        kwh |>
-            arrange(Total) |>
-            apply(
-                c(1, 2),
-                function(x) {
-                    ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
-                }
-            ) |>
-            as.data.frame()
+        if (nrow(kwh) > 0) {
+            total <- grepl("Total", rownames(kwh))
+            rownames(kwh)[!total] <- paste0(n, " - <a href='https://doi.org/", rownames(kwh)[!total], "' target='_blank'>Click here</a>")
+            rownames(kwh)[total] <- paste0("**", n, " - Total**")
+            kwh |>
+                arrange(Total) |>
+                apply(
+                    c(1, 2),
+                    function(x) {
+                        ifelse(x == 0, "<font color='red'>0</font>", paste0("<font color='green'>", x, "</font>"))
+                    }
+                ) |>
+                as.data.frame()
+        } else {
+            return(NULL)
+        }
     }
-) |>
-    do.call(what = rbind)
+)
+tbl <- tbl[sapply(tbl, class) != "NULL"]
+tbl <- do.call(what = rbind, tbl)
+
 
 detail <- rbind(
     "**overall**" = c(
@@ -1150,7 +1220,7 @@ detail <- rbind(
                 select(count) |>
                 unlist() |>
                 as.vector(),
-              "**"
+            "**"
         ),
         ""
     ),
@@ -1189,7 +1259,7 @@ Each column is a different search term, and each row consists of the key papers 
 
 in_summary <- grepl("Total|overall", rownames(detail))
 knitr::kable(
-  detail[in_summary,]
+    detail[in_summary, ]
 )
 ```
 
@@ -1208,14 +1278,14 @@ knitr::kable(detail)
 The possible new search strategy is a combination of a keyword based search Results and a concepts based filter. The concepts terms are selected by using their score, i.e. all concepts with a score higher than {r params$concept_cuttoff} are used. Please see section @concepts_selected for the list of concepts.
 
 ```{r}
-#| label: search_combined 
+#| label: search_combined
 #| eval: false
 
 #' @title FUNCTION_TITLE
 #' @description FUNCTION_DESCRIPTION
 #' @param search PARAM_DESCRIPTION, Default: NULL
 #' @param concepts character vector. The search will be done by using `AND`, Default: NULL
-#' @param dois character vector. dois which should be filtered for. If 
+#' @param dois character vector. dois which should be filtered for. If
 #'   longer than 1, these are collapsed into an `OR`. Default: NULL
 #' @param count_only PARAM_DESCRIPTION, Default: TRUE
 #' @param verbose PARAM_DESCRIPTION, Default: FALSE
@@ -1223,16 +1293,16 @@ The possible new search strategy is a combination of a keyword based search Resu
 #' @param results_per_doi PARAM_DESCRIPTION, Default: FALSE
 #' @return OUTPUT_DESCRIPTION
 #' @details DETAILS
-#' @examples 
+#' @examples
 #' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
+#' if (interactive()) {
+#'     # EXAMPLE1
 #' }
-#' @seealso 
+#' }
+#' @seealso
 #'  \code{\link[openalexR]{oa_query}}, \code{\link[openalexR]{oa_request}}
 #' @rdname get_search_combined
-#' @export 
+#' @export
 #' @importFrom openalexR oa_query oa_request
 get_search_combined <- function(
     search = NULL,
@@ -1241,16 +1311,15 @@ get_search_combined <- function(
     count_only = TRUE,
     verbose = FALSE,
     return_call = FALSE,
-    results_per_doi = FALSE){
-
-    if (length(concepts.id > 1)){
-      concepts.id <- paste0(concepts.id, collapse = "|")
+    results_per_doi = FALSE) {
+    if (length(concepts.id > 1)) {
+        concepts.id <- paste0(concepts.id, collapse = "|")
     }
 
-    if (!results_per_doi){
-      if (length(dois > 1)) {
-        dois <- paste0(dois, collapse = "|")
-      }
+    if (!results_per_doi) {
+        if (length(dois > 1)) {
+            dois <- paste0(dois, collapse = "|")
+        }
     }
     query <- lapply(
         dois,
@@ -1278,14 +1347,14 @@ get_search_combined <- function(
             }
         }
     )
-    if (count_only){
-      result <- do.call(rbind, result) |>
-        as.data.frame() 
-      result <- result[1] |> 
-      t() |>
-      unlist()
+    if (count_only) {
+        result <- do.call(rbind, result) |>
+            as.data.frame()
+        result <- result[1] |>
+            t() |>
+            unlist()
     }
-   
+
     return(result)
 }
 ```
@@ -1296,37 +1365,38 @@ get_search_combined <- function(
 #| eval: false
 
 ids <- key_works_concepts |>
-  do.call(what = rbind) |>
-  filter(level == 0) |>
-  arrange(desc(score)) |>
-  distinct(id, .keep_all = TRUE) |>
-  select(display_name) |>
-  # slice(1:50) |>
-  unlist() |>
-  as.vector() |> unique()
+    do.call(what = rbind) |>
+    filter(level == 0) |>
+    arrange(desc(score)) |>
+    distinct(id, .keep_all = TRUE) |>
+    select(display_name) |>
+    # slice(1:50) |>
+    unlist() |>
+    as.vector() |>
+    unique()
 
 
 dois <- key_works_df |>
-  do.call(what = rbind) |>
-  select(doi) |>
-  unlist() |>
-  unique() |>
-  as.vector()
+    do.call(what = rbind) |>
+    select(doi) |>
+    unlist() |>
+    unique() |>
+    as.vector()
 
 
 
 get_search_combined(
-  # search = paste0( "(", params$s_tsf_comb, ")" ),
-  search = paste0( "(", params$s_tsf_comb, ") AND (",  params$s_nat_rev, ")" ),
-  concepts.id = paste0(ids, collapse = "|"),
-#  dois = dois,
-  count_only = TRUE,
-  verbose = TRUE
+    # search = paste0( "(", params$s_tsf_comb, ")" ),
+    search = paste0("(", params$s_tsf_comb, ") AND (", params$s_nat_rev, ")"),
+    concepts.id = paste0(ids, collapse = "|"),
+    #  dois = dois,
+    count_only = TRUE,
+    verbose = TRUE
 )
 
 openalexR::oa_query(concepts.id = "https://openalex.org/c86803240|https://openalex.org/c39432304") |>
-  openalexR::oa_request(count_only = TRUE) |>
-  unlist()
+    openalexR::oa_request(count_only = TRUE) |>
+    unlist()
 
 x <- (openalexR::oa_query(doi = key_papers) |> openalexR::oa_request(count_only = FALSE) |> oa2df(entity = "works"))
 ```
