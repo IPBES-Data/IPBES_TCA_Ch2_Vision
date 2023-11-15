@@ -8,9 +8,9 @@ This repository is part of an ongoing IPBES project.
 
 The authors do not take any responsibility for it's copntent or the correct working of the code. If scripts in here wipe your data, you are on your own.
 
-Nevertheless, please feel free to browse the code and re-use it at your own risk. 
+Nevertheless, please feel free to browse the code and re-use it at your own risk.
 
-Once finalised, the final repo will be published on Zenodo 
+Once finalised, the final repo will be published on Zenodo
 
 ## Metadata
 
@@ -28,12 +28,12 @@ Once finalised, the final repo will be published on Zenodo
   - ...
 
 - **email cc**:
-  - [TfC tsu](mailto:ipbes-tsu-transformative-change@umontpellier.fr)
+  - [TCA tsu](mailto:ipbes-tsu-transformative-change@umontpellier.fr)
   - <lynne.shannon@uct.ac.za>
   - <laurence.perianin@umontpellier.fr>
   - ...
 
-- **Github Repo**: [IPBES_TFC_Ch2_Visione](https://github.com/IPBES-Data/IPBES_TFC_Ch2_Vision)
+- **Github Repo**: [IPBES_TCA_Ch2_Visione](https://github.com/IPBES-Data/IPBES_TCA_Ch2_Vision)
 - **Googl Drive Folder**: [Google Drive Folder](https://drive.google.com/drive/folders/1IiALbIOAjYeL_IrlkZd-E7U7hr72iggx)
 
 - **`Further Info**: [Document on Google Drive]([Google Drive Folder](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69EibD_x05GE)
@@ -48,10 +48,10 @@ Once finalised, the final repo will be published on Zenodo
 
 See [here](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69EibD_x05GE) for further info.
 
-
 ## Status
+
 - ...
 
-
 ## Reports
+
 - [Status Report](Status.html)

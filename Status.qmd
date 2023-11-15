@@ -641,7 +641,7 @@ build <- build + 1
 writeLines(as.character(build), "buildNo")
 
 if (!exists("params")) {
-    params <- rmarkdown::yaml_front_matter("~/Documents_Local/git/IPBES_data_tsu/Assessments/Transformative Change/IPBES_TFC_Ch2_Vision/Status.qmd")$params
+    params <- rmarkdown::yaml_front_matter("~/Documents_Local/git/IPBES_data_tsu/Assessments/Transformative Change/IPBES_TCA_Ch2_Vision/Status.qmd")$params
 }
 
 library(openalexR)
@@ -681,11 +681,11 @@ rm(x)
 ```
 
 # Working Title
-TfC Ch 2 Vision
+TCA Ch 2 Vision
 
 ## Code repo
 
-[Github - private](https://github.com/IPBES-Data/IPBES_TFC_Ch2_Vision)
+[Github - private](https://github.com/IPBES-Data/IPBES_TCA_Ch2_Vision)
 
 ## Build No: ``r build``
 
