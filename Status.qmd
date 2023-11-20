@@ -9,6 +9,11 @@ format:
         embed-resources: true
         code-fold: true
         code-summary: 'Show the code'
+        grid:
+            sidebar-width: 0px
+            body-width: 4000px
+            margin-width: 200px
+            gutter-width: 1.5rem      
 execute:
   message: NA
 params:
@@ -593,8 +598,6 @@ params:
       OR idea
       OR appearance
   
-    s_1_f_ch5_vision_case: !expr function(){paste0("(", params$s_1_ch5_vision, ") AND (", params$s_1_case, ")")}
-
     s_1_case: >-
       "case study*"
       OR case
@@ -605,32 +608,52 @@ params:
       OR empirical
       OR practical
       OR initiative*
+
+    s_1_f_ch5_vision_case: !expr function(){paste0("(", params$s_1_ch5_vision, ") AND (", params$s_1_case, ")")}
+
    
     concept_cuttoff: 0.6
 
     key_papers:
-      - "./inputs/key papers/Ch 1 - Arun.csv"
-#      - "./inputs/key papers/Ch 1 - pdf.csv"
-      - "./inputs/key papers/Ch 1 - word.csv"
-      - "./inputs/key papers/Ch 2 - pdf.csv"
-      - "./inputs/key papers/Ch 2 - Sebastian.csv"
-      - "./inputs/key papers/Ch 3 - Cl1.csv"
-      - "./inputs/key papers/Ch 3 - Cl3.csv"
-      - "./inputs/key papers/Ch 3 - Cl4.csv"
-      - "./inputs/key papers/Ch 3 - Cl5.csv"
-      - "./inputs/key papers/Ch 3 - Cl6.csv"
-      - "./inputs/key papers/Ch 3 - pdf.csv"
-      - "./inputs/key papers/Ch 4 - Challenge 1.csv"
-      - "./inputs/key papers/Ch 4 - Challenge 2.csv"
-      - "./inputs/key papers/Ch 4 - Challenge 3.csv"
-      - "./inputs/key papers/Ch 4 - Challenge 4.csv"
-      - "./inputs/key papers/Ch 4 - Challenge 5.csv"
-      - "./inputs/key papers/Ch 5 - Hannah.csv"
-      - "./inputs/key papers/Ch 5 - Victoria.csv"
-      - "./inputs/key papers/Ch 5.csv"
+#      - Ch_1:
+        - "./inputs/key papers/Ch 1 - Arun.csv"
+        - "./inputs/key papers/Ch 1 - pdf.csv"
+        - "./inputs/key papers/Ch 1 - word.csv"
+#      - Ch_2:
+        - "./inputs/key papers/Ch 2 - pdf.csv"
+        - "./inputs/key papers/Ch 2 - Sebastian.csv"
+#      - Ch_3_Cl_1:
+        - "./inputs/key papers/Ch 3 - Cl1.csv"
+#      - Ch_3_Cl_3:
+        - "./inputs/key papers/Ch 3 - Cl3.csv"
+#      - Ch_3_Cl_4:
+        - "./inputs/key papers/Ch 3 - Cl4.csv"
+#      - Ch_3_Cl_5:
+        - "./inputs/key papers/Ch 3 - Cl5.csv"
+#      - Ch_3Cl_6:
+        - "./inputs/key papers/Ch 3 - Cl6.csv"
+#      - Ch_3:
+        - "./inputs/key papers/Ch 3 - pdf.csv"
+#      - Ch_4_Cl_1:
+        - "./inputs/key papers/Ch 4 - Challenge 1.csv"
+#      - Ch_4_Cl_2:
+        - "./inputs/key papers/Ch 4 - Challenge 2.csv"
+#      - Ch_4_Cl_3:
+        - "./inputs/key papers/Ch 4 - Challenge 3.csv"
+#      - Ch_4_Cl_4:
+        - "./inputs/key papers/Ch 4 - Challenge 4.csv"
+#      - Ch_4_Cl_5:
+        - "./inputs/key papers/Ch 4 - Challenge 5.csv"
+#      - Ch_5:
+        - "./inputs/key papers/Ch 5 - Hannah.csv"
+        - "./inputs/key papers/Ch 5 - Victoria.csv"
+        - "./inputs/key papers/Ch 5 -.csv"
 
     mc.cores: 8
 ---
+
+
+
 ```{r}
 #| label: setup
 #| include: false
@@ -678,6 +701,7 @@ if (!require("IPBES.R")) {
 # A single core request is needed to make multicore parallel processing work
 x <- oa_request(oa_query("bidiversity"), count_only = TRUE)
 rm(x)
+
 ```
 
 # Working Title
@@ -695,9 +719,6 @@ The following terminology is used in this document:
 - **Individual corpus**: The corpus resulting from one search term, e.g. `transformative` or `nature` or `ChX_Y`
 - **Assessment Corpus**: The corpus resulting from the search terms `transformative AND nature`
 - **Chapter corpus**: The corpus resulting from `transformative AND Nature AND ChX_Y` 
-
-
-
 
 
 ## Search Terms {#sec-search_terms}
@@ -935,6 +956,17 @@ cat(params$s_1_ch5_vision)
 ```
 
 
+#### Case {#sec-case}
+
+
+
+```{r}
+#| label: s_1_case
+#|
+
+cat(params$s_1_case)
+```
+
 #### Vision & Case {#sec-ch5_vision_case}
 
 
@@ -1004,18 +1036,34 @@ if (!file.exists(fn)) {
         params$key_papers,
         function(fn) {
             message("Processing '", fn, "' ...")
-            read.csv(fn) |>
-                select(DOI) # |>
-            # rename(Year = Publication.Year, Journal = Publication.Title) |>
-            # arrange(desc(Year))
+            sapply(
+                fn,
+                function(x) {
+                    read.csv(x) |>
+                        select(DOI)
+                }
+            ) |>
+                unlist()
         }
     )
-    names(key_papers) <- params$key_papers |>
-        basename() |>
-        gsub(pattern = "\\.csv", replacement = "") |>
-        gsub(pattern = " - ", replacement = "_") |>
-        gsub(pattern = "-", replacement = "_") |>
-        gsub(pattern = " ", replacement = "_")
+    names(key_papers) <- gsub("\\.csv", "", basename(params$key_papers))
+
+    key_papers <- list(
+        Ch_1 = unlist(key_papers[grepl("Ch 1 -", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_2 = unlist(key_papers[grepl("Ch 2 -", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_1 = unlist(key_papers[grepl("Ch 3 - Cl1", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_3 = unlist(key_papers[grepl("Ch 3 - Cl3", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_4 = unlist(key_papers[grepl("Ch 3 - Cl4", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_5 = unlist(key_papers[grepl("Ch 3 - Cl5", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_6 = unlist(key_papers[grepl("Ch 3 - Cl6", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3 = unlist(key_papers[grepl("Ch 3 - p", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_1 = unlist(key_papers[grepl("Ch 4 - Challenge 1", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_2 = unlist(key_papers[grepl("Ch 4 - Challenge 2", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_3 = unlist(key_papers[grepl("Ch 4 - Challenge 3", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_4 = unlist(key_papers[grepl("Ch 4 - Challenge 4", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_5 = unlist(key_papers[grepl("Ch 4 - Challenge 5", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_5 = unlist(key_papers[grepl("Ch 5 -", names(key_papers))], recursive = FALSE) |> as.vector()
+    )
 
     saveRDS(key_papers, file = fn)
 } else {
@@ -1031,18 +1079,18 @@ if (!file.exists(fn)) {
 fn_kw <- file.path(".", "data", "key_works.rds")
 fn_kw_df <- file.path(".", "data", "key_works_df.rds")
 if (!all(file.exists(fn_kw, fn_kw_df))) {
-    key_works <- lapply(
+    key_works <- parallel::mclapply(
         key_papers,
         function(kp) {
-            dois <- kp |>
-                select(DOI) |>
-                filter(DOI != "") |>
+            dois <- kp[kp != ""] |>
                 unlist() |>
                 tolower() |>
                 unique()
-            openalexR::oa_query(doi = dois) |>
-                openalexR::oa_request(count_only = FALSE)
-        }
+
+            openalexR::oa_fetch(doi = dois, output = "list")
+        },
+        mc.cores = params$mc.cores,
+        mc.preschedule = FALSE
     )
 
     found <- sapply(
@@ -1064,6 +1112,7 @@ if (!all(file.exists(fn_kw, fn_kw_df))) {
         oa2df,
         entity = "works"
     )
+
     saveRDS(key_works_df, fn_kw_df)
 } else {
     key_works <- readRDS(file = fn_kw)
@@ -1176,15 +1225,44 @@ Here we show the number of hits for the key papers in the different individual c
 
 ```{r}
 #| label: hits_per_search_term_table
-search_term_hits |>
+
+dat <- cbind(
+    search_term_hits
+)
+
+rownames(dat) <- dplyr::recode(
+    rownames(dat),
+    "transformative change" = "Transformative Change @sec-transform",
+    "nature environment" = "Nature @sec-nature",
+    "Chapter 1 01" = "Ch1 01 @sec-ch1-01",
+    "Chapter 1 02" = "Ch1 02 @sec-ch1-02",
+    "Chapter 1 03" = "Ch1 03 @sec-ch1-03",
+    "Chapter 1 04" = "Ch1 04 @sec-ch1-04",
+    "Chapter 1 05" = "Ch1 05 @sec-ch1-05",
+    "Chapter 1 06" = "Ch1 06 @sec-ch1-06",
+    "Chapter 2" = "Ch2  @sec-ch2",
+    "Chapter 3 01" = "Ch3 01 @sec-ch3-01",
+    "Chapter 3 02" = "Ch3 02 @sec-ch3-02",
+    "Chapter 3 03" = "Ch3 03 @sec-ch3-03",
+    "Chapter 3 04" = "Ch3 04 @sec-ch3-04",
+    "Chapter 3 05" = "Ch3 05 @sec-ch3-05",
+    "Chapter 3 06" = "Ch3 06 @sec-ch3-06",
+    "Chapter 4 01" = "Ch4 01 @sec-ch4-01",
+    "Chapter 4 02" = "Ch4 02 @sec-ch4-02",
+    "Chapter 5 vision" = "Ch5 Vision @sec-ch5_vision",
+    "Chapter 5 vision case" = "Ch5 Vision Case @sec-ch5_vision_case",
+    "case" = "Ch5 Case @sec-case"
+)
+
+dat |>
     knitr::kable(
         caption = "Number of hits",
     )
+
+rm(dat)
 ```
 
-### Key papers in different iIndividual Corpi {#key_papers_in_corpi}
-
-
+### Key papers in different Individual Corpi {#key_papers_in_corpi}
 
 
 ```{r}
@@ -1252,6 +1330,7 @@ detail <- detail |>
         "Ch4 01 @sec-ch4-01" = s_1_ch4_01,
         "Ch4 02 @sec-ch4-02" = s_1_ch4_02,
         "Ch5 Vision @sec-ch5_vision" = s_1_ch5_vision,
+        "Ch5 Case @sec-case" = s_1_case,
         "Ch5 Vision Case @sec-ch5_vision_case" = s_1_f_ch5_vision_case
     )
 ```
@@ -1267,28 +1346,18 @@ knitr::kable(
 )
 ```
 
-```{r}
-#| eval: FALSE
-key_works_hits[[1]] |>
-    tibble::rownames_to_column("key paper") |>
-    flextable() |>
-    set_table_properties(
-        opts_html = list(
-            extra_css = ".tabwid tbody tr > :first-child {position: sticky;z-index: 1;left: 0;background: #ddd;}",
-            scroll = list(height = "500px")
-        )
-    ) # |>
-# bg(bg = scales::col_numeric(palette = "viridis", domain = c(0, 1)))
-```
+
 
 #### Detail
 ```{r}
-knitr::kable(detail)
+knitr::kable(
+    detail
+)
 ```
 
 
 
-
+<!-- 
 
 # ==== APPENDIX ====
 
@@ -1434,4 +1503,4 @@ TODO:
 - Ch5 MISSING (Options?)
 - Case-Studies
 
-TODO: which key papers are still missing?
+TODO: which key papers are still missing? -->
