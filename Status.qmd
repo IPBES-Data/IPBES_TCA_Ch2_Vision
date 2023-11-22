@@ -1,6 +1,37 @@
 ---
-title: 'Report Transformative Change Literature Search Chapter 2'
-author: Rainer M Krug [Rainer.Krug@Senckenberg.de](mailto:Rainer.Krug@Senckenberg.de)
+title: 'Report Transformative Change Assessment Corpus'
+date: today
+author:
+  - name: Rainer M Krug
+    id: rmk
+    orcid: 0000-0002-7490-0066
+    email: Rainer.Krug@Senckenberg.de, Rainer@Krugs.de
+    affiliation: 
+      - name: Senckenberg
+        city: Frankfurt (Main)
+        url: https://www.senckenberg.de/en/institutes/sbik-f/
+    roles: [author, editor]
+abstract: > 
+    The literature search for the assessment corpus was conducted using search terms provided by the experts and refined in co-operation with the Knowldge and Data task force.
+    The search was conducted using [OpenAlex](https://openalex.org), scripted from [R](https://cran.r-project.org) to use  the [API](https://docs.openalex.org). Search terms for the following searches were defined:
+    **Transformative Change**,
+    **Nature / Environment** and 
+    **additional search terms for individual chapters and sub-chapters**
+    To assess the quality of the corpus, sets of key-papers were selected by the experts to verify if these are in the corpus. 
+    These key-papers were selected per chapter / sub-chapter to ensure that the corpus is representative of each chapter.  
+keywords:
+  - DMR
+  - TCA
+  - Assessment Corpus
+license: "CC BY"
+
+citation: 
+  type: report
+  container-title: Report Transformative Change Assessment Corpus
+  doi: xxxxx
+doi: xxxxx
+version: 0.0.2
+
 format:
     html:
         toc: true
@@ -705,11 +736,11 @@ rm(x)
 ```
 
 # Working Title
-TCA Ch 2 Vision
+IPBES_TCA_Corpus
 
 ## Code repo
 
-[Github - private](https://github.com/IPBES-Data/IPBES_TCA_Ch2_Vision)
+[Github repository](https://github.com/IPBES-Data/IPBES_TCA_Corpus)
 
 ## Build No: ``r build``
 

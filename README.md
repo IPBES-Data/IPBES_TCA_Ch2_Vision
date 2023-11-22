@@ -1,4 +1,4 @@
-# Identify Vision and case studies for Transformative Change
+# Define Corpus for Transformative Change Assessment
 
 [![DOI](https://zenodo.org/badge/DOI/99.9999/zenodo.9999999.svg)](https://doi.org/99.9999/zenodo.9999999)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
@@ -14,10 +14,10 @@ Once finalised, the final repo will be published on Zenodo
 
 ## Metadata
 
-- **Project name**: Identify Vision and case studies for Transformative Change
+- **Project name**: Define Corpus for Transformative Change Assessment
 - **Assessment**: Transformative Change
-- **Chapter**: Chapter 2
-- **Short Name**: Vision
+- **Chapter**: all
+- **Short Name**: IPBES_TCA_Corpus
 
 - **Status**: in progress
 
@@ -33,7 +33,7 @@ Once finalised, the final repo will be published on Zenodo
   - <laurence.perianin@umontpellier.fr>
   - ...
 
-- **Github Repo**: [IPBES_TCA_Ch2_Vision](https://github.com/IPBES-Data/IPBES_TCA_Ch2_Vision)
+- **Github Repo**: [IPBES_TCA_Corpus(https://github.com/IPBES-Data/IPBES_TCA_Corpus)
 - **Googl Drive Folder**: [Google Drive Folder](https://drive.google.com/drive/folders/1IiALbIOAjYeL_IrlkZd-E7U7hr72iggx)
 
 - **`Further Info**: [Document on Google Drive]([Google Drive Folder](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69EibD_x05GE)
@@ -55,3 +55,7 @@ See [here](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69
 ## Reports
 
 - [Status Report](Status.html)
+- Data Management Report
+  - SOD
+    - [Summary Data Management Report (docx)](IPBES%20TCA%20DMR.docx)
+    - [Data Management Report](Status.html) - THIS LINK WILL BE CHANGED WHEN SUBMITTED

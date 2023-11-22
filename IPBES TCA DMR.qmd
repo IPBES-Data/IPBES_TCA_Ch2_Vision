@@ -1,0 +1,79 @@
+---
+title: "IPBES TCA - Assessment Corpus"
+format: 
+    docx:
+        reference-doc: IPBES TCA DMR Template.docx
+---
+
+**Code:** IPBES_TCA_Corpus
+
+**Versioning 01:**
+
+**DOI:** [99.9999/zenodo.9999999](https://doi.org/99.9999/zenodo.9999999)
+
+**Full Report:** [IPBES_TCA_Corpus](https://ipbes-data.github.io/IPBES_TCA_Corpus/Status.html)
+
+# Project leaders
+- [Arun Agrawal](mailto:arunagra@umich.edu), 
+- [Karen O'Brien](mailto:karen.obrien@sosgeo.uio.no), 
+- [Sebastián Villasante](mailto:sebastian.villasante@usc.es)
+- [Victoria Reyes Garcia](mailto:Victoria.Reyes@uab.cat), 
+- [Sergio Lambertucci](mailto:slambertucci@comahue-conicet.gob.ar),
+- [karina Benessaiah](mailto:karinaben@gmail.com), 
+
+# Researchers
+- Lynne Shannon (mailto:lynne.shannon@uct.ac.za), 
+- Chuan Liao (mailto:cl824@cornell.edu), 
+- "yves.zinngrebe" (mailto:yves.zinngrebe@ufz.de), 
+- "Frantzeskaki, N. (Niki)" (mailto:n.frantzeskaki@uu.nl), 
+- Janita Gurung (mailto:janita.gurung@icimod.org), 
+- Julia Mildorfova Leventon (mailto:leventon.j@czechglobe.cz), 
+- Fern Wickson (mailto:fern.wickson@uit.no), "Biggs, 
+- Oonsie [oonsie@sun.ac.za]" (mailto:oonsie@sun.ac.za), 
+- "Elena Bennett, Dr." (mailto:elena.bennett@mcgill.ca), 
+- Rafael Calderón-Contreras (mailto:rcalderon@cua.uam.mx), 
+- Hannah Gosnell (mailto:gosnellh@oregonstate.edu), 
+- Mariana Cantu Fernandez (mailto:mariana.cantufernandez@un.org), 
+- EdCarr@clarku.edu, Lucas Alejandro Garibaldi (mailto:lgaribaldi@unrn.edu.ar), 
+
+# Assessment Experts
+
+# Knowledge and Data TSU members
+- [Rainer M Krug](mailto:rainer@krugs.de)
+- [Aidin Niamir](mailto:aidin.niamir@senckenberg.de)
+- [Renske Gudde](mailto:renske.gudde@senckenberg.de)
+
+# Data curator(s)
+- [Rainer M Krug](mailto:rainer@krugs.de)
+
+
+# Description
+
+The review corresponds to the IPBES transformative change assessment. The IPBES Scoping document for the transformative 
+change assessment describes that chapter XX should address XXX. The chapter provides evidence on XXXX. In this context,
+ a review of XXX focused on XXX was conducted and is further described below.
+
+# Summary
+The literature search for the assessment corpus was conducted using search terms provided by the experts and refined in 
+co-operation with the Knowldge and Data task force.
+
+The search was conducted using [OpenAlex](https://openalex.org), scripted from [R](https://cran.r-project.org) to use 
+the [API](https://docs.openalex.org). Search terms for the following searches were defined:
+
+- Transformative Change
+- Nature / Environment
+- additional search terms for individual chapters and sub-chapters
+
+To assess the quality of the corpus, sets of key-papers were selected by the experts to verify if these are in the corpus. 
+These key-papers were selected per chapter / sub-chapter to ensure that the corpus is representative of each chapter.
+
+# Complete Data Management Report
+The complete data management report includes all code used to conduct the searches and to assess the quality of the corpus
+as well as the key-papers provided. It is fully reproducible and does not require any additional data.
+
+The report concludes, that the search term definitions for *Transformative Change* as well as *Nature / Environment* do
+include the key-papers provided by the experts. The search terms for the individual chapters and sub-chapters do not 
+include all key-papers provided by the experts of the corresponding chapters / sub-chapters, and need to be refined by 
+the experts.
+
+The full report can be found at [IPBES_TCA_Corpus](https://ipbes-data.github.io/IPBES_TCA_Corpus/Status.html) or the DOI
