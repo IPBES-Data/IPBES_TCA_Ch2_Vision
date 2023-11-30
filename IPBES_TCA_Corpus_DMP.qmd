@@ -1,5 +1,5 @@
 ---
-title: 'Report Transformative Change Assessment Corpus'
+title: 'Data Management Report Transformative Change Assessment Corpus - SOD'
 date: today
 author:
   - name: Rainer M Krug
@@ -683,6 +683,13 @@ params:
     mc.cores: 8
 ---
 
+
+
+
+[![DOI](https://zenodo.org/badge/DOI/xxxxxxx.svg)](https://doi.org/xxxxxxx)
+[![GitHub release](https://img.shields.io/github/release/IPBES-Data/IPBES_TCA_Corpus.svg)](https://github.com/IPBES-Data/IPBES_TCA_Corpus/releases/latest)
+[![GitHub commits since latest release](https://img.shields.io/github/commits-since/IPBES-Data/IPBES_TCA_Corpus/latest)](https://github.com/IPBES-Data/IPBES_TCA_Corpus/commits/main)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 
 ```{r}
