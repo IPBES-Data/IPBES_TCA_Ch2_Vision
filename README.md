@@ -56,4 +56,4 @@ See [here](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69
 
 - [Status Report](IPBES_TCA_Corpus_DMP.html)
 - Data Management Report
-  - [SOD DOI](DOI)
+  - [SOD DOI](https://doi.org/10.5281/zenodo.10251349)
