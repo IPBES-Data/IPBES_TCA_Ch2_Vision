@@ -1,1 +1,6 @@
 IPBES_TCA_Corpus.code-workspace
+
+Inputs/**/*.pdf
+Inputs/**/*.bib
+Inputs/**/*.docx
+*.eml
