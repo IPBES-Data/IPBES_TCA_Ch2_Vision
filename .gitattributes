@@ -1,4 +1,4 @@
-Inputs/*.pdf export-ignore
-Inputs/*.bib export-ignore
-Inputs/*.docx export-ignore
+Inputs/**/*.pdf export-ignore
+Inputs/**/*.bib export-ignore
+Inputs/**/*.docx export-ignore
 *.eml export-ignore
