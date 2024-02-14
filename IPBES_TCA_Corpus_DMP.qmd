@@ -223,7 +223,7 @@ params:
       OR "coupled system"
       OR nature
 
-#    s_1_f_trans_nat: !expr function(){paste0("(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")")}
+    s_1_f_tca_corpus: !expr function(){paste0("(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")")}
 
     s_1_ch1_01: >-
       (
@@ -680,6 +680,7 @@ params:
         - "./inputs/key papers/Ch 5 - Victoria.csv"
         - "./inputs/key papers/Ch 5 -.csv"
 
+    sample_size: 10000
     mc.cores: 8
 ---
 
@@ -702,22 +703,22 @@ build <- build + 1
 writeLines(as.character(build), "buildNo")
 
 if (!exists("params")) {
-    params <- rmarkdown::yaml_front_matter("~/Documents_Local/git/IPBES_data_tsu/Assessments/Transformative Change/IPBES_TCA_Ch2_Vision/Status.qmd")$params
+    params <- rmarkdown::yaml_front_matter("./IPBES_TCA_Corpus_DMP.qmd")$params
 }
 
 library(openalexR)
 library(dplyr)
 
-library(knitr)
 library(tictoc)
 
 library(parallel)
 library(pbmcapply)
 library(pbapply)
 
-library(knitr)
-library(flextable)
 library(tibble)
+
+library(knitr)
+library(DT)
 
 # Function to make the search strings compacter
 compact <- function(x) {
@@ -785,6 +786,15 @@ cat(params$s_1_transformative_change)
 cat(params$s_1_nature_environment)
 ```
 
+
+### Assessment Corpus {#sec-tca-corpus}
+
+```{r}
+#| label: s_1_tca_corpus
+#|
+
+cat(params$s_1_f_tca_corpus())
+```
 
 
 ### Chapter 1
@@ -1019,9 +1029,17 @@ cat(params$s_1_f_ch5_vision_case())
 
 
 
+## Topics
+
+OpenAlex assigns topics to each work in a hirarchical manner:
+
+![](images/topic_hirarchy.png)
+
+Please see [here](https://help.openalex.org/how-it-works/topics) for more information and [here](https://docs.google.com/spreadsheets/d/1v-MAq64x4YjhO7RWcB-yrKV5D_2vOOsxl4u6GBKEXY8/edit#gid=983250122) for a complete list of all topics and their corresponding subfields, fields and domains.
+
 # Get and calculate Data
 In this section, the data is retrieved from OpenAlex and the calculations are done. It contains the code used.
-No resiults are shown here, so this section can be skipped.
+No results are shown here, so this section can be skipped.
 
 ```{r}
 #| label: get_search_term_hits
@@ -1066,6 +1084,68 @@ if (!file.exists(fn)) {
 
 
 ```{r}
+#| label: get_sample_tca_corpus
+#| eval: true
+
+
+fn <- file.path(".", "data", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
+fn_df <- file.path(".", "data", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
+if (!file.exists(fn)) {
+    message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
+    sample_tca_corpus <- openalexR::oa_query(
+        search = compact(
+            paste0(
+                "(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")"
+            )
+        ),
+        options = list(
+            sample = params$sample_size
+        )
+    ) |>
+        openalexR::oa_request(count_only = FALSE, verbose = TRUE)
+
+    sample_tca_corpus_df <- oa2df(sample_tca_corpus, entity = "works")
+
+    saveRDS(sample_tca_corpus, file = fn)
+    saveRDS(sample_tca_corpus_df, file = fn_df)
+} else {
+    sample_tca_corpus <- readRDS(fn)
+    sample_tca_corpus_df <- readRDS(fn_df)
+}
+```
+
+```{r}
+#| label: prim_topic_tca_corpus
+#| eval: true
+
+fn <- file.path(".", "data", paste0("prim_topics_tca_corpus.rds"))
+if (!file.exists(fn)) {
+    # message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
+
+    prim_topics_tca_corpus <- openalexR::oa_fetch(
+        search = compact(paste0("(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")")),
+        group_by = "primary_topic.id",
+        verbose = FALSE
+    )
+    names(prim_topics_tca_corpus) <- c("topic_id", "topic_name", "count")
+    prim_topics_tca_corpus <- prim_topics_tca_corpus[-2]
+    prim_topics_tca_corpus$topic_id <- sub("https://openalex.org/T", "", prim_topics_tca_corpus$topic_id)
+    prim_topics_tca_corpus <- merge(
+        read.csv(file.path("inputs", "OpenAlex_topic_mapping_table - final_topic_field_subfield_table.csv")),
+        prim_topics_tca_corpus,
+        by = "topic_id"
+    )
+
+    prim_topics_tca_corpus <- prim_topics_tca_corpus[order(prim_topics_tca_corpus$count, decreasing = TRUE), ]
+
+    saveRDS(prim_topics_tca_corpus, file = fn)
+} else {
+    prim_topics_tca_corpus <- readRDS(fn)
+}
+```
+
+
+```{r}
 #| label: get_key_papers
 #|
 fn <- file.path(".", "data", "key_papers.rds")
@@ -1085,6 +1165,7 @@ if (!file.exists(fn)) {
         }
     )
     names(key_papers) <- gsub("\\.csv", "", basename(params$key_papers))
+
 
     key_papers <- list(
         Ch_1 = unlist(key_papers[grepl("Ch 1 -", names(key_papers))], recursive = FALSE) |> as.vector(),
@@ -1272,6 +1353,7 @@ rownames(dat) <- dplyr::recode(
     rownames(dat),
     "transformative change" = "Transformative Change @sec-transform",
     "nature environment" = "Nature @sec-nature",
+    "tca corpus" = "Assessment Corpus @sec-tca-corpus",
     "Chapter 1 01" = "Ch1 01 @sec-ch1-01",
     "Chapter 1 02" = "Ch1 02 @sec-ch1-02",
     "Chapter 1 03" = "Ch1 03 @sec-ch1-03",
@@ -1352,6 +1434,7 @@ detail <- detail |>
     dplyr::rename(
         "Transformative Change @sec-transform" = s_1_transformative_change,
         "Nature @sec-nature" = s_1_nature_environment,
+        "Assessment Corpus @sec-tca-corpus" = s_1_f_tca_corpus,
         "Ch1 01 @sec-ch1-01" = s_1_ch1_01,
         "Ch1 02 @sec-ch1-02" = s_1_ch1_02,
         "Ch1 03 @sec-ch1-03" = s_1_ch1_03,
@@ -1393,8 +1476,146 @@ knitr::kable(
 )
 ```
 
+## TCA Corpus properties
 
+### Topics in corpus
 
+```{r}
+#| label: prim_topics_tca_corpus_plot
+#|
+
+cs <- cumsum(prim_topics_tca_corpus$count)
+cs |>
+    plot(
+        type = "l",
+        xlab = "Topic",
+        ylab = "Cumulative Count",
+        main = "Cumulative Topics in TCA Corpus"
+    )
+
+abline(
+    h = 0.95 * cs[length(cs)],
+    v = min(which(cs > 0.95 * cs[length(cs)])),
+    col = "red"
+)
+
+text(
+    x = 0.5 * length(cs),
+    y = 0.95 * cs[length(cs)],
+    pos = 3,
+    labels = "95% of the corpus",
+    col = "red"
+)
+```
+
+```{r}
+#| label: prim_topics_tca_corpus_table
+#|
+
+prim_topics_tca_corpus |>
+    relocate(count, .after = "topic_id") |>
+    DT::datatable(
+        extensions = c(
+            "Buttons",
+            "FixedColumns",
+            "Scroller"
+        ),
+        options = list(
+            dom = "Bfrtip",
+            buttons = list(
+                list(
+                    extend = "csv",
+                    filename = fn
+                ),
+                list(
+                    extend = "excel",
+                    filename = fn
+                ),
+                list(
+                    extend = "pdf",
+                    filename = fn,
+                    orientation = "landscape",
+                    customize = DT::JS(
+                        "function(doc) {",
+                        "  doc.defaultStyle.fontSize = 5;", # Change the font size
+                        "}"
+                    )
+                ),
+                "print"
+            ),
+            scroller = TRUE,
+            scrollY = JS("window.innerHeight * 0.7 + 'px'"),
+            scrollX = TRUE,
+            fixedColumns = list(leftColumns = 4)
+        ),
+        escape = FALSE
+    )
+```
+
+### SubFields in Corpus
+
+```{r}
+#| label: prim_subfield_tca_corpus_table
+#|
+
+prim_topics_tca_corpus |>
+    mutate(
+        topic_id = NULL,
+        topic_name = NULL,
+        keywords = NULL,
+        summary = NULL,
+        wikipedia_url = NULL
+    ) |>
+    group_by(
+        subfield_id,
+        subfield_name,
+        field_id,
+        field_name,
+        domain_id,
+        domain_name
+    ) |>
+    summarise(
+        count = sum(count)
+    ) |>
+    arrange(desc(count)) |>
+    relocate(count, .after = "subfield_id") |>
+    DT::datatable(
+        extensions = c(
+            "Buttons",
+            "FixedColumns",
+            "Scroller"
+        ),
+        options = list(
+            dom = "Bfrtip",
+            buttons = list(
+                list(
+                    extend = "csv",
+                    filename = fn
+                ),
+                list(
+                    extend = "excel",
+                    filename = fn
+                ),
+                list(
+                    extend = "pdf",
+                    filename = fn,
+                    orientation = "landscape",
+                    customize = DT::JS(
+                        "function(doc) {",
+                        "  doc.defaultStyle.fontSize = 5;", # Change the font size
+                        "}"
+                    )
+                ),
+                "print"
+            ),
+            scroller = TRUE,
+            scrollY = JS("window.innerHeight * 0.7 + 'px'"),
+            scrollX = TRUE,
+            fixedColumns = list(leftColumns = 4)
+        ),
+        escape = FALSE
+    )
+```
 <!-- 
 
 # ==== APPENDIX ====
@@ -1542,3 +1763,6 @@ TODO:
 - Case-Studies
 
 TODO: which key papers are still missing? -->
+
+
+- TODO: Histogram / table with topics identified to identify non-relevant papers
