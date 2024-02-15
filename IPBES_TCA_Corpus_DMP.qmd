@@ -1070,11 +1070,53 @@ if (!file.exists(fn)) {
         as.data.frame() |>
         dplyr::mutate(page = NULL, per_page = NULL) |>
         dplyr::mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0))
+
     rownames(search_term_hits) <- s_t |>
         gsub(pattern = "s_1_", replacement = "") |>
         gsub(pattern = "f_", replacement = "") |>
         gsub(pattern = "^ch", replacement = "Chapter ") |>
         gsub(pattern = "_", replacement = " ")
+
+
+
+    tca_corpus_filtered <- openalexR::oa_query(
+        search = compact(params$s_1_f_tca_corpus()),
+        sustainable_development_goals.id = paste(
+            "https://metadata.un.org/sdg/3",
+            "https://metadata.un.org/sdg/1",
+            "https://metadata.un.org/sdg/6",
+            "https://metadata.un.org/sdg/2",
+            "https://metadata.un.org/sdg/4",
+            "https://metadata.un.org/sdg/14",
+            "https://metadata.un.org/sdg/15",
+            "https://metadata.un.org/sdg/5",
+            "https://metadata.un.org/sdg/7",
+            "https://metadata.un.org/sdg/12",
+            "https://metadata.un.org/sdg/13",
+            "https://metadata.un.org/sdg/10",
+            "https://metadata.un.org/sdg/16",
+            "https://metadata.un.org/sdg/8",
+            "https://metadata.un.org/sdg/11",
+            "https://metadata.un.org/sdg/17",
+            "https://metadata.un.org/sdg/9",
+            sep = "|"
+        )
+    ) |>
+        openalexR::oa_request(count_only = TRUE) |>
+        unlist()
+    
+    tca_corpus_filtered["count"] = formatC(tca_corpus_filtered["count"], format = "f", big.mark = ",", digits = 0)
+
+    search_term_hits <- rbind(
+        search_term_hits,
+        data.frame(
+            count = tca_corpus_filtered[[1]],
+            db_response_time_ms = tca_corpus_filtered[[2]],
+            row.names = "tca corpus SDG"
+        )
+    )
+
+    search_term_hits <- search_term_hits[c(1:4, nrow(search_term_hits), 5:(nrow(search_term_hits) - 1)),]
 
     saveRDS(search_term_hits, file = fn)
 } else {
@@ -1143,7 +1185,6 @@ if (!file.exists(fn)) {
     prim_topics_tca_corpus <- readRDS(fn)
 }
 ```
-
 
 
 ```{r}
@@ -1266,8 +1307,6 @@ if (!file.exists(fn)) {
     tc_corpus_plus <- readRDS(fn)
 }
 ```
-
-
 
 
 ```{r}
@@ -1436,13 +1475,6 @@ if (!file.exists(fn)) {
             #     rownames(kw_h) <- dois
             # }
 
-
-            kw_h <- cbind(
-                kw_h,
-                Total = rowSums(kw_h)
-            ) |>
-                mutate(Total = Total - 1)
-
             kw_h <- rbind(
                 kw_h,
                 colSums(kw_h)
@@ -1453,6 +1485,79 @@ if (!file.exists(fn)) {
         }
     )
     names(key_works_hits) <- nms
+
+
+
+    ### Add for tca corpus filtered
+
+
+    key_works_hits_tca_filtered <- pbapply::pblapply(
+        nms,
+        function(nm) {
+            message("Getting key paper set for ", nm, " ...")
+            dois <- key_works_df[[nm]] |>
+                select(doi) |>
+                distinct() |>
+                unlist() |>
+                unique() |>
+                tolower()
+
+            search <- params$s_1_f_tca_corpus()
+            search <- compact(search)
+            kw_h <- get_count(
+                search_term = search,
+                dois = dois,
+                sustainable_development_goals.id = paste(
+                    "https://metadata.un.org/sdg/3",
+                    "https://metadata.un.org/sdg/1",
+                    "https://metadata.un.org/sdg/6",
+                    "https://metadata.un.org/sdg/2",
+                    "https://metadata.un.org/sdg/4",
+                    "https://metadata.un.org/sdg/14",
+                    "https://metadata.un.org/sdg/15",
+                    "https://metadata.un.org/sdg/5",
+                    "https://metadata.un.org/sdg/7",
+                    "https://metadata.un.org/sdg/12",
+                    "https://metadata.un.org/sdg/13",
+                    "https://metadata.un.org/sdg/10",
+                    "https://metadata.un.org/sdg/16",
+                    "https://metadata.un.org/sdg/8",
+                    "https://metadata.un.org/sdg/11",
+                    "https://metadata.un.org/sdg/17",
+                    "https://metadata.un.org/sdg/9",
+                    sep = "|"
+                )
+            ) |>
+                data.frame()
+
+            names(kw_h) <- "tca_corpus_SDG"
+
+            kw_h <- rbind(
+                kw_h,
+                colSums(kw_h)
+            )
+
+            rownames(kw_h)[[nrow(kw_h)]] <- "Total"
+            return(kw_h)
+        }
+    )
+    names(key_works_hits_tca_filtered) <- nms
+
+    for (i in nms) {
+        key_works_hits[[i]] <- cbind(
+            key_works_hits[[i]],
+            key_works_hits_tca_filtered[[i]]
+        )
+
+        key_works_hits[[i]] <- cbind(
+            key_works_hits[[i]],
+            Total = rowSums(key_works_hits[[i]])
+        ) |>
+            mutate(Total = Total - 1) |>
+            relocate(tca_corpus_SDG, .after = s_1_f_tca_corpus)
+    }
+
+    ###
 
     saveRDS(key_works_hits, file = fn)
 } else {
