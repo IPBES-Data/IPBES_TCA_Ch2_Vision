@@ -1126,6 +1126,33 @@ if (!file.exists(fn)) {
 ```
 
 
+
+```{r}
+#| label: get_countries_tca_corpus
+#|
+
+fn <- file.path(".", "data", "countries_tca_corpus.rds")
+if (!file.exists(fn)) {
+    countries_tca_corpus <- openalexR::oa_query(
+        filter = list(
+            title_and_abstract.search = compact(params$s_1_f_tca_corpus())
+        ),
+        group_by = "authorships.countries"
+    ) |>
+        openalexR::oa_request(count_only = FALSE, verbose = TRUE) |>
+        sapply(FUN = unlist) |>
+        t() |>
+        as.data.frame() |>
+        dplyr::rename(iso2c = key) |>
+        mutate(count = as.numeric(count))
+
+    saveRDS(countries_tca_corpus, file = fn)
+} else {
+    countries_tca_corpus <- readRDS(fn)
+}
+```
+
+
 ```{r}
 #| label: get_sample_tca_corpus
 #| eval: true
@@ -1494,63 +1521,6 @@ if (!file.exists(fn)) {
 
     names(key_works_hits) <- nms
 
-
-
-    ### Add for tca corpus filtered
-
-
-    # key_works_hits_tca_filtered <- pbapply::pblapply(
-    #     nms,
-    #     function(nm) {
-    #         message("Getting key paper set for ", nm, " ...")
-    #         dois <- key_works_df[[nm]] |>
-    #             select(doi) |>
-    #             distinct() |>
-    #             unlist() |>
-    #             unique() |>
-    #             tolower()
-
-    #         search <- params$s_1_f_tca_corpus()
-    #         search <- compact(search)
-    #         kw_h <- get_count(
-    #             search_term = search,
-    #             dois = dois,
-    #             sustainable_development_goals.id = paste(
-    #                 "https://metadata.un.org/sdg/3",
-    #                 "https://metadata.un.org/sdg/1",
-    #                 "https://metadata.un.org/sdg/6",
-    #                 "https://metadata.un.org/sdg/2",
-    #                 "https://metadata.un.org/sdg/4",
-    #                 "https://metadata.un.org/sdg/14",
-    #                 "https://metadata.un.org/sdg/15",
-    #                 "https://metadata.un.org/sdg/5",
-    #                 "https://metadata.un.org/sdg/7",
-    #                 "https://metadata.un.org/sdg/12",
-    #                 "https://metadata.un.org/sdg/13",
-    #                 "https://metadata.un.org/sdg/10",
-    #                 "https://metadata.un.org/sdg/16",
-    #                 "https://metadata.un.org/sdg/8",
-    #                 "https://metadata.un.org/sdg/11",
-    #                 "https://metadata.un.org/sdg/17",
-    #                 "https://metadata.un.org/sdg/9",
-    #                 sep = "|"
-    #             )
-    #         ) |>
-    #             data.frame()
-
-    #         names(kw_h) <- "tca_corpus_SDG"
-
-    #         kw_h <- rbind(
-    #             kw_h,
-    #             colSums(kw_h)
-    #         )
-
-    #         rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-    #         return(kw_h)
-    #     }
-    # )
-    # names(key_works_hits_tca_filtered) <- nms
-
     for (i in nms) {
         # key_works_hits[[i]] <- cbind(
         #     key_works_hits[[i]],
@@ -1715,6 +1685,25 @@ knitr::kable(
 ```
 
 ## TCA Corpus properties
+
+### TODO Countries in TCA Corpus
+
+```{r}
+#| label: countries_tca_corpus_map
+#| eval: true
+#| 
+
+map <- countries_tca_corpus |>
+    mutate(
+        log_count = log(count)
+    ) |>
+    map_country_codes(
+        values = "log_count",
+        map_type = "countries"
+    )
+
+map
+```
 
 ### Topics in corpus
 
