@@ -759,6 +759,7 @@ The following terminology is used in this document:
 - **Assessment Corpus**: The corpus resulting from the search terms `transformative AND nature`
 - **Chapter corpus**: The corpus resulting from `transformative AND Nature AND ChX_Y` 
 
+The following searches are conducted on Title and Abstrat only as the availability of fulltext drops in 2020. OpenAlex did "inherit" fro Microsoft Academic their initial corpus in 2021 which contained a lot of fulltext for searches. After that time, other sources had to be used which did not include fulltext for searches. To eliminate this bias, we linit the search for terms in abstract and title only.
 
 ## Search Terms {#sec-search_terms}
 Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu to adopt them for OpenAlex.
@@ -1058,8 +1059,8 @@ if (!file.exists(fn)) {
                 search <- params[[stn]]
             }
             search <- compact(search)
-            openalexR::oa_query(search = search) |>
-                openalexR::oa_request(count_only = TRUE) |>
+            openalexR::oa_query(filter = list(title_and_abstract.search = search)) |>
+                openalexR::oa_request(count_only = TRUE, verbose = TRUE) |>
                 unlist()
         },
         mc.cores = params$mc.cores,
@@ -1079,44 +1080,44 @@ if (!file.exists(fn)) {
 
 
 
-    tca_corpus_filtered <- openalexR::oa_query(
-        search = compact(params$s_1_f_tca_corpus()),
-        sustainable_development_goals.id = paste(
-            "https://metadata.un.org/sdg/3",
-            "https://metadata.un.org/sdg/1",
-            "https://metadata.un.org/sdg/6",
-            "https://metadata.un.org/sdg/2",
-            "https://metadata.un.org/sdg/4",
-            "https://metadata.un.org/sdg/14",
-            "https://metadata.un.org/sdg/15",
-            "https://metadata.un.org/sdg/5",
-            "https://metadata.un.org/sdg/7",
-            "https://metadata.un.org/sdg/12",
-            "https://metadata.un.org/sdg/13",
-            "https://metadata.un.org/sdg/10",
-            "https://metadata.un.org/sdg/16",
-            "https://metadata.un.org/sdg/8",
-            "https://metadata.un.org/sdg/11",
-            "https://metadata.un.org/sdg/17",
-            "https://metadata.un.org/sdg/9",
-            sep = "|"
-        )
-    ) |>
-        openalexR::oa_request(count_only = TRUE) |>
-        unlist()
+    # tca_corpus_filtered <- openalexR::oa_query(
+    #     search = compact(params$s_1_f_tca_corpus()),
+    #     sustainable_development_goals.id = paste(
+    #         "https://metadata.un.org/sdg/3",
+    #         "https://metadata.un.org/sdg/1",
+    #         "https://metadata.un.org/sdg/6",
+    #         "https://metadata.un.org/sdg/2",
+    #         "https://metadata.un.org/sdg/4",
+    #         "https://metadata.un.org/sdg/14",
+    #         "https://metadata.un.org/sdg/15",
+    #         "https://metadata.un.org/sdg/5",
+    #         "https://metadata.un.org/sdg/7",
+    #         "https://metadata.un.org/sdg/12",
+    #         "https://metadata.un.org/sdg/13",
+    #         "https://metadata.un.org/sdg/10",
+    #         "https://metadata.un.org/sdg/16",
+    #         "https://metadata.un.org/sdg/8",
+    #         "https://metadata.un.org/sdg/11",
+    #         "https://metadata.un.org/sdg/17",
+    #         "https://metadata.un.org/sdg/9",
+    #         sep = "|"
+    #     )
+    # ) |>
+    #     openalexR::oa_request(count_only = TRUE) |>
+    #     unlist()
     
-    tca_corpus_filtered["count"] = formatC(tca_corpus_filtered["count"], format = "f", big.mark = ",", digits = 0)
+    # tca_corpus_filtered["count"] = formatC(tca_corpus_filtered["count"], format = "f", big.mark = ",", digits = 0)
 
-    search_term_hits <- rbind(
-        search_term_hits,
-        data.frame(
-            count = tca_corpus_filtered[[1]],
-            db_response_time_ms = tca_corpus_filtered[[2]],
-            row.names = "tca corpus SDG"
-        )
-    )
+    # search_term_hits <- rbind(
+    #     search_term_hits,
+    #     data.frame(
+    #         count = tca_corpus_filtered[[1]],
+    #         db_response_time_ms = tca_corpus_filtered[[2]],
+    #         row.names = "tca corpus SDG"
+    #     )
+    # )
 
-    search_term_hits <- search_term_hits[c(1:4, nrow(search_term_hits), 5:(nrow(search_term_hits) - 1)),]
+    # search_term_hits <- search_term_hits[c(1:4, nrow(search_term_hits), 5:(nrow(search_term_hits) - 1)),]
 
     saveRDS(search_term_hits, file = fn)
 } else {
@@ -1135,9 +1136,11 @@ fn_df <- file.path(".", "data", paste0("sample_tca_corpus_", params$sample_size,
 if (!file.exists(fn)) {
     message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
     sample_tca_corpus <- openalexR::oa_query(
-        search = compact(
+        filter = list(
+            title_and_abstract.search = compact(
             paste0(
                 "(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")"
+            )
             )
         ),
         options = list(
@@ -1437,12 +1440,16 @@ if (!file.exists(fn)) {
 
 fn <- file.path(".", "data", "key_works_hits.rds")
 if (!file.exists(fn)) {
-    nms <- names(key_works_df)
+    kws <- key_works_df
+    kws$all  <- key_works_df |>
+        bind_rows()
+
+    nms <- names(kws)
     key_works_hits <- pbapply::pblapply(
         nms,
         function(nm) {
             message("Getting key paper set for ", nm, " ...")
-            dois <- key_works_df[[nm]] |>
+            dois <- kws[[nm]] |>
                 select(doi) |>
                 distinct() |>
                 unlist() |>
@@ -1460,7 +1467,7 @@ if (!file.exists(fn)) {
                         search <- params[[stn]]
                     }
                     search <- compact(search)
-                    get_count(search_term = search, dois = dois)
+                    get_count(dois = dois, list(title_and_abstract.search = search), verbose = FALSE)
                 },
                 mc.cores = params$mc.cores,
                 mc.preschedule = FALSE
@@ -1481,9 +1488,10 @@ if (!file.exists(fn)) {
             )
 
             rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-            return(kw_h)
+            return(kw_h)  
         }
     )
+
     names(key_works_hits) <- nms
 
 
@@ -1491,70 +1499,70 @@ if (!file.exists(fn)) {
     ### Add for tca corpus filtered
 
 
-    key_works_hits_tca_filtered <- pbapply::pblapply(
-        nms,
-        function(nm) {
-            message("Getting key paper set for ", nm, " ...")
-            dois <- key_works_df[[nm]] |>
-                select(doi) |>
-                distinct() |>
-                unlist() |>
-                unique() |>
-                tolower()
+    # key_works_hits_tca_filtered <- pbapply::pblapply(
+    #     nms,
+    #     function(nm) {
+    #         message("Getting key paper set for ", nm, " ...")
+    #         dois <- key_works_df[[nm]] |>
+    #             select(doi) |>
+    #             distinct() |>
+    #             unlist() |>
+    #             unique() |>
+    #             tolower()
 
-            search <- params$s_1_f_tca_corpus()
-            search <- compact(search)
-            kw_h <- get_count(
-                search_term = search,
-                dois = dois,
-                sustainable_development_goals.id = paste(
-                    "https://metadata.un.org/sdg/3",
-                    "https://metadata.un.org/sdg/1",
-                    "https://metadata.un.org/sdg/6",
-                    "https://metadata.un.org/sdg/2",
-                    "https://metadata.un.org/sdg/4",
-                    "https://metadata.un.org/sdg/14",
-                    "https://metadata.un.org/sdg/15",
-                    "https://metadata.un.org/sdg/5",
-                    "https://metadata.un.org/sdg/7",
-                    "https://metadata.un.org/sdg/12",
-                    "https://metadata.un.org/sdg/13",
-                    "https://metadata.un.org/sdg/10",
-                    "https://metadata.un.org/sdg/16",
-                    "https://metadata.un.org/sdg/8",
-                    "https://metadata.un.org/sdg/11",
-                    "https://metadata.un.org/sdg/17",
-                    "https://metadata.un.org/sdg/9",
-                    sep = "|"
-                )
-            ) |>
-                data.frame()
+    #         search <- params$s_1_f_tca_corpus()
+    #         search <- compact(search)
+    #         kw_h <- get_count(
+    #             search_term = search,
+    #             dois = dois,
+    #             sustainable_development_goals.id = paste(
+    #                 "https://metadata.un.org/sdg/3",
+    #                 "https://metadata.un.org/sdg/1",
+    #                 "https://metadata.un.org/sdg/6",
+    #                 "https://metadata.un.org/sdg/2",
+    #                 "https://metadata.un.org/sdg/4",
+    #                 "https://metadata.un.org/sdg/14",
+    #                 "https://metadata.un.org/sdg/15",
+    #                 "https://metadata.un.org/sdg/5",
+    #                 "https://metadata.un.org/sdg/7",
+    #                 "https://metadata.un.org/sdg/12",
+    #                 "https://metadata.un.org/sdg/13",
+    #                 "https://metadata.un.org/sdg/10",
+    #                 "https://metadata.un.org/sdg/16",
+    #                 "https://metadata.un.org/sdg/8",
+    #                 "https://metadata.un.org/sdg/11",
+    #                 "https://metadata.un.org/sdg/17",
+    #                 "https://metadata.un.org/sdg/9",
+    #                 sep = "|"
+    #             )
+    #         ) |>
+    #             data.frame()
 
-            names(kw_h) <- "tca_corpus_SDG"
+    #         names(kw_h) <- "tca_corpus_SDG"
 
-            kw_h <- rbind(
-                kw_h,
-                colSums(kw_h)
-            )
+    #         kw_h <- rbind(
+    #             kw_h,
+    #             colSums(kw_h)
+    #         )
 
-            rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-            return(kw_h)
-        }
-    )
-    names(key_works_hits_tca_filtered) <- nms
+    #         rownames(kw_h)[[nrow(kw_h)]] <- "Total"
+    #         return(kw_h)
+    #     }
+    # )
+    # names(key_works_hits_tca_filtered) <- nms
 
     for (i in nms) {
-        key_works_hits[[i]] <- cbind(
-            key_works_hits[[i]],
-            key_works_hits_tca_filtered[[i]]
-        )
+        # key_works_hits[[i]] <- cbind(
+        #     key_works_hits[[i]],
+        #     key_works_hits_tca_filtered[[i]]
+        # )
 
         key_works_hits[[i]] <- cbind(
             key_works_hits[[i]],
             Total = rowSums(key_works_hits[[i]])
         ) |>
-            mutate(Total = Total - 1) |>
-            relocate(tca_corpus_SDG, .after = s_1_f_tca_corpus)
+            mutate(Total = Total - 1) # |>
+            # relocate(tca_corpus_SDG, .after = s_1_f_tca_corpus)
     }
 
     ###
