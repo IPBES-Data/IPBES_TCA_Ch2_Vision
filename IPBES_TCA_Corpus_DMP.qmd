@@ -759,6 +759,7 @@ The following terminology is used in this document:
 - **Assessment Corpus**: The corpus resulting from the search terms `transformative AND nature`
 - **Chapter corpus**: The corpus resulting from `transformative AND Nature AND ChX_Y` 
 
+The following searches are conducted on Title and Abstrat only as the availability of fulltext drops in 2020. OpenAlex did "inherit" fro Microsoft Academic their initial corpus in 2021 which contained a lot of fulltext for searches. After that time, other sources had to be used which did not include fulltext for searches. To eliminate this bias, we linit the search for terms in abstract and title only.
 
 ## Search Terms {#sec-search_terms}
 Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu to adopt them for OpenAlex.
@@ -1058,8 +1059,8 @@ if (!file.exists(fn)) {
                 search <- params[[stn]]
             }
             search <- compact(search)
-            openalexR::oa_query(search = search) |>
-                openalexR::oa_request(count_only = TRUE) |>
+            openalexR::oa_query(filter = list(title_and_abstract.search = search)) |>
+                openalexR::oa_request(count_only = TRUE, verbose = TRUE) |>
                 unlist()
         },
         mc.cores = params$mc.cores,
@@ -1079,48 +1080,37 @@ if (!file.exists(fn)) {
 
 
 
-    tca_corpus_filtered <- openalexR::oa_query(
-        search = compact(params$s_1_f_tca_corpus()),
-        sustainable_development_goals.id = paste(
-            "https://metadata.un.org/sdg/3",
-            "https://metadata.un.org/sdg/1",
-            "https://metadata.un.org/sdg/6",
-            "https://metadata.un.org/sdg/2",
-            "https://metadata.un.org/sdg/4",
-            "https://metadata.un.org/sdg/14",
-            "https://metadata.un.org/sdg/15",
-            "https://metadata.un.org/sdg/5",
-            "https://metadata.un.org/sdg/7",
-            "https://metadata.un.org/sdg/12",
-            "https://metadata.un.org/sdg/13",
-            "https://metadata.un.org/sdg/10",
-            "https://metadata.un.org/sdg/16",
-            "https://metadata.un.org/sdg/8",
-            "https://metadata.un.org/sdg/11",
-            "https://metadata.un.org/sdg/17",
-            "https://metadata.un.org/sdg/9",
-            sep = "|"
-        )
-    ) |>
-        openalexR::oa_request(count_only = TRUE) |>
-        unlist()
-    
-    tca_corpus_filtered["count"] = formatC(tca_corpus_filtered["count"], format = "f", big.mark = ",", digits = 0)
-
-    search_term_hits <- rbind(
-        search_term_hits,
-        data.frame(
-            count = tca_corpus_filtered[[1]],
-            db_response_time_ms = tca_corpus_filtered[[2]],
-            row.names = "tca corpus SDG"
-        )
-    )
-
-    search_term_hits <- search_term_hits[c(1:4, nrow(search_term_hits), 5:(nrow(search_term_hits) - 1)),]
 
     saveRDS(search_term_hits, file = fn)
 } else {
     search_term_hits <- readRDS(fn)
+}
+```
+
+
+
+```{r}
+#| label: get_countries_tca_corpus
+#|
+
+fn <- file.path(".", "data", "countries_tca_corpus.rds")
+if (!file.exists(fn)) {
+    countries_tca_corpus <- openalexR::oa_query(
+        filter = list(
+            title_and_abstract.search = compact(params$s_1_f_tca_corpus())
+        ),
+        group_by = "authorships.countries"
+    ) |>
+        openalexR::oa_request(count_only = FALSE, verbose = TRUE) |>
+        sapply(FUN = unlist) |>
+        t() |>
+        as.data.frame() |>
+        dplyr::rename(iso2c = key) |>
+        mutate(count = as.numeric(count))
+
+    saveRDS(countries_tca_corpus, file = fn)
+} else {
+    countries_tca_corpus <- readRDS(fn)
 }
 ```
 
@@ -1135,9 +1125,11 @@ fn_df <- file.path(".", "data", paste0("sample_tca_corpus_", params$sample_size,
 if (!file.exists(fn)) {
     message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
     sample_tca_corpus <- openalexR::oa_query(
-        search = compact(
+        filter = list(
+            title_and_abstract.search = compact(
             paste0(
                 "(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")"
+            )
             )
         ),
         options = list(
@@ -1165,7 +1157,7 @@ if (!file.exists(fn)) {
     # message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
 
     prim_topics_tca_corpus <- openalexR::oa_fetch(
-        search = compact(paste0("(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")")),
+        listsearch = compact(paste0("(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")")),
         group_by = "primary_topic.id",
         verbose = FALSE
     )
@@ -1195,7 +1187,7 @@ if (!file.exists(fn)) {
 fn <- file.path(".", "data", paste0("nature_corpus_plus.rds"))
 if (!file.exists(fn)) {
     nature_corpus_plus <- openalexR::oa_fetch(
-        search = compact(params$s_1_nature_environment),
+        title_and_abstract.search = compact(params$s_1_nature_environment),
         concepts.id = paste(
             "C86803240",
             "C18903297",
@@ -1244,7 +1236,7 @@ if (!file.exists(fn)) {
 fn <- file.path(".", "data", paste0("tc_corpus_plus.rds"))
 if (!file.exists(fn)) {
     tc_corpus_plus <- openalexR::oa_fetch(
-        search = compact(params$s_1_transformative_change),
+        title_and_abstract.search = compact(params$s_1_transformative_change),
         concepts.id = paste(
             "C548081761",
             "C162324750",
@@ -1404,31 +1396,6 @@ if (!all(file.exists(fn_kw, fn_kw_df))) {
 ```
 
 
-```{r}
-#| label: key_works_concepts
-#|
-
-fn <- file.path(".", "data", "key_works_concepts.rds")
-if (!file.exists(fn)) {
-    nms <- names(key_works_df)
-    key_works_concepts <- lapply(
-        nms,
-        function(nm) {
-            message("Processing '", nm, "' ...")
-            ifelse(
-                is.na(key_works_df[[nm]]),
-                list(NULL),
-                do.call(rbind, key_works_df[[nm]]$concepts) |>
-                    # filter(score > params$concept_cuttoff) |>
-                    arrange(desc(score))
-            )
-        }
-    )
-    saveRDS(key_works_concepts, file = fn)
-} else {
-    key_works_concepts <- readRDS(file = fn)
-}
-```
 
 
 ```{r}
@@ -1437,12 +1404,16 @@ if (!file.exists(fn)) {
 
 fn <- file.path(".", "data", "key_works_hits.rds")
 if (!file.exists(fn)) {
-    nms <- names(key_works_df)
+    kws <- key_works_df
+    kws$all  <- key_works_df |>
+        bind_rows()
+
+    nms <- names(kws)
     key_works_hits <- pbapply::pblapply(
         nms,
         function(nm) {
             message("Getting key paper set for ", nm, " ...")
-            dois <- key_works_df[[nm]] |>
+            dois <- kws[[nm]] |>
                 select(doi) |>
                 distinct() |>
                 unlist() |>
@@ -1455,12 +1426,11 @@ if (!file.exists(fn)) {
                 function(stn) {
                     message("  getting '", stn, "' ...")
                     if (grepl("_f_", stn)) {
-                        search <- params[[stn]]()
+                        search <- compact(params[[stn]]())
                     } else {
-                        search <- params[[stn]]
+                        search <- compact(params[[stn]])
                     }
-                    search <- compact(search)
-                    get_count(search_term = search, dois = dois)
+                    get_count(dois = dois, list(title_and_abstract.search = search), verbose = FALSE)
                 },
                 mc.cores = params$mc.cores,
                 mc.preschedule = FALSE
@@ -1481,80 +1451,24 @@ if (!file.exists(fn)) {
             )
 
             rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-            return(kw_h)
+            return(kw_h)  
         }
     )
+
     names(key_works_hits) <- nms
 
-
-
-    ### Add for tca corpus filtered
-
-
-    key_works_hits_tca_filtered <- pbapply::pblapply(
-        nms,
-        function(nm) {
-            message("Getting key paper set for ", nm, " ...")
-            dois <- key_works_df[[nm]] |>
-                select(doi) |>
-                distinct() |>
-                unlist() |>
-                unique() |>
-                tolower()
-
-            search <- params$s_1_f_tca_corpus()
-            search <- compact(search)
-            kw_h <- get_count(
-                search_term = search,
-                dois = dois,
-                sustainable_development_goals.id = paste(
-                    "https://metadata.un.org/sdg/3",
-                    "https://metadata.un.org/sdg/1",
-                    "https://metadata.un.org/sdg/6",
-                    "https://metadata.un.org/sdg/2",
-                    "https://metadata.un.org/sdg/4",
-                    "https://metadata.un.org/sdg/14",
-                    "https://metadata.un.org/sdg/15",
-                    "https://metadata.un.org/sdg/5",
-                    "https://metadata.un.org/sdg/7",
-                    "https://metadata.un.org/sdg/12",
-                    "https://metadata.un.org/sdg/13",
-                    "https://metadata.un.org/sdg/10",
-                    "https://metadata.un.org/sdg/16",
-                    "https://metadata.un.org/sdg/8",
-                    "https://metadata.un.org/sdg/11",
-                    "https://metadata.un.org/sdg/17",
-                    "https://metadata.un.org/sdg/9",
-                    sep = "|"
-                )
-            ) |>
-                data.frame()
-
-            names(kw_h) <- "tca_corpus_SDG"
-
-            kw_h <- rbind(
-                kw_h,
-                colSums(kw_h)
-            )
-
-            rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-            return(kw_h)
-        }
-    )
-    names(key_works_hits_tca_filtered) <- nms
-
     for (i in nms) {
-        key_works_hits[[i]] <- cbind(
-            key_works_hits[[i]],
-            key_works_hits_tca_filtered[[i]]
-        )
+        # key_works_hits[[i]] <- cbind(
+        #     key_works_hits[[i]],
+        #     key_works_hits_tca_filtered[[i]]
+        # )
 
         key_works_hits[[i]] <- cbind(
             key_works_hits[[i]],
             Total = rowSums(key_works_hits[[i]])
         ) |>
-            mutate(Total = Total - 1) |>
-            relocate(tca_corpus_SDG, .after = s_1_f_tca_corpus)
+            mutate(Total = Total - 1) # |>
+            # relocate(tca_corpus_SDG, .after = s_1_f_tca_corpus)
     }
 
     ###
@@ -1707,6 +1621,25 @@ knitr::kable(
 ```
 
 ## TCA Corpus properties
+
+### TODO Countries in TCA Corpus
+
+```{r}
+#| label: countries_tca_corpus_map
+#| eval: true
+#| 
+
+map <- countries_tca_corpus |>
+    mutate(
+        log_count = log(count)
+    ) |>
+    map_country_codes(
+        values = "log_count",
+        map_type = "countries"
+    )
+
+map
+```
 
 ### Topics in corpus
 
