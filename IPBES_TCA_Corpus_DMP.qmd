@@ -1080,44 +1080,6 @@ if (!file.exists(fn)) {
 
 
 
-    # tca_corpus_filtered <- openalexR::oa_query(
-    #     search = compact(params$s_1_f_tca_corpus()),
-    #     sustainable_development_goals.id = paste(
-    #         "https://metadata.un.org/sdg/3",
-    #         "https://metadata.un.org/sdg/1",
-    #         "https://metadata.un.org/sdg/6",
-    #         "https://metadata.un.org/sdg/2",
-    #         "https://metadata.un.org/sdg/4",
-    #         "https://metadata.un.org/sdg/14",
-    #         "https://metadata.un.org/sdg/15",
-    #         "https://metadata.un.org/sdg/5",
-    #         "https://metadata.un.org/sdg/7",
-    #         "https://metadata.un.org/sdg/12",
-    #         "https://metadata.un.org/sdg/13",
-    #         "https://metadata.un.org/sdg/10",
-    #         "https://metadata.un.org/sdg/16",
-    #         "https://metadata.un.org/sdg/8",
-    #         "https://metadata.un.org/sdg/11",
-    #         "https://metadata.un.org/sdg/17",
-    #         "https://metadata.un.org/sdg/9",
-    #         sep = "|"
-    #     )
-    # ) |>
-    #     openalexR::oa_request(count_only = TRUE) |>
-    #     unlist()
-    
-    # tca_corpus_filtered["count"] = formatC(tca_corpus_filtered["count"], format = "f", big.mark = ",", digits = 0)
-
-    # search_term_hits <- rbind(
-    #     search_term_hits,
-    #     data.frame(
-    #         count = tca_corpus_filtered[[1]],
-    #         db_response_time_ms = tca_corpus_filtered[[2]],
-    #         row.names = "tca corpus SDG"
-    #     )
-    # )
-
-    # search_term_hits <- search_term_hits[c(1:4, nrow(search_term_hits), 5:(nrow(search_term_hits) - 1)),]
 
     saveRDS(search_term_hits, file = fn)
 } else {
@@ -1195,7 +1157,7 @@ if (!file.exists(fn)) {
     # message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
 
     prim_topics_tca_corpus <- openalexR::oa_fetch(
-        search = compact(paste0("(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")")),
+        listsearch = compact(paste0("(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")")),
         group_by = "primary_topic.id",
         verbose = FALSE
     )
@@ -1225,7 +1187,7 @@ if (!file.exists(fn)) {
 fn <- file.path(".", "data", paste0("nature_corpus_plus.rds"))
 if (!file.exists(fn)) {
     nature_corpus_plus <- openalexR::oa_fetch(
-        search = compact(params$s_1_nature_environment),
+        title_and_abstract.search = compact(params$s_1_nature_environment),
         concepts.id = paste(
             "C86803240",
             "C18903297",
@@ -1274,7 +1236,7 @@ if (!file.exists(fn)) {
 fn <- file.path(".", "data", paste0("tc_corpus_plus.rds"))
 if (!file.exists(fn)) {
     tc_corpus_plus <- openalexR::oa_fetch(
-        search = compact(params$s_1_transformative_change),
+        title_and_abstract.search = compact(params$s_1_transformative_change),
         concepts.id = paste(
             "C548081761",
             "C162324750",
@@ -1434,31 +1396,6 @@ if (!all(file.exists(fn_kw, fn_kw_df))) {
 ```
 
 
-```{r}
-#| label: key_works_concepts
-#|
-
-fn <- file.path(".", "data", "key_works_concepts.rds")
-if (!file.exists(fn)) {
-    nms <- names(key_works_df)
-    key_works_concepts <- lapply(
-        nms,
-        function(nm) {
-            message("Processing '", nm, "' ...")
-            ifelse(
-                is.na(key_works_df[[nm]]),
-                list(NULL),
-                do.call(rbind, key_works_df[[nm]]$concepts) |>
-                    # filter(score > params$concept_cuttoff) |>
-                    arrange(desc(score))
-            )
-        }
-    )
-    saveRDS(key_works_concepts, file = fn)
-} else {
-    key_works_concepts <- readRDS(file = fn)
-}
-```
 
 
 ```{r}
@@ -1489,11 +1426,10 @@ if (!file.exists(fn)) {
                 function(stn) {
                     message("  getting '", stn, "' ...")
                     if (grepl("_f_", stn)) {
-                        search <- params[[stn]]()
+                        search <- compact(params[[stn]]())
                     } else {
-                        search <- params[[stn]]
+                        search <- compact(params[[stn]])
                     }
-                    search <- compact(search)
                     get_count(dois = dois, list(title_and_abstract.search = search), verbose = FALSE)
                 },
                 mc.cores = params$mc.cores,
