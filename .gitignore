@@ -5,3 +5,4 @@ Inputs/**/*.bib
 Inputs/**/*.docx
 *.eml
 IPBES_TCA_Corpus_DMP_files/
+data/pages/*
