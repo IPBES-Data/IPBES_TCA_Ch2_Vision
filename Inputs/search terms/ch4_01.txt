@@ -1,0 +1,33 @@
+(
+    challenge
+    OR barrier
+    OR obstacle
+    OR hinder
+    OR hindrance
+    OR block
+    OR prevent
+    OR deter
+    OR inertia
+    OR "path dependence"
+    OR "path dependency"
+    OR stasis
+    OR "lock-in"
+    OR trap
+    OR habits
+    OR habitual
+    OR "status quo"
+    OR power
+    OR "limiting factOR"
+)
+AND (
+    economic inequality
+    OR "Wealth concentration"
+    OR "Socioeconomic inequality"
+    OR financialization
+    OR "uneven development"
+    OR Financialization
+    OR "Structural adjustment"
+    OR "Sovereign Debt"
+    OR inequality
+    OR "Policy effectiveness"
+)
