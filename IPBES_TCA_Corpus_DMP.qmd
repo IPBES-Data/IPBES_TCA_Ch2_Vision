@@ -1174,9 +1174,9 @@ cs <- prim_topics_tca_corpus |>
 cs |>
     plot(
         type = "l",
-        xlab = "Topic",
+        xlab = "Subfield",
         ylab = "Cumulative Count",
-        main = "Cumulative Topics in TCA Corpus"
+        main = "Cumulative Subfields in TCA Corpus"
     )
 
 abline(
