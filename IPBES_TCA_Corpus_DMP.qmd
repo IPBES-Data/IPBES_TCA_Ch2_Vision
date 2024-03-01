@@ -1108,7 +1108,7 @@ countries_tca_corpus |>
 ```
 
 ### Topics in corpus
-c("AIA", "BLM", "BMU", "CXR", "GGY", "GIB", "IOT", "MCO", "MHL", "MDV", "NFK", "NRU", "SMR", "TKL", "TUV", "UMI", "VAT", "VGB", "WLF")
+
 ```{r}
 #| label: prim_topics_tca_corpus_plot
 #|
@@ -1150,6 +1150,49 @@ prim_topics_tca_corpus |>
 
 ### SubFields in Corpus
 
+```{r}
+#| label: prim_subfield_tca_corpus_plot
+#|
+cs <- prim_topics_tca_corpus |>
+    mutate(
+        topic_id = NULL,
+        topic_name = NULL,
+        keywords = NULL,
+        summary = NULL,
+        wikipedia_url = NULL
+    ) |>
+    group_by(
+        subfield_id,
+    ) |>
+    summarise(
+        count = sum(count)
+    ) |>
+    arrange(desc(count)) |>
+    dplyr::select(count) |>
+    unlist() |>
+    cumsum()
+cs |>
+    plot(
+        type = "l",
+        xlab = "Topic",
+        ylab = "Cumulative Count",
+        main = "Cumulative Topics in TCA Corpus"
+    )
+
+abline(
+    h = 0.95 * cs[length(cs)],
+    v = min(which(cs > 0.95 * cs[length(cs)])),
+    col = "red"
+)
+
+text(
+    x = 0.5 * length(cs),
+    y = 0.95 * cs[length(cs)],
+    pos = 3,
+    labels = "95% of the corpus",
+    col = "red"
+)
+```
 
 ```{r}
 #| label: prim_subfield_tca_corpus_table
