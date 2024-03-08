@@ -155,6 +155,15 @@ library(tibble)
 library(knitr)
 library(DT)
 
+library(arrow)
+library(parquetize)
+library(purrr)
+library(base64enc)
+
+library(pbapply)
+library(pbmcapply)
+library(parallel)
+
 # Function to make the search strings compacter
 compact <- function(x) {
     x |>
@@ -172,9 +181,12 @@ if (!require("IPBES.R")) {
     }
 }
 
+source(file.path("R", "functions.R"))
+
 # A single core request is needed to make multicore parallel processing work
 x <- oa_request(oa_query("bidiversity"), count_only = TRUE)
 rm(x)
+
 ```
 
 # Working Title
@@ -455,42 +467,6 @@ cat(params$s_1_case)
 
 
 
-
-### Download all IDs for the search TCA Corpus
-Needs to be enabled by setting `eval: true` in the code block below.
-
-```{r}
-#| label: get_tca_corpus
-#| eval: false
-#| 
-
-fn <- file.path(".", "data", "tca_corpus.rds")
-if (file.exists(fn)) {
-    tca_corpus <- readRDS(fn)
-} else {
-    unlink(file.path(".", "data", "pages"), recursive = TRUE)
-    dir.create(
-        file.path(".", "data", "pages"),
-        showWarnings = FALSE,
-        recursive = TRUE
-    )
-    openalexR::oa_query(
-        title_and_abstract.search = compact(params$s_1_tca_corpus),
-        options = list(
-            select = c("id", "doi", "title", "abstract_inverted_index", "topics")
-        ),
-        verbose = TRUE
-    ) |>
-    IPBES.R::oa_request_IPBES(
-        verbose = TRUE,
-        output_path = file.path(".", "data", "pages")
-    )
-
-    saveRDS(file = file.path(".", "data", "tca_corpus_ids.rds"))
-}
-
-```
-
 ## Topics
 
 OpenAlex assigns topics to each work in a hirarchical manner:
@@ -498,6 +474,190 @@ OpenAlex assigns topics to each work in a hirarchical manner:
 ![](images/topic_hirarchy.png)
 
 Please see [here](https://help.openalex.org/how-it-works/topics) for more information and [here](https://docs.google.com/spreadsheets/d/1v-MAq64x4YjhO7RWcB-yrKV5D_2vOOsxl4u6GBKEXY8/edit#gid=983250122) for a complete list of all topics and their corresponding subfields, fields and domains.
+
+
+
+# Download TCA Corpus
+
+The corpus download will be stored in `data/pages` and the arrow database in `data/corpus`.
+
+This is not on github!
+
+The corpus can be read by running `get_corpus()` which o[pens the database so that then it can be fed into a `dplyr` pipeline. After most `dplyr` functions, the actual data needs to be collected via `collect()`.
+
+Only then is the actual data read!
+
+Needs to be enabled by setting `eval: true` in the code block below.
+
+```{r}
+#| label: get_tca_corpus
+#| eval: false
+#|
+
+pages_dir <- file.path(".", "data", "pages")
+
+if (!dir.exists(fn)) {
+    dir.create(
+        path = pages_dir,
+        showWarnings = FALSE,
+        recursive = TRUE
+    )
+
+    years <- oa_fetch(
+        title_and_abstract.search = compact(params$s_1_tca_corpus),
+        group_by = "publication_year",
+        paging = "cursor",
+        verbose = FALSE
+    )$key
+
+    #######
+    #######
+    processed <- list.dirs(
+        path = pages_dir,
+        full.names = FALSE,
+        recursive = FALSE
+    ) |>
+        gsub(
+            pattern = paste0("^pages_publication_year=", ""),
+            replacement = ""
+        )
+
+    interrupted <- list.files(
+        path = pages_dir,
+        pattern = "^next_page.rds",
+        full.names = TRUE,
+        recursive = TRUE
+    ) |>
+        gsub(
+            pattern = paste0("^", pages_dir, "/pages_publication_year=", ""),
+            replacement = ""
+        ) |>
+        gsub(
+            pattern = "/next_page.rds$",
+            replacement = ""
+        )
+
+    completed <- processed[!(processed %in% interrupted)]
+
+    years <- years[!(years %in% completed)]
+    #######
+    #######
+
+    pbmcapply::pbmclapply(
+        sample(years),
+        function(y) {
+            message("Getting data for year ", y, " ...")
+            output_path <- file.path(pages_dir, paste0("pages_publication_year=", y))
+
+            dir.create(
+                path = output_path,
+                showWarnings = FALSE,
+                recursive = TRUE
+            )
+
+            data <- oa_query(
+                title_and_abstract.search = compact(params$s_1_tca_corpus),
+                publication_year = y,
+                options = list(
+                    select = c("id", "doi", "authorships", "publication_year", "title", "abstract_inverted_index", "topics")
+                ),
+                verbose = FALSE
+            ) |>
+                IPBES.R::oa_request_IPBES(
+                    count_only = FALSE,
+                    output_path = output_path,
+                    verbose = TRUE
+                )
+        },
+        mc.cores = params$mc.cores,
+        mc.preschedule = FALSE
+    )
+}
+```
+
+The fields `author` and `topics` are seerialized in the arrow database and need to be unserialized by using `unserialize_arrow()` on a dataset containing the two columns.
+
+```{r}
+#| label: convert_tca_corpus_arrow
+#| eval: false
+
+pages_dir <- file.path(".", "data", "pages")
+arrow_dir <- file.path(".", "data", "corpus")
+
+years <- list.dirs(
+    path = pages_dir,
+    full.names = TRUE,
+    recursive = FALSE
+)
+
+years_done <- list.dirs(
+    path = arrow_dir,
+    full.names = TRUE,
+    recursive = FALSE
+)
+
+years <- years[
+    !(
+        gsub(
+            x = years,
+            pattern = paste0("^", pages_dir, "/pages_publication_year="),
+            replacement = ""
+        ) %in% gsub(
+            x = years_done,
+            pattern = paste0("^", arrow_dir, "/publication_year="),
+            replacement = ""
+        )
+    )
+]
+
+pbapply::pblapply(
+    sample(years),
+    function(year) {
+        message("\n     Processing year ", year, " ...\n")
+        pages <- list.files(
+            path = year,
+            pattern = "^page_",
+            full.names = TRUE,
+            recursive = TRUE
+        )
+        data <- parallel::mclapply(
+            pages,
+            function(page) {
+                p <- readRDS(file.path(page))$results |>
+                    openalexR::works2df(verbose = FALSE)
+                p$author_abbr <- IPBES.R::abbreviate_authors(p)
+                return(p)
+            },
+            mc.cores = 3 # params$mc.cores
+        ) |>
+            do.call(what = rbind)
+
+        saveRDS(
+            data,
+            file = file.path(paste0(year, ".rds"))
+        )
+        # unlink(year, recursive = TRUE)
+
+        data <- serialize_arrow(data)
+
+        # parquetize::write_parquet_at_once(
+        #     data = data,
+        #     path_to_parquet = arrow_dir,
+        #     partition = "yes",
+        #     partitioning = "publication_year"
+        # )
+        arrow::write_dataset(
+            data, 
+            path = arrow_dir,
+            partitioning = "publication_year" ,
+            format = "parquet",
+            existing_data_behavior = "overwrite"
+        )
+    }
+)
+```
+
+
 
 # Get and calculate Data
 In this section, the data is retrieved from OpenAlex and the calculations are done. It contains the code used.
@@ -636,128 +796,6 @@ if (!file.exists(fn)) {
     saveRDS(prim_topics_tca_corpus, file = fn)
 } else {
     prim_topics_tca_corpus <- readRDS(fn)
-}
-```
-
-
-```{r}
-#| label: TODO_get_nature_corpus_plus
-#| eval: false
-#|
-
-fn <- file.path(".", "data", paste0("nature_corpus_plus.rds"))
-if (!file.exists(fn)) {
-    nature_corpus_plus <- openalexR::oa_fetch(
-        title_and_abstract.search = compact(params$s_1_nature_environment),
-        concepts.id = paste(
-            "C86803240",
-            "C18903297",
-            "C205649164",
-            "C59822182",
-            "C127313418",
-            "C151730666",
-            "C90856448",
-            "C159390177",
-            "C78458016",
-            "C58640448",
-            "C185933670",
-            "C62649853",
-            "C114793014",
-            "C97137747",
-            "C132651083",
-            "C110872660",
-            "C24518262",
-            "C130217890",
-            "C43827410",
-            sep = "|"
-        ),
-        sustainable_development_goals.id = paste(
-            "https://metadata.un.org/sdg/14",
-            "https://metadata.un.org/sdg/15",
-            "https://metadata.un.org/sdg/13",
-            sep = "|"
-        ),
-        options = list(
-            select = "id, authorships"
-        ),
-        verbose = TRUE,
-        count_only = TRUE
-    )
-    save(nature_corpus_plus, file = fn)
-} else {
-    nature_corpus_plus <- readRDS(fn)
-}
-```
-
-```{r}
-#| label: TODO_get_tc_corpus_plus
-#| eval: false
-#|
-
-fn <- file.path(".", "data", paste0("tc_corpus_plus.rds"))
-if (!file.exists(fn)) {
-    tc_corpus_plus <- openalexR::oa_fetch(
-        title_and_abstract.search = compact(params$s_1_transformative_change),
-        concepts.id = paste(
-            "C548081761",
-            "C162324750",
-            "C87717796",
-            "C139719470",
-            "C2778348673",
-            "C175605778",
-            "C47737302",
-            "C17744445",
-            "C199539241",
-            "C144133560",
-            "C138885662",
-            "C94625758",
-            "C10138342",
-            "C50522688",
-            "C162853370",
-            "C77805123",
-            "C36289849",
-            "C39549134",
-            "C187736073",
-            "C188147891",
-            "C66204764",
-            "C199033989",
-            "C74363100",
-            "C2776867660",
-            "C134560507",
-            "C106159729",
-            "C4249254",
-            "C47768531",
-            "C190248442",
-            "C95124753",
-            "C6303427",
-            sep = "|"
-        ),
-        sustainable_development_goals.id = paste(
-            "https://metadata.un.org/sdg/16",
-            "https://metadata.un.org/sdg/10",
-            "https://metadata.un.org/sdg/5",
-            "https://metadata.un.org/sdg/4",
-            "https://metadata.un.org/sdg/8",
-            "https://metadata.un.org/sdg/1",
-            "https://metadata.un.org/sdg/3",
-            "https://metadata.un.org/sdg/2",
-            "https://metadata.un.org/sdg/12",
-            "https://metadata.un.org/sdg/9",
-            "https://metadata.un.org/sdg/17",
-            "https://metadata.un.org/sdg/11",
-            "https://metadata.un.org/sdg/6",
-            "https://metadata.un.org/sdg/7",
-            sep = "|"
-        ),
-        options = list(
-            select = "id, authorships"
-        ),
-        verbose = TRUE,
-        count_only = TRUE
-    )
-    save(tc_corpus_plus, file = fn)
-} else {
-    tc_corpus_plus <- readRDS(fn)
 }
 ```
 
