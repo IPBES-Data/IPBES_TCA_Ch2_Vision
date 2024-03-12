@@ -1177,7 +1177,7 @@ data <- read_corpus(file.path("data", "corpus")) |>
             )
     )
 
-data |>
+figure <- data |>
     dplyr::filter(publication_year >= 1900) |>
     ggplot() +
     geom_bar(aes(x = publication_year, y = p), stat = "identity") +
@@ -1195,7 +1195,28 @@ data |>
     ) +
     theme_minimal() +
     theme(axis.text.y.right = element_text(color = "red"))
+
+
+ggplot2::ggsave(
+    file.path("figures", "publications_over_time.pdf"),
+    width = 12,
+    height = 6,
+    figure
+)
+ggplot2::ggsave(
+    file.path("figures", "publications_over_time.png"),
+    width = 12,
+    height = 6,
+    figure
+)
+
+rm(figure)    
 ```
+
+
+![](`r file.path("figures", "publications_over_time.png")`)
+
+To download high resolution, [click here](`r file.path("figures", "publications_over_time.pdf")`){target="_blank"}
 
 ```{r}
 data |> IPBES.R::table_dt(fn = "publications_over_time")
