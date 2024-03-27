@@ -59,9 +59,9 @@ if (!exists("params")) {
     params <- rmarkdown::yaml_front_matter("IPBES_Ch1_evidence_causes.qmd")$params
 }
 
-build <- as.integer(readLines("buildNo_ch2_evidence_causes"))
+build <- as.integer(readLines("buildNo_ch1_evidence_causes"))
 build <- build + 1
-writeLines(as.character(build), "buildNo_ch2_evidence_causes")
+writeLines(as.character(build), "buildNo_ch1_evidence_causes")
 
 knitr::opts_chunk$set(message = NA)
 
@@ -718,11 +718,16 @@ if (!file.exists(fn)) {
 # Results
 
 ## 1. Ethical arguments for transformative change
+
+**Subset of TCA Corpus**
+
 How many, what percentage, and what papers in the full TC corpus?
 
-The **Ethics Corpus** consists of  **`r count$ethical_tca`** works, which is **`r round(100 * count$ethical_tca / count$tca_corpus, digits = 2)`%** of the TCA Corpus
+The **Ethics Corpus**  consists of  **`r count$ethical_tca`** works, which is **`r round(100 * count$ethical_tca / count$tca_corpus, digits = 2)`%** of the TCA Corpus
 
 ## 2. Assessing broader biodiversity concepts
+
+**Subset of OpenAlex Corpus**
 
 The Concepts 1 Corpus (talking about biodiversity in relation to conservation, management, policy, or governance ) consists of **`r count$concepts_1`** works, which is **`r round(100 * count$concepts_1 / count$nature_corpus, digits = 2)`%** of the Nature Corpus. Of these, **`r count$concepts_1_2`** (**`r round(100 * count$concepts_1__2 / count$nature_corpus, digits = 2)`%** of Nature Corpus and **`r round(100 * count$concepts_2 / count$concept_1, digits = 2)`%** of the Concept 1 Corpus) works also talk about broader than non-human species and ecosystems.
 
@@ -732,23 +737,64 @@ To be discussed
 
 ## 4. Narrowed TFC corpus
 
-The Narrowed TFC Corpus consists of **`r count$narrowed_tca`** works, which is **`r round(100 * count$narrowed_tca_tca / count$tca_corpus, digits = 2)`%** of the TCA Corpus.
+**Subset of TCA Corpus**
+
+The Narrowed TFC Corpus consists of **`r count$narrowed_tca_tca`** works, which is **`r round(100 * count$narrowed_tca_tca / count$tca_corpus, digits = 2)`%** of the TCA Corpus.
+
+
+**Subset of Nature Corpus**
+
 The Narrowed Nature Corpus consists of **`r count$narrowed_tca_nature`** works, which is **`r round(100 * count$narrowed_tca_nature / count$nature_corpus, digits = 2)`%** of the Nature Corpus.
 
 ## 5. Assessing criteria in the Narrowed TFC corpus
 
-This is not possible due to the length of the query. A download of the Narrowed TFC Corpus is suggested, but will take time due to its size.
 
-### 6. Assessing the literature that discusses the causes of biodiversity loss 
+### Criteria 1
 
-#### Nature Corpus
+**`r count$narrowed_tca_c1`** works in the narrowed TCA Corpus, which is **`r round(100 * count$narrowed_tca_c1 / count$narrowed_tca_tca, digits = 2)`% **of the Narrowed TCA Corpus.
 
-There are **`r count$biodiv_loss_nat_s_1`** works in the Nature Corpus that discuss the causes of biodiversity loss. 
+### Criteria 2
 
-#### Narrowed TFC Corpus
+**`r count$narrowed_tca_c2`** works in the narrowed TCA Corpus, which is **`r round(100 * count$narrowed_tca_c2 / count$narrowed_tca_tca, digits = 2)`%** of the Narrowed TCA Corpus.
 
-There are **`r count$biodiv_loss_narrowed_s_2`** works in the Narrowed TFC Corpus that discuss the causes of biodiversity loss. 
+### Criteria 3
 
-#### Intersection of Nature Corpus and Narrowed TCA Corpus
+**`r count$narrowed_tca_c3`** works in the narrowed TCA Corpus, which is **`r round(100 * count$narrowed_tca_c3 / count$narrowed_tca_tca, digits = 2)`% **of the Narrowed TCA Corpus.
 
-There are **`r count$biodiv_loss_nat_narrowed_s_3`** works in the intersection from the Nature Corpus and the Narrowed TFC Corpus that discuss the causes of biodiversity loss. 
+### Criteria 4
+
+**`r count$narrowed_tca_c4`** works in the narrowed TCA Corpus, which is **`r round(100 * count$narrowed_tca_c4 / count$narrowed_tca_tca, digits = 2)`%** of the Narrowed TCA Corpus.
+
+## 6. Assessing the literature that discusses the causes of biodiversity loss 
+
+### Nature Corpus AND `Step 1` AND `Step 2`
+
+There are the following numbers of wotks in the Nature Corpus:
+
+- **`r count$biodiv_loss_nat_s_1 `** works in the Nature Corpus that discuss the `Topic 1`, which is **`r round(100 * count$biodiv_loss_nat_s_1 / count$nature_corpus, digits = 2)`%**
+- **`r count$biodiv_loss_nat_s_2 `** works in the Nature Corpus that discuss the `Topic 2`, which is **`r round(100 * count$biodiv_loss_nat_s_2 / count$nature_corpus, digits = 2)`%**
+- **`r count$biodiv_loss_nat_s_3 `** works in the Nature Corpus that discuss the `Topic 3`, which is **`r round(100 * count$biodiv_loss_nat_s_3 / count$nature_corpus, digits = 2)`%**
+- **`r count$biodiv_loss_nat_s_4 `** works in the Nature Corpus that discuss the `Topic 4`, which is **`r round(100 * count$biodiv_loss_nat_s_4 / count$nature_corpus, digits = 2)`%**
+- **`r count$biodiv_loss_nat_s_5 `** works in the Nature Corpus that discuss the `Topic 5`, which is **`r round(100 * count$biodiv_loss_nat_s_5 / count$nature_corpus, digits = 2)`%**
+
+
+### Narrowed TCA Corpus AND `Step 1` AND `Step 2`
+
+There are the following numbers of wotks in the Narrowed TCA Corpus:
+
+- **`r count$biodiv_loss_narrowed_s_1 `** works in the Narrowed TFC Corpus that discuss the `Topic 1`, which is **`r round(100 * count$biodiv_loss_narrowed_s_1 / count$narrowed_tca_tca, digits = 2)`%**
+- **`r count$biodiv_loss_narrowed_s_2 `** works in the Narrowed TFC Corpus that discuss the `Topic 2`, which is **`r round(100 * count$biodiv_loss_narrowed_s_2 / count$narrowed_tca_tca, digits = 2)`%**
+- **`r count$biodiv_loss_narrowed_s_3 `** works in the Narrowed TFC Corpus that discuss the `Topic 3`, which is **`r round(100 * count$biodiv_loss_narrowed_s_3 / count$narrowed_tca_tca, digits = 2)`%**
+- **`r count$biodiv_loss_narrowed_s_4 `** works in the Narrowed TFC Corpus that discuss the `Topic 4`, which is **`r round(100 * count$biodiv_loss_narrowed_s_4 / count$narrowed_tca_tca, digits = 2)`%**
+- **`r count$biodiv_loss_narrowed_s_5 `** works in the Narrowed TFC Corpus that discuss the `Topic 5`, which is **`r round(100 * count$biodiv_loss_narrowed_s_5 / count$narrowed_tca_tca, digits = 2)`%**
+
+### Nature Corpus AND Narrowed TCA Corpus AND `Step 1` AND `Step 2`
+
+There are the following numbers of wotks in the Nature Corpus AND Narrowed TCA Corpus:
+
+- **`r count$biodiv_loss_nat_narrowed_s_1 `** works in the Nature Corpus AND Narrowed TFC Corpus that discuss the `Topic 1`, which is **`r round(100 * count$biodiv_loss_nat_narrowed_s_1 / count$narrowed_tca_nature, digits = 2)`%**
+- **`r count$biodiv_loss_nat_narrowed_s_2 `** works in the Nature Corpus AND Narrowed TFC Corpus that discuss the `Topic 2`, which is **`r round(100 * count$biodiv_loss_nat_narrowed_s_2 / count$narrowed_tca_nature, digits = 2)`%**
+- **`r count$biodiv_loss_nat_narrowed_s_3 `** works in the Nature Corpus AND Narrowed TFC Corpus that discuss the `Topic 3`, which is **`r round(100 * count$biodiv_loss_nat_narrowed_s_3 / count$narrowed_tca_nature, digits = 2)`%**
+- **`r count$biodiv_loss_nat_narrowed_s_4 `** works in the Nature Corpus AND Narrowed TFC Corpus that discuss the `Topic 4`, which is **`r round(100 * count$biodiv_loss_nat_narrowed_s_4 / count$narrowed_tca_nature, digits = 2)`%**
+- **`r count$biodiv_loss_nat_narrowed_s_5 `** works in the Nature Corpus AND Narrowed TFC Corpus that discuss the `Topic 5`, which is **`r round(100 * count$biodiv_loss_nat_narrowed_s_5 / count$narrowed_tca_nature, digits = 2)`%**
+
