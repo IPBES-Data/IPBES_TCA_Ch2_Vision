@@ -1,0 +1,13 @@
+"Environmental crisis" OR
+"environmental destruction" OR
+"biodiversity loss" OR
+"biodiversity crisis" OR
+"nature’s decline" OR
+"polycrisis" OR
+"planetary disruption" OR
+"planetary crisis" OR
+"global crisis" OR
+"global crises" OR
+"Environmental Crises" OR
+unsustainable OR
+"sustainability crisis"

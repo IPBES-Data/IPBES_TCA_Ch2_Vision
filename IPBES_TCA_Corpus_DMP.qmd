@@ -55,26 +55,26 @@ params:
     # s_tfc_rev: "('transformative change'  OR  'deliberate transformation*'  OR  'transformative turn*'  OR  'transition*'  OR  'social-ecological change*'  OR  'deep change'  OR  'fundamental alteration'  OR  'profound change'  OR  'profound transformation'  OR  'radical transformation'  OR  'transformational change'  OR  'complete change'  OR  'complete transformation'  OR  'drastic change'  OR  'in-depth transformation'  OR  'progressive change'  OR  'radical alteration'  OR  'radical change'  OR  'revolutionary change'  OR  'significant modification'  OR  'total transformation'  OR  'transition'  OR  'pathway'  OR  'power'  OR  'agency'  OR  'scale'  OR  'leverage'  OR  'context'  OR  'process'  OR  'regime'  OR  'shift'  OR  'views'  OR  'value*'  OR  'structure*'  OR  'institution*' OR  'deliberate'  OR  'structural'  OR  'fundamental'  OR  'system*'  OR  'deep'  OR  'radical'  OR  'profound'  OR  'drastic'  OR  'widespread'  OR  'political'  OR  'economical'  OR  'structur*'  OR  'complete'  OR  'progressive'  OR  'revolutionary'  OR  'substantial'  OR  'significant') AND ('transformation'  OR  'alteration'  OR  'change'  OR  'turn'  OR  'action' OR  'transition'  OR  'shift' )"
  
     s_1_oa: ""
-    s_1_transformative_change: !expr paste0(readLines(file.path("inputs", "search terms", "tfc.txt")), collapse = "\n")
-    s_1_nature_environment: !expr paste0(readLines(file.path("inputs", "search terms", "nature.txt")), collapse = "\n")
-    s_1_tca_corpus: !expr paste("(", paste0(readLines(file.path("inputs", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("inputs", "search terms", "tfc.txt")), collapse = "\n"), ")")
-    s_1_ch1_01: !expr paste0(readLines(file.path("inputs", "search terms", "ch1_01.txt")), collapse = "\n")
-    s_1_ch1_02: !expr paste0(readLines(file.path("inputs", "search terms", "ch1_02.txt")), collapse = "\n")
-    s_1_ch1_03: !expr paste0(readLines(file.path("inputs", "search terms", "ch1_03.txt")), collapse = "\n")
-    s_1_ch1_04: !expr paste0(readLines(file.path("inputs", "search terms", "ch1_04.txt")), collapse = "\n")
-    s_1_ch1_05: !expr paste0(readLines(file.path("inputs", "search terms", "ch1_05.txt")), collapse = "\n")
-    s_1_ch1_06: !expr paste0(readLines(file.path("inputs", "search terms", "ch1_06.txt")), collapse = "\n")
-    s_1_ch2: !expr paste0(readLines(file.path("inputs", "search terms", "ch2.txt")), collapse = "\n")
-    s_1_ch3_01: !expr paste0(readLines(file.path("inputs", "search terms", "ch3_01.txt")), collapse = "\n")
-    s_1_ch3_02: !expr paste0(readLines(file.path("inputs", "search terms", "ch3_02.txt")), collapse = "\n")
-    s_1_ch3_03: !expr paste0(readLines(file.path("inputs", "search terms", "ch3_03.txt")), collapse = "\n")
-    s_1_ch3_04: !expr paste0(readLines(file.path("inputs", "search terms", "ch3_04.txt")), collapse = "\n")
-    s_1_ch3_05: !expr paste0(readLines(file.path("inputs", "search terms", "ch3_05.txt")), collapse = "\n")
-    s_1_ch3_06: !expr paste0(readLines(file.path("inputs", "search terms", "ch3_06.txt")), collapse = "\n")
-    s_1_ch4_01: !expr paste0(readLines(file.path("inputs", "search terms", "ch4_01.txt")), collapse = "\n")     
-    s_1_ch4_02: !expr paste0(readLines(file.path("inputs", "search terms", "ch4_02.txt")), collapse = "\n")
-    s_1_case: !expr paste0(readLines(file.path("inputs", "search terms", "case.txt")), collapse = "\n")
-    s_1_ch2_vision_case: !expr paste("(", paste0(readLines(file.path("inputs", "search terms", "ch2.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("inputs", "search terms", "case.txt")), collapse = "\n"), ")")
+    s_1_transformative_change: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n")
+    s_1_nature_environment: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "nature.txt")), collapse = "\n")
+    s_1_tca_corpus: !expr paste("(", paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ")")
+    s_1_ch1_01: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch1_01.txt")), collapse = "\n")
+    s_1_ch1_02: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch1_02.txt")), collapse = "\n")
+    s_1_ch1_03: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch1_03.txt")), collapse = "\n")
+    s_1_ch1_04: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch1_04.txt")), collapse = "\n")
+    s_1_ch1_05: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch1_05.txt")), collapse = "\n")
+    s_1_ch1_06: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch1_06.txt")), collapse = "\n")
+    s_1_ch2: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch2.txt")), collapse = "\n")
+    s_1_ch3_01: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch3_01.txt")), collapse = "\n")
+    s_1_ch3_02: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch3_02.txt")), collapse = "\n")
+    s_1_ch3_03: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch3_03.txt")), collapse = "\n")
+    s_1_ch3_04: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch3_04.txt")), collapse = "\n")
+    s_1_ch3_05: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch3_05.txt")), collapse = "\n")
+    s_1_ch3_06: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch3_06.txt")), collapse = "\n")
+    s_1_ch4_01: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch4_01.txt")), collapse = "\n")     
+    s_1_ch4_02: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch4_02.txt")), collapse = "\n")
+    s_1_case: !expr paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "case.txt")), collapse = "\n")
+    s_1_ch2_vision_case: !expr paste("(", paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "ch2.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("inputs", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
    
     concept_cuttoff: 0.6
 
@@ -503,7 +503,7 @@ Needs to be enabled by setting `eval: true` in the code block below.
 #| eval: false
 #|
 
-pages_dir <- file.path(".", "data", "pages")
+pages_dir <- file.path(".", "data", "tca_corpus", "pages")
 
 if (!dir.exists(fn)) {
     dir.create(
@@ -590,8 +590,17 @@ The fields `author` and `topics` are seerialized in the arrow database and need 
 #| label: convert_tca_corpus_arrow
 #| eval: false
 
-pages_dir <- file.path(".", "data", "pages")
-arrow_dir <- file.path(".", "data", "corpus")
+pages_dir <- file.path(".", "data", "tca_corpus", "pages")
+arrow_dir <- file.path(".", "data", "tca_corpus", "corpus")
+
+# convert_pages_2_arrow(  
+#     pages_dir = pages_dir, 
+#     arrow_dir = arrow_dir,
+#     continue = FALSE,
+#     delete_arrow_dir = TRUE,
+#     mc_cores = 3,
+#     verbose = TRUE
+# )
 
 years <- list.dirs(
     path = pages_dir,
@@ -645,16 +654,11 @@ pbapply::pblapply(
             data,
             file = file.path(paste0(year, ".rds"))
         )
-        # unlink(year, recursive = TRUE)
 
-        data <- serialize_arrow(data)
+                    for  (i in 1:nrow(data)) {
+                        data$author[[i]]$au_orcid <- as.character(data$author[[i]]$au_orcid)
+                    }
 
-        # parquetize::write_parquet_at_once(
-        #     data = data,
-        #     path_to_parquet = arrow_dir,
-        #     partition = "yes",
-        #     partitioning = "publication_year"
-        # )
         arrow::write_dataset(
             data, 
             path = arrow_dir,
@@ -676,7 +680,7 @@ No results are shown here, so this section can be skipped.
 #| label: get_search_term_hits
 #|
 
-fn <- file.path(".", "data", "search_term_hits.rds")
+fn <- file.path(".", "data", "tca_corpus", "search_term_hits.rds")
 if (!file.exists(fn)) {
     s_t <- grep("s_1_", names(params), value = TRUE)
     search_term_hits <- parallel::mclapply(
@@ -723,20 +727,36 @@ if (!file.exists(fn)) {
 #| label: get_countries_tca_corpus
 #|
 
-fn <- file.path(".", "data", "countries_tca_corpus.rds")
+fn <- file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")
 if (!file.exists(fn)) {
-    countries_tca_corpus <- openalexR::oa_query(
-        filter = list(
-            title_and_abstract.search = compact(params$s_1_tca_corpus)
-        ),
-        group_by = "authorships.countries"
+    data <- file.path(".", "data", "tca_corpus", "corpus") |>
+        IPBES.R::arrow_read_corpus() |>
+        dplyr::select(author) |>
+        dplyr::collect()
+
+    countries_tca_corpus <- pbmcapply::pbmclapply(
+        1:nrow(data),
+        function(i) {
+            country <- IPBES.R::unserialize_arrow(data$author[i])[[1]]["institution_country_code"] |>
+                unlist()
+            weight <- 1 / length(country)
+            result <- data.frame(
+                country = country,
+                weight = weight
+            )
+            rownames(result) <- NULL
+            result <- result[!is.na(result$country), ]
+            if (nrow(result) == 0) {
+                result <- NULL
+            }
+            return(result)
+        },
+        mc.cores = 8
     ) |>
-        openalexR::oa_request(count_only = FALSE, verbose = TRUE) |>
-        sapply(FUN = unlist) |>
-        t() |>
-        as.data.frame() |>
-        dplyr::rename(iso2c = key) |>
-        mutate(count = as.numeric(count))
+        do.call(what = rbind) |>
+        dplyr::group_by(country) |>
+        dplyr::summarise(weight = sum(weight))
+
 
     saveRDS(countries_tca_corpus, file = fn)
 } else {
@@ -744,14 +764,100 @@ if (!file.exists(fn)) {
 }
 ```
 
+```{r}
+#| label: get_countries_tca_corpus_b2016
+#|
+
+fn <- file.path(".", "data", "tca_corpus", "countries_tca_corpus_b2016.rds")
+if (!file.exists(fn)) {
+    data <- file.path(".", "data", "tca_corpus", "corpus") |>
+        IPBES.R::arrow_read_corpus() |>
+        dplyr::filter(publication_year <= 2016) |>
+        dplyr::select(author) |>
+        dplyr::select(author) |>
+        dplyr::collect()
+
+    countries_tca_corpus_b2016 <- pbmcapply::pbmclapply(
+        1:nrow(data),
+        function(i) {
+            country <- IPBES.R::unserialize_arrow(data$author[i])[[1]]["institution_country_code"] |>
+                unlist()
+            weight <- 1 / length(country)
+            result <- data.frame(
+                country = country,
+                weight = weight
+            )
+            rownames(result) <- NULL
+            result <- result[!is.na(result$country), ]
+            if (nrow(result) == 0) {
+                result <- NULL
+            }
+            return(result)
+        },
+        mc.cores = 8
+    ) |>
+        do.call(what = rbind) |>
+        dplyr::group_by(country) |>
+        dplyr::summarise(weight = sum(weight))
+
+
+
+    saveRDS(countries_tca_corpus_b2016, file = fn)
+} else {
+    countries_tca_corpus_b2016 <- readRDS(fn)
+}
+```
+
+```{r}
+#| label: get_countries_tca_corpus_a2018
+#|
+
+fn <- file.path(".", "data", "tca_corpus", "countries_tca_corpus_a2018.rds")
+if (!file.exists(fn)) {
+    data <- file.path(".", "data", "tca_corpus", "corpus") |>
+        IPBES.R::arrow_read_corpus() |>
+        dplyr::filter(publication_year > 2018) |>
+        dplyr::select(author) |>
+        dplyr::select(author) |>
+        dplyr::collect()
+
+    countries_tca_corpus_a2018 <- pbmcapply::pbmclapply(
+        1:nrow(data),
+        function(i) {
+            country <- IPBES.R::unserialize_arrow(data$author[i])[[1]]["institution_country_code"] |>
+                unlist()
+            weight <- 1 / length(country)
+            result <- data.frame(
+                country = country,
+                weight = weight
+            )
+            rownames(result) <- NULL
+            result <- result[!is.na(result$country), ]
+            if (nrow(result) == 0) {
+                result <- NULL
+            }
+            return(result)
+        },
+        mc.cores = 8
+    ) |>
+        do.call(what = rbind) |>
+        dplyr::group_by(country) |>
+        dplyr::summarise(weight = sum(weight))
+
+
+    saveRDS(countries_tca_corpus_a2018, file = fn)
+} else {
+    countries_tca_corpus_a2018 <- readRDS(fn)
+}
+```
 
 ```{r}
 #| label: get_sample_tca_corpus
 #| eval: true
 
 
-fn <- file.path(".", "data", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
-fn_df <- file.path(".", "data", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
+fn <- file.path(".", "data", "tca_corpus", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
+fn_df <- file.path(".", "data", "tca_corpus", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
 if (!file.exists(fn)) {
     message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
     sample_tca_corpus <- openalexR::oa_query(
@@ -782,7 +888,7 @@ if (!file.exists(fn)) {
 #| label: prim_topic_tca_corpus
 #| eval: true
 
-fn <- file.path(".", "data", paste0("prim_topics_tca_corpus.rds"))
+fn <- file.path(".", "data", "tca_corpus", paste0("prim_topics_tca_corpus.rds"))
 if (!file.exists(fn)) {
     # message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
 
@@ -795,7 +901,7 @@ if (!file.exists(fn)) {
     prim_topics_tca_corpus <- prim_topics_tca_corpus[-2]
     prim_topics_tca_corpus$topic_id <- sub("https://openalex.org/T", "", prim_topics_tca_corpus$topic_id)
     prim_topics_tca_corpus <- merge(
-        read.csv(file.path("inputs", "OpenAlex_topic_mapping_table - final_topic_field_subfield_table.csv")),
+        read.csv(file.path("inputs", "tca_corpus", "OpenAlex_topic_mapping_table - final_topic_field_subfield_table.csv")),
         prim_topics_tca_corpus,
         by = "topic_id"
     )
@@ -812,7 +918,7 @@ if (!file.exists(fn)) {
 ```{r}
 #| label: get_key_papers
 #|
-fn <- file.path(".", "data", "key_papers.rds")
+fn <- file.path(".", "data", "tca_corpus", "key_papers.rds")
 if (!file.exists(fn)) {
     key_papers <- lapply(
         params$key_papers,
@@ -859,8 +965,8 @@ if (!file.exists(fn)) {
 #| label: key_works
 #|
 
-fn_kw <- file.path(".", "data", "key_works.rds")
-fn_kw_df <- file.path(".", "data", "key_works_df.rds")
+fn_kw <- file.path(".", "data", "tca_corpus", "key_works.rds")
+fn_kw_df <- file.path(".", "data", "tca_corpus", "key_works_df.rds")
 if (!all(file.exists(fn_kw, fn_kw_df))) {
     key_works <- parallel::mclapply(
         key_papers,
@@ -910,7 +1016,7 @@ if (!all(file.exists(fn_kw, fn_kw_df))) {
 #| label: key_works_hits
 #|
 
-fn <- file.path(".", "data", "key_works_hits.rds")
+fn <- file.path(".", "data", "tca_corpus", "key_works_hits.rds")
 if (!file.exists(fn)) {
     kws <- key_works_df
     kws$all  <- key_works_df |>
@@ -1141,7 +1247,7 @@ The red line is the cumulative proportion of publications, the blue line the cum
 #| fig-height: 6
 #|
 
-data <- read_corpus(file.path("data", "corpus")) |>
+data <- read_corpus(file.path("data", "tca_corpus", "corpus")) |>
     dplyr::select(publication_year) |>
     dplyr::arrange(publication_year) |>
     dplyr::collect() |>
@@ -1157,6 +1263,7 @@ data <- read_corpus(file.path("data", "corpus")) |>
     ) |>
     dplyr::inner_join(
         y = openalexR::oa_fetch(
+            search = "",
             group_by = "publication_year",
             output = "tibble",
             verbose = FALSE
@@ -1198,13 +1305,13 @@ figure <- data |>
 
 
 ggplot2::ggsave(
-    file.path("figures", "publications_over_time.pdf"),
+    file.path("figures", "tca_corpus", "publications_over_time.pdf"),
     width = 12,
     height = 6,
     figure
 )
 ggplot2::ggsave(
-    file.path("figures", "publications_over_time.png"),
+    file.path("figures", "tca_corpus", "publications_over_time.png"),
     width = 12,
     height = 6,
     figure
@@ -1214,9 +1321,9 @@ rm(figure)
 ```
 
 
-![](`r file.path("figures", "publications_over_time.png")`)
+![](`r file.path("figures", "tca_corpus", "publications_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "publications_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("figures", "tca_corpus", "publications_over_time.pdf")`){target="_blank"}
 
 ```{r}
 data |> IPBES.R::table_dt(fn = "publications_over_time")
@@ -1225,19 +1332,20 @@ rm(data)
 
 ### Countries in TCA Corpus
 
-TODO These maps still use the results from the OpenAlex query, not the arrow database. But the differences should be minimal and this will be changed.
+The countries are based on the countries of the institutes of all authors, weighted by `1/no_ authors_per_paper`. 
 
 The following calculations were done:
 
-- `**count** = ifelse(is.na(count), 0, count)`
-- `**log_count** = log(count + 1)`
-- `**log_count_oa** = log(count_oa + 1)`
-- `**p* = count / sum(count)`
-- `**p_oa** = count_oa / sum(count_oa)`
-- `**p_output** = count / count_oa`
-- `**p_diff** = (p_oa - p) * 100`
+- `**count** = `ifelse(is.na(count), 0, count)`
+- `**log_count** = `log(count + 1)`
+- `**p** = `count / sum(count)`
+- `**count_oa** = `ifelse(is.na(count_oa), 0, count)`
+- `**log_count_oa** = `log(count_oa + 1)`
+- `**p_oa** = `count_oa / sum(count_oa)`
+- `**p_diff** = `(p_oa - p) * 100`
+- `**p_ratio** = `count / count_oa`
 
-
+#### All works
 
 ```{r}
 #| label: countries_tca_corpus_map
@@ -1245,34 +1353,70 @@ The following calculations were done:
 #| fig-height: 9
 #|
 
-
 data <- countries_tca_corpus |>
     dplyr::full_join(
         openalexR::oa_fetch(
+            search = "",
             group_by = "authorships.countries",
             output = "tibble",
             verbose = FALSE
         ) |>
-            rename(count_oa = count)
+            dplyr::rename(
+                count_oa = count,
+                country = key_display_name
+            ) |>
+            dplyr::mutate(
+                country = countrycode::countrycode(
+                    country,
+                    origin = "country.name",
+                    destination = "iso2c"
+                )
+            )
     ) |>
-    mutate(
+    dplyr::rename(
+        count = weight
+    ) |>
+    dplyr::mutate(
         count = ifelse(is.na(count), 0, count),
+        count_scaled = (count - min(count, na.rm = TRUE)) / (max(count, na.rm = TRUE) - min(count, na.rm = TRUE)),
         log_count = log(count + 1),
-        log_count_oa = log(count_oa + 1),
         p = count / sum(count),
+        #
+        count_oa = ifelse(is.na(count_oa), 0, count_oa),
+        count_oa_scaled = (count - min(count_oa, na.rm = TRUE)) / (max(count_oa, na.rm = TRUE) - min(count_oa, na.rm = TRUE)),
+        log_count_oa = log(count_oa + 1),
         p_oa = count_oa / sum(count_oa),
-        p_output = count / count_oa,
-        p_diff = (p_oa - p) * 100
+        #
+        # p_tca = count / count_oa,
+        p_diff = (p_oa - p) * 100,
+        p_ratio = (p / p_oa)
     )
 
 data$iso3c <- countrycode::countrycode(
-    data$key_display_name,
-    origin = "country.name",
+    data$country,
+    origin = "iso2c",
     destination = "iso3c"
 )
 
 
 map <- patchwork::wrap_plots(
+    #
+    data |> map_country_codes(
+        map_type = "countries",
+        values = "count_oa",
+        geodata_path = gdm_dir
+    ) +
+        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+        ggplot2::ggtitle("count of overall publications (count_oa)"),
+    ##
+    data |> map_country_codes(
+        map_type = "countries",
+        values = "count",
+        geodata_path = gdm_dir
+    ) +
+        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+        ggplot2::ggtitle("count of TCA publications (count_oa)"),
+    #
     data |> map_country_codes(
         map_type = "countries",
         values = "log_count_oa",
@@ -1280,6 +1424,7 @@ map <- patchwork::wrap_plots(
     ) +
         ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
         ggplot2::ggtitle("log(count + 1) of overall publications (log_count_oa)"),
+    ##
     data |> map_country_codes(
         map_type = "countries",
         values = "log_count",
@@ -1287,39 +1432,51 @@ map <- patchwork::wrap_plots(
     ) +
         ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
         ggplot2::ggtitle("log(count + 1) of TCA publications (log_count)"),
+    #
     data |> map_country_codes(
         map_type = "countries",
         values = "p_oa",
         geodata_path = gdm_dir
     ) +
         ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("Overall research output (p_oa)"),
+        ggplot2::ggtitle("Overall research output (p_oa = count_oa / sum(count_oa))"),
+    #
     data |> map_country_codes(
         map_type = "countries",
         values = "p",
         geodata_path = gdm_dir
     ) +
         ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("TCA research output (p)"),
+        ggplot2::ggtitle("TCA research output (p = count / sum(count))"),
+    #
     data |>
         map_country_codes(
             map_type = "countries",
             values = "p_diff",
             geodata_path = gdm_dir
         ) +
+        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+        ggplot2::ggtitle("TCA research output (p)"),
+    #
+    data |>
+        map_country_codes(
+            map_type = "countries",
+            values = "p_ratio",
+            geodata_path = gdm_dir
+        ) +
         ggplot2::scale_fill_gradient2(low = "#E69F00", mid = "white", high = "#56B4E9", midpoint = 0) +
-        ggplot2::ggtitle("difference (TCA - overall) output (p_oa - p)"),
+        ggplot2::ggtitle("ratio output (p / p_oa)"),
     ncol = 2
 )
 
 ggplot2::ggsave(
-    file.path("maps", "publications_countries.pdf"),
+    file.path("maps", "tca_corpus", "publications_countries.pdf"),
     width = 12,
     height = 8,
     map
 )
 ggplot2::ggsave(
-    file.path("maps", "publications_countries.png"),
+    file.path("maps", "tca_corpus", "publications_countries.png"),
     width = 12,
     height = 8,
     map
@@ -1328,9 +1485,10 @@ ggplot2::ggsave(
 rm(map)
 ```
 
-![](`r file.path("maps", "publications_countries.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "publications_countries.pdf")`){target="_blank"}
+![](`r file.path("maps", "tca_corpus", "publications_countries.png")`)
+
+To download high resolution, [click here](`r file.path("maps", "tca_corpus", "publications_countries.pdf")`){target="_blank"}
 
 ```{r}
 data |> IPBES.R::table_dt(fn = "publications_per_country")

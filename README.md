@@ -54,6 +54,9 @@ See [here](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69
 
 ## Reports
 
-- [Status Report](IPBES_TCA_Corpus_DMP.html)
-- Data Management Report
-  - [SOD DOI](https://doi.org/10.5281/zenodo.10251349)
+- [TCA Corpus Report](IPBES_TCA_Corpus_DMP.html)
+- [TCA Chapter 1 Evidence Causes](IPBES_Ch1_evidence_causes.html)
+
+### Data Management Report
+
+- [TCA Corpus SOD DOI](https://doi.org/10.5281/zenodo.10251349)
