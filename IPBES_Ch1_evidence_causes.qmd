@@ -449,9 +449,9 @@ if (!file.exists(fn)) {
 }
 ```
 
-## TODO Download `technology AND vision` Corpus
+## TODO Download ` Corpi
 
-The corpus download will be stored in `ch1_evidence_causes/pages` and the arrow database in `data/ch1_evidence_causes/corpus`.
+The corpi download will be stored in `ch1_evidence_causes/pages` and the arrow database in `data/ch1_evidence_causes/corpus`.
 
 This is not on github!
 
@@ -461,7 +461,7 @@ Only then is the actual data read!
 
 Needs to be enabled by setting `eval: true` in the code block below.
 
-### TODO Download TCA Corpus
+### TODO Download Corpus
 
 ```{r}
 #| label: get_tca_corpus
@@ -550,7 +550,7 @@ pbmcapply::pbmclapply(
 toc()
 ```
 
-### TODO Convert TCA Corpus to Arrow
+### TODO Convert Corpus to Arrow
 
 The fields `author` and `topics` are serialized in the arrow database and need to be unserialized by using `unserialize_arrow()` on a dataset containing the two columns.
 
@@ -694,7 +694,7 @@ pbapply::pblapply(
 toc()
 ```
 
-### TODO Extract 50 random papers from `technology AND vision` in TCA Corpus
+### TODO Extract 50 random papers
 ```{r}
 #| label: extract_random_papers
 #| eval: false
