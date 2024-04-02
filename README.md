@@ -55,8 +55,9 @@ See [here](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69
 ## Reports
 
 - [TCA Corpus Report](IPBES_TCA_Corpus_DMP.html)
+  - Status see [Issue #9](https://github.com/IPBES-Data/IPBES_TCA_Corpus/issues/9)
 - [TCA Chapter 1 Evidence Causes](IPBES_Ch1_evidence_causes.html)
-  - [ ] Waiting for feedback
+  - Status see [Issue #11](https://github.com/IPBES-Data/IPBES_TCA_Corpus/issues/11)
 
 ### Data Management Report
 
