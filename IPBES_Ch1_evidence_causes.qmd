@@ -176,7 +176,7 @@ count$tca_corpus <- openalexR::oa_fetch(
 
 ### 1. Ethical arguments for transformative change
 
-The search terms is [ethical](inputs/ch1_evidence_causes/ethical.txt){target=_blank}
+The search terms is [ethical](./inputs/ch1_evidence_causes/ethical.txt){target=_blank}
 on **OpenAlex**.
 
 ```{r}
@@ -341,6 +341,26 @@ st_1_nat <- compact(paste0("(", nature_st, ") AND (", biodiv_loss_1_st, ") AND (
 st_2_tca <- compact(paste0("(", narrowed_tca_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
 st_3_nat <- compact(paste0("(", nature_st, ") AND (", narrowed_tca_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
 
+count$st_1_nat <- openalexR::oa_fetch(
+    title_and_abstract.search = st_1_nat,
+    count_only = TRUE,
+    output = "list",
+    verbose = TRUE
+)$count
+
+count$st_2_tca <- openalexR::oa_fetch(
+    title_and_abstract.search = st_2_tca,
+    count_only = TRUE,
+    output = "list",
+    verbose = TRUE
+)$count
+
+count$st_3_nat <- openalexR::oa_fetch(
+    title_and_abstract.search = st_3_nat,
+    count_only = TRUE,
+    output = "list",
+    verbose = TRUE
+)$count
 
 count$biodiv_loss_nat_s_1 <- openalexR::oa_fetch(
     title_and_abstract.search = compact(paste0("(", st_1_nat, ") AND (", biodiv_loss_3_1_st, ")")),
@@ -769,6 +789,8 @@ The Narrowed Nature Corpus consists of **`r count$narrowed_tca_nature`** works, 
 
 ### Nature Corpus AND `Step 1` AND `Step 2`
 
+- **`r count$st_1_nat `** works in the Nature Corpus crossed with Step 1 and Step 2 terms, which is **`r round(100 * count$st_1_nat / count$nature_corpus, digits = 2)`%** of the Nature Corpus
+
 There are the following numbers of wotks in the Nature Corpus:
 
 - **`r count$biodiv_loss_nat_s_1 `** works in the Nature Corpus that discuss the `Topic 1`, which is **`r round(100 * count$biodiv_loss_nat_s_1 / count$nature_corpus, digits = 2)`%**
@@ -780,6 +802,8 @@ There are the following numbers of wotks in the Nature Corpus:
 
 ### Narrowed TCA Corpus AND `Step 1` AND `Step 2`
 
+- **`r count$st_3_nat `** works in the Narrowed TCA Corpus crossed the NAture Corpus and with Step 1 and Step 2 terms, which is **`r round(100 * count$st_3_nat / count$narrowed_tca_tca, digits = 2)`%** of the Narrowed TCA Corpus
+
 There are the following numbers of wotks in the Narrowed TCA Corpus:
 
 - **`r count$biodiv_loss_narrowed_s_1 `** works in the Narrowed TFC Corpus that discuss the `Topic 1`, which is **`r round(100 * count$biodiv_loss_narrowed_s_1 / count$narrowed_tca_tca, digits = 2)`%**
@@ -789,6 +813,8 @@ There are the following numbers of wotks in the Narrowed TCA Corpus:
 - **`r count$biodiv_loss_narrowed_s_5 `** works in the Narrowed TFC Corpus that discuss the `Topic 5`, which is **`r round(100 * count$biodiv_loss_narrowed_s_5 / count$narrowed_tca_tca, digits = 2)`%**
 
 ### Nature Corpus AND Narrowed TCA Corpus AND `Step 1` AND `Step 2`
+
+- **`r count$st_2_tca `** works in the Narrowed TCA Corpus crossed with Step 1 and Step 2 terms, which is **`r round(100 * count$st_2_tca / count$narrowed_tca_nature, digits = 2)`%** of the Narrowed TCA Corpus
 
 There are the following numbers of wotks in the Nature Corpus AND Narrowed TCA Corpus:
 
