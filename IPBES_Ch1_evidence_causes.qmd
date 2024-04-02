@@ -191,7 +191,6 @@ count$ethical <- openalexR::oa_fetch(
 )$count
 ```
 
-
 The search terms is [ethical](inputs/ch1_evidence_causes/ethical.txt){target=_blank}
 on **TCA Corpus**.
 
