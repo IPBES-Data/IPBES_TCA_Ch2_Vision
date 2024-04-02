@@ -192,10 +192,12 @@ rm(x)
 gdm_dir <- tempfile()
 dir.create(gdm_dir, showWarnings = FALSE, recursive = TRUE)
 
+pages_dir <- file.path(".", "data", "tca_corpus", "pages")
+corpus_dir <- file.path(".", "data", "tca_corpus", "corpus")
+
 on.exit({
     unlink(gdm_dir, recursive = TRUE)
-    }
-)
+})
 ```
 
 # Working Title
@@ -503,7 +505,6 @@ Needs to be enabled by setting `eval: true` in the code block below.
 #| eval: false
 #|
 
-pages_dir <- file.path(".", "data", "tca_corpus", "pages")
 
 if (!dir.exists(fn)) {
     dir.create(
@@ -590,12 +591,10 @@ The fields `author` and `topics` are seerialized in the arrow database and need 
 #| label: convert_tca_corpus_arrow
 #| eval: false
 
-pages_dir <- file.path(".", "data", "tca_corpus", "pages")
-arrow_dir <- file.path(".", "data", "tca_corpus", "corpus")
 
 # convert_pages_2_arrow(  
 #     pages_dir = pages_dir, 
-#     arrow_dir = arrow_dir,
+#     arrow_dir = corpus_dir,
 #     continue = FALSE,
 #     delete_arrow_dir = TRUE,
 #     mc_cores = 3,
@@ -609,7 +608,7 @@ years <- list.dirs(
 )
 
 years_done <- list.dirs(
-    path = arrow_dir,
+    path = corpus_dir,
     full.names = TRUE,
     recursive = FALSE
 )
@@ -622,7 +621,7 @@ years <- years[
             replacement = ""
         ) %in% gsub(
             x = years_done,
-            pattern = paste0("^", arrow_dir, "/publication_year="),
+            pattern = paste0("^", corpus_dir, "/publication_year="),
             replacement = ""
         )
     )
@@ -661,7 +660,7 @@ pbapply::pblapply(
 
         arrow::write_dataset(
             data, 
-            path = arrow_dir,
+            path = corpus_dir,
             partitioning = "publication_year" ,
             format = "parquet",
             existing_data_behavior = "overwrite"
@@ -675,6 +674,16 @@ pbapply::pblapply(
 # Get and calculate Data
 In this section, the data is retrieved from OpenAlex and the calculations are done. It contains the code used.
 No results are shown here, so this section can be skipped.
+
+
+```{r}
+#| label: export_abstracts
+#| eval: false
+
+corpus_read(corpus_dir) |>
+    select(id, doi, ab) |>
+    arrow::write_parquet(file.path(".", "data", "tca_corpus", "abstracts_tca.parquet")
+```
 
 ```{r}
 #| label: get_search_term_hits
@@ -724,137 +733,180 @@ if (!file.exists(fn)) {
 
 
 ```{r}
-#| label: get_countries_tca_corpus
+#| label: get_countries_tca_corpus_data
 #|
 
 fn <- file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")
+
 if (!file.exists(fn)) {
-    data <- file.path(".", "data", "tca_corpus", "corpus") |>
-        IPBES.R::arrow_read_corpus() |>
-        dplyr::select(author) |>
-        dplyr::collect()
+    years <- IPBES.R::corpus_read(corpus_dir) |>
+        distinct(publication_year) |>
+        collect() |>
+        unlist() |>
+        as.vector()
+    
+    if (length(years) > 1) {
+        years <- sample(years)
+    }
 
-    countries_tca_corpus <- pbmcapply::pbmclapply(
-        1:nrow(data),
-        function(i) {
-            country <- IPBES.R::unserialize_arrow(data$author[i])[[1]]["institution_country_code"] |>
-                unlist()
-            weight <- 1 / length(country)
-            result <- data.frame(
-                country = country,
-                weight = weight
-            )
-            rownames(result) <- NULL
-            result <- result[!is.na(result$country), ]
-            if (nrow(result) == 0) {
-                result <- NULL
+    auth <- pbmcapply::pbmclapply(
+        years,
+        function(y) {
+            authors <- IPBES.R::corpus_read(corpus_dir) |>
+                dplyr::filter(publication_year == y) |>
+                dplyr::select(author) |>
+                collect() |>
+                unlist() |>
+                IPBES.R::unserialize_arrow()
+
+
+            data_first <- authors |>
+                IPBES.R::extract_countries(first_only = TRUE) |>
+                dplyr::group_by(cc) |>
+                dplyr::summarise(count = sum(weight)) |>
+                rename(
+                    iso2c = cc,
+                    count_first = count
+                )
+
+            data <- authors |>
+                IPBES.R::extract_countries(first_only = FALSE) |>
+                dplyr::group_by(cc) |>
+                dplyr::summarise(count = sum(weight)) |>
+                rename(
+                    iso2c = cc,
+                    count_all = count
+                ) |>
+                dplyr::full_join(
+                    x = data_first,
+                    by = "iso2c"
+                )
+
+            rm(data_first, authors)
+
+            if (nrow(data) == 0) {
+                data$iso3c <- character(0)
+            } else {
+                data$iso3c <- countrycode::countrycode(
+                    data$iso2c,
+                    origin = "iso2c",
+                    destination = "iso3c"
+                )
             }
-            return(result)
+
+            data_oa <- openalexR::oa_fetch(
+                group_by = "authorships.countries",
+                publication_year = y,
+                output = "tibble",
+                verbose = FALSE
+            ) |>
+                rename(count_oa = count)
+
+            data_oa$iso3c <- countrycode::countrycode(
+                data_oa$key_display_name,
+                origin = "country.name",
+                destination = "iso3c"
+            )
+
+            data_oa <- data_oa |>
+                mutate(
+                    key_display_name = NULL,
+                    key = NULL
+                )
+
+            data |>
+                mutate(
+                    iso2c = NULL
+                ) |>
+                dplyr::full_join(
+                    y = data_oa,
+                    by = "iso3c"
+                ) |>
+                mutate(
+                    count_oa = ifelse(is.na(count_oa), 0, count_oa),
+                    log_count_oa = log(count_oa + 1),
+                    p_oa = count_oa / sum(count_oa),
+                    #
+                    count_first = ifelse(is.na(count_first), 0, count_first),
+                    log_count_first = log(count_first + 1),
+                    p_first = count_first / sum(count_first),
+                    p_first_output = count_first / count_oa,
+                    p_first_diff = (p_oa - p_first) * 100,
+                    #
+                    count_all = ifelse(is.na(count_all), 0, count_all),
+                    log_count_all = log(count_all + 1),
+                    p_all = count_all / sum(count_all),
+                    p_all_output = count_all / count_oa,
+                    p_all_diff = (p_oa - p_all) * 100,
+                ) |>
+                dplyr::arrange(
+                    iso3c
+                ) |>
+                dplyr::relocate(
+                    iso3c,
+                    everything()
+                )
         },
-        mc.cores = 8
-    ) |>
-        do.call(what = rbind) |>
-        dplyr::group_by(country) |>
-        dplyr::summarise(weight = sum(weight))
+        mc.cores = params$mc.cores,
+        mc.preschedule = FALSE
+    )
 
-
-    saveRDS(countries_tca_corpus, file = fn)
-} else {
-    countries_tca_corpus <- readRDS(fn)
+    names(auth) <- years
+    saveRDS(auth, file = fn)
 }
 ```
 
-```{r}
-#| label: get_countries_tca_corpus_b2016
-#|
-
-fn <- file.path(".", "data", "tca_corpus", "countries_tca_corpus_b2016.rds")
-if (!file.exists(fn)) {
-    data <- file.path(".", "data", "tca_corpus", "corpus") |>
-        IPBES.R::arrow_read_corpus() |>
-        dplyr::filter(publication_year <= 2016) |>
-        dplyr::select(author) |>
-        dplyr::select(author) |>
-        dplyr::collect()
-
-    countries_tca_corpus_b2016 <- pbmcapply::pbmclapply(
-        1:nrow(data),
-        function(i) {
-            country <- IPBES.R::unserialize_arrow(data$author[i])[[1]]["institution_country_code"] |>
-                unlist()
-            weight <- 1 / length(country)
-            result <- data.frame(
-                country = country,
-                weight = weight
-            )
-            rownames(result) <- NULL
-            result <- result[!is.na(result$country), ]
-            if (nrow(result) == 0) {
-                result <- NULL
-            }
-            return(result)
-        },
-        mc.cores = 8
-    ) |>
-        do.call(what = rbind) |>
-        dplyr::group_by(country) |>
-        dplyr::summarise(weight = sum(weight))
-
-
-
-    saveRDS(countries_tca_corpus_b2016, file = fn)
-} else {
-    countries_tca_corpus_b2016 <- readRDS(fn)
-}
-```
 
 ```{r}
-#| label: get_countries_tca_corpus_a2018
+#| label: publications_over_time_data
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "countries_tca_corpus_a2018.rds")
+fn <- file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")
+
 if (!file.exists(fn)) {
-    data <- file.path(".", "data", "tca_corpus", "corpus") |>
-        IPBES.R::arrow_read_corpus() |>
-        dplyr::filter(publication_year > 2018) |>
-        dplyr::select(author) |>
-        dplyr::select(author) |>
-        dplyr::collect()
-
-    countries_tca_corpus_a2018 <- pbmcapply::pbmclapply(
-        1:nrow(data),
-        function(i) {
-            country <- IPBES.R::unserialize_arrow(data$author[i])[[1]]["institution_country_code"] |>
-                unlist()
-            weight <- 1 / length(country)
-            result <- data.frame(
-                country = country,
-                weight = weight
-            )
-            rownames(result) <- NULL
-            result <- result[!is.na(result$country), ]
-            if (nrow(result) == 0) {
-                result <- NULL
-            }
-            return(result)
-        },
-        mc.cores = 8
+read_corpus(file.path("data", "tca_corpus", "corpus")) |>
+    dplyr::select(publication_year) |>
+    dplyr::arrange(publication_year) |>
+    dplyr::collect() |>
+    table() |>
+    as.data.frame() |>
+    mutate(
+        publication_year = as.integer(as.character(publication_year)),
+        p = Freq / sum(Freq),
+        p_cum = cumsum(p)
     ) |>
-        do.call(what = rbind) |>
-        dplyr::group_by(country) |>
-        dplyr::summarise(weight = sum(weight))
-
-
-    saveRDS(countries_tca_corpus_a2018, file = fn)
-} else {
-    countries_tca_corpus_a2018 <- readRDS(fn)
+    rename(
+        count = Freq
+    ) |>
+    dplyr::inner_join(
+        y = openalexR::oa_fetch(
+            search = "",
+            group_by = "publication_year",
+            output = "tibble",
+            verbose = FALSE
+        ) |>
+            dplyr::select(
+                key,
+                count
+            ) |>
+            dplyr::rename(
+                publication_year = key,
+                count_oa = count
+            ) |>
+            dplyr::arrange(publication_year) |>
+            dplyr::mutate(
+                publication_year = as.integer(as.character(publication_year)),
+                p_oa = count_oa / sum(count_oa),
+                p_oa_cum = cumsum(p_oa)
+            )
+    )
+    saveRDS(data, file = fn)
 }
 ```
 
 ```{r}
 #| label: get_sample_tca_corpus
-#| eval: true
-
+#| 
 
 fn <- file.path(".", "data", "tca_corpus", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
 fn_df <- file.path(".", "data", "tca_corpus", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
@@ -1243,81 +1295,44 @@ The red line is the cumulative proportion of publications, the blue line the cum
 
 ```{r}
 #| label: publications_over_time_plot
-#| fig-width: 12
-#| fig-height: 6
 #|
 
-data <- read_corpus(file.path("data", "tca_corpus", "corpus")) |>
-    dplyr::select(publication_year) |>
-    dplyr::arrange(publication_year) |>
-    dplyr::collect() |>
-    table() |>
-    as.data.frame() |>
-    mutate(
-        publication_year = as.integer(as.character(publication_year)),
-        p = Freq / sum(Freq),
-        p_cum = cumsum(p)
-    ) |>
-    rename(
-        count = Freq
-    ) |>
-    dplyr::inner_join(
-        y = openalexR::oa_fetch(
-            search = "",
-            group_by = "publication_year",
-            output = "tibble",
-            verbose = FALSE
-        ) |>
-            dplyr::select(
-                key,
-                count
-            ) |>
-            dplyr::rename(
-                publication_year = key,
-                count_oa = count
-            ) |>
-            dplyr::arrange(publication_year) |>
-            dplyr::mutate(
-                publication_year = as.integer(as.character(publication_year)),
-                p_oa = count_oa / sum(count_oa),
-                p_oa_cum = cumsum(p_oa)
-            )
+if (length(list.files(file.path("figures", "tca_corpus"), pattern = "publications_over_time")) < 2) {
+    figure <- readRDS(file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")) |>
+        dplyr::filter(publication_year >= 1900) |>
+        ggplot() +
+        geom_bar(aes(x = publication_year, y = p), stat = "identity") +
+        geom_line(aes(x = publication_year, y = p_cum / 10), color = "red") +
+        geom_line(aes(x = publication_year, y = p_oa_cum / 10), color = "blue") +
+        scale_x_continuous(breaks = seq(1900, 2020, 10)) +
+        scale_y_continuous(
+            "Proportion of publications",
+            sec.axis = sec_axis(~ . * 10, name = "Cumulative proportion") # divide by 100 to scale back the secondary axis
+        ) +
+        labs(
+            title = "Publications over time",
+            x = "Year",
+            y = "Number of publications"
+        ) +
+        theme_minimal() +
+        theme(axis.text.y.right = element_text(color = "red"))
+
+
+    ggplot2::ggsave(
+        file.path("figures", "tca_corpus", "publications_over_time.pdf"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
+        file.path("figures", "tca_corpus", "publications_over_time.png"),
+        width = 12,
+        height = 6,
+        figure
     )
 
-figure <- data |>
-    dplyr::filter(publication_year >= 1900) |>
-    ggplot() +
-    geom_bar(aes(x = publication_year, y = p), stat = "identity") +
-    geom_line(aes(x = publication_year, y = p_cum / 10), color = "red") +
-    geom_line(aes(x = publication_year, y = p_oa_cum / 10), color = "blue") +
-    scale_x_continuous(breaks = seq(1900, 2020, 10)) +
-    scale_y_continuous(
-        "Proportion of publications",
-        sec.axis = sec_axis(~ . * 10, name = "Cumulative proportion") # divide by 100 to scale back the secondary axis
-    ) +
-    labs(
-        title = "Publications over time",
-        x = "Year",
-        y = "Number of publications"
-    ) +
-    theme_minimal() +
-    theme(axis.text.y.right = element_text(color = "red"))
-
-
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "publications_over_time.pdf"),
-    width = 12,
-    height = 6,
-    figure
-)
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "publications_over_time.png"),
-    width = 12,
-    height = 6,
-    figure
-)
-
-rm(figure)    
+    rm(figure)
+}
 ```
 
 

@@ -9,3 +9,7 @@ IPBES_TCA_Corpus_DMP_files/
 **/pages/
 **/corpus/
 **/corpus_tc
+
+data/tca_corpus/abstracts_tca.parquet
+
+data/tca_corpus/tca_corpus.duckdb
