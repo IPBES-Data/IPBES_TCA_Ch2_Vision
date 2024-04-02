@@ -238,7 +238,7 @@ count$concepts_1 <- openalexR::oa_fetch(
 )$count
 ```
 
-Assessing the broader biodiversity concepts by searching for [concepts_1 corpus](inputs/ch1_evidence_causes/concepts_1.txt){target=_blank} AND [concepts_2 corpus](inputs/ch2_evidence_causes/concepts_2.txt){target=_blank}
+Assessing the broader biodiversity concepts by searching for [concepts_1 corpus](inputs/ch1_evidence_causes/concepts_1.txt){target=_blank} AND [concepts_2 corpus](inputs/ch1_evidence_causes/concepts_2.txt){target=_blank}
 
 ```{r}
 #| label: get_concepts_1_2_nature_count
