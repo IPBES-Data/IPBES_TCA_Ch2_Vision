@@ -189,7 +189,7 @@ if (!require("IPBES.R")) {
 x <- oa_request(oa_query("bidiversity"), count_only = TRUE)
 rm(x)
 
-gdm_dir <- tempfile()
+gdm_dir <- file.path(".", "data", "gdm_dir")
 dir.create(gdm_dir, showWarnings = FALSE, recursive = TRUE)
 
 pages_dir <- file.path(".", "data", "tca_corpus", "pages")
@@ -487,8 +487,270 @@ OpenAlex assigns topics to each work in a hirarchical manner:
 Please see [here](https://help.openalex.org/how-it-works/topics) for more information and [here](https://docs.google.com/spreadsheets/d/1v-MAq64x4YjhO7RWcB-yrKV5D_2vOOsxl4u6GBKEXY8/edit#gid=983250122) for a complete list of all topics and their corresponding subfields, fields and domains.
 
 
+# Methods
 
-# Download TCA Corpus
+## Get and calculate Data
+These data is gathered from OpenAlex directly, not using the downloaded TCA Corpus. The data is used to assess the quality of the TCA Corpus.
+
+```{r}
+#| label: get_search_term_hits
+#|
+
+fn <- file.path(".", "data", "tca_corpus", "search_term_hits.rds")
+if (!file.exists(fn)) {
+    s_t <- grep("s_1_", names(params), value = TRUE)
+    search_term_hits <- parallel::mclapply(
+        s_t,
+        function(stn) {
+            message("getting '", stn, "' ...")
+            if (grepl("_f_", stn)) {
+                search <- params[[stn]]()
+            } else {
+                search <- params[[stn]]
+            }
+            search <- compact(search)
+            openalexR::oa_query(filter = list(title_and_abstract.search = search)) |>
+                openalexR::oa_request(count_only = TRUE, verbose = TRUE) |>
+                unlist()
+        },
+        mc.cores = params$mc.cores,
+        mc.preschedule = FALSE
+    ) |>
+        do.call(what = cbind) |>
+        t() |>
+        as.data.frame() |>
+        dplyr::mutate(page = NULL, per_page = NULL) |>
+        dplyr::mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0))
+
+    rownames(search_term_hits) <- s_t |>
+        gsub(pattern = "s_1_", replacement = "") |>
+        gsub(pattern = "f_", replacement = "") |>
+        gsub(pattern = "^ch", replacement = "Chapter ") |>
+        gsub(pattern = "_", replacement = " ")
+
+
+
+
+    saveRDS(search_term_hits, file = fn)
+} else {
+    search_term_hits <- readRDS(fn)
+}
+```
+
+
+
+```{r}
+#| label: get_prim_topic_tca_corpus
+#| eval: true
+
+fn <- file.path(".", "data", "tca_corpus", paste0("prim_topics_tca_corpus.rds"))
+if (!file.exists(fn)) {
+    # message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
+
+    prim_topics_tca_corpus <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(params$s_1_tca_corpus),
+        group_by = "primary_topic.id",
+        verbose = FALSE
+    )
+    names(prim_topics_tca_corpus) <- c("topic_id", "topic_name", "count")
+    prim_topics_tca_corpus <- prim_topics_tca_corpus[-2]
+    prim_topics_tca_corpus$topic_id <- sub("https://openalex.org/T", "", prim_topics_tca_corpus$topic_id)
+    prim_topics_tca_corpus <- merge(
+        read.csv(file.path("inputs", "tca_corpus", "OpenAlex_topic_mapping_table - final_topic_field_subfield_table.csv")),
+        prim_topics_tca_corpus,
+        by = "topic_id"
+    )
+
+    prim_topics_tca_corpus <- prim_topics_tca_corpus[order(prim_topics_tca_corpus$count, decreasing = TRUE), ]
+
+    saveRDS(prim_topics_tca_corpus, file = fn)
+} else {
+    prim_topics_tca_corpus <- readRDS(fn)
+}
+```
+
+
+```{r}
+#| label: get_key_papers
+#|
+fn <- file.path(".", "data", "tca_corpus", "key_papers.rds")
+if (!file.exists(fn)) {
+    key_papers <- lapply(
+        params$key_papers,
+        function(fn) {
+            message("Processing '", fn, "' ...")
+            sapply(
+                fn,
+                function(x) {
+                    read.csv(x) |>
+                        select(DOI)
+                }
+            ) |>
+                unlist()
+        }
+    )
+    names(key_papers) <- gsub("\\.csv", "", basename(params$key_papers))
+
+
+    key_papers <- list(
+        Ch_1 = unlist(key_papers[grepl("Ch 1 -", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_2 = unlist(key_papers[grepl("Ch 2 -", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_1 = unlist(key_papers[grepl("Ch 3 - Cl1", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_3 = unlist(key_papers[grepl("Ch 3 - Cl3", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_4 = unlist(key_papers[grepl("Ch 3 - Cl4", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_5 = unlist(key_papers[grepl("Ch 3 - Cl5", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3_Cl_6 = unlist(key_papers[grepl("Ch 3 - Cl6", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_3 = unlist(key_papers[grepl("Ch 3 - p", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_1 = unlist(key_papers[grepl("Ch 4 - Challenge 1", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_2 = unlist(key_papers[grepl("Ch 4 - Challenge 2", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_3 = unlist(key_papers[grepl("Ch 4 - Challenge 3", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_4 = unlist(key_papers[grepl("Ch 4 - Challenge 4", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_4_Cl_5 = unlist(key_papers[grepl("Ch 4 - Challenge 5", names(key_papers))], recursive = FALSE) |> as.vector(),
+        Ch_5 = unlist(key_papers[grepl("Ch 5 -", names(key_papers))], recursive = FALSE) |> as.vector()
+    )
+
+    saveRDS(key_papers, file = fn)
+} else {
+    key_papers <- readRDS(fn)
+}
+```
+
+
+```{r}
+#| label: get_key_works
+#|
+
+fn_kw <- file.path(".", "data", "tca_corpus", "key_works.rds")
+fn_kw_df <- file.path(".", "data", "tca_corpus", "key_works_df.rds")
+if (!all(file.exists(fn_kw, fn_kw_df))) {
+    key_works <- parallel::mclapply(
+        key_papers,
+        function(kp) {
+            dois <- kp[kp != ""] |>
+                unlist() |>
+                tolower() |>
+                unique()
+
+            openalexR::oa_fetch(doi = dois, output = "list")
+        },
+        mc.cores = params$mc.cores,
+        mc.preschedule = FALSE
+    )
+
+    found <- sapply(
+        key_works,
+        function(x) {
+            length(x) > 0
+        }
+    )
+
+    key_works <- key_works[found]
+
+    print("The following key paper sets were excluded as they contained no papers in OpenAlex:\n")
+    print(names(found)[!found])
+
+    saveRDS(key_works, file = fn_kw)
+
+    key_works_df <- lapply(
+        key_works,
+        oa2df,
+        entity = "works"
+    )
+
+    saveRDS(key_works_df, fn_kw_df)
+} else {
+    key_works <- readRDS(file = fn_kw)
+    key_works_df <- readRDS(fn_kw_df)
+}
+```
+
+
+
+
+```{r}
+#| label: get_key_works_hits
+#|
+
+fn <- file.path(".", "data", "tca_corpus", "key_works_hits.rds")
+if (!file.exists(fn)) {
+    kws <- key_works_df
+    kws$all  <- key_works_df |>
+        bind_rows()
+
+    nms <- names(kws)
+    key_works_hits <- pbapply::pblapply(
+        nms,
+        function(nm) {
+            message("Getting key paper set for ", nm, " ...")
+            dois <- kws[[nm]] |>
+                select(doi) |>
+                distinct() |>
+                unlist() |>
+                unique() |>
+                tolower()
+
+            s_t <- grep("s_1_", names(params), value = TRUE)
+            kw_h <- parallel::mclapply(
+                s_t,
+                function(stn) {
+                    message("  getting '", stn, "' ...")
+                    if (grepl("_f_", stn)) {
+                        search <- compact(params[[stn]]())
+                    } else {
+                        search <- compact(params[[stn]])
+                    }
+                    get_count(dois = dois, list(title_and_abstract.search = search), verbose = FALSE)
+                },
+                mc.cores = params$mc.cores,
+                mc.preschedule = FALSE
+            ) |>
+                do.call(what = cbind) |>
+                as.data.frame()
+
+            names(kw_h) <- s_t
+
+            # if (ncol(kw_h) == 1){
+            #     kw_h <- t(kw_h)
+            #     rownames(kw_h) <- dois
+            # }
+
+            kw_h <- rbind(
+                kw_h,
+                colSums(kw_h)
+            )
+
+            rownames(kw_h)[[nrow(kw_h)]] <- "Total"
+            return(kw_h)  
+        }
+    )
+
+    names(key_works_hits) <- nms
+
+    for (i in nms) {
+        # key_works_hits[[i]] <- cbind(
+        #     key_works_hits[[i]],
+        #     key_works_hits_tca_filtered[[i]]
+        # )
+
+        key_works_hits[[i]] <- cbind(
+            key_works_hits[[i]],
+            Total = rowSums(key_works_hits[[i]])
+        ) |>
+            mutate(Total = Total - 1) # |>
+            # relocate(tca_corpus_SDG, .after = s_1_tca_corpus)
+    }
+
+    ###
+
+    saveRDS(key_works_hits, file = fn)
+} else {
+    key_works_hits <- readRDS(file = fn)
+}
+```
+
+
+
+## Download TCA Corpus
 
 The corpus download will be stored in `data/pages` and the arrow database in `data/corpus`.
 
@@ -669,11 +931,7 @@ pbapply::pblapply(
 )
 ```
 
-
-
-# Get and calculate Data
-In this section, the data is retrieved from OpenAlex and the calculations are done. It contains the code used.
-No results are shown here, so this section can be skipped.
+## Export
 
 
 ```{r}
@@ -685,55 +943,121 @@ corpus_read(corpus_dir) |>
     arrow::write_parquet(file.path(".", "data", "tca_corpus", "abstracts_tca.parquet")
 ```
 
+
 ```{r}
-#| label: get_search_term_hits
-#|
+#| label: export_random_50
+#| eval: false
+#| 
 
-fn <- file.path(".", "data", "tca_corpus", "search_term_hits.rds")
+fn <- file.path("data", "tca_corpus", "random_50_tca_corpus.xlsx")
 if (!file.exists(fn)) {
-    s_t <- grep("s_1_", names(params), value = TRUE)
-    search_term_hits <- parallel::mclapply(
-        s_t,
-        function(stn) {
-            message("getting '", stn, "' ...")
-            if (grepl("_f_", stn)) {
-                search <- params[[stn]]()
-            } else {
-                search <- params[[stn]]
-            }
-            search <- compact(search)
-            openalexR::oa_query(filter = list(title_and_abstract.search = search)) |>
-                openalexR::oa_request(count_only = TRUE, verbose = TRUE) |>
-                unlist()
-        },
-        mc.cores = params$mc.cores,
-        mc.preschedule = FALSE
-    ) |>
-        do.call(what = cbind) |>
-        t() |>
-        as.data.frame() |>
-        dplyr::mutate(page = NULL, per_page = NULL) |>
-        dplyr::mutate(count = formatC(count, format = "f", big.mark = ",", digits = 0))
-
-    rownames(search_term_hits) <- s_t |>
-        gsub(pattern = "s_1_", replacement = "") |>
-        gsub(pattern = "f_", replacement = "") |>
-        gsub(pattern = "^ch", replacement = "Chapter ") |>
-        gsub(pattern = "_", replacement = " ")
-
-
-
-
-    saveRDS(search_term_hits, file = fn)
-} else {
-    search_term_hits <- readRDS(fn)
+    set.seed(13)
+    read_corpus(corpus_tca_dir) |>
+        dplyr::select(id, doi, author_abbr, display_name, ab) |>
+        dplyr::rename(abstract = ab, title = display_name) |>
+        dplyr::collect() |>
+        dplyr::slice_sample(n = 50) |>
+        writexl::write_xlsx(path = fn)
 }
 ```
 
 
+## Figures
 
 ```{r}
-#| label: get_countries_tca_corpus_data
+#| label: publications_over_time_data
+#|
+
+fn <- file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")
+
+if (!file.exists(fn)) {
+read_corpus(file.path("data", "tca_corpus", "corpus")) |>
+    dplyr::select(publication_year) |>
+    dplyr::arrange(publication_year) |>
+    dplyr::collect() |>
+    table() |>
+    as.data.frame() |>
+    mutate(
+        publication_year = as.integer(as.character(publication_year)),
+        p = Freq / sum(Freq),
+        p_cum = cumsum(p)
+    ) |>
+    rename(
+        count = Freq
+    ) |>
+    dplyr::inner_join(
+        y = openalexR::oa_fetch(
+            search = "",
+            group_by = "publication_year",
+            output = "tibble",
+            verbose = FALSE
+        ) |>
+            dplyr::select(
+                key,
+                count
+            ) |>
+            dplyr::rename(
+                publication_year = key,
+                count_oa = count
+            ) |>
+            dplyr::arrange(publication_year) |>
+            dplyr::mutate(
+                publication_year = as.integer(as.character(publication_year)),
+                p_oa = count_oa / sum(count_oa),
+                p_oa_cum = cumsum(p_oa)
+            )
+    ) |>
+    saveRDS(file = fn)
+}
+```
+
+```{r}
+#| label: publications_over_time_plot
+#|
+
+if (length(list.files(file.path("figures", "tca_corpus"), pattern = "publications_over_time")) < 2) {
+    figure <- readRDS(file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")) |>
+        dplyr::filter(publication_year >= 1900) |>
+        ggplot() +
+        geom_bar(aes(x = publication_year, y = p), stat = "identity") +
+        geom_line(aes(x = publication_year, y = p_cum / 10), color = "red") +
+        geom_line(aes(x = publication_year, y = p_oa_cum / 10), color = "blue") +
+        scale_x_continuous(breaks = seq(1900, 2020, 10)) +
+        scale_y_continuous(
+            "Proportion of publications",
+            sec.axis = sec_axis(~ . * 10, name = "Cumulative proportion") # divide by 100 to scale back the secondary axis
+        ) +
+        labs(
+            title = "Publications over time",
+            x = "Year",
+            y = "Number of publications"
+        ) +
+        theme_minimal() +
+        theme(axis.text.y.right = element_text(color = "red"))
+
+
+    ggplot2::ggsave(
+        file.path("figures", "tca_corpus", "publications_over_time.pdf"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
+        file.path("figures", "tca_corpus", "publications_over_time.png"),
+        width = 12,
+        height = 6,
+        figure
+    )
+
+    rm(figure)
+}
+```
+
+## Maps
+
+
+```{r}
+#| label: countries_tca_corpus_data
 #|
 
 fn <- file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")
@@ -744,7 +1068,7 @@ if (!file.exists(fn)) {
         collect() |>
         unlist() |>
         as.vector()
-    
+
     if (length(years) > 1) {
         years <- sample(years)
     }
@@ -823,21 +1147,23 @@ if (!file.exists(fn)) {
                     by = "iso3c"
                 ) |>
                 mutate(
+                    publication_year = y,
+                    #
                     count_oa = ifelse(is.na(count_oa), 0, count_oa),
-                    log_count_oa = log(count_oa + 1),
-                    p_oa = count_oa / sum(count_oa),
+                    # log_count_oa = log(count_oa + 1),
+                    # p_oa = count_oa / sum(count_oa),
                     #
                     count_first = ifelse(is.na(count_first), 0, count_first),
-                    log_count_first = log(count_first + 1),
-                    p_first = count_first / sum(count_first),
-                    p_first_output = count_first / count_oa,
-                    p_first_diff = (p_oa - p_first) * 100,
+                    # log_count_first = log(count_first + 1),
+                    # p_first = count_first / sum(count_first),
+                    # p_first_output = count_first / count_oa,
+                    # p_first_diff = (p_oa - p_first) * 100,
                     #
                     count_all = ifelse(is.na(count_all), 0, count_all),
-                    log_count_all = log(count_all + 1),
-                    p_all = count_all / sum(count_all),
-                    p_all_output = count_all / count_oa,
-                    p_all_diff = (p_oa - p_all) * 100,
+                    # log_count_all = log(count_all + 1),
+                    # p_all = count_all / sum(count_all),
+                    # p_all_output = count_all / count_oa,
+                    # p_all_diff = (p_oa - p_all) * 100,
                 ) |>
                 dplyr::arrange(
                     iso3c
@@ -845,306 +1171,478 @@ if (!file.exists(fn)) {
                 dplyr::relocate(
                     iso3c,
                     everything()
+                ) |>
+                dplyr::relocate(
+                    publication_year,
+                    everything()
                 )
         },
         mc.cores = params$mc.cores,
         mc.preschedule = FALSE
     )
 
-    names(auth) <- years
+    auth <- auth[sapply(auth, class) != "try-error"] |>
+        dplyr::bind_rows() |>
+        dplyr::arrange(publication_year, iso3c)
+
     saveRDS(auth, file = fn)
 }
 ```
 
-
 ```{r}
-#| label: publications_over_time_data
+#| label: countries_tca_corpus_map
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")
-
-if (!file.exists(fn)) {
-read_corpus(file.path("data", "tca_corpus", "corpus")) |>
-    dplyr::select(publication_year) |>
-    dplyr::arrange(publication_year) |>
-    dplyr::collect() |>
-    table() |>
-    as.data.frame() |>
-    mutate(
-        publication_year = as.integer(as.character(publication_year)),
-        p = Freq / sum(Freq),
-        p_cum = cumsum(p)
-    ) |>
-    rename(
-        count = Freq
-    ) |>
-    dplyr::inner_join(
-        y = openalexR::oa_fetch(
-            search = "",
-            group_by = "publication_year",
-            output = "tibble",
-            verbose = FALSE
+if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publications_countries")) < 2) {
+    data <- readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")) |>
+        dplyr::group_by(iso3c) |>
+        dplyr::summarize(
+            count_first = sum(as.integer(count_first), na.rm = TRUE),
+            count_all = sum(as.integer(count_all), na.rm = TRUE),
+            count_oa = sum(as.integer(count_oa), na.rm = TRUE),
         ) |>
-            dplyr::select(
-                key,
-                count
-            ) |>
-            dplyr::rename(
-                publication_year = key,
-                count_oa = count
-            ) |>
-            dplyr::arrange(publication_year) |>
-            dplyr::mutate(
-                publication_year = as.integer(as.character(publication_year)),
-                p_oa = count_oa / sum(count_oa),
-                p_oa_cum = cumsum(p_oa)
-            )
-    )
-    saveRDS(data, file = fn)
-}
-```
-
-```{r}
-#| label: get_sample_tca_corpus
-#| 
-
-fn <- file.path(".", "data", "tca_corpus", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
-fn_df <- file.path(".", "data", "tca_corpus", paste0("sample_tca_corpus_", params$sample_size, ".rds"))
-if (!file.exists(fn)) {
-    message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
-    sample_tca_corpus <- openalexR::oa_query(
-        filter = list(
-            title_and_abstract.search = compact(
-            paste0(
-                "(", params$s_1_transformative_change, ") AND (", params$s_1_nature_environment, ")"
-            )
-            )
-        ),
-        options = list(
-            sample = params$sample_size
+        dplyr::mutate(
+            count_oa = ifelse(is.na(count_oa), 0, count_oa),
+            log_count_oa = log(count_oa + 1),
+            p_oa = count_oa / sum(count_oa),
+            #
+            count_first = ifelse(is.na(count_first), 0, count_first),
+            log_count_first = log(count_first + 1),
+            p_first = count_first / sum(count_first),
+            p_first_output = count_first / count_oa,
+            p_first_diff = (p_oa - p_first) * 100,
+            #
+            count_all = ifelse(is.na(count_all), 0, count_all),
+            log_count_all = log(count_all + 1),
+            p_all = count_all / sum(count_all),
+            p_all_output = count_all / count_oa,
+            p_all_diff = (p_oa - p_all) * 100,
         )
-    ) |>
-        openalexR::oa_request(count_only = FALSE, verbose = TRUE)
 
-    sample_tca_corpus_df <- oa2df(sample_tca_corpus, entity = "works")
-
-    saveRDS(sample_tca_corpus, file = fn)
-    saveRDS(sample_tca_corpus_df, file = fn_df)
-} else {
-    sample_tca_corpus <- readRDS(fn)
-    sample_tca_corpus_df <- readRDS(fn_df)
-}
-```
-
-```{r}
-#| label: prim_topic_tca_corpus
-#| eval: true
-
-fn <- file.path(".", "data", "tca_corpus", paste0("prim_topics_tca_corpus.rds"))
-if (!file.exists(fn)) {
-    # message("Sampling 'transformative change' corpus (n = ", params$sample_size, ") - this can take some time ...")
-
-    prim_topics_tca_corpus <- openalexR::oa_fetch(
-        title_and_abstract.search = compact(params$s_1_tca_corpus),
-        group_by = "primary_topic.id",
-        verbose = FALSE
-    )
-    names(prim_topics_tca_corpus) <- c("topic_id", "topic_name", "count")
-    prim_topics_tca_corpus <- prim_topics_tca_corpus[-2]
-    prim_topics_tca_corpus$topic_id <- sub("https://openalex.org/T", "", prim_topics_tca_corpus$topic_id)
-    prim_topics_tca_corpus <- merge(
-        read.csv(file.path("inputs", "tca_corpus", "OpenAlex_topic_mapping_table - final_topic_field_subfield_table.csv")),
-        prim_topics_tca_corpus,
-        by = "topic_id"
-    )
-
-    prim_topics_tca_corpus <- prim_topics_tca_corpus[order(prim_topics_tca_corpus$count, decreasing = TRUE), ]
-
-    saveRDS(prim_topics_tca_corpus, file = fn)
-} else {
-    prim_topics_tca_corpus <- readRDS(fn)
-}
-```
-
-
-```{r}
-#| label: get_key_papers
-#|
-fn <- file.path(".", "data", "tca_corpus", "key_papers.rds")
-if (!file.exists(fn)) {
-    key_papers <- lapply(
-        params$key_papers,
-        function(fn) {
-            message("Processing '", fn, "' ...")
-            sapply(
-                fn,
-                function(x) {
-                    read.csv(x) |>
-                        select(DOI)
-                }
-            ) |>
-                unlist()
-        }
-    )
-    names(key_papers) <- gsub("\\.csv", "", basename(params$key_papers))
-
-
-    key_papers <- list(
-        Ch_1 = unlist(key_papers[grepl("Ch 1 -", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_2 = unlist(key_papers[grepl("Ch 2 -", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_3_Cl_1 = unlist(key_papers[grepl("Ch 3 - Cl1", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_3_Cl_3 = unlist(key_papers[grepl("Ch 3 - Cl3", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_3_Cl_4 = unlist(key_papers[grepl("Ch 3 - Cl4", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_3_Cl_5 = unlist(key_papers[grepl("Ch 3 - Cl5", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_3_Cl_6 = unlist(key_papers[grepl("Ch 3 - Cl6", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_3 = unlist(key_papers[grepl("Ch 3 - p", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_4_Cl_1 = unlist(key_papers[grepl("Ch 4 - Challenge 1", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_4_Cl_2 = unlist(key_papers[grepl("Ch 4 - Challenge 2", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_4_Cl_3 = unlist(key_papers[grepl("Ch 4 - Challenge 3", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_4_Cl_4 = unlist(key_papers[grepl("Ch 4 - Challenge 4", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_4_Cl_5 = unlist(key_papers[grepl("Ch 4 - Challenge 5", names(key_papers))], recursive = FALSE) |> as.vector(),
-        Ch_5 = unlist(key_papers[grepl("Ch 5 -", names(key_papers))], recursive = FALSE) |> as.vector()
-    )
-
-    saveRDS(key_papers, file = fn)
-} else {
-    key_papers <- readRDS(fn)
-}
-```
-
-
-```{r}
-#| label: key_works
-#|
-
-fn_kw <- file.path(".", "data", "tca_corpus", "key_works.rds")
-fn_kw_df <- file.path(".", "data", "tca_corpus", "key_works_df.rds")
-if (!all(file.exists(fn_kw, fn_kw_df))) {
-    key_works <- parallel::mclapply(
-        key_papers,
-        function(kp) {
-            dois <- kp[kp != ""] |>
-                unlist() |>
-                tolower() |>
-                unique()
-
-            openalexR::oa_fetch(doi = dois, output = "list")
-        },
-        mc.cores = params$mc.cores,
-        mc.preschedule = FALSE
+    map <- patchwork::wrap_plots(
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of overall publications (count_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of TCA publications (count_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of TCA publications (count_all)"),
+        ####
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of overall publications (log_count_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of TCA publications (log_count_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of TCA publications (log_count_all)"),
+        ####
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("Overall research output (p_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("TCA research output (p_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("TCA research output (p_all)"),
+        ####
+        ggplot() +
+            theme_void(),
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_first_diff",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", mid = "white", high = "#56B4E9", midpoint = 0) +
+            ggplot2::ggtitle("difference (TCA - overall) output (p_oa - p_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_all_diff",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", mid = "white", high = "#56B4E9", midpoint = 0) +
+            ggplot2::ggtitle("difference (TCA - overall) output (p_oa - p_all)"),
+        ncol = 3
     )
 
-    found <- sapply(
-        key_works,
-        function(x) {
-            length(x) > 0
-        }
+    ggplot2::ggsave(
+        file.path("maps", "tca_corpus", "publications_countries.pdf"),
+        width = 12,
+        height = 8,
+        map
     )
-
-    key_works <- key_works[found]
-
-    print("The following key paper sets were excluded as they contained no papers in OpenAlex:\n")
-    print(names(found)[!found])
-
-    saveRDS(key_works, file = fn_kw)
-
-    key_works_df <- lapply(
-        key_works,
-        oa2df,
-        entity = "works"
+    ggplot2::ggsave(
+        file.path("maps", "tca_corpus", "publications_countries.png"),
+        width = 12,
+        height = 8,
+        map
     )
-
-    saveRDS(key_works_df, fn_kw_df)
-} else {
-    key_works <- readRDS(file = fn_kw)
-    key_works_df <- readRDS(fn_kw_df)
 }
 ```
 
 
-
-
 ```{r}
-#| label: key_works_hits
+#| label: countries_tca_corpus_before_2016_map
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "key_works_hits.rds")
-if (!file.exists(fn)) {
-    kws <- key_works_df
-    kws$all  <- key_works_df |>
-        bind_rows()
-
-    nms <- names(kws)
-    key_works_hits <- pbapply::pblapply(
-        nms,
-        function(nm) {
-            message("Getting key paper set for ", nm, " ...")
-            dois <- kws[[nm]] |>
-                select(doi) |>
-                distinct() |>
-                unlist() |>
-                unique() |>
-                tolower()
-
-            s_t <- grep("s_1_", names(params), value = TRUE)
-            kw_h <- parallel::mclapply(
-                s_t,
-                function(stn) {
-                    message("  getting '", stn, "' ...")
-                    if (grepl("_f_", stn)) {
-                        search <- compact(params[[stn]]())
-                    } else {
-                        search <- compact(params[[stn]])
-                    }
-                    get_count(dois = dois, list(title_and_abstract.search = search), verbose = FALSE)
-                },
-                mc.cores = params$mc.cores,
-                mc.preschedule = FALSE
-            ) |>
-                do.call(what = cbind) |>
-                as.data.frame()
-
-            names(kw_h) <- s_t
-
-            # if (ncol(kw_h) == 1){
-            #     kw_h <- t(kw_h)
-            #     rownames(kw_h) <- dois
-            # }
-
-            kw_h <- rbind(
-                kw_h,
-                colSums(kw_h)
-            )
-
-            rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-            return(kw_h)  
-        }
-    )
-
-    names(key_works_hits) <- nms
-
-    for (i in nms) {
-        # key_works_hits[[i]] <- cbind(
-        #     key_works_hits[[i]],
-        #     key_works_hits_tca_filtered[[i]]
-        # )
-
-        key_works_hits[[i]] <- cbind(
-            key_works_hits[[i]],
-            Total = rowSums(key_works_hits[[i]])
+if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publications_countries_before_2016")) < 2) {
+    data <- readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")) |>
+        dplyr::filter(
+            publication_year < 2016
         ) |>
-            mutate(Total = Total - 1) # |>
-            # relocate(tca_corpus_SDG, .after = s_1_tca_corpus)
-    }
+        dplyr::group_by(iso3c) |>
+        dplyr::summarize(
+            count_first = sum(as.integer(count_first), na.rm = TRUE),
+            count_all = sum(as.integer(count_all), na.rm = TRUE),
+            count_oa = sum(as.integer(count_oa), na.rm = TRUE),
+        ) |>
+        dplyr::mutate(
+            count_oa = ifelse(is.na(count_oa), 0, count_oa),
+            log_count_oa = log(count_oa + 1),
+            p_oa = count_oa / sum(count_oa),
+            #
+            count_first = ifelse(is.na(count_first), 0, count_first),
+            log_count_first = log(count_first + 1),
+            p_first = count_first / sum(count_first),
+            p_first_output = count_first / count_oa,
+            p_first_diff = (p_oa - p_first) * 100,
+            #
+            count_all = ifelse(is.na(count_all), 0, count_all),
+            log_count_all = log(count_all + 1),
+            p_all = count_all / sum(count_all),
+            p_all_output = count_all / count_oa,
+            p_all_diff = (p_oa - p_all) * 100,
+        )
 
-    ###
+    map <- patchwork::wrap_plots(
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of overall publications (count_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of TCA publications (count_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of TCA publications (count_all)"),
+        ####
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of overall publications (log_count_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of TCA publications (log_count_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of TCA publications (log_count_all)"),
+        ####
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("Overall research output (p_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("TCA research output (p_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("TCA research output (p_all)"),
+        ####
+        ggplot() +
+            theme_void(),
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_first_diff",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", mid = "white", high = "#56B4E9", midpoint = 0) +
+            ggplot2::ggtitle("difference (TCA - overall) output (p_oa - p_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_all_diff",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", mid = "white", high = "#56B4E9", midpoint = 0) +
+            ggplot2::ggtitle("difference (TCA - overall) output (p_oa - p_all)"),
+        ncol = 3
+    )
 
-    saveRDS(key_works_hits, file = fn)
-} else {
-    key_works_hits <- readRDS(file = fn)
+    ggplot2::ggsave(
+        file.path("maps", "tca_corpus", "publications_countries_before_2016.pdf"),
+        width = 12,
+        height = 8,
+        map
+    )
+    ggplot2::ggsave(
+        file.path("maps", "tca_corpus", "publications_countries_before_2016.png"),
+        width = 12,
+        height = 8,
+        map
+    )
 }
 ```
 
+
+```{r}
+#| label: countries_tca_corpus_after_2019_map
+#|
+
+if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publications_countries_after_2019")) < 2) {
+    data <- readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")) |>
+        dplyr::filter(
+            publication_year > 2019
+        ) |>
+        dplyr::group_by(iso3c) |>
+        dplyr::summarize(
+            count_first = sum(as.integer(count_first), na.rm = TRUE),
+            count_all = sum(as.integer(count_all), na.rm = TRUE),
+            count_oa = sum(as.integer(count_oa), na.rm = TRUE),
+        ) |>
+        dplyr::mutate(
+            count_oa = ifelse(is.na(count_oa), 0, count_oa),
+            log_count_oa = log(count_oa + 1),
+            p_oa = count_oa / sum(count_oa),
+            #
+            count_first = ifelse(is.na(count_first), 0, count_first),
+            log_count_first = log(count_first + 1),
+            p_first = count_first / sum(count_first),
+            p_first_output = count_first / count_oa,
+            p_first_diff = (p_oa - p_first) * 100,
+            #
+            count_all = ifelse(is.na(count_all), 0, count_all),
+            log_count_all = log(count_all + 1),
+            p_all = count_all / sum(count_all),
+            p_all_output = count_all / count_oa,
+            p_all_diff = (p_oa - p_all) * 100,
+        )
+
+    map <- patchwork::wrap_plots(
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of overall publications (count_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of TCA publications (count_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "count_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("count of TCA publications (count_all)"),
+        ####
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of overall publications (log_count_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of TCA publications (log_count_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "log_count_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("log(count + 1) of TCA publications (log_count_all)"),
+        ####
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_oa",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("Overall research output (p_oa)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_first",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("TCA research output (p_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_all",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
+            ggplot2::ggtitle("TCA research output (p_all)"),
+        ####
+        ggplot() +
+            theme_void(),
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_first_diff",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", mid = "white", high = "#56B4E9", midpoint = 0) +
+            ggplot2::ggtitle("difference (TCA - overall) output (p_oa - p_first)"),
+        #
+        data |>
+            IPBES.R::map_country_codes(
+                map_type = "countries",
+                values = "p_all_diff",
+                geodata_path = gdm_dir
+            ) +
+            ggplot2::scale_fill_gradient2(low = "#E69F00", mid = "white", high = "#56B4E9", midpoint = 0) +
+            ggplot2::ggtitle("difference (TCA - overall) output (p_oa - p_all)"),
+        ncol = 3
+    )
+
+    ggplot2::ggsave(
+        file.path("maps", "tca_corpus", "publications_countries_after_2019.pdf"),
+        width = 12,
+        height = 8,
+        map
+    )
+    ggplot2::ggsave(
+        file.path("maps", "tca_corpus", "publications_countries_after_2019.png"),
+        width = 12,
+        height = 8,
+        map
+    )
+}
+```
 
 # Results
 
@@ -1293,56 +1791,14 @@ knitr::kable(
 
 The red line is the cumulative proportion of publications, the blue line the cumulative proportion of all of the Op[enAlex corpus. Both use the secondeary (red) axis.
 
-```{r}
-#| label: publications_over_time_plot
-#|
-
-if (length(list.files(file.path("figures", "tca_corpus"), pattern = "publications_over_time")) < 2) {
-    figure <- readRDS(file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")) |>
-        dplyr::filter(publication_year >= 1900) |>
-        ggplot() +
-        geom_bar(aes(x = publication_year, y = p), stat = "identity") +
-        geom_line(aes(x = publication_year, y = p_cum / 10), color = "red") +
-        geom_line(aes(x = publication_year, y = p_oa_cum / 10), color = "blue") +
-        scale_x_continuous(breaks = seq(1900, 2020, 10)) +
-        scale_y_continuous(
-            "Proportion of publications",
-            sec.axis = sec_axis(~ . * 10, name = "Cumulative proportion") # divide by 100 to scale back the secondary axis
-        ) +
-        labs(
-            title = "Publications over time",
-            x = "Year",
-            y = "Number of publications"
-        ) +
-        theme_minimal() +
-        theme(axis.text.y.right = element_text(color = "red"))
-
-
-    ggplot2::ggsave(
-        file.path("figures", "tca_corpus", "publications_over_time.pdf"),
-        width = 12,
-        height = 6,
-        figure
-    )
-    ggplot2::ggsave(
-        file.path("figures", "tca_corpus", "publications_over_time.png"),
-        width = 12,
-        height = 6,
-        figure
-    )
-
-    rm(figure)
-}
-```
-
 
 ![](`r file.path("figures", "tca_corpus", "publications_over_time.png")`)
 
 To download high resolution, [click here](`r file.path("figures", "tca_corpus", "publications_over_time.pdf")`){target="_blank"}
 
 ```{r}
-data |> IPBES.R::table_dt(fn = "publications_over_time")
-rm(data)
+readRDS(file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")) |> 
+    IPBES.R::table_dt(fn = "publications_over_time")
 ```
 
 ### Countries in TCA Corpus
@@ -1360,155 +1816,30 @@ The following calculations were done:
 - `**p_diff** = `(p_oa - p) * 100`
 - `**p_ratio** = `count / count_oa`
 
-#### All works
 
 ```{r}
-#| label: countries_tca_corpus_map
-#| fig-width: 18
-#| fig-height: 9
-#|
-
-data <- countries_tca_corpus |>
-    dplyr::full_join(
-        openalexR::oa_fetch(
-            search = "",
-            group_by = "authorships.countries",
-            output = "tibble",
-            verbose = FALSE
-        ) |>
-            dplyr::rename(
-                count_oa = count,
-                country = key_display_name
-            ) |>
-            dplyr::mutate(
-                country = countrycode::countrycode(
-                    country,
-                    origin = "country.name",
-                    destination = "iso2c"
-                )
-            )
-    ) |>
-    dplyr::rename(
-        count = weight
-    ) |>
-    dplyr::mutate(
-        count = ifelse(is.na(count), 0, count),
-        count_scaled = (count - min(count, na.rm = TRUE)) / (max(count, na.rm = TRUE) - min(count, na.rm = TRUE)),
-        log_count = log(count + 1),
-        p = count / sum(count),
-        #
-        count_oa = ifelse(is.na(count_oa), 0, count_oa),
-        count_oa_scaled = (count - min(count_oa, na.rm = TRUE)) / (max(count_oa, na.rm = TRUE) - min(count_oa, na.rm = TRUE)),
-        log_count_oa = log(count_oa + 1),
-        p_oa = count_oa / sum(count_oa),
-        #
-        # p_tca = count / count_oa,
-        p_diff = (p_oa - p) * 100,
-        p_ratio = (p / p_oa)
-    )
-
-data$iso3c <- countrycode::countrycode(
-    data$country,
-    origin = "iso2c",
-    destination = "iso3c"
-)
-
-
-map <- patchwork::wrap_plots(
-    #
-    data |> map_country_codes(
-        map_type = "countries",
-        values = "count_oa",
-        geodata_path = gdm_dir
-    ) +
-        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("count of overall publications (count_oa)"),
-    ##
-    data |> map_country_codes(
-        map_type = "countries",
-        values = "count",
-        geodata_path = gdm_dir
-    ) +
-        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("count of TCA publications (count_oa)"),
-    #
-    data |> map_country_codes(
-        map_type = "countries",
-        values = "log_count_oa",
-        geodata_path = gdm_dir
-    ) +
-        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("log(count + 1) of overall publications (log_count_oa)"),
-    ##
-    data |> map_country_codes(
-        map_type = "countries",
-        values = "log_count",
-        geodata_path = gdm_dir
-    ) +
-        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("log(count + 1) of TCA publications (log_count)"),
-    #
-    data |> map_country_codes(
-        map_type = "countries",
-        values = "p_oa",
-        geodata_path = gdm_dir
-    ) +
-        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("Overall research output (p_oa = count_oa / sum(count_oa))"),
-    #
-    data |> map_country_codes(
-        map_type = "countries",
-        values = "p",
-        geodata_path = gdm_dir
-    ) +
-        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("TCA research output (p = count / sum(count))"),
-    #
-    data |>
-        map_country_codes(
-            map_type = "countries",
-            values = "p_diff",
-            geodata_path = gdm_dir
-        ) +
-        ggplot2::scale_fill_gradient2(low = "#E69F00", high = "#56B4E9") +
-        ggplot2::ggtitle("TCA research output (p)"),
-    #
-    data |>
-        map_country_codes(
-            map_type = "countries",
-            values = "p_ratio",
-            geodata_path = gdm_dir
-        ) +
-        ggplot2::scale_fill_gradient2(low = "#E69F00", mid = "white", high = "#56B4E9", midpoint = 0) +
-        ggplot2::ggtitle("ratio output (p / p_oa)"),
-    ncol = 2
-)
-
-ggplot2::ggsave(
-    file.path("maps", "tca_corpus", "publications_countries.pdf"),
-    width = 12,
-    height = 8,
-    map
-)
-ggplot2::ggsave(
-    file.path("maps", "tca_corpus", "publications_countries.png"),
-    width = 12,
-    height = 8,
-    map
-)
-
-rm(map)
+readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")) |>
+    IPBES.R::table_dt(fn = "publications_per_country")
 ```
 
+#### All Years
 
 ![](`r file.path("maps", "tca_corpus", "publications_countries.png")`)
 
 To download high resolution, [click here](`r file.path("maps", "tca_corpus", "publications_countries.pdf")`){target="_blank"}
 
-```{r}
-data |> IPBES.R::table_dt(fn = "publications_per_country")
-rm(data)
-```
+#### All Years
+
+![](`r file.path("maps", "tca_corpus", "publications_countries_before_2016.png")`)
+
+To download high resolution, [click here](`r file.path("maps", "tca_corpus", "publications_countries_before_2016.pdf")`){target="_blank"}
+
+#### All Years
+
+
+![](`r file.path("maps", "tca_corpus", "publications_countries_after_2019.png")`)
+
+To download high resolution, [click here](`r file.path("maps", "tca_corpus", "publications_countries_after_2019.pdf")`){target="_blank"}
 
 ### Topics in corpus
 

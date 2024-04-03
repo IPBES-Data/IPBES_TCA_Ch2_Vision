@@ -13,3 +13,4 @@ IPBES_TCA_Corpus_DMP_files/
 data/tca_corpus/abstracts_tca.parquet
 
 data/tca_corpus/tca_corpus.duckdb
+data/tca_corpus/tca_corpus_without_fts.duckdb
