@@ -1,0 +1,252 @@
+id,display_name,sector
+1100,General Agricultural and Biological Sciences,Agriculture
+1102,Agronomy and Crop Science,Agriculture
+1103,Animal Science and Zoology,Agriculture
+1106,Food Science,Agriculture
+3404,Small Animals,Agriculture
+1111,Soil Science,Agriculture
+1104,Aquatic Science,Fisheries/aquaculture
+1910,Oceanography,Fisheries/aquaculture
+2212,Ocean Engineering,Fisheries/aquaculture
+1107,Forestry,Forestry
+1110,Plant Science,Forestry
+1906,Geochemistry and Petrology,Fossil fuel
+1907,Geology,Fossil fuel
+1908,Geophysics,Fossil fuel
+2200,General Engineering,Fossil fuel
+2100,General Energy,Fossil fuel
+2102,Energy Engineering and Power Technology,Fossil fuel
+2103,Fuel Technology,Fossil fuel
+2104,Nuclear Energy and Engineering,Fossil fuel
+2105,"Renewable Energy, Sustainability and the Environment",Fossil fuel
+1109,Insect Science,Mining
+1303,Biochemistry,Mining
+2304,Environmental Chemistry,Mining
+1602,Analytical Chemistry,Mining
+1603,Electrochemistry,Mining
+1604,Inorganic Chemistry,Mining
+1605,Organic Chemistry,Mining
+1606,Physical and Theoretical Chemistry,Mining
+1607,Spectroscopy,Mining
+2505,Materials Chemistry,Mining
+2506,Metals and Alloys,Mining
+2507,Polymers and Plastics,Mining
+2203,Automotive Engineering,Infrastructures (Irrigation and road infrastructure)
+2205,Civil and Structural Engineering,Infrastructures (Irrigation and road infrastructure)
+2207,Control and Systems Engineering,Infrastructures (Irrigation and road infrastructure)
+2208,Electrical and Electronic Engineering,Infrastructures (Irrigation and road infrastructure)
+2209,Industrial and Manufacturing Engineering,Infrastructures (Irrigation and road infrastructure)
+2210,Mechanical Engineering,Infrastructures (Irrigation and road infrastructure)
+2211,Mechanics of Materials,Infrastructures (Irrigation and road infrastructure)
+2215,Building and Construction,Infrastructures (Irrigation and road infrastructure)
+2216,Architecture,Infrastructures (Irrigation and road infrastructure)
+3322,Urban Studies,Infrastructures (Irrigation and road infrastructure)
+3313,Transportation,Infrastructures (Irrigation and road infrastructure)
+2305,Environmental Engineering,Infrastructures (Irrigation and road infrastructure)
+2312,Water Science and Technology,Infrastructures (Irrigation and road infrastructure)
+3402,Equine,Earth/Nature/Biodiversity
+2302,Ecological Modeling,Earth/Nature/Biodiversity
+2303,Ecology,Earth/Nature/Biodiversity
+1206,Conservation,Earth/Nature/Biodiversity
+1309,Developmental Biology,Earth/Nature/Biodiversity
+1305,Biotechnology,Earth/Nature/Biodiversity
+1312,Molecular Biology,Earth/Nature/Biodiversity
+1105,"Ecology, Evolution, Behavior and Systematics",Earth/Nature/Biodiversity
+1315,Structural Biology,Earth/Nature/Biodiversity
+1304,Biophysics,Earth/Nature/Biodiversity
+1902,Atmospheric Science,Earth/Nature/Biodiversity
+1904,Earth-Surface Processes,Earth/Nature/Biodiversity
+1912,Space and Planetary Science,Earth/Nature/Biodiversity
+1911,Paleontology,Earth/Nature/Biodiversity
+2306,Global and Planetary Change,Earth/Nature/Biodiversity
+2404,Microbiology,Earth/Nature/Biodiversity
+2405,Parasitology,Earth/Nature/Biodiversity
+2406,Virology,Earth/Nature/Biodiversity
+2309,Nature and Landscape Conservation,Earth/Nature/Biodiversity
+1502,Bioengineering,Earth/Nature/Biodiversity
+2704,Biochemistry,Earth/Nature/Biodiversity
+2402,Applied Microbiology and Biotechnology,Earth/Nature/Biodiversity
+1702,Artificial Intelligence,Technology
+1703,Computational Theory and Mathematics,Technology
+1704,Computer Graphics and Computer-Aided Design,Technology
+1705,Computer Networks and Communications,Technology
+1706,Computer Science Applications,Technology
+1707,Computer Vision and Pattern Recognition,Technology
+1708,Hardware and Architecture,Technology
+1709,Human-Computer Interaction,Technology
+1710,Information Systems,Technology
+1711,Signal Processing,Technology
+1712,Software,Technology
+1800,General Decision Sciences,Technology
+1802,Information Systems and Management,Technology
+1803,Management Science and Operations Research,Technology
+1804,"Statistics, Probability and Uncertainty",Technology
+2214,Media Technology,Technology
+2614,Theoretical Computer Science,Technology
+2204,Biomedical Engineering,Health
+1306,Cancer Research,Health
+1307,Cell Biology,Health
+1308,Clinical Biochemistry,Health
+1310,Endocrinology,Health
+1311,Genetics,Health
+1313,Molecular Medicine,Health
+1314,Physiology,Health
+2702,Anatomy,Health
+2703,Anesthesiology and Pain Medicine,Health
+2705,Cardiology and Cardiovascular Medicine,Health
+2706,Critical Care and Intensive Care Medicine,Health
+2707,Complementary and alternative medicine,Health
+2708,Dermatology,Health
+2711,Emergency Medicine,Health
+2712,"Endocrinology, Diabetes and Metabolism",Health
+2713,Epidemiology,Health
+2714,Family Practice,Health
+2715,Gastroenterology,Health
+2717,Geriatrics and Gerontology,Health
+2718,Health Informatics,Health
+2720,Hematology,Health
+2721,Hepatology,Health
+2723,Immunology and Allergy,Health
+2724,Internal Medicine,Health
+2725,Infectious Diseases,Health
+2726,Microbiology,Health
+2727,Nephrology,Health
+2728,Neurology,Health
+2729,Obstetrics and Gynecology,Health
+2730,Oncology,Health
+2731,Ophthalmology,Health
+2732,Orthopedics and Sports Medicine,Health
+2733,Otorhinolaryngology,Health
+2734,Pathology and Forensic Medicine,Health
+2735,"Pediatrics, Perinatology and Child Health",Health
+2736,Pharmacology,Health
+2737,Physiology,Health
+2738,Psychiatry and Mental health,Health
+2739,"Public Health, Environmental and Occupational Health",Health
+2740,Pulmonary and Respiratory Medicine,Health
+2741,"Radiology, Nuclear Medicine and Imaging",Health
+2742,Rehabilitation,Health
+2743,Reproductive Medicine,Health
+2745,Rheumatology,Health
+2746,Surgery,Health
+2747,Transplantation,Health
+2748,Urology,Health
+2802,Behavioral Neuroscience,Health
+2803,Biological Psychiatry,Health
+2804,Cellular and Molecular Neuroscience,Health
+2805,Cognitive Neuroscience,Health
+2806,Developmental Neuroscience,Health
+2807,Endocrine and Autonomic Systems,Health
+2808,Neurology,Health
+2809,Sensory Systems,Health
+3200,General Psychology,Health
+3202,Applied Psychology,Health
+3203,Clinical Psychology,Health
+3204,Developmental and Educational Psychology,Health
+3205,Experimental and Cognitive Psychology,Health
+3206,Neuropsychology and Physiological Psychology,Health
+2916,Nutrition and Dietetics,Health
+3002,Drug Discovery,Health
+3003,Pharmaceutical Science,Health
+3004,Pharmacology,Health
+3005,Toxicology,Health
+2716,Genetics,Health
+3306,Health,Health
+3319,Life-span and Life-course Studies,Health
+3500,General Dentistry,Health
+3504,Oral Surgery,Health
+3505,Orthodontics,Health
+3506,Periodontics,Health
+3600,General Health Professions,Health
+3603,Complementary and Manual Therapy,Health
+3604,Emergency Medical Services,Health
+3605,Health Information Management,Health
+3607,Medical Laboratory Technology,Health
+3608,Medical Terminology,Health
+3609,Occupational Therapy,Health
+3611,Pharmacy,Health
+3612,"Physical Therapy, Sports Therapy and Rehabilitation",Health
+3614,Radiological and Ultrasound Technology,Health
+3616,Speech and Hearing,Health
+1402,Accounting,Economics
+1403,Business and International Management,Economics
+1404,Management Information Systems,Economics
+1405,Management of Technology and Innovation,Economics
+1406,Marketing,Economics
+1407,Organizational Behavior and Human Resource Management,Economics
+1408,Strategy and Management,Economics
+1409,"Tourism, Leisure and Hospitality Management",Economics
+1410,Industrial relations,Economics
+2000,"General Economics, Econometrics and Finance",Economics
+2002,Economics and Econometrics,Economics
+2003,Finance,Economics
+3303,Development,Economics
+1200,General Arts and Humanities,Social sciences and humanities
+1202,History,Social sciences and humanities
+1203,Language and Linguistics,Social sciences and humanities
+1204,Archeology,Social sciences and humanities
+1205,Classics,Social sciences and humanities
+1207,History and Philosophy of Science,Social sciences and humanities
+1208,Literature and Literary Theory,Social sciences and humanities
+1209,Museology,Social sciences and humanities
+1210,Music,Social sciences and humanities
+1211,Philosophy,Social sciences and humanities
+1212,Religious studies,Social sciences and humanities
+1213,Visual Arts and Performing Arts,Social sciences and humanities
+1302,Aging,Social sciences and humanities
+2910,"Issues, ethics and legal aspects",Social sciences and humanities
+2911,Leadership and Management,Social sciences and humanities
+2308,"Management, Monitoring, Policy and Law",Social sciences and humanities
+3304,Education,Social sciences and humanities
+3305,"Geography, Planning and Development",Social sciences and humanities
+3207,Social Psychology,Social sciences and humanities
+3300,General Social Sciences,Social sciences and humanities
+3302,Archeology,Social sciences and humanities
+3308,Law,Social sciences and humanities
+3309,Library and Information Sciences,Social sciences and humanities
+3310,Linguistics and Language,Social sciences and humanities
+3311,Safety Research,Social sciences and humanities
+3312,Sociology and Political Science,Social sciences and humanities
+3314,Anthropology,Social sciences and humanities
+3315,Communication,Social sciences and humanities
+3316,Cultural Studies,Social sciences and humanities
+3317,Demography,Social sciences and humanities
+3318,Gender Studies,Social sciences and humanities
+3320,Political Science and International Relations,Social sciences and humanities
+3321,Public Administration,Social sciences and humanities
+3307,Human Factors and Ergonomics,Social sciences and humanities
+1503,Catalysis,Other topics
+1504,Chemical Health and Safety,Other topics
+1506,Filtration and Separation,Other topics
+1507,Fluid Flow and Transfer Processes,Other topics
+1508,Process Chemistry and Technology,Other topics
+2202,Aerospace Engineering,Other topics
+2206,Computational Mechanics,Other topics
+2213,"Safety, Risk, Reliability and Quality",Other topics
+3102,Acoustics and Ultrasonics,Other topics
+3103,Astronomy and Astrophysics,Other topics
+3104,Condensed Matter Physics,Other topics
+3105,Instrumentation,Other topics
+3106,Nuclear and High Energy Physics,Other topics
+3107,"Atomic and Molecular Physics, and Optics",Other topics
+3108,Radiation,Other topics
+3109,Statistical and Nonlinear Physics,Other topics
+2922,Research and Theory,Other topics
+2307,"Health, Toxicology and Mutagenesis",Other topics
+2310,Pollution,Other topics
+2311,Waste Management and Disposal,Other topics
+2403,Immunology,Other topics
+2500,General Materials Science,Other topics
+2502,Biomaterials,Other topics
+2503,Ceramics and Composites,Other topics
+2504,"Electronic, Optical and Magnetic Materials",Other topics
+2508,"Surfaces, Coatings and Films",Other topics
+2602,Algebra and Number Theory,Other topics
+2604,Applied Mathematics,Other topics
+2605,Computational Mathematics,Other topics
+2607,Discrete Mathematics and Combinatorics,Other topics
+2608,Geometry and Topology,Other topics
+2610,Mathematical Physics,Other topics
+2611,Modeling and Simulation,Other topics
+2612,Numerical Analysis,Other topics
+2613,Statistics and Probability,Other topics

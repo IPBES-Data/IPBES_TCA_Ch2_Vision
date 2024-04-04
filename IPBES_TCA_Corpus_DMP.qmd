@@ -1644,6 +1644,224 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
 }
 ```
 
+## Topics and Sectors
+
+The Sectors definition is based on the subfields assigned to each work by OpenAlex. These were grouped by experts into sectors. See [this Google Doc](https://docs.google.com/spreadsheets/d/1ZCB_St2TQu_wL3yl1iN7Wxz5FERGxk-GZA0_2oGcRM0/edit#gid=210658071) for details.
+
+```{r}
+#| label: topics_tca_corpus_data
+#|
+
+sector_dir <- file.path(".", "data", "tca_corpus", "sectors")
+
+if (!file.exists(fn)) {
+    dir.create(sector_dir, showWarnings = FALSE)
+
+    years <- IPBES.R::corpus_read(corpus_dir) |>
+        distinct(publication_year) |>
+        collect() |>
+        unlist() |>
+        as.vector() |>
+        sort(decreasing = TRUE)
+
+    sectors <- read.csv(file.path("inputs", "tca_corpus", "sectors_def.csv")) |>
+        tibble::as_tibble() |>
+        dplyr::mutate(
+            id = paste0("https://openalex.org/subfields/", id),
+            display_name = NULL
+        )
+
+    pbmcapply::pbmclapply(
+        years,
+        function(y) {
+            message("Processing year: ", y)
+            IPBES.R::corpus_read(corpus_dir) |>
+                dplyr::filter(publication_year == y) |>
+                dplyr::select(
+                    id,
+                    publication_year,
+                    topics
+                ) |>
+                collect() |>
+                IPBES.R::extract_topics(
+                    names = "subfield",
+                    unserialize = TRUE
+                ) |>
+                dplyr::left_join(
+                    y = sectors,
+                    by = "id"
+                ) |>
+                arrow::write_dataset(
+                    path = sector_dir,
+                    partitioning = c("publication_year"),
+                    format = "parquet",
+                    existing_data_behavior = "overwrite"
+                )
+        },
+        mc.cores = 3,
+        mc.preschedule = FALSE
+    )
+
+    IPBES.R::corpus_read(sector_dir) |>
+        arrow::write_parquet(
+            paste0(sector_dir, ".parquet2")
+        )
+    unlink(sector_dir, recursive = TRUE)
+}
+```
+
+
+```{r}
+#| label: sectors_over_time_data
+#|
+
+fn  <- file.path("data", "tca_corpus", "sectors_over_time.rds")
+if (!file.exists(fn)){
+    data <- IPBES.R::corpus_read(file.path(".", "data", "tca_corpus", "sectors.parquet")) |>
+        dplyr::group_by(
+            publication_year,
+            sector,
+            i
+        ) |>
+        dplyr::summarize(
+            count = n()
+        ) |>
+        dplyr::rename(
+            level = i
+        ) |>
+        dplyr::collect()
+
+    data |>
+        dplyr::filter(
+            level == 1
+        ) |>
+        dplyr::group_by(
+            publication_year,
+            sector
+        ) |>
+        dplyr::summarize(
+            count_1 = sum(count)
+        ) |>
+        dplyr::full_join(
+            data |>
+                dplyr::group_by(
+                    publication_year,
+                    sector
+                ) |>
+                dplyr::summarize(
+                    count_all = sum(count)
+                )
+        ) |>
+        dplyr::arrange(
+            publication_year,
+            sector
+        ) |>
+        dplyr::mutate(
+            count_1 = ifelse(is.na(count_1), 0, count_1),
+            count_all = ifelse(is.na(count_all), 0, count_all)
+        ) |>
+        dplyr::group_by(sector) |>
+        dplyr::mutate(
+            cumsum_count_1 = cumsum(count_1),
+            cumsum_count_all = cumsum(count_all),
+            p_cumsum_count_1 = cumsum_count_1 / max(cumsum_count_1),
+            p_cumsum_count_all = cumsum_count_all /  max(cumsum_count_all)
+        ) |>
+        saveRDS(fn)
+    rm(data)
+}
+```
+
+
+```{r}
+#| label: sectors_over_time_plot
+#|
+
+if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_over_time")) < 2) {
+    figure_1 <- readRDS(file.path(file.path("data", "tca_corpus", "sectors_over_time.rds"))) |>
+        dplyr::filter(
+            publication_year >= 1950
+        ) |>
+        ggplot() +
+        geom_line(
+            aes(
+                x = publication_year,
+                y = cumsum_count_1,
+                color = sector,
+                lty = sector
+            )
+        ) +
+        scale_x_continuous(breaks = seq(1900, 2020, 10)) +
+        scale_y_continuous(
+            "Log(No Publications)",
+            trans = "log10"
+            # sec.axis = sec_axis(~ . * 10, name = "Cumulative proportion") # divide by 100 to scale back the secondary axis
+        ) +
+        labs(
+            title = "Publications classified into Sectors over time (primary sector only)",
+            x = "Year"
+            # y = "Number of publications"
+        ) +
+        theme_minimal() +
+        theme(
+            legend.position = "bottom",
+            # axis.text.y.right = element_text(color = "red")
+        )
+
+    figure_all <- readRDS(file.path(file.path("data", "tca_corpus", "sectors_over_time.rds"))) |>
+        dplyr::filter(
+            publication_year >= 1950
+        ) |>
+        ggplot() +
+        geom_line(
+            aes(
+                x = publication_year,
+                y = cumsum_count_all,
+                color = sector,
+                lty = sector
+            )
+        ) +
+        scale_x_continuous(breaks = seq(1900, 2020, 10)) +
+        scale_y_continuous(
+            "Log(No Publications)",
+            trans = "log10"
+            # sec.axis = sec_axis(~ . * 10, name = "Cumulative proportion") # divide by 100 to scale back the secondary axis
+        ) +
+        labs(
+            title = "Publications clssified into Sectors over time (up to three sectors)",
+            x = "Year"
+            # y = "Number of publications"
+        ) +
+        theme_minimal() +
+        theme(
+            legend.position = "none",
+            # axis.text.y.right = element_text(color = "red")
+        )
+
+    figure <- patchwork::wrap_plots(
+        figure_1,
+        figure_all,
+        nrow = 2
+    )
+
+    ggplot2::ggsave(
+        file.path("figures", "tca_corpus", "sectors_over_time.pdf"),
+        width = 12,
+        height = 12,
+        figure
+    )
+    ggplot2::ggsave(
+        file.path("figures", "tca_corpus", "sectors_over_time.png"),
+        width = 12,
+        height = 12,
+        figure
+    )
+
+    rm(figure_1, figure_all, figure)
+}
+```
+
+
 # Results
 
 ## Quality Control
@@ -1840,6 +2058,23 @@ To download high resolution, [click here](`r file.path("maps", "tca_corpus", "pu
 ![](`r file.path("maps", "tca_corpus", "publications_countries_after_2019.png")`)
 
 To download high resolution, [click here](`r file.path("maps", "tca_corpus", "publications_countries_after_2019.pdf")`){target="_blank"}
+
+### Sectors over time
+
+For clarity, the log of the cumulative sum of the sectors over time are shown here. 
+
+
+![The top graph shows only the primary sector assigned, the bottom graph all sectors (first, secondary and tertiary)](figures/tca_corpus/sectors_over_time.png)
+
+To download high resolution, [click here](`r file.path("maps", "tca_corpus", "sectors_over_time.pdf")`){target="_blank"}
+
+```{r}
+readRDS(file.path(".", "data", "tca_corpus", "sectors_over_time.rds")) |>
+    IPBES.R::table_dt(
+        fn = "sectors_over_time",
+        fixedColumns = list(leftColumns = 3)
+    )
+```
 
 ### Topics in corpus
 
