@@ -80,38 +80,38 @@ params:
 
     key_papers:
 #      - Ch_1:
-        - "./inputs/key papers/Ch 1 - Arun.csv"
-        - "./inputs/key papers/Ch 1 - pdf.csv"
-        - "./inputs/key papers/Ch 1 - word.csv"
+        - "./inputs/tca_corpus/key papers/Ch 1 - Arun.csv"
+        - "./inputs/tca_corpus/key papers/Ch 1 - pdf.csv"
+        - "./inputs/tca_corpus/key papers/Ch 1 - word.csv"
 #      - Ch_2:
-        - "./inputs/key papers/Ch 2 - pdf.csv"
-        - "./inputs/key papers/Ch 2 - Sebastian.csv"
+        - "./inputs/tca_corpus/key papers/Ch 2 - pdf.csv"
+        - "./inputs/tca_corpus/key papers/Ch 2 - Sebastian.csv"
 #      - Ch_3_Cl_1:
-        - "./inputs/key papers/Ch 3 - Cl1.csv"
+        - "./inputs/tca_corpus/key papers/Ch 3 - Cl1.csv"
 #      - Ch_3_Cl_3:
-        - "./inputs/key papers/Ch 3 - Cl3.csv"
+        - "./inputs/tca_corpus/key papers/Ch 3 - Cl3.csv"
 #      - Ch_3_Cl_4:
-        - "./inputs/key papers/Ch 3 - Cl4.csv"
+        - "./inputs/tca_corpus/key papers/Ch 3 - Cl4.csv"
 #      - Ch_3_Cl_5:
-        - "./inputs/key papers/Ch 3 - Cl5.csv"
+        - "./inputs/tca_corpus/key papers/Ch 3 - Cl5.csv"
 #      - Ch_3Cl_6:
-        - "./inputs/key papers/Ch 3 - Cl6.csv"
+        - "./inputs/tca_corpus/key papers/Ch 3 - Cl6.csv"
 #      - Ch_3:
-        - "./inputs/key papers/Ch 3 - pdf.csv"
+        - "./inputs/tca_corpus/key papers/Ch 3 - pdf.csv"
 #      - Ch_4_Cl_1:
-        - "./inputs/key papers/Ch 4 - Challenge 1.csv"
+        - "./inputs/tca_corpus/key papers/Ch 4 - Challenge 1.csv"
 #      - Ch_4_Cl_2:
-        - "./inputs/key papers/Ch 4 - Challenge 2.csv"
+        - "./inputs/tca_corpus/key papers/Ch 4 - Challenge 2.csv"
 #      - Ch_4_Cl_3:
-        - "./inputs/key papers/Ch 4 - Challenge 3.csv"
+        - "./inputs/tca_corpus/key papers/Ch 4 - Challenge 3.csv"
 #      - Ch_4_Cl_4:
-        - "./inputs/key papers/Ch 4 - Challenge 4.csv"
+        - "./inputs/tca_corpus/key papers/Ch 4 - Challenge 4.csv"
 #      - Ch_4_Cl_5:
-        - "./inputs/key papers/Ch 4 - Challenge 5.csv"
+        - "./inputs/tca_corpus/key papers/Ch 4 - Challenge 5.csv"
 #      - Ch_5:
-        - "./inputs/key papers/Ch 5 - Hannah.csv"
-        - "./inputs/key papers/Ch 5 - Victoria.csv"
-        - "./inputs/key papers/Ch 5 -.csv"
+        - "./inputs/tca_corpus/key papers/Ch 5 - Hannah.csv"
+        - "./inputs/tca_corpus/key papers/Ch 5 - Victoria.csv"
+        - "./inputs/tca_corpus/key papers/Ch 5 -.csv"
 
     sample_size: 10000
     mc.cores: 8
@@ -489,7 +489,7 @@ Please see [here](https://help.openalex.org/how-it-works/topics) for more inform
 
 # Methods
 
-## Get and calculate Data
+## Get and calculate Data from OpenAlex
 These data is gathered from OpenAlex directly, not using the downloaded TCA Corpus. The data is used to assess the quality of the TCA Corpus.
 
 ```{r}
@@ -573,6 +573,7 @@ if (!file.exists(fn)) {
 ```{r}
 #| label: get_key_papers
 #|
+
 fn <- file.path(".", "data", "tca_corpus", "key_papers.rds")
 if (!file.exists(fn)) {
     key_papers <- lapply(
@@ -762,173 +763,45 @@ Only then is the actual data read!
 
 Needs to be enabled by setting `eval: true` in the code block below.
 
+
 ```{r}
-#| label: get_tca_corpus
+#| label: download_tca_corpus
 #| eval: false
 #|
 
+tic()
 
-if (!dir.exists(fn)) {
-    dir.create(
-        path = pages_dir,
-        showWarnings = FALSE,
-        recursive = TRUE
-    )
+IPBES.R::corpus_download(
+    pages_dir = pages_dir,
+    title_and_abstract_search = compact(params$s_1_tca_corpus),
+    continue = TRUE,
+    delete_pages_dir = FALSE,
+    set_size = 2000,
+    dry_run = FALSE,
+    verbose = TRUE,
+    mc_cores = 6
+)
 
-    years <- oa_fetch(
-        title_and_abstract.search = compact(params$s_1_tca_corpus),
-        group_by = "publication_year",
-        paging = "cursor",
-        verbose = FALSE
-    )$key
-
-    #######
-    #######
-    processed <- list.dirs(
-        path = pages_dir,
-        full.names = FALSE,
-        recursive = FALSE
-    ) |>
-        gsub(
-            pattern = paste0("^pages_publication_year=", ""),
-            replacement = ""
-        )
-
-    interrupted <- list.files(
-        path = pages_dir,
-        pattern = "^next_page.rds",
-        full.names = TRUE,
-        recursive = TRUE
-    ) |>
-        gsub(
-            pattern = paste0("^", pages_dir, "/pages_publication_year=", ""),
-            replacement = ""
-        ) |>
-        gsub(
-            pattern = "/next_page.rds$",
-            replacement = ""
-        )
-
-    completed <- processed[!(processed %in% interrupted)]
-
-    years <- years[!(years %in% completed)]
-    #######
-    #######
-
-    pbmcapply::pbmclapply(
-        sample(years),
-        function(y) {
-            message("Getting data for year ", y, " ...")
-            output_path <- file.path(pages_dir, paste0("pages_publication_year=", y))
-
-            dir.create(
-                path = output_path,
-                showWarnings = FALSE,
-                recursive = TRUE
-            )
-
-            data <- oa_query(
-                title_and_abstract.search = compact(params$s_1_tca_corpus),
-                publication_year = y,
-                options = list(
-                    select = c("id", "doi", "authorships", "publication_year", "title", "abstract_inverted_index", "topics")
-                ),
-                verbose = FALSE
-            ) |>
-                IPBES.R::oa_request_IPBES(
-                    count_only = FALSE,
-                    output_path = output_path,
-                    verbose = TRUE
-                )
-        },
-        mc.cores = params$mc.cores,
-        mc.preschedule = FALSE
-    )
-}
+toc()
 ```
-
-The fields `author` and `topics` are seerialized in the arrow database and need to be unserialized by using `unserialize_arrow()` on a dataset containing the two columns.
 
 ```{r}
 #| label: convert_tca_corpus_arrow
 #| eval: false
 
+tic()
 
-# convert_pages_2_arrow(  
-#     pages_dir = pages_dir, 
-#     arrow_dir = corpus_dir,
-#     continue = FALSE,
-#     delete_arrow_dir = TRUE,
-#     mc_cores = 3,
-#     verbose = TRUE
-# )
-
-years <- list.dirs(
-    path = pages_dir,
-    full.names = TRUE,
-    recursive = FALSE
+IPBES.R::corpus_pages_to_arrow(
+    pages_dir = pages_dir,
+    arrow_dir = corpus_dir,
+    continue = TRUE,
+    delete_arrow_dir = FALSE,
+    dry_run = FALSE,
+    verbose = TRUE,
+    mc_cores = 2
 )
 
-years_done <- list.dirs(
-    path = corpus_dir,
-    full.names = TRUE,
-    recursive = FALSE
-)
-
-years <- years[
-    !(
-        gsub(
-            x = years,
-            pattern = paste0("^", pages_dir, "/pages_publication_year="),
-            replacement = ""
-        ) %in% gsub(
-            x = years_done,
-            pattern = paste0("^", corpus_dir, "/publication_year="),
-            replacement = ""
-        )
-    )
-]
-
-pbapply::pblapply(
-    sample(years),
-    function(year) {
-        message("\n     Processing year ", year, " ...\n")
-        pages <- list.files(
-            path = year,
-            pattern = "^page_",
-            full.names = TRUE,
-            recursive = TRUE
-        )
-        data <- parallel::mclapply(
-            pages,
-            function(page) {
-                p <- readRDS(file.path(page))$results |>
-                    openalexR::works2df(verbose = FALSE)
-                p$author_abbr <- IPBES.R::abbreviate_authors(p)
-                return(p)
-            },
-            mc.cores = 3 # params$mc.cores
-        ) |>
-            do.call(what = rbind)
-
-        saveRDS(
-            data,
-            file = file.path(paste0(year, ".rds"))
-        )
-
-                    for  (i in 1:nrow(data)) {
-                        data$author[[i]]$au_orcid <- as.character(data$author[[i]]$au_orcid)
-                    }
-
-        arrow::write_dataset(
-            data, 
-            path = corpus_dir,
-            partitioning = "publication_year" ,
-            format = "parquet",
-            existing_data_behavior = "overwrite"
-        )
-    }
-)
+toc()
 ```
 
 ## Export
@@ -936,27 +809,46 @@ pbapply::pblapply(
 
 ```{r}
 #| label: export_abstracts
-#| eval: false
+#|
 
-corpus_read(corpus_dir) |>
-    select(id, doi, ab) |>
-    arrow::write_parquet(file.path(".", "data", "tca_corpus", "abstracts_tca.parquet")
+fn <- file.path(".", "data", "tca_corpus", "abstracts_tca.parquet")
+if (!file.exists(fn)) {
+    IPBES.R::corpus_read(corpus_dir) |>
+        select(
+            id,
+            doi,
+            display_name,
+            ab
+        ) |>
+        arrow::write_parquet(fn)
+}
 ```
 
 
 ```{r}
-#| label: export_random_50
-#| eval: false
-#| 
+#| label: export_random_250
+#|
 
-fn <- file.path("data", "tca_corpus", "random_50_tca_corpus.xlsx")
+sample_size <- 250
+
+fn <- file.path("data", "tca_corpus", paste0("random_", sample_size, "_tca_corpus.xlsx"))
 if (!file.exists(fn)) {
     set.seed(13)
-    read_corpus(corpus_tca_dir) |>
-        dplyr::select(id, doi, author_abbr, display_name, ab) |>
-        dplyr::rename(abstract = ab, title = display_name) |>
+    read_corpus(corpus_dir) |>
+        dplyr::select(
+            id,
+            doi,
+            author = author_abbr,
+            title = display_name,
+            abstract = ab
+        ) |>
+        dplyr::slice_sample(
+            n = sample_size
+        ) |>
+        dplyr::mutate(
+            abstract = substr(abstract, 1, 5000)
+        ) |>
         dplyr::collect() |>
-        dplyr::slice_sample(n = 50) |>
         writexl::write_xlsx(path = fn)
 }
 ```
@@ -1649,12 +1541,12 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
 The Sectors definition is based on the subfields assigned to each work by OpenAlex. These were grouped by experts into sectors. See [this Google Doc](https://docs.google.com/spreadsheets/d/1ZCB_St2TQu_wL3yl1iN7Wxz5FERGxk-GZA0_2oGcRM0/edit#gid=210658071) for details.
 
 ```{r}
-#| label: topics_tca_corpus_data
+#| label: sectors_tca_corpus_data
 #|
 
 sector_dir <- file.path(".", "data", "tca_corpus", "sectors")
 
-if (!file.exists(fn)) {
+if (!dir.exists(sector_dir)) {
     dir.create(sector_dir, showWarnings = FALSE)
 
     years <- IPBES.R::corpus_read(corpus_dir) |>
@@ -1662,7 +1554,7 @@ if (!file.exists(fn)) {
         collect() |>
         unlist() |>
         as.vector() |>
-        sort(decreasing = TRUE)
+        sort()
 
     sectors <- read.csv(file.path("inputs", "tca_corpus", "sectors_def.csv")) |>
         tibble::as_tibble() |>
@@ -1674,7 +1566,7 @@ if (!file.exists(fn)) {
     pbmcapply::pbmclapply(
         years,
         function(y) {
-            message("Processing year: ", y)
+            message("\nProcessing year: ", y)
             IPBES.R::corpus_read(corpus_dir) |>
                 dplyr::filter(publication_year == y) |>
                 dplyr::select(
@@ -1684,8 +1576,7 @@ if (!file.exists(fn)) {
                 ) |>
                 collect() |>
                 IPBES.R::extract_topics(
-                    names = "subfield",
-                    unserialize = TRUE
+                    names = "subfield"
                 ) |>
                 dplyr::left_join(
                     y = sectors,
@@ -1701,12 +1592,6 @@ if (!file.exists(fn)) {
         mc.cores = 3,
         mc.preschedule = FALSE
     )
-
-    IPBES.R::corpus_read(sector_dir) |>
-        arrow::write_parquet(
-            paste0(sector_dir, ".parquet2")
-        )
-    unlink(sector_dir, recursive = TRUE)
 }
 ```
 
@@ -1715,16 +1600,17 @@ if (!file.exists(fn)) {
 #| label: sectors_over_time_data
 #|
 
-fn  <- file.path("data", "tca_corpus", "sectors_over_time.rds")
-if (!file.exists(fn)){
-    data <- IPBES.R::corpus_read(file.path(".", "data", "tca_corpus", "sectors.parquet")) |>
+fn <- file.path("data", "tca_corpus", "sectors_over_time.rds")
+if (!file.exists(fn)) {
+    data <- IPBES.R::corpus_read(file.path(".", "data", "tca_corpus", "sectors")) |>
         dplyr::group_by(
             publication_year,
             sector,
             i
         ) |>
         dplyr::summarize(
-            count = n()
+            count = n(),
+            .groups = "drop"
         ) |>
         dplyr::rename(
             level = i
@@ -1740,7 +1626,8 @@ if (!file.exists(fn)){
             sector
         ) |>
         dplyr::summarize(
-            count_1 = sum(count)
+            count_1 = sum(count),
+            .groups = "drop"
         ) |>
         dplyr::full_join(
             data |>
@@ -1765,7 +1652,7 @@ if (!file.exists(fn)){
             cumsum_count_1 = cumsum(count_1),
             cumsum_count_all = cumsum(count_all),
             p_cumsum_count_1 = cumsum_count_1 / max(cumsum_count_1),
-            p_cumsum_count_all = cumsum_count_all /  max(cumsum_count_all)
+            p_cumsum_count_all = cumsum_count_all / max(cumsum_count_all)
         ) |>
         saveRDS(fn)
     rm(data)
@@ -2184,7 +2071,8 @@ prim_topics_tca_corpus |>
         domain_name
     ) |>
     summarise(
-        count = sum(count)
+        count = sum(count),
+        .groups = "drop"        
     ) |>
     arrange(desc(count)) |>
     relocate(count, .after = "subfield_id") |>
