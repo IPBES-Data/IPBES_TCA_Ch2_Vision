@@ -7,13 +7,21 @@ Inputs/**/*.docx
 IPBES_TCA_Corpus_DMP_files/
 
 **/pages/
-**/corpus/
-**/corpus_tc
+**/pages_cases/
 
-**/sectors/
+**/corpus/
+**/corpus_cases/
+**/corpus_tc/
+
+**/corpus_authors/
+**/corpus_topics/
+**/corpus as converted not cleaned/
 
 data/tca_corpus/sectors.parquet
 data/tca_corpus/abstracts_tca.parquet
 
 data/tca_corpus/tca_corpus.duckdb
 data/tca_corpus/tca_corpus_without_fts.duckdb
+data/tca_corpus/tca_corpus*.duckdb
+
+.vscode/settings.json
