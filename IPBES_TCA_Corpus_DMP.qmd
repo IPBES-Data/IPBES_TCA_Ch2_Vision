@@ -182,6 +182,11 @@ library(parallel)
 library(duckdb)
 library(arrow)
 
+if not (require(plantuml)){
+    install.packages('plantuml', repos = c('https://rkrug.r-universe.dev', 'https://cloud.r-project.org'))
+    library(plantuml)
+}
+
 # Function to make the search strings compacter
 compact <- function(x) {
     x |>
@@ -224,6 +229,11 @@ The following terminology is used in this document:
 - **Chapter corpus**: The corpus resulting from `transformative AND Nature AND ChX_Y` 
 
 The following searches are conducted on Title and Abstrat only as the availability of fulltext drops in 2020. OpenAlex did "inherit" fro Microsoft Academic their initial corpus in 2021 which contained a lot of fulltext for searches. After that time, other sources had to be used which did not include fulltext for searches. To eliminate this bias, we linit the search for terms in abstract and title only.
+
+## Schematic Overview
+TODO
+
+
 
 ## Search Terms {#sec-search_terms}
 Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu to adopt them for OpenAlex.
