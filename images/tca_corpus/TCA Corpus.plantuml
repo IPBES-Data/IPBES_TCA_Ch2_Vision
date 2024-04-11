@@ -4,7 +4,7 @@ cloud "<size:24>[[https://openalex.org OpenAlex]]" as openalex #pink
 
 ' TCA / Global Corpus
 rectangle "TCA / Global Corpus" as box_tca {
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/tfc.txt TFC]]" as search_tca
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/tfc.txt TFC]]" as search_tca
     database "Corpus of IPBES Transformative Change Assessment\n----\nTCA / Global Corpus\n---\n**Inclusivity**: Checked\n**Specificity**: Not Checked" as corpus_tca #yellow
     openalex --> search_tca
     search_tca -down-> corpus_tca
@@ -25,10 +25,10 @@ rectangle "TCA / Global Corpus" as box_tca {
     file "Sectors over Time Data\n---\n**Filename**: sectors_over_time_data.rds" as file_sec_time_tca #yellow
     prepare_sec_time_tca -down-> file_sec_time_tca
     ' sectors_over_time figure
-    file "Sectors over Time Figure\n---\n**Filename**: sectors_over_time.(pdf / png)" as file_sec_time_figure_tca #LightCoral
+    file "Sectors over Time Figure\n---\n**[[https://ipbes-data.github.io/IPBES_TCA_Corpus/figures/tca_corpus/sectors_over_time.pdf sectors_over_time.(pdf / png)]]" as file_sec_time_figure_tca #LightCoral
     file_sec_time_tca -down-> file_sec_time_figure_tca
     ' sectors_proportions_over_time figure
-    file "Sectors Proportions over Time Figure\n---\n**Filename**: sectors_proportions_over_time.(pdf / png)" as file_sec_prop_time_figure_tca #LightCoral
+    file "Sectors Proportions over Time Figure\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/figures/tca_corpus/sectors_proportions_over_time.pdf sectors_proportions_over_time.(pdf / png)]]" as file_sec_prop_time_figure_tca #LightCoral
     file_sec_time_tca -down-> file_sec_prop_time_figure_tca
 
     ' publications_over_time_tca_corpus.rds
@@ -58,7 +58,7 @@ rectangle "TCA / Global Corpus" as box_tca {
 
 ' Cases Corpus
 rectangle "Cases Corpus" as running_1 {
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/tfc.txt TFC]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/case.txt CASE]]" as search_tca_case
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/tfc.txt TFC]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/case.txt CASE]]" as search_tca_case
     database "Corpus of IPBES TCA Ch2 - Cases\n---\nCases Corpus\n---\n**Inclusivity**: Not Checked\n**Specificity**: <font color=red>** Not Checked**" as corpus_tca_case #yellow
     openalex --> search_tca_case
     search_tca_case -down-> corpus_tca_case
@@ -94,8 +94,8 @@ rectangle "Technology Corpus" as box_technology {
 }
 
 ' Subsidies Corpus
-rectangle "Subsidies Corpus" as box_subsidies {
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/tfc.txt TFC]] AND [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/input/ch_5_subsidies_reform/government_financial_support.txt SUBSIDIES]]" as search_subsidies
+rectangle "Subsidies Corpus" as box_subsidies { 
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/tfc.txt TFC]] AND [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/input/ch_5_subsidies_reform/government_financial_support.txt SUBSIDIES]]" as search_subsidies
     openalex --> search_subsidies
     database "Corpus of IPBES TCA Ch5 - Subsidies studies\n---\nSubsidies Corpus\n---\n**Inclusivity**: Not Checked\n**Specificity**: **Checked**" as corpus_subsidies #yellow
     search_subsidies -down-> corpus_subsidies
@@ -150,38 +150,38 @@ rectangle "Subsidies Corpus" as box_subsidies {
 }
 
 rectangle "Additional Search Terms" as additional_search_terms {
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch1_01.txt Ch1 01]]" as search_ch1_01
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_01.txt Ch1 01]]" as search_ch1_01
     ' openalex -right-> search_ch1_01
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch1_02.txt Ch1 02]]" as search_ch1_02
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_02.txt Ch1 02]]" as search_ch1_02
     ' openalex --> search_ch1_02
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch1_03.txt Ch1 03]]" as search_ch1_03
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_03.txt Ch1 03]]" as search_ch1_03
     ' openalex -right-> search_ch1_03
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch1_04.txt Ch1 04]]" as search_ch1_04
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_04.txt Ch1 04]]" as search_ch1_04
     ' openalex -right-> search_ch1_04
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch1_05.txt Ch1 05]]" as search_ch1_05
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_05.txt Ch1 05]]" as search_ch1_05
     ' openalex -right-> search_ch1_05
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch1_06.txt Ch1 06]]" as search_ch1_06
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_06.txt Ch1 06]]" as search_ch1_06
     ' openalex -right-> search_ch1_06
 
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch2.txt Ch2]]" as search_ch2
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch2.txt Ch2]]" as search_ch2
     ' openalex -right-> search_ch2
 
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch3_01.txt Ch3 01]]" as search_ch3_01
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_01.txt Ch3 01]]" as search_ch3_01
     ' openalex -right-> search_ch3_01
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch3_02.txt Ch3 02]]" as search_ch3_02
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_02.txt Ch3 02]]" as search_ch3_02
     ' openalex -right-> search_ch3_02
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch3_03.txt Ch3 03]]" as search_ch3_03
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_03.txt Ch3 03]]" as search_ch3_03
     ' openalex -right-> search_ch3_03
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch3_04.txt Ch3 04]]" as search_ch3_04
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_04.txt Ch3 04]]" as search_ch3_04
     ' openalex -right-> search_ch3_04
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch3_05.txt Ch3 05]]" as search_ch3_05
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_05.txt Ch3 05]]" as search_ch3_05
     ' openalex -right-> search_ch3_05
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch3_06.txt Ch3 06]]" as search_ch3_06
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_06.txt Ch3 06]]" as search_ch3_06
     ' openalex -right-> search_ch3_06
 
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch3_01.txt Ch4 01]]" as search_ch4_01
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_01.txt Ch4 01]]" as search_ch4_01
     ' openalex -right-> search_ch4_01
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/ch3_02.txt Ch4 02]]" as search_ch4_02
+    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_02.txt Ch4 02]]" as search_ch4_02
     ' openalex -right-> search_ch4_02
 }
 openalex -up-> additional_search_terms

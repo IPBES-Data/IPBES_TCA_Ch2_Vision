@@ -2130,18 +2130,18 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_pro
             legend.position = "right"
         )
 
-    # ggplot2::ggsave(
-    #     file.path("figures", "tca_corpus", "sectors_proportions_over_time.pdf"),
-    #     width = 12,
-    #     height = 12,
-    #     figure
-    # )
-    # ggplot2::ggsave(
-    #     file.path("figures", "tca_corpus", "sectors_proportions_over_time.png"),
-    #     width = 12,
-    #     height = 12,
-    #     figure
-    # )
+    ggplot2::ggsave(
+        file.path("figures", "tca_corpus", "sectors_proportions_over_time.pdf"),
+        width = 12,
+        height = 12,
+        figure
+    )
+    ggplot2::ggsave(
+        file.path("figures", "tca_corpus", "sectors_proportions_over_time.png"),
+        width = 12,
+        height = 12,
+        figure
+    )
 
     rm(figure)
 }
