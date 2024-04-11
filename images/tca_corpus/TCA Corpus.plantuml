@@ -16,7 +16,7 @@ rectangle "TCA / Global Corpus" as box_tca {
     ' prim_topics_tca_corpus.rds
     process "Extract Primary Topics" as prepare_prim_topics_tca
     corpus_sectors_tca -down-> prepare_prim_topics_tca
-    file "Primary Topics Data\n---\n**Filename**: prim_topics_tca_corpus.rds" as file_prim_topics_tca #yellow
+    file "Primary Topics Data\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/data/tca_corpus/prim_topics_tca_corpus.rds prim_topics_tca_corpus.rds]]" as file_prim_topics_tca #yellow
     prepare_prim_topics_tca -down-> file_prim_topics_tca
 
     ' sectors_over_time_data.rds
@@ -34,10 +34,10 @@ rectangle "TCA / Global Corpus" as box_tca {
     ' publications_over_time_tca_corpus.rds
     process "Prepare Publication Data" as prepare_pub_time_tca
     corpus_sectors_tca -down-> prepare_pub_time_tca
-    file "Publication over Times Data\n---\n**Filename**: publications_over_time_tca_corpus.rds" as file_pub_time_tca #yellow
+    file "Publication over Times Data\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/data/tca_corpus/publications_over_time_tca_corpus.rds publications_over_time_tca_corpus.rds]]" as file_pub_time_tca #yellow
     prepare_pub_time_tca -down-> file_pub_time_tca
     ' publications_over_time figure
-    file "Publication over Time Figure\n---\n**Filename**: publications_over_time.(pdf / png)" as file_pub_time_figure_tca #LightCoral
+    file "Publication over Time Figure\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/figures/tca_corpus/publications_over_time.pdf publications_over_time.(pdf / png)]]" as file_pub_time_figure_tca #LightCoral
     file_pub_time_tca -down-> file_pub_time_figure_tca
 
     ' Countries
@@ -48,10 +48,10 @@ rectangle "TCA / Global Corpus" as box_tca {
     ' countries_tca_corpus.rds
     process "Prepare Countries Data" as prepare_countries_tca
     corpus_countries_tca -down-> prepare_countries_tca
-    file "Publication Countries Data\n---\n**Filename**: countries_tca_corpus.rds" as file_countries_tca #yellow
+    file "Publication Countries Data\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/data/tca_corpus/countries_tca_corpus.rds countries_tca_corpus.rds]]" as file_countries_tca #yellow
     prepare_countries_tca -down-> file_countries_tca
     ' publications_countries maps
-    file "Publication Countries Maps\n---\n**Filename**: publications_countries.(pdf / png)" as file_pub_maps_tca #LightCyan
+    file "Publication Countries Maps\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/maps/tca_corpus/publications_countries.pdf publications_countries.(pdf / png)]]" as file_pub_maps_tca #LightCyan
     file_countries_tca -down-> file_pub_maps_tca
 
 }
@@ -65,7 +65,7 @@ rectangle "Cases Corpus" as running_1 {
 }
 
 ' Technology Corpus
-rectangle "Technology Corpus" as box_technology {
+rectangle "Technology **Corpus TO CHECK**" as box_technology {
     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/input/Ch2_technology/technology.txt TECHNOLOGY]] AND [[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/input/Ch2_technology/vision.txt VISION]]" as search_technology
     database "technology Corpus" as corpus_int_technology
     action "Cross with TCA Corpus" as cross_tca_technology
@@ -79,11 +79,11 @@ rectangle "Technology Corpus" as box_technology {
     'publications_over_time.rds
     process "Prepare Publication Time Data" as prepare_pub_time_technology
     corpus_technology -down-> prepare_pub_time_technology
-    file "Publication over Times Data\n---\n**Filename**: publications_over_time.rds" as file_pub_time_technology #yellow
+    file "Publication over Times Data\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/data/Ch2_technology/publications_over_time.rds publications_over_time.rds]]" as file_pub_time_technology #yellow
     prepare_pub_time_technology -down-> file_pub_time_technology
-    ' publications_over_time figure
-    file "Publication over Time Figure\n---\n**Filename**: publications_over_time.(pdf / png)" as file_pub_time_figure_technology #LightCoral
-    file_pub_time_technology -down-> file_pub_time_figure_technology
+    ' ' publications_over_time figure
+    ' file "Publication over Time Figure\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/figures/Ch2_technology/publications_over_time.pdf publications_over_time.(pdf / png)]]" as file_pub_time_figure_technology #LightCoral
+    ' file_pub_time_technology -down-> file_pub_time_figure_technology
 
     ' publications_per_country_data.rds
     process "Prepare Countries Data" as prepare_countries_technology
@@ -108,7 +108,7 @@ rectangle "Subsidies Corpus" as box_subsidies {
     ' sent_analysis_subsidies.csv
     process "Sentiment Analysis\n---\nExternal" as analysis_sent_subsidies
     corpus_sent_subsidies -down-> analysis_sent_subsidies
-    file "Sentiment Analysis Results\n---\n**Filename**: sent_analysis_subsidies.csv" as file_sent_subsidies #yellow
+    file "Sentiment Analysis Results\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/input/ch_5_subsidies_reform/SentAnalysis_Scores.rds SentAnalysis_Scores.rds]]" as file_sent_subsidies #yellow
     analysis_sent_subsidies -down-> file_sent_subsidies
 
     ' sentAnalysis_scores_countries.rds
@@ -117,7 +117,18 @@ rectangle "Subsidies Corpus" as box_subsidies {
     file "Spatial Sentiment Data\n---\n**Filename**: sentAnalysis_scores_countries.rds" as file_sent_countries_subsidies #yellow
     prepare_sent_countries_subsidies -down-> file_sent_countries_subsidies
     ' sentiment_[neu/pos/neg/compound]_per_countries maps
-    file "Sentiment Maps Maps\n---\n**Filename**: sentiment_[neu/pos/neg/compound]_per_countries.(pdf / png)" as file_sent_countries_maps_subsidies #LightCyan
+    file file_sent_countries_maps_subsidies #LightCyan [
+        Sentiment Maps Maps
+        ---
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neu_per_countries_all.pdf sentiment_neu_per_countries_all.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neu_per_countries_10.pdf sentiment_neu_per_countries_10.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_pos_per_countries_all.pdf sentiment_pos_per_countries_all.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_pos_per_countries_10.pdf sentiment_pos_per_countries_10.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neg_per_countries_all.pdf sentiment_neg_per_countries_all.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neg_per_countries_10.pdf sentiment_neg_per_countries_10.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_comp_per_countries_all.pdf sentiment_comp_per_countries_all.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_comp_per_countries_10.pdf sentiment_comp_per_countries_10.(pdf / png)]]
+    ]
     file_sent_countries_subsidies -down-> file_sent_countries_maps_subsidies
     ' sentAnalysis_scores_timeseries
     process "Prepare Sentiment over Time Data" as prepare_sent_time_subsidies
@@ -125,7 +136,16 @@ rectangle "Subsidies Corpus" as box_subsidies {
     file "Sentiment over Time Data\n---\n**Filename**: sentAnalysis_scores_timeseries.rds" as file_sent_time_subsidies #yellow
     prepare_sent_time_subsidies -down-> file_sent_time_subsidies
     ' sentiments_over_time[neu/pos/neg/compound/neg_pos] figures
-    file "Sentiment over Time Figures\n---\n**Filename**: sentiments_over_time[neu/pos/neg/compound/neg_pos].(pdf / png)" as file_sent_time_subsidies_figures #LightCoral
+    file file_sent_time_subsidies_figures #LightCoral [
+        Sentiment over Time Figures
+        ---
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/figures/ch_5_subsidies_reform/sentiments_over_time.pdf sentiments_over_time_.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/figures/ch_5_subsidies_reform/sentiments_over_time_neg_pos.pdf sentiments_over_time_neg_pos.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/figures/ch_5_subsidies_reform/sentiments_neg_over_time.pdf sentiments_neg_over_time.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/figures/ch_5_subsidies_reform/sentiments_neu_over_time.pdf sentiments_neu_over_time.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/figures/ch_5_subsidies_reform/sentiments_pos_over_time.pdf sentiments_pos_over_time.(pdf / png)]]
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/figures/ch_5_subsidies_reform/sentiments_comp_over_time.pdf sentiments_comp_over_time.(pdf / png)]]
+    ]
     file_sent_time_subsidies -down-> file_sent_time_subsidies_figures
 
 
@@ -135,7 +155,7 @@ rectangle "Subsidies Corpus" as box_subsidies {
     file "Publication over Times Data\n---\n**Filename**: publications_over_time_data.rds" as file_pub_time_subsidies #yellow
     prepare_pub_time_subsidies -down-> file_pub_time_subsidies
     ' publications_over_time figure
-    file "Publication over Time Figure\n---\n**Filename**: publications_over_time.(pdf / png)" as file_pub_time_figure_subsidies #LightCoral
+    file "Publication over Time Figure\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/figures/ch_5_subsidies_reform/publications_over_time.pdf publications_over_time.(pdf / png)]]" as file_pub_time_figure_subsidies #LightCoral
     file_pub_time_subsidies -down-> file_pub_time_figure_subsidies
 
     ' publications_per_country_data.rds
@@ -144,7 +164,11 @@ rectangle "Subsidies Corpus" as box_subsidies {
     file "Publication Countries Data\n---\n**Filename**: publications_per_country_data.rds" as file_countries_subsidies #yellow
     prepare_countries_subsidies -down-> file_countries_subsidies
     ' publications_countries maps
-    file "Publication Countries Maps\n---\n**Filename**: publications_countries.(pdf / png)" as file_pub_maps_subsidies #LightCyan
+    file file_pub_maps_subsidies #LightCyan [
+        Publication Countries Maps
+        ---
+        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/tca_corpus/publications_countries.pdf publications_countries.(pdf / png)]]
+    ]
     file_countries_subsidies -down-> file_pub_maps_subsidies
 
 }
