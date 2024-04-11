@@ -1,54 +1,4 @@
-@startuml Overview_Corpuses
-
-
-cloud "[[https://openalex.org OpenAlex]]" as openalex
-
-' TCA / Global Corpus
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/tfc.txt TFC]]" as search_tca
-database "TCA / Global Corpus" as corpus_tca #lightgreen
-openalex --> search_tca
-search_tca --> corpus_tca
-
-' TCA Case Corpus
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/tfc.txt TFC]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/case.txt CASE]]" as search_tca_case
-database "TCA Case Corpus" as corpus_tca_case #lightgreen
-openalex --> search_tca_case
-search_tca_case --> corpus_tca_case
-
-' Technology Corpus
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/input/Ch2_technology/technology.txt TECHNOLOGY]] AND [[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/input/Ch2_technology/vision.txt VISION]]" as search_technology
-database "technology Corpus" as corpus_int_technology
-action "Cross with TCA Corpus" as cross_tca_technology
-database "Technology Corpus" as corpus_technology #lightgreen
-openalex --> search_technology
-search_technology --> corpus_int_technology
-corpus_int_technology --> cross_tca_technology
-corpus_tca --> cross_tca_technology
-cross_tca_technology --> corpus_technology
-
-' Subsidies Corpus
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/input/ch_5_subsidies_reform/government_financial_support.txt SUBSIDIES]]" as search_subsidies
-database "subsidies Corpus" as corpus_int_subsidies
-action "Cross with TCA Corpus" as cross_tca_subsidies
-database "Subsidies Corpus" as corpus_subsidies #lightgreen
-openalex --> search_subsidies
-search_subsidies --> corpus_int_subsidies
-corpus_int_subsidies --> cross_tca_subsidies
-corpus_tca --> cross_tca_subsidies
-cross_tca_subsidies --> corpus_subsidies
-
-' LEGEND
-newpage
-rectangle Legend {
-    cloud "External Source\nusually a website" 
-    database "Downloaded Corpus\nusually parquet dataset" #lightgreen
-    database "Downloaded Intermediate Corpus\nusually parquet dataset"
-    action "Action related to obtaining / filtering of corpus"
-    process "Analysis related process"
-    storage "Numeric results"
-    storage "Part 5" #red
-}
-
+@startuml Ch 1 evidence causes
 
 ' Ch 1 evidence causes
 newpage
@@ -56,21 +6,21 @@ cloud "[[https://openalex.org OpenAlex]]" as openalex
 
 ' part 0
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/nature.txt NATURE]]" as ch1_nature
-storage "Number of Works\n--0--" as ch1_nature_count #Lavender
+storage "Number of Works\n--0.1--" as ch1_nature_count #Lavender
 '
 openalex --> ch1_nature
 ch1_nature --> ch1_nature_count
 
 
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/tfc.txt TFC]]" as ch1_tfc
-storage "Number of Works\n---0---" as ch1_tfc_count #Lavender
+storage "Number of Works\n---0.2---" as ch1_tfc_count #Lavender
 '
 openalex --> ch1_tfc
 ch1_tfc --> ch1_tfc_count
 
 
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/tca_corpus/search%20terms/tfc.txt TFC]]" as ch1_tca
-' storage "Number of Works\n---0---" as ch1_tfc_count #Lavender
+' storage "Number of Works\n---0.3---" as ch1_tfc_count #Lavender
 '
 ' openalex --> ch1_tca
 ' ch1_tfc --> ch1_tfc_count
@@ -87,12 +37,12 @@ ch1_ethical --> ch1_ethical_count
 ' part 2
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_evidence_causes/concepts_1.txt CONCEPTS 1]]" as ch1_concepts_1
 openalex --> ch1_concepts_1
-storage "Number of Works\n--2--" as ch1_concepts_1_count #Khaki
+storage "Number of Works\n--2.1--" as ch1_concepts_1_count #Khaki
 ch1_concepts_1 --> ch1_concepts_1_count
 
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_evidence_causes/concepts_2.txt CONCEPTS 2]]" as ch1_concepts_2
 ch1_concepts_1 --> ch1_concepts_2
-storage "Number of Works\n--2--" as ch1_concepts_1_concepts_2_count #Khaki
+storage "Number of Works\n--2.2--" as ch1_concepts_1_concepts_2_count #Khaki
 ch1_concepts_2 --> ch1_concepts_1_concepts_2_count
 
 
@@ -101,34 +51,34 @@ action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_e
 '
 openalex --> ch1_narrowed_tca
 ch1_narrowed_tca --> ch1_tca
-storage "Number of Works\n--4--" as ch1_narrowed_tca_tca_count #Yellow
+storage "Number of Works\n--4.1--" as ch1_narrowed_tca_tca_count #Yellow
 ch1_tca --> ch1_narrowed_tca_tca_count
 
-storage "Number of Works\n--4--" as ch1_narrowed_tca_count #Yellow
+storage "Number of Works\n--4.2--" as ch1_narrowed_tca_count #Yellow
 ch1_narrowed_tca --> ch1_narrowed_tca_count
 
 
 ' part 5
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_evidence_causes/criteria_1.txt CRITERIA 1]]" as ch1_criteria_1
 ch1_narrowed_tca --> ch1_criteria_1
-storage "Number of Works\n--5--" as ch1_narrowed_tca_criteria_1_count #pink
+storage "Number of Works\n--5.1--" as ch1_narrowed_tca_criteria_1_count #pink
 ch1_criteria_1 --> ch1_narrowed_tca_criteria_1_count
 
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_evidence_causes/criteria_2.txt CRITERIA 2]]" as ch1_criteria_2
 ch1_narrowed_tca --> ch1_criteria_2
-storage "Number of Works\n--5--" as ch1_narrowed_tca_criteria_2_count #pink
+storage "Number of Works\n--5.2--" as ch1_narrowed_tca_criteria_2_count #pink
 ch1_criteria_2 --> ch1_narrowed_tca_criteria_2_count
 
 
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_evidence_causes/criteria_3.txt CRITERIA 3]]" as ch1_criteria_3
 ch1_narrowed_tca --> ch1_criteria_3
-storage "Number of Works\n--5--" as ch1_narrowed_tca_criteria_3_count #pink
+storage "Number of Works\n--5.3--" as ch1_narrowed_tca_criteria_3_count #pink
 ch1_criteria_3 --> ch1_narrowed_tca_criteria_3_count
 
 
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_evidence_causes/criteria_4.txt CRITERIA 4]]" as ch1_criteria_4
 ch1_narrowed_tca --> ch1_criteria_4
-storage "Number of Works\n--5--" as ch1_narrowed_tca_criteria_4_count #pink
+storage "Number of Works\n--5.4--" as ch1_narrowed_tca_criteria_4_count #pink
 ch1_criteria_4 --> ch1_narrowed_tca_criteria_4_count
 
 
@@ -137,18 +87,18 @@ action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_e
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_evidence_causes/biodiv_loss_2.txt BIODIV LOSS 2]]" as ch1_biodiv_loss_2
 ch1_nature --> ch1_biodiv_loss_1 #cyan
 ch1_biodiv_loss_1 --> ch1_biodiv_loss_2 #cyan
-storage "Number of Works\n--6--" as ch1_nat_biodiv_loss_1_2_count #LightCyan
+storage "Number of Works\n--6.1--" as ch1_nat_biodiv_loss_1_2_count #LightCyan
 ch1_biodiv_loss_2 --> ch1_nat_biodiv_loss_1_2_count #cyan
 
 ch1_narrowed_tca --> ch1_biodiv_loss_1 #blue;line.dotted
 ch1_biodiv_loss_1 --> ch1_biodiv_loss_2 #blue;line.dotted
-storage "Number of Works\n--6--" as ch1_nar_biodiv_loss_1_2_count #lightblue
+storage "Number of Works\n--6.2--" as ch1_nar_biodiv_loss_1_2_count #lightblue
 ch1_biodiv_loss_2 --> ch1_nar_biodiv_loss_1_2_count #blue;line.dotted
 
 ch1_nature --> ch1_narrowed_tca #green;line.dashed
 ch1_narrowed_tca --> ch1_biodiv_loss_1 #green;line.dashed
 ch1_biodiv_loss_1 --> ch1_biodiv_loss_2 #green;line.dashed
-storage "Number of Works\n--6--" as ch1_nat_nar_biodiv_loss_1_2_count #lightgreen
+storage "Number of Works\n--6.3--" as ch1_nat_nar_biodiv_loss_1_2_count #lightgreen
 ch1_biodiv_loss_2 --> ch1_nat_nar_biodiv_loss_1_2_count #green;line.dashed
 
 
@@ -159,66 +109,66 @@ action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_e
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/inputs/ch1_evidence_causes/biodiv_loss_3_5.txt BIODIV LOSS 3 5]]" as ch1_biodiv_loss_3_5
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_1 #cyan
-storage "Number of Works\n--6--" as ch1_nat_biodiv_loss_1_2_3_1_count #lightcyan
+storage "Number of Works\n--6.1.1--" as ch1_nat_biodiv_loss_1_2_3_1_count #lightcyan
 ch1_biodiv_loss_3_1 --> ch1_nat_biodiv_loss_1_2_3_1_count #cyan
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_2 #cyan
-storage "Number of Works\n--6--" as ch1_nat_biodiv_loss_1_2_3_2_count #lightcyan
+storage "Number of Works\n--6.1.2--" as ch1_nat_biodiv_loss_1_2_3_2_count #lightcyan
 ch1_biodiv_loss_3_2 --> ch1_nat_biodiv_loss_1_2_3_2_count #cyan
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_3 #cyan
-storage "Number of Works\n--6--" as ch1_nat_biodiv_loss_1_2_3_3_count #lightcyan
+storage "Number of Works\n--6.1.3--" as ch1_nat_biodiv_loss_1_2_3_3_count #lightcyan
 ch1_biodiv_loss_3_3 --> ch1_nat_biodiv_loss_1_2_3_3_count #cyan
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_4 #cyan
-storage "Number of Works\n--6--" as ch1_nat_biodiv_loss_1_2_3_4_count #lightcyan
+storage "Number of Works\n--6.1.4--" as ch1_nat_biodiv_loss_1_2_3_4_count #lightcyan
 ch1_biodiv_loss_3_4 --> ch1_nat_biodiv_loss_1_2_3_4_count #cyan
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_5 #cyan
-storage "Number of Works\n--6--" as ch1_nat_biodiv_loss_1_2_3_5_count #lightcyan
+storage "Number of Works\n--6.1.5--" as ch1_nat_biodiv_loss_1_2_3_5_count #lightcyan
 ch1_biodiv_loss_3_5 --> ch1_nat_biodiv_loss_1_2_3_5_count #cyan
 
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_1 #blue;line.dotted
-storage "Number of Works\n--6--" as ch1_nar_biodiv_biodiv_loss_1_2_3_1_count #lightblue
+storage "Number of Works\n--6.2.1--" as ch1_nar_biodiv_biodiv_loss_1_2_3_1_count #lightblue
 ch1_biodiv_loss_3_1 --> ch1_nar_biodiv_biodiv_loss_1_2_3_1_count #blue;line.dotted
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_2 #blue;line.dotted
-storage "Number of Works\n--6--" as ch1_nar_biodiv_biodiv_loss_1_2_3_2_count #lightblue
+storage "Number of Works\n--6.2.2--" as ch1_nar_biodiv_biodiv_loss_1_2_3_2_count #lightblue
 ch1_biodiv_loss_3_2 --> ch1_nar_biodiv_biodiv_loss_1_2_3_2_count #blue;line.dotted
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_3 #blue;line.dotted
-storage "Number of Works\n--6--" as ch1_nar_biodiv_biodiv_loss_1_2_3_3_count #lightblue
+storage "Number of Works\n--6.2.3--" as ch1_nar_biodiv_biodiv_loss_1_2_3_3_count #lightblue
 ch1_biodiv_loss_3_3 --> ch1_nar_biodiv_biodiv_loss_1_2_3_3_count #blue;line.dotted
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_4 #blue;line.dotted
-storage "Number of Works\n--6--" as ch1_nar_biodiv_biodiv_loss_1_2_3_4_count #lightblue
+storage "Number of Works\n--6.2.4--" as ch1_nar_biodiv_biodiv_loss_1_2_3_4_count #lightblue
 ch1_biodiv_loss_3_4 --> ch1_nar_biodiv_biodiv_loss_1_2_3_4_count #blue;line.dotted
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_5 #blue;line.dotted
-storage "Number of Works\n--6--" as ch1_nar_biodiv_biodiv_loss_1_2_3_5_count #lightblue
+storage "Number of Works\n--6.2.5--" as ch1_nar_biodiv_biodiv_loss_1_2_3_5_count #lightblue
 ch1_biodiv_loss_3_5 --> ch1_nar_biodiv_biodiv_loss_1_2_3_5_count #blue;line.dotted
 
 
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_1 #green;line.dashed
-storage "Number of Works\n--6--" as ch1_nat_nar_biodiv_loss_1_2_3_1_count #lightgreen
+storage "Number of Works\n--6.3.1--" as ch1_nat_nar_biodiv_loss_1_2_3_1_count #lightgreen
 ch1_biodiv_loss_3_1 --> ch1_nat_nar_biodiv_loss_1_2_3_1_count #green;line.dashed
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_2 #green;line.dashed
-storage "Number of Works\n--6--" as ch1_nat_nar_biodiv_loss_1_2_3_2_count #lightgreen
+storage "Number of Works\n--6.3.2--" as ch1_nat_nar_biodiv_loss_1_2_3_2_count #lightgreen
 ch1_biodiv_loss_3_2 --> ch1_nat_nar_biodiv_loss_1_2_3_2_count #green;line.dashed
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_3 #green;line.dashed
-storage "Number of Works\n--6--" as ch1_nat_nar_biodiv_loss_1_2_3_3_count #lightgreen
+storage "Number of Works\n--6.3.3--" as ch1_nat_nar_biodiv_loss_1_2_3_3_count #lightgreen
 ch1_biodiv_loss_3_3 --> ch1_nat_nar_biodiv_loss_1_2_3_3_count #green;line.dashed
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_4 #green;line.dashed
-storage "Number of Works\n--6--" as ch1_nat_nar_biodiv_loss_1_2_3_4_count #lightgreen
+storage "Number of Works\n--6.3.4--" as ch1_nat_nar_biodiv_loss_1_2_3_4_count #lightgreen
 ch1_biodiv_loss_3_4 --> ch1_nat_nar_biodiv_loss_1_2_3_4_count #green;line.dashed
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_5 #green;line.dashed
-storage "Number of Works\n--6--" as ch1_nat_nar_biodiv_loss_1_2_3_5_count #lightgreen
+storage "Number of Works\n--6.3.5--" as ch1_nat_nar_biodiv_loss_1_2_3_5_count #lightgreen
 ch1_biodiv_loss_3_5 --> ch1_nat_nar_biodiv_loss_1_2_3_5_count #green;line.dashed
 
 

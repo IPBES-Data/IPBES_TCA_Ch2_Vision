@@ -64,7 +64,7 @@ params:
     s_1_ch1_04: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_04.txt")), collapse = "\n")
     s_1_ch1_05: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_05.txt")), collapse = "\n")
     s_1_ch1_06: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_06.txt")), collapse = "\n")
-    s_1_ch2: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch2.txt")), collapse = "\n")
+    s_1_ch2:    !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch2.txt")),    collapse = "\n")
     s_1_ch3_01: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_01.txt")), collapse = "\n")
     s_1_ch3_02: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_02.txt")), collapse = "\n")
     s_1_ch3_03: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_03.txt")), collapse = "\n")
@@ -73,8 +73,8 @@ params:
     s_1_ch3_06: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_06.txt")), collapse = "\n")
     s_1_ch4_01: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch4_01.txt")), collapse = "\n")     
     s_1_ch4_02: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch4_02.txt")), collapse = "\n")
-    s_1_case: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n")
-    s_1_ch2_vision_case: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch2.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
+    s_1_case:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")),   collapse = "\n")
+    # s_1_ch2_vision_case: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch2.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
    
     concept_cuttoff: 0.6
 
@@ -182,10 +182,10 @@ library(parallel)
 library(duckdb)
 library(arrow)
 
-if not (require(plantuml)){
-    install.packages('plantuml', repos = c('https://rkrug.r-universe.dev', 'https://cloud.r-project.org'))
-    library(plantuml)
-}
+# if not (require(plantuml)){
+#     install.packages('plantuml', repos = c('https://rkrug.r-universe.dev', 'https://cloud.r-project.org'))
+#     library(plantuml)
+# }
 
 # Function to make the search strings compacter
 compact <- function(x) {
@@ -207,8 +207,7 @@ if (!require("IPBES.R")) {
 # source(file.path("R", "functions.R"))
 
 # A single core request is needed to make multicore parallel processing work
-x <- oa_request(oa_query("bidiversity"), count_only = TRUE)
-rm(x)
+invisible(oa_request(oa_query("bidiversity"), count_only = TRUE))
 
 ```
 
@@ -849,7 +848,7 @@ IPBES.R::corpus_download(
     continue = TRUE,
     delete_pages_dir = FALSE,
     set_size = 2000,
-    dry_run = FALSE,
+    dry_run = TRUE,
     verbose = TRUE,
     mc_cores = 6
 )
@@ -992,7 +991,7 @@ if (!file.exists(params$duckdb_fn)) {
 
 ## Extract Data from Global Corpus
 
-### Export
+### Export Random Works
 
 ```{r}
 #| label: export_random_250
@@ -1630,7 +1629,7 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
 
 
 ```{r}
-#| label: countries_tca_corpus_before_2016_map
+#| label: xx_countries_tca_corpus_before_2016_map
 #| eval: false
 
 if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publications_countries_before_2016")) < 2) {
@@ -1783,7 +1782,7 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
 
 
 ```{r}
-#| label: countries_tca_corpus_after_2019_map
+#| label: xx_countries_tca_corpus_after_2019_map
 #| eval: false
 
 
