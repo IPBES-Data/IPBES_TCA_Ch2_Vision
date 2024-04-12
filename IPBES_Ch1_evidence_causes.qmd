@@ -71,61 +71,68 @@ library(dplyr)
 library(IPBES.R)
 library(tictoc)
 
-ethical_st <- readLines(file.path("inputs", "ch1_evidence_causes", "ethical.txt")) |>
+if (!require("plantuml")) {
+    install.packages("plantuml", repos = c("https://rkrug.r-universe.dev", "https://cran.r-project.org"))
+    library(plantuml)
+}
+
+plantuml::server_set("remote")
+
+ethical_st <- readLines(file.path("input", "ch1_evidence_causes", "ethical.txt")) |>
     paste(collapse = " ")
 
-concepts_1_st <- readLines(file.path("inputs", "ch1_evidence_causes", "concepts_1.txt")) |>
+concepts_1_st <- readLines(file.path("input", "ch1_evidence_causes", "concepts_1.txt")) |>
     paste(collapse = " ")
 
-concepts_2_st <- readLines(file.path("inputs", "ch1_evidence_causes", "concepts_2.txt")) |>
+concepts_2_st <- readLines(file.path("input", "ch1_evidence_causes", "concepts_2.txt")) |>
     paste(collapse = " ")
 
-narrowed_tca_st <- readLines(file.path("inputs", "ch1_evidence_causes", "narrowed_tca.txt")) |>
+narrowed_tca_st <- readLines(file.path("input", "ch1_evidence_causes", "narrowed_tca.txt")) |>
     paste(collapse = " ")
 
-criteria_1_st <- readLines(file.path("inputs", "ch1_evidence_causes", "criteria_1.txt")) |>
+criteria_1_st <- readLines(file.path("input", "ch1_evidence_causes", "criteria_1.txt")) |>
     paste(collapse = " ")
 
-criteria_2_st <- readLines(file.path("inputs", "ch1_evidence_causes", "criteria_2.txt")) |>
+criteria_2_st <- readLines(file.path("input", "ch1_evidence_causes", "criteria_2.txt")) |>
     paste(collapse = " ")
 
-criteria_3_st <- readLines(file.path("inputs", "ch1_evidence_causes", "criteria_3.txt")) |>
+criteria_3_st <- readLines(file.path("input", "ch1_evidence_causes", "criteria_3.txt")) |>
     paste(collapse = " ")
 
-criteria_4_st <- readLines(file.path("inputs", "ch1_evidence_causes", "criteria_4.txt")) |>
+criteria_4_st <- readLines(file.path("input", "ch1_evidence_causes", "criteria_4.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_1_st <- readLines(file.path("inputs", "ch1_evidence_causes", "biodiv_loss_1.txt")) |>
+biodiv_loss_1_st <- readLines(file.path("input", "ch1_evidence_causes", "biodiv_loss_1.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_2_st <- readLines(file.path("inputs", "ch1_evidence_causes", "biodiv_loss_2.txt")) |>
+biodiv_loss_2_st <- readLines(file.path("input", "ch1_evidence_causes", "biodiv_loss_2.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_1_st <- readLines(file.path("inputs", "ch1_evidence_causes", "biodiv_loss_3_1.txt")) |>
+biodiv_loss_3_1_st <- readLines(file.path("input", "ch1_evidence_causes", "biodiv_loss_3_1.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_2_st <- readLines(file.path("inputs", "ch1_evidence_causes", "biodiv_loss_3_2.txt")) |>
+biodiv_loss_3_2_st <- readLines(file.path("input", "ch1_evidence_causes", "biodiv_loss_3_2.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_3_st <- readLines(file.path("inputs", "ch1_evidence_causes", "biodiv_loss_3_3.txt")) |>
+biodiv_loss_3_3_st <- readLines(file.path("input", "ch1_evidence_causes", "biodiv_loss_3_3.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_4_st <- readLines(file.path("inputs", "ch1_evidence_causes", "biodiv_loss_3_4.txt")) |>
+biodiv_loss_3_4_st <- readLines(file.path("input", "ch1_evidence_causes", "biodiv_loss_3_4.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_5_st <- readLines(file.path("inputs", "ch1_evidence_causes", "biodiv_loss_3_5.txt")) |>
+biodiv_loss_3_5_st <- readLines(file.path("input", "ch1_evidence_causes", "biodiv_loss_3_5.txt")) |>
     paste(collapse = " ")
 
-pages_dir <- file.path(".", "data", "ch1_evidence_causes", "pages")
-arrow_dir <- file.path(".", "data", "ch1_evidence_causes", "corpus")
-arrow_tca_dir <- file.path(".", "data", "ch1_evidence_causes", "corpus_tca")
+# pages_dir <- file.path(".", "data", "ch1_evidence_causes", "pages")
+# arrow_dir <- file.path(".", "data", "ch1_evidence_causes", "corpus")
+# arrow_tca_dir <- file.path(".", "data", "ch1_evidence_causes", "corpus_tca")
 
 ##########
 
-nature_st <- readLines(file.path("inputs", "tca_corpus", "search terms", "nature.txt")) |>
+nature_st <- readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")) |>
     paste(collapse = " ")
 
-tfc_st <- readLines(file.path("inputs", "tca_corpus", "search terms", "tfc.txt")) |>
+tfc_st <- readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")) |>
     paste(collapse = " ")
 
 tca_corpus_st <- paste("(", nature_st, ") AND (", tfc_st, ")")
@@ -186,7 +193,7 @@ if (!calc_count) {
 
 ### 1. Ethical arguments for transformative change
 
-The search terms is [ethical](inputs/ch1_evidence_causes/ethical.txt){target=_blank}
+The search terms is [ethical](input/ch1_evidence_causes/ethical.txt){target=_blank}
 on **OpenAlex**.
 
 ```{r}
@@ -201,7 +208,7 @@ count$ethical <- openalexR::oa_fetch(
 )$count
 ```
 
-The search terms is [ethical](inputs/ch1_evidence_causes/ethical.txt){target=_blank}
+The search terms is [ethical](input/ch1_evidence_causes/ethical.txt){target=_blank}
 on **TCA Corpus**.
 
 ```{r}
@@ -220,10 +227,10 @@ count$ethical_tca <- openalexR::oa_fetch(
 
 ### 2. Assessing broader biodiversity concepts
 
-The search terms is [concepts_1](inputs/ch1_evidence_causes/concepts_1.txt){target=_blank}
+The search terms is [concepts_1](input/ch1_evidence_causes/concepts_1.txt){target=_blank}
 Open Alex search.
 
-The [concepts_1](inputs/ch1_evidence_causes/concepts_1.txt){target=_blank} search returns a subset of the [nature corpus](inputs/tca_corpus/search terms/nature.txt){target=_blank} as `biodiversity` is a subset of the nature corpus. Therefore, it is not nbecessary to subset the nature corpus and the search can be done on the complete OpenAlex corpus
+The [concepts_1](input/ch1_evidence_causes/concepts_1.txt){target=_blank} search returns a subset of the [nature corpus](input/tca_corpus/search terms/nature.txt){target=_blank} as `biodiversity` is a subset of the nature corpus. Therefore, it is not nbecessary to subset the nature corpus and the search can be done on the complete OpenAlex corpus
 .
 ```{r}
 #| label: get_concepts_1_count
@@ -238,7 +245,7 @@ count$concepts_1 <- openalexR::oa_fetch(
 )$count
 ```
 
-Assessing the broader biodiversity concepts by searching for [concepts_1 corpus](inputs/ch1_evidence_causes/concepts_1.txt){target=_blank} AND [concepts_2 corpus](inputs/ch1_evidence_causes/concepts_2.txt){target=_blank}
+Assessing the broader biodiversity concepts by searching for [concepts_1 corpus](input/ch1_evidence_causes/concepts_1.txt){target=_blank} AND [concepts_2 corpus](input/ch1_evidence_causes/concepts_2.txt){target=_blank}
 
 ```{r}
 #| label: get_concepts_1_2_nature_count
@@ -261,7 +268,7 @@ To be discussed
 
 ### 4. Narrowed transformative change corpus
 
-Here the term [narrowed_tca](inputs/ch1_evidence_causes/narrowed_tca.txt){target=_blank} is used to narrow down the TCA corpus.
+Here the term [narrowed_tca](input/ch1_evidence_causes/narrowed_tca.txt){target=_blank} is used to narrow down the TCA corpus.
 
 ```{r}
 #| label: get_narrowed_tca_count
@@ -293,10 +300,10 @@ count$narrowed_tca_nature <- openalexR::oa_fetch(
 ### 5. Assessing criteria in the narrowed TFC corpus
 
 Here the terms about criteria are used:
-- [criteria_1](inputs/ch1_evidence_causes/criteria_1.txt){target=_blank}
-- [criteria_2](inputs/ch1_evidence_causes/criteria_2.txt){target=_blank}
-- [criteria_3](inputs/ch1_evidence_causes/criteria_3.txt){target=_blank}
-- [criteria_4](inputs/ch1_evidence_causes/criteria_4.txt){target=_blank}
+- [criteria_1](input/ch1_evidence_causes/criteria_1.txt){target=_blank}
+- [criteria_2](input/ch1_evidence_causes/criteria_2.txt){target=_blank}
+- [criteria_3](input/ch1_evidence_causes/criteria_3.txt){target=_blank}
+- [criteria_4](input/ch1_evidence_causes/criteria_4.txt){target=_blank}
 
 ```{r}
 #| label: get_narrowed_tca_criteria_criteria_count
@@ -336,11 +343,11 @@ count$narrowed_tca_c4 <- openalexR::oa_fetch(
 
 Here the terms about criteria are used:
 
-- [biodiv_loss_3_1](inputs/ch1_evidence_causes/biodiv_loss_3_1.txt){target=_blank}
-- [biodiv_loss_3_2](inputs/ch1_evidence_causes/biodiv_loss_3_2.txt){target=_blank}
-- [biodiv_loss_3_3](inputs/ch1_evidence_causes/biodiv_loss_3_3.txt){target=_blank}
-- [biodiv_loss_3_4](inputs/ch1_evidence_causes/biodiv_loss_3_4.txt){target=_blank}
-- [biodiv_loss_3_5](inputs/ch1_evidence_causes/biodiv_loss_3_5.txt){target=_blank}
+- [biodiv_loss_3_1](input/ch1_evidence_causes/biodiv_loss_3_1.txt){target=_blank}
+- [biodiv_loss_3_2](input/ch1_evidence_causes/biodiv_loss_3_2.txt){target=_blank}
+- [biodiv_loss_3_3](input/ch1_evidence_causes/biodiv_loss_3_3.txt){target=_blank}
+- [biodiv_loss_3_4](input/ch1_evidence_causes/biodiv_loss_3_4.txt){target=_blank}
+- [biodiv_loss_3_5](input/ch1_evidence_causes/biodiv_loss_3_5.txt){target=_blank}
 
 These need to be `AND` with
 - Nature Corpus
@@ -377,6 +384,8 @@ count$st_3_nat <- openalexR::oa_fetch(
     verbose = TRUE
 )$count
 
+
+
 count$biodiv_loss_nat_s_1 <- openalexR::oa_fetch(
     title_and_abstract.search = compact(paste0("(", st_1_nat, ") AND (", biodiv_loss_3_1_st, ")")),
     count_only = TRUE,
@@ -395,7 +404,7 @@ count$biodiv_loss_nat_s_3 <- openalexR::oa_fetch(
     output = "list",
     verbose = TRUE
 )$count
-count$biodiv_loss_nat_s_14 <- openalexR::oa_fetch(
+count$biodiv_loss_nat_s_4 <- openalexR::oa_fetch(
     title_and_abstract.search = compact(paste0("(", st_1_nat, ") AND (", biodiv_loss_3_4_st, ")")),
     count_only = TRUE,
     output = "list",
@@ -428,7 +437,7 @@ count$biodiv_loss_narrowed_s_3 <- openalexR::oa_fetch(
     output = "list",
     verbose = TRUE
 )$count
-count$biodiv_loss_narrowed_s_14 <- openalexR::oa_fetch(
+count$biodiv_loss_narrowed_s_1 <- openalexR::oa_fetch(
     title_and_abstract.search = compact(paste0("(", st_2_tca, ") AND (", biodiv_loss_3_4_st, ")")),
     count_only = TRUE,
     output = "list",
@@ -483,103 +492,241 @@ count$biodiv_loss_nat_narrowed_s_5 <- openalexR::oa_fetch(
 saveRDS(count, fn)
 ```
 
-## TODO Download Corpi
-
-The corpi download will be stored in `ch1_evidence_causes/pages` and the arrow database in `data/ch1_evidence_causes/corpus`.
-
-This is not on github!
-
-The corpus can be read by running `corpus_read()` from the `IPBES.R` package which opens the database so that then it can be fed into a `dplyr` pipeline. After most `dplyr` functions, the actual data needs to be collected via `collect()`.
-
-Only then is the actual data read!
-
-Needs to be enabled by setting `eval: true` in the code block below.
-
-### TODO Download Corpus
+## Greate Graph
 
 ```{r}
-#| label: get_tca_corpus
-#| eval: false
+#| label: create_plantuml_graph
 #|
 
-tic()
+basename <- file.path("figures", "ch1_evidence_causes", "Ch1_evidence_causes")
 
-IPBES.R::corpus_download(
-    search_terms = tca_corpus_st,
-    output_dir = pages_dir,
-    verbose = TRUE
-)
+nf <- list.files(
+    path = dirname(basename),
+    pattern = basename(basename)
+) |>
+    length()
 
-toc()
-```
+if (nf < 3) {
+    puml <- readLines(file.path("input", "ch1_evidence_causes", "Ch1_evidence_causes.plantuml"))
 
-### TODO Convert Corpus to Arrow
+    ## 0.[1:2]]
+    puml <- gsub(
+        pattern = "%$%0.1%$%",
+        replacement = paste0("**n = ", count$nature_corpus |> format(big.mark = ","), "**\\n---\\nnature_corpus"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%0.2%$%",
+        replacement = paste0("**n = ", count$tca_corpus |> format(big.mark = ","), "**\\n---\\ntca_corpus"),
+        x = puml,
+        fixed = TRUE
+    )
 
-The fields `author` and `topics` are serialized in the arrow database and need to be unserialized by using `unserialize_arrow()` on a dataset containing the two columns.
+    ## 1
+    puml <- gsub(
+        pattern = "%$%1%$%",
+        replacement = paste0("**n = ", count$ethical |> format(big.mark = ","), "**\\n---\\nethical"),
+        x = puml,
+        fixed = TRUE
+    )
 
-```{r}
-#| label: convert_tca_corpus_arrow
-#| eval: false
-tic()
+    ## 2.[1:2]
+    puml <- gsub(
+        pattern = "%$%2.1%$%",
+        replacement = paste0("**n = ", count$concepts_1 |> format(big.mark = ","), "**\\n---\\nconcepts_1"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%2.2%$%",
+        replacement = paste0("**n = ", count$concepts_1_2 |> format(big.mark = ","), "**\\n---\\nconcepts_1_2"),
+        x = puml,
+        fixed = TRUE
+    )
 
-IPBES.R::corpus_to_arrow(
-    pages_dir = pages_dir,
-    arrow_dir = arrow_dir,
-    verbose = TRUE
-)
+    ## 3 OUTSTANDING
 
-toc()
-```
+    ## 4.[1:2]
+    puml <- gsub(
+        pattern = "%$%4.1%$%",
+        replacement = paste0("**n = ", count$narrowed_tca_tca |> format(big.mark = ","), "**\\n---\\nnarrowed_tca_tca"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%4.2%$%",
+        replacement = paste0("**n = ", count$narrowed_tca |> format(big.mark = ","), "**\\n---\\nnarrowed_tca"),
+        x = puml,
+        fixed = TRUE
+    )
 
-### TODO Filter Corpus with TCA Corpus
-```{r}
-#| label: filter_corpus_with_tca
-#| eval: false
-#|
+    ## 5.[1:4]
+    puml <- gsub(
+        pattern = "%$%5.1%$%",
+        replacement = paste0("**n = ", count$narrowed_tca_c1 |> format(big.mark = ","), "**\\n---\\nnarrowed_tca_c1"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%5.2%$%",
+        replacement = paste0("**n = ", count$narrowed_tca_c2 |> format(big.mark = ","), "**\\n---\\nnarrowed_tca_c2"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%5.3%$%",
+        replacement = paste0("**n = ", count$narrowed_tca_c3 |> format(big.mark = ","), "**\\n---\\nnarrowed_tca_c3"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%5.4%$%",
+        replacement = paste0("**n = ", count$narrowed_tca_c4 |> format(big.mark = ","), "**\\n---\\nnarrowed_tca_c4"),
+        x = puml,
+        fixed = TRUE
+    )
 
-ids_technology <- read_corpus(file.path("data", "ch1_evidence_causes", "corpus")) |>
-    dplyr::select(id) |>
-    collect() |>
-    unlist()
+    ## 6.[1:3]
+    puml <- gsub(
+        pattern = "%$%6.1%$%",
+        replacement = paste0("**n = ", count$st_1_nat |> format(big.mark = ","), "**\\n---\\nst_1_nat"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.2%$%",
+        replacement = paste0("**n = ", count$st_2_tca |> format(big.mark = ","), "**\\n---\\nst_2_tca"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.3%$%",
+        replacement = paste0("**n = ", count$st_3_nat |> format(big.mark = ","), "**\\n---\\nst_3_nat"),
+        x = puml,
+        fixed = TRUE
+    )
 
-ids_tca <- read_corpus(file.path("..", "IPBES_TCA_Corpus", "data", "tca_corpus", "ch1_evidence_causes", "corpus")) |>
-    dplyr::select(id) |>
-    collect() |>
-    unlist()
+    ## 6.1.[1:5]
+    puml <- gsub(
+        pattern = "%$%6.1.1%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_s_1 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_s_1"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.1.2%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_s_2 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_s_2"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.1.3%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_s_3 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_s_3"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.1.4%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_s_4 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_s_4"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.1.5%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_s_5 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_s_5"),
+        x = puml,
+        fixed = TRUE
+    )
 
-ids_subs_tca <- ids_technology[ids_technology %in% ids_tca]
+    ## 6.2.[1:5]
+    puml <- gsub(
+        pattern = "%$%6.2.1%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_narrowed_s_1 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_narrowed_s_1"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.2.2%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_narrowed_s_2 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_narrowed_s_2"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.2.3%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_narrowed_s_3 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_narrowed_s_3"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.2.4%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_narrowed_s_4 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_narrowed_s_4"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.2.5%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_narrowed_s_5 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_narrowed_s_5"),
+        x = puml,
+        fixed = TRUE
+    )
 
-writeRDS(ids_subs_tca, file.path("data", "ch1_evidence_causes", "ids_subs_tca.rds"))
 
-IPBES.R::corpus_filter_ids(
-    ids = ids_subs_tca,
-    arrow_dir = arrow_dir,
-    output_dir = arrow_tca_dir,
-    verbose = TRUE
+    ## 6.3.[1:5]
+    puml <- gsub(
+        pattern = "%$%6.3.1%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_narrowed_s_1 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_narrowed_s_1"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.3.2%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_narrowed_s_2 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_narrowed_s_2"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.3.3%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_narrowed_s_3 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_narrowed_s_3"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.3.4%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_narrowed_s_4 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_narrowed_s_4"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%6.3.5%$%",
+        replacement = paste0("**n = ", count$biodiv_loss_nat_narrowed_s_5 |> format(big.mark = ","), "**\\n---\\nbiodiv_loss_nat_narrowed_s_5"),
+        x = puml,
+        fixed = TRUE
+    )
 
-toc()
-```
+    puml |>
+        paste(collapse = "\n") |>
+        plantuml::plantuml() |>
+        plantuml::get_graph(
+            file = file.path("figures", "ch1_evidence_causes", "Ch1_evidence_causes.pdf")
+        )
 
-### TODO Extract 50 random papers
-```{r}
-#| label: extract_random_papers
-#| eval: false
+    puml |>
+        paste(collapse = "\n") |>
+        plantuml::plantuml() |>
+        plantuml::get_graph(
+            file = file.path("figures", "ch1_evidence_causes", "Ch1_evidence_causes.svg")
+        )
 
-fn <- file.path("data", "ch1_evidence_causes", "random_50_technology_in_tca.xlsx")
-
-if (!file.exists(fn)) {
-    set.seed(14)
-    IPBES.R::corpus_read(arrow_path) |>
-        dplyr::select(id, author_abbr, display_name, ab) |>
-        dplyr::rename(abstract = ab, title = display_name) |>
-        dplyr::collect() |>
-        dplyr::slice_sample(n = 50) |>
-        dplyr::mutate(
-            abstract = substr(abstract, start = 1, stop = 5000)
-        ) |>
-        writexl::write_xlsx(path = fn)
+    puml |>
+        paste(collapse = "\n") |>
+        plantuml::plantuml() |>
+        plantuml::get_graph(
+            file = file.path("figures", "ch1_evidence_causes", "Ch1_evidence_causes.png")
+        )
 }
 ```
+
 
 # Results
 
@@ -670,3 +817,10 @@ There are the following numbers of wotks in the Nature Corpus AND Narrowed TCA C
 - **`r count$biodiv_loss_nat_narrowed_s_4 `** works in the Nature Corpus AND Narrowed TFC Corpus that discuss the `Topic 4`, which is **`r round(100 * count$biodiv_loss_nat_narrowed_s_4 / count$narrowed_tca_nature, digits = 2)`%**
 - **`r count$biodiv_loss_nat_narrowed_s_5 `** works in the Nature Corpus AND Narrowed TFC Corpus that discuss the `Topic 5`, which is **`r round(100 * count$biodiv_loss_nat_narrowed_s_5 / count$narrowed_tca_nature, digits = 2)`%**
 
+## Diagram
+
+![Overview of the analysis and results.](figures/ch1_evidence_causes/Ch1_evidence_causes.svg){width=100% height=100%}
+
+- To download png, [click here](figures/ch1_evidence_causes/Ch1_evidence_causes.png){target="_blank"}.
+- To download high resolution pdf, [click here](figures/ch1_evidence_causes/Ch1_evidence_causes.pdf){target="_blank"}.
+- To download high resolution svg, [click here](figures/ch1_evidence_causes/Ch1_evidence_causes.svg){target="_blank"}.
