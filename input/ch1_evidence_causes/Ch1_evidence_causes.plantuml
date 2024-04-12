@@ -170,7 +170,10 @@ storage "Number of Works\n--6.3.5--\n%$%6.3.5%$%" as ch1_nat_nar_biodiv_loss_1_2
 ch1_biodiv_loss_3_5 --> ch1_nat_nar_biodiv_loss_1_2_3_5_count #green;line.dashed
 
 
-
+rectangle Legend #LightGoldenRodYellow{
+    action "Search Term [[dummy Link to search term]]" as l_search
+    storage "Number of Works\n--section number--\n**n = number of works fron searches**\n---\ninternal name of variable" as l_storage
+} 
 
 
 
