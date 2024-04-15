@@ -469,7 +469,7 @@ count$biodiv_loss_nat_narrowed_s_3 <- openalexR::oa_fetch(
     output = "list",
     verbose = TRUE
 )$count
-count$biodiv_loss_nat_narrowed_s_14 <- openalexR::oa_fetch(
+count$biodiv_loss_nat_narrowed_s_4 <- openalexR::oa_fetch(
     title_and_abstract.search = compact(paste0("(", st_3_nat, ") AND (", biodiv_loss_3_4_st, ")")),
     count_only = TRUE,
     output = "list",

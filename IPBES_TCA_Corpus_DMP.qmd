@@ -736,6 +736,150 @@ if (!file.exists(fn)) {
 }
 ```
 
+### Works over Time
+
+Get works over time for different search terms
+
+```{r}
+#| label: get_vision_technology_case_years
+#|
+
+fn <- file.path(".", "data", "tca_corpus", "oa_count.rds")
+if (!file.exists(fn)) {
+    oa_count <- list(
+        timestamp = Sys.time()
+    )
+    #
+    oa_count$oa_years <- openalexR::oa_fetch(
+        entity = "works",
+        search = "",
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::mutate(
+            publication_year = as.integer(as.character(key_display_name)),
+            key = NULL,
+            key_display_name = NULL,
+            p = count / sum(count)
+        ) |>
+        dplyr::arrange(publication_year) |>
+        dplyr::mutate(
+            p_cum = cumsum(p)
+        ) |>
+        dplyr::select(
+            publication_year,
+            everything()
+        )
+    #
+    oa_count$tca_nature <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", params$s_1_nature_environment, ")")),
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::mutate(
+            publication_year = as.integer(as.character(key_display_name)),
+            key = NULL,
+            key_display_name = NULL,
+            p = count / sum(count)
+        ) |>
+        dplyr::arrange(publication_year) |>
+        dplyr::mutate(
+            p_cum = cumsum(p)
+        ) |>
+        dplyr::select(
+            publication_year,
+            everything()
+        )
+    #
+    oa_count$transformative_change_years <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", params$s_1_transformative_change, ")")),
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::mutate(
+            publication_year = as.integer(as.character(key_display_name)),
+            key = NULL,
+            key_display_name = NULL,
+            p = count / sum(count)
+        ) |>
+        dplyr::arrange(publication_year) |>
+        dplyr::mutate(
+            p_cum = cumsum(p)
+        ) |>
+        dplyr::select(
+            publication_year,
+            everything()
+        )
+    #
+    oa_count$tca_years <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", params$s_1_nature_environment, ") AND (", params$s_1_transformative_change, ")")),
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::mutate(
+            publication_year = as.integer(as.character(key_display_name)),
+            key = NULL,
+            key_display_name = NULL,
+            p = count / sum(count)
+        ) |>
+        dplyr::arrange(publication_year) |>
+        dplyr::mutate(
+            p_cum = cumsum(p)
+        ) |>
+        dplyr::select(
+            publication_year,
+            everything()
+        )
+    #
+    oa_count$case_years <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", params$s_1_case,  ")")),
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::mutate(
+            publication_year = as.integer(as.character(key_display_name)),
+            key = NULL,
+            key_display_name = NULL,
+            p = count / sum(count)
+        ) |>
+        dplyr::arrange(publication_year) |>
+        dplyr::mutate(
+            p_cum = cumsum(p)
+        ) |>
+        dplyr::select(
+            publication_year,
+            everything()
+        )
+    #
+    oa_count$tca_case_years <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", params$s_1_nature_environment, ") AND (", params$s_1_transformative_change, ") AND (", params$s_1_case, ")")),
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::mutate(
+            publication_year = as.integer(as.character(key_display_name)),
+            key = NULL,
+            key_display_name = NULL,
+            p = count / sum(count)
+        ) |>
+        dplyr::arrange(publication_year) |>
+        dplyr::mutate(
+            p_cum = cumsum(p)
+        ) |>
+        dplyr::select(
+            publication_year,
+            everything()
+        )
+    saveRDS(oa_count, file = fn)
+}
+```
+
 
 
 ## Download TCA Corpus
@@ -2342,6 +2486,13 @@ For clarity, the log of the cumulative sum of the sectors over time are shown he
 ![The top graph shows only the primary sector assigned, the bottom graph all sectors (first, secondary and tertiary)](figures/tca_corpus/sectors_over_time.png)
 
 To download high resolution, [click here](`r file.path("maps", "tca_corpus", "sectors_over_time.pdf")`){target="_blank"}
+
+
+![The graph shows the proportion of the different sectors over time](figures/tca_corpus/sectors_proportions_over_time.png)
+
+To download high resolution, [click here](`r file.path("maps", "tca_corpus", "sectors_proportions_over_time.pdf")`){target="_blank"}
+
+
 
 ```{r}
 readRDS(file.path(".", "data", "tca_corpus", "sectors_over_time.rds")) |>
