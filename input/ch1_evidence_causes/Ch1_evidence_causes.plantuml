@@ -64,7 +64,7 @@ ch1_criteria_1 --> ch1_narrowed_tca_criteria_1_count
 
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/criteria_2.txt CRITERIA 2]]" as ch1_criteria_2
 ch1_narrowed_tca --> ch1_criteria_2
-storage "Number of Works\n--5.2--\n%$%5.2%$%%**" as ch1_narrowed_tca_criteria_2_count #pink
+storage "Number of Works\n--5.2--\n%$%5.2%$%" as ch1_narrowed_tca_criteria_2_count #pink
 ch1_criteria_2 --> ch1_narrowed_tca_criteria_2_count
 
 

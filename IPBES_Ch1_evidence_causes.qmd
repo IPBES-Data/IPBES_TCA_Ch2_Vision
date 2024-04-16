@@ -42,7 +42,11 @@ format:
             sidebar-width: 0px
             body-width: 4000px
             margin-width: 200px
-            gutter-width: 1.5rem      
+            gutter-width: 1.5rem 
+params:
+    fn_count: !expr file.path("data", "ch1_evidence_causes", "count.rds")
+    fn_corpus_6: !expr file.path("data", "ch1_evidence_causes", "corpus_6.rds") 
+    fn_corpus_6_xlsx:  !expr file.path("data", "ch1_evidence_causes", "corpus_6_all.xlsx") 
 ---
 
 
@@ -135,8 +139,29 @@ nature_st <- readLines(file.path("input", "tca_corpus", "search terms", "nature.
 tfc_st <- readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")) |>
     paste(collapse = " ")
 
+st_1_nat <- compact(paste0("(", nature_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
+st_2_tca <- compact(paste0("(", narrowed_tca_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
+st_3_nat <- compact(paste0("(", nature_st, ") AND (", narrowed_tca_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
+
 tca_corpus_st <- paste("(", nature_st, ") AND (", tfc_st, ")")
 
+
+calc_count <- !file.exists(params$fn_count)
+if (!calc_count) {
+    count <- readRDS(params$fn_count)
+} else {
+    count <- list(
+        timestamp = Sys.time()
+    )
+}
+
+if (file.exists(params$fn_corpus_6)) {
+    corpus_6 <- readRDS(params$fn_corpus_6)
+} else {
+    corpus_6 <- list(
+        timestamp = Sys.time()
+    )
+}
 # source(file.path("R", "ch1_evidence_causes", "functions.R"))
 ```
 
@@ -152,7 +177,13 @@ IPBES_TCA_Ch1_evidence_causes
 
 The BuidNo is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same.
 
-## Introduction
+## TODO
+- [ ] Table 6.1, 6.2, 6.3, 6.[1:3].[1:5] (SPM)
+- [ ] random 250 from 4.2, 5.1, 5.2, 5.3, 5.4 (samples SPM)
+- [ ]  NATURE AND CONCEPTS_1
+- [ ]  NATURE AND CONCEPTS_2
+- [ ]  NATURE AND CONCEPTS_1 AND CONCEPTS_2 Change to NATURE from OPEN ALEX
+- [ ]  Introduction
 
 All searches are done on all works in OpenAlex. The search in the TCA Corpus is not possibly at the moment, but we are working on it.
 
@@ -164,31 +195,23 @@ See [Google Doc with search terms and questions](https://docs.google.com/documen
 ## Methods
 
 ```{r}
-#| label: get_corpus_counts
-#|
-fn <- file.path("data", "ch1_evidence_causes", "counts.rds")
-calc_count <- !file.exists(fn)
-if (!calc_count) {
-    count <- readRDS(fn)
-} else {
-    count <- list()
-
-    count$nature_corpus <- openalexR::oa_fetch(
-        title_and_abstract.search = nature_st,
-        count_only = TRUE,
-        output = "list",
-        verbose = TRUE
-    )$count
-
-    count$tca_corpus <- openalexR::oa_fetch(
-        title_and_abstract.search = compact(tca_corpus_st),
-        count_only = TRUE,
-        output = "list",
-        verbose = TRUE
-    )$count
-}
+#| label: get_corpus_count
+#| eval: !expr "calc_count"
 
 
+count$nature_corpus <- openalexR::oa_fetch(
+    title_and_abstract.search = nature_st,
+    count_only = TRUE,
+    output = "list",
+    verbose = TRUE
+)$count
+
+count$tca_corpus <- openalexR::oa_fetch(
+    title_and_abstract.search = compact(tca_corpus_st),
+    count_only = TRUE,
+    output = "list",
+    verbose = TRUE
+)$count
 ```
 
 ### 1. Ethical arguments for transformative change
@@ -359,9 +382,6 @@ These need to be `AND` with
 #| eval: !expr "calc_count"
 #|
 
-st_1_nat <- compact(paste0("(", nature_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
-st_2_tca <- compact(paste0("(", narrowed_tca_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
-st_3_nat <- compact(paste0("(", nature_st, ") AND (", narrowed_tca_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
 
 count$st_1_nat <- openalexR::oa_fetch(
     title_and_abstract.search = st_1_nat,
@@ -484,12 +504,286 @@ count$biodiv_loss_nat_narrowed_s_5 <- openalexR::oa_fetch(
 
 ```
 
+#### Download Corpora
+
 ```{r}
-#| label: save_counts
+#| label: download_corpus_6
+#|
+
+if (!file.exists(params$fn_corpus_6)) {
+    corpus_6$st_1_nat <- openalexR::oa_fetch(
+        title_and_abstract.search = st_1_nat,
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+
+    corpus_6$st_2_tca <- openalexR::oa_fetch(
+        title_and_abstract.search = st_2_tca,
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+
+    corpus_6$st_3_nat <- openalexR::oa_fetch(
+        title_and_abstract.search = st_3_nat,
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+
+
+
+    corpus_6$biodiv_loss_nat_s_1 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_1_nat, ") AND (", biodiv_loss_3_1_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_nat_s_2 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_1_nat, ") AND (", biodiv_loss_3_2_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_nat_s_3 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_1_nat, ") AND (", biodiv_loss_3_3_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_nat_s_4 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_1_nat, ") AND (", biodiv_loss_3_4_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_nat_s_5 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_1_nat, ") AND (", biodiv_loss_3_5_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+
+
+
+    corpus_6$biodiv_loss_narrowed_s_1 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_2_tca, ") AND (", biodiv_loss_3_1_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_narrowed_s_2 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_2_tca, ") AND (", biodiv_loss_3_2_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_narrowed_s_3 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_2_tca, ") AND (", biodiv_loss_3_3_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_narrowed_s_4 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_2_tca, ") AND (", biodiv_loss_3_4_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_narrowed_s_5 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_2_tca, ") AND (", biodiv_loss_3_5_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+
+
+    corpus_6$biodiv_loss_nat_narrowed_s_1 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_3_nat, ") AND (", biodiv_loss_3_1_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_nat_narrowed_s_2 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_3_nat, ") AND (", biodiv_loss_3_2_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_nat_narrowed_s_3 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_3_nat, ") AND (", biodiv_loss_3_3_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_nat_narrowed_s_4 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_3_nat, ") AND (", biodiv_loss_3_4_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+    corpus_6$biodiv_loss_nat_narrowed_s_5 <- openalexR::oa_fetch(
+        title_and_abstract.search = compact(paste0("(", st_3_nat, ") AND (", biodiv_loss_3_5_st, ")")),
+        output = "dataframe",
+        verbose = TRUE
+    ) |>
+        dplyr::distinct(id, .keep_all = TRUE)
+
+    saveRDS(corpus_6, file = params$fn_corpus_6)
+}
+```
+
+
+### Save the Counts
+```{r}
+#| label: save_count
 #| eval: !expr "calc_count"
 #|
 
-saveRDS(count, fn)
+saveRDS(count, params$fn_count)
+```
+
+## Export data
+
+### export Part 6 to Excel
+
+```{r}
+if (!file.exists(params$fn_corpus_6_xlsx)) {
+    corpus_6 <- readRDS(params$fn_corpus_6)[-1]
+
+    for (nm in names(corpus_6)) {
+        corpus_6[[nm]] <- corpus_6[[nm]] |>
+            dplyr::select(
+                id,
+                doi,
+                title = display_name,
+                abstract = ab,
+                author,
+                publication_year
+            ) |>
+            dplyr::mutate(
+                abstract = substr(abstract, 1, 5000),
+                set = nm
+            )
+        corpus_6[[nm]]$author_abbr <- IPBES.R::abbreviate_authors(corpus_6[[nm]])
+        corpus_6[[nm]] <- corpus_6[[nm]] |>
+            dplyr::select(
+                id,
+                doi,
+                author_abbr,
+                title,
+                abstract,
+                set
+            )
+    }
+
+    all <- do.call(rbind, corpus_6) |>
+        dplyr::mutate(
+            set = NULL
+        ) |>
+        dplyr::distinct(
+            id,
+            .keep_all = TRUE
+        )
+
+
+
+    for (nm in names(corpus_6)) {
+        corpus_6[[nm]] <- corpus_6[[nm]] |>
+            dplyr::select(
+                id
+            ) |>
+            dplyr::mutate(
+                set = "X"
+            )
+        names(corpus_6[[nm]])[2] <- nm
+    }
+
+    all <- all |>
+        dplyr::full_join(
+            corpus_6$st_1_nat,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$st_2_tca,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$st_3_nat,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_s_1,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_s_2,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_s_3,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_s_4,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_s_5,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_narrowed_s_1,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_narrowed_s_2,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_narrowed_s_3,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_narrowed_s_4,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_narrowed_s_5,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_narrowed_s_1,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_narrowed_s_2,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_narrowed_s_3,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_narrowed_s_4,
+            by = "id"
+        ) |>
+        dplyr::full_join(
+            corpus_6$biodiv_loss_nat_narrowed_s_5,
+            by = "id"
+        )
+
+    names(all)[-(1:5)] <- c(
+        "6.1", "6.2", "6.3",
+        "6.1.1", "6.1.2", "6.1.3", "6.1.4", "6.1.5",
+        "6.2.1", "6.2.2", "6.2.3", "6.2.4", "6.2.5",
+        "6.3.1", "6.3.2", "6.3.3", "6.3.4", "6.3.5"
+    )
+
+    writexl::write_xlsx(all, path = params$fn_corpus_6_xlsx)
+    rm(all, corpus_6)
+}
 ```
 
 ## Greate Graph
