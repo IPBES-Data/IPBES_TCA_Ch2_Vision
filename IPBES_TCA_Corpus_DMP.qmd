@@ -79,36 +79,36 @@ params:
     concept_cuttoff: 0.6
 
     key_papers:
-#      - Ch_1:
+    # Ch_1:
         - "./input/tca_corpus/key papers/Ch 1 - Arun.csv"
         - "./input/tca_corpus/key papers/Ch 1 - pdf.csv"
         - "./input/tca_corpus/key papers/Ch 1 - word.csv"
-#      - Ch_2:
+    # Ch_2:
         - "./input/tca_corpus/key papers/Ch 2 - pdf.csv"
         - "./input/tca_corpus/key papers/Ch 2 - Sebastian.csv"
-#      - Ch_3_Cl_1:
+    # Ch_3_Cl_1:
         - "./input/tca_corpus/key papers/Ch 3 - Cl1.csv"
-#      - Ch_3_Cl_3:
+    # Ch_3_Cl_3:
         - "./input/tca_corpus/key papers/Ch 3 - Cl3.csv"
-#      - Ch_3_Cl_4:
+    # Ch_3_Cl_4:
         - "./input/tca_corpus/key papers/Ch 3 - Cl4.csv"
-#      - Ch_3_Cl_5:
+    # Ch_3_Cl_5:
         - "./input/tca_corpus/key papers/Ch 3 - Cl5.csv"
-#      - Ch_3Cl_6:
+    # Ch_3Cl_6:
         - "./input/tca_corpus/key papers/Ch 3 - Cl6.csv"
-#      - Ch_3:
+    # Ch_3:
         - "./input/tca_corpus/key papers/Ch 3 - pdf.csv"
-#      - Ch_4_Cl_1:
+    # Ch_4_Cl_1:
         - "./input/tca_corpus/key papers/Ch 4 - Challenge 1.csv"
-#      - Ch_4_Cl_2:
+    # Ch_4_Cl_2:
         - "./input/tca_corpus/key papers/Ch 4 - Challenge 2.csv"
-#      - Ch_4_Cl_3:
+    # Ch_4_Cl_3:
         - "./input/tca_corpus/key papers/Ch 4 - Challenge 3.csv"
-#      - Ch_4_Cl_4:
+    # Ch_4_Cl_4:
         - "./input/tca_corpus/key papers/Ch 4 - Challenge 4.csv"
-#      - Ch_4_Cl_5:
+    # Ch_4_Cl_5:
         - "./input/tca_corpus/key papers/Ch 4 - Challenge 5.csv"
-#      - Ch_5:
+    # Ch_5:
         - "./input/tca_corpus/key papers/Ch 5 - Hannah.csv"
         - "./input/tca_corpus/key papers/Ch 5 - Victoria.csv"
         - "./input/tca_corpus/key papers/Ch 5 -.csv"
@@ -979,6 +979,8 @@ lapply(
 )
 ```
 
+## Download TCA AND CASE Corpus
+
 ```{r}
 #| label: download_tca_cases_corpus
 #| eval: false
@@ -1135,18 +1137,19 @@ if (!file.exists(params$duckdb_fn)) {
 
 ## Extract Data from Global Corpus
 
-### Export Random Works
+
+### Export Random Works from TCA Cases Corpus
 
 ```{r}
-#| label: export_random_250
+#| label: export_random_250_cases
 #|
 
 sample_size <- 250
 
-fn <- file.path("data", "tca_corpus", paste0("random_", sample_size, "_tca_corpus.xlsx"))
+fn <- file.path("data", "tca_corpus", paste0("random_", sample_size, "_tca_cases_corpus.xlsx"))
 if (!file.exists(fn)) {
     set.seed(13)
-    read_corpus(params$corpus_dir) |>
+    read_corpus(params$corpus_cases_dir) |>
         dplyr::select(
             id,
             doi,
@@ -1164,6 +1167,7 @@ if (!file.exists(fn)) {
         writexl::write_xlsx(path = fn)
 }
 ```
+
 
 ### Sectors
 
@@ -1319,43 +1323,6 @@ if (!dir.exists(params$corpus_authors_dir)) {
         dbExecute(conn = con)
 
     duckdb::dbDisconnect(con, shutdown = TRUE)
-
-    ###################################
-
-    # dir.create(params$corpus_authors_dir, showWarnings = FALSE)
-
-    # years <- IPBES.R::corpus_read(params$corpus_dir) |>
-    #     distinct(publication_year) |>
-    #     collect() |>
-    #     unlist() |>
-    #     as.vector() |>
-    #     sort()
-
-    # pbmcapply::pbmclapply(
-    #     years,
-    #     function(y) {
-    #         message("\nProcessing year: ", y)
-    #         IPBES.R::corpus_read(params$corpus_dir) |>
-    #             dplyr::filter(publication_year == y) |>
-    #             dplyr::select(
-    #                 id,
-    #                 publication_year,
-    #                 author
-    #             ) |>
-    #             collect() |>
-    #             IPBES.R::extract_authors(
-    #                 positions = TRUE
-    #             ) |>
-    #             arrow::write_dataset(
-    #                 path = params$corpus_authors_dir,
-    #                 partitioning = c("publication_year"),
-    #                 format = "parquet",
-    #                 existing_data_behavior = "overwrite"
-    #             )
-    #     },
-    #     mc.cores = 3,
-    #     mc.preschedule = FALSE
-    # )
 }
 ```
 
