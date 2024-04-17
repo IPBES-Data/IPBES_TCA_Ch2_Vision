@@ -662,7 +662,7 @@ if (!all(file.exists(fn_kw, fn_kw_df))) {
 fn <- file.path(".", "data", "tca_corpus", "key_works_hits.rds")
 if (!file.exists(fn)) {
     kws <- key_works_df
-    kws$all  <- key_works_df |>
+    kws$all <- key_works_df |>
         bind_rows()
 
     nms <- names(kws)
@@ -708,7 +708,7 @@ if (!file.exists(fn)) {
             )
 
             rownames(kw_h)[[nrow(kw_h)]] <- "Total"
-            return(kw_h)  
+            return(kw_h)
         }
     )
 
@@ -725,7 +725,7 @@ if (!file.exists(fn)) {
             Total = rowSums(key_works_hits[[i]])
         ) |>
             mutate(Total = Total - 1) # |>
-            # relocate(tca_corpus_SDG, .after = s_1_tca_corpus)
+        # relocate(tca_corpus_SDG, .after = s_1_tca_corpus)
     }
 
     ###
@@ -836,7 +836,7 @@ if (!file.exists(fn)) {
         )
     #
     oa_count$case_years <- openalexR::oa_fetch(
-        title_and_abstract.search = compact(paste0("(", params$s_1_case,  ")")),
+        title_and_abstract.search = compact(paste0("(", params$s_1_case, ")")),
         group_by = "publication_year",
         output = "dataframe",
         verbose = TRUE
@@ -1179,7 +1179,6 @@ These were grouped by experts into sectors. See [this Google Doc](https://docs.g
 #|
 
 if (!dir.exists(params$corpus_topics_dir)) {
-
     con <- duckdb::dbConnect(duckdb::duckdb(), read_only = FALSE)
 
     corpus_read(params$corpus_dir) |>
@@ -1204,7 +1203,7 @@ if (!dir.exists(params$corpus_topics_dir)) {
         "FROM  ",
         "corpus "
     ) |>
-    dbExecute(conn = con)
+        dbExecute(conn = con)
 
     select_sql <- paste0(
         "SELECT ",
@@ -1369,43 +1368,43 @@ if (!file.exists(fn)) {
 fn <- file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")
 
 if (!file.exists(fn)) {
-read_corpus(params$corpus_dir) |>
-    dplyr::select(publication_year) |>
-    dplyr::arrange(publication_year) |>
-    dplyr::collect() |>
-    table() |>
-    as.data.frame() |>
-    mutate(
-        publication_year = as.integer(as.character(publication_year)),
-        p = Freq / sum(Freq),
-        p_cum = cumsum(p)
-    ) |>
-    rename(
-        count = Freq
-    ) |>
-    dplyr::inner_join(
-        y = openalexR::oa_fetch(
-            search = "",
-            group_by = "publication_year",
-            output = "tibble",
-            verbose = FALSE
+    read_corpus(params$corpus_dir) |>
+        dplyr::select(publication_year) |>
+        dplyr::arrange(publication_year) |>
+        dplyr::collect() |>
+        table() |>
+        as.data.frame() |>
+        mutate(
+            publication_year = as.integer(as.character(publication_year)),
+            p = Freq / sum(Freq),
+            p_cum = cumsum(p)
         ) |>
-            dplyr::select(
-                key,
-                count
+        rename(
+            count = Freq
+        ) |>
+        dplyr::inner_join(
+            y = openalexR::oa_fetch(
+                search = "",
+                group_by = "publication_year",
+                output = "tibble",
+                verbose = FALSE
             ) |>
-            dplyr::rename(
-                publication_year = key,
-                count_oa = count
-            ) |>
-            dplyr::arrange(publication_year) |>
-            dplyr::mutate(
-                publication_year = as.integer(as.character(publication_year)),
-                p_oa = count_oa / sum(count_oa),
-                p_oa_cum = cumsum(p_oa)
-            )
-    ) |>
-    saveRDS(file = fn)
+                dplyr::select(
+                    key,
+                    count
+                ) |>
+                dplyr::rename(
+                    publication_year = key,
+                    count_oa = count
+                ) |>
+                dplyr::arrange(publication_year) |>
+                dplyr::mutate(
+                    publication_year = as.integer(as.character(publication_year)),
+                    p_oa = count_oa / sum(count_oa),
+                    p_oa_cum = cumsum(p_oa)
+                )
+        ) |>
+        saveRDS(file = fn)
 }
 ```
 
@@ -1550,7 +1549,7 @@ if (!file.exists(fn)) {
         dplyr::add_row(
             data_oa
         ) |>
-    saveRDS(file = fn)
+        saveRDS(file = fn)
     rm(data_first, data_all, data_oa)
 }
 ```
@@ -1561,7 +1560,7 @@ Some check of the data
 #| label: countries_tca_corpus_check
 #| eval: false
 #| echo: false
-#| 
+#|
 
 data <- readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds"))
 data <- data |>
@@ -1605,19 +1604,19 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
         )
 
 
-        # data |> mutate(
-        #     count_first = count_first / max(count_first),
-        #     count_all = count_all / max(count_all),
-        #     count_oa = count_oa / max(count_oa)
-        # ) |>
-        # dplyr::arrange(desc(count_oa)) |>
-        # ggplot(aes(x = iso3c)) +
-        #     geom_line(aes(y = count_first, color = "Count First"), group = 1) +
-        #     geom_line(aes(y = count_all, color = "Count All"), group = 1) +
-        #     geom_line(aes(y = count_oa, color = "Count OA"), group = 1) +
-        #     scale_color_manual(values = c("Count First" = "red", "Count All" = "blue", "Count OA" = "green")) +
-        #     labs(x = "ISO3C", y = "Normalized Count") +
-        #     theme_minimal()
+    # data |> mutate(
+    #     count_first = count_first / max(count_first),
+    #     count_all = count_all / max(count_all),
+    #     count_oa = count_oa / max(count_oa)
+    # ) |>
+    # dplyr::arrange(desc(count_oa)) |>
+    # ggplot(aes(x = iso3c)) +
+    #     geom_line(aes(y = count_first, color = "Count First"), group = 1) +
+    #     geom_line(aes(y = count_all, color = "Count All"), group = 1) +
+    #     geom_line(aes(y = count_oa, color = "Count OA"), group = 1) +
+    #     scale_color_manual(values = c("Count First" = "red", "Count All" = "blue", "Count OA" = "green")) +
+    #     labs(x = "ISO3C", y = "Normalized Count") +
+    #     theme_minimal()
 
     map <- patchwork::wrap_plots(
         data |>
@@ -2210,7 +2209,6 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_ove
 #|
 
 if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_proportions_over_time")) < 2) {
-
     figure <- readRDS(file.path(file.path("data", "tca_corpus", "sectors_over_time.rds"))) |>
         dplyr::filter(
             publication_year >= 1950
@@ -2228,8 +2226,8 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_pro
         ) +
         scale_x_continuous(breaks = seq(1900, 2020, 10)) +
         scale_y_continuous(
-           "Proportion of Publications" # ,
-        #    limits = c(0, 1.0001)
+            "Proportion of Publications" # ,
+            #    limits = c(0, 1.0001)
         ) +
         labs(
             title = "Publications clssified into Sectors over time. Each publication has up to three sectors assigned.",
@@ -2413,7 +2411,7 @@ The red line is the cumulative proportion of publications, the blue line the cum
 To download high resolution, [click here](`r file.path("figures", "tca_corpus", "publications_over_time.pdf")`){target="_blank"}
 
 ```{r}
-readRDS(file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")) |> 
+readRDS(file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")) |>
     IPBES.R::table_dt(fn = "publications_over_time")
 ```
 
@@ -2506,8 +2504,8 @@ text(
 prim_topics_tca_corpus |>
     relocate(count, .after = "id") |>
     IPBES.R::table_dt(
-        fn = "topics_tca_corpus", 
-    )    
+        fn = "topics_tca_corpus",
+    )
 ```
 
 ### SubFields in Corpus
@@ -2578,7 +2576,7 @@ prim_topics_tca_corpus |>
     ) |>
     summarise(
         count = sum(count),
-        .groups = "drop"        
+        .groups = "drop"
     ) |>
     arrange(desc(count)) |>
     relocate(count, .after = "subfield_id") |>
@@ -2619,10 +2617,194 @@ prim_topics_tca_corpus |>
         escape = FALSE
     )
 ```
-<!-- 
 
 # ==== APPENDIX ====
 
+## Assesment of Sectors / Contcepts search terms
+
+The file [strategies_options.txt](input/tca_corpus/search terms/strategies_options.txt) contains the terms for the different strategies and options.
+
+I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](input/tca_corpus/search terms/tca_corpus.txt).
+
+```{r}
+#| label: strategies_options
+#|
+if (!file.exists(file.path("data", "tca_corpus", "strategies_options.rds"))) {
+    # Read the lines from the file
+    sts <- readLines("input/tca_corpus/search terms/strategies_options.txt")
+
+    # Remove empty or NA lines or Main header ("# ")
+    sts <- sts[!is.na(sts) & nchar(sts) > 0]
+    sts <- grep("^# ", sts, invert = TRUE, value = TRUE)
+
+    # Create a vector that indicates where each new first-level element should start
+    split_points_level1 <- cumsum(grepl("^## \\(", sts))
+
+    # Split the vector into a list
+    list_sts_level1 <- split(sts, split_points_level1)
+
+    # For each first-level element, split into second-level elements
+    list_sts_level2 <- lapply(list_sts_level1, function(x) {
+        split_points_level2 <- cumsum(grepl("^###", x))
+        split(x, split_points_level2)
+    })
+
+    # Remove the lines with "## (" and "###" from each element of the list
+    sts_split <- lapply(
+        list_sts_level2,
+        function(x) {
+            lapply(
+                x,
+                function(y) {
+                    res <- y[!grepl("^## \\(|^###", y)]
+                    if (length(res) == 0) {
+                        res <- NULL
+                    }
+                    return(res)
+                }
+            )
+        }
+    )
+
+    sts_split <- lapply(
+        sts_split,
+        function(sts) {
+            i <- sapply(
+                sts,
+                length
+            ) > 0
+            return(sts[i])
+        }
+    )
+
+
+    # Extract the names for the first-level list
+    names_level1 <- gsub("^## \\(|\\)$", "", sts[grepl("^## \\(", sts)])
+
+    # Extract the names for the second-level lists
+    names_level2 <- lapply(list_sts_level1, function(x) gsub("^### |\\)$", "", x[grepl("^###", x)]))
+    names(names_level2) <- names_level1
+
+    # Assign the names to the first-level list
+    names(sts_split) <- names_level1
+
+    sts_split <- Map(setNames, sts_split, names_level2)
+
+    result <- lapply(
+        sts_split,
+        function(sts) {
+            lapply(
+                sts,
+                function(st) {
+                    result <- list()
+                    result$term <- paste(st, collapse = " ")
+                    result$count <- NA
+                    result$years <- NA
+                    result$assess_search_terms <- NA
+                    try(
+                        {
+                            result$count <- openalexR::oa_fetch(
+                                title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                                count_only = TRUE,
+                                output = "list",
+                                verbose = TRUE
+                            )$count
+                            result$years <- openalexR::oa_fetch(
+                                title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                                group_by = "publication_year",
+                                output = "dataframe",
+                                verbose = TRUE
+                            )
+                        },
+                        silent = TRUE
+                    )
+
+                    result$assess_search_terms <- assess_search_term(
+                        st = st,
+                        remove = " OR$",
+                        excl_others = FALSE,
+                        mc.cores = 8
+                    ) |>
+                        dplyr::arrange(desc(count))
+
+                    return(result)
+                }
+            )
+        }
+    )
+
+    saveRDS(result, file.path("data", "tca_corpus", "strategies_options.rds"))
+}
+```
+
+### Results
+
+#### Number of hits of TCA Corpus AND Concept
+
+```{r}
+#| label: strategies_options_counts
+#| render: asis
+
+result <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+
+
+for (str in names(result)) {
+    cat("\n\n##### ", str)
+    for (con in names(result[[str]])) {
+        cat("\n###### ", con)
+        cat("\nCount: ", result[[str]][[con]]$count)
+    }
+}
+```
+
+#### Assesment of individual terms
+
+These numbers are the number of hits of TCA Corpus AND each individual term of the Concept
+
+```{r}
+#| label: strategies_options_asess
+#|
+
+lapply(
+    names(result),
+    function(str) {
+        lapply(
+            names(result[[str]]),
+            function(con) {
+                result[[str]][[con]]$assess_search_terms |>
+                    knitr::kable(
+                        caption = paste0(str, "\n", con)
+                    )
+            }
+        )
+    }
+)
+```
+
+#### Counts over years for each TCA Corpus AND Concept
+
+```{r}
+#| label: strategies_options_years
+#|
+
+lapply(
+    names(result),
+    function(str) {
+        lapply(
+            names(result[[str]]),
+            function(con) {
+                result[[str]][[con]]$years |>
+                    knitr::kable(
+                        caption = paste0(str, "\n", con)
+                    )
+            }
+        )
+    }
+)
+
+```
+
+<!-- 
 
 TODO: one search term per chapter with OR
 TODO: CH 5 search terms missing - check in emails

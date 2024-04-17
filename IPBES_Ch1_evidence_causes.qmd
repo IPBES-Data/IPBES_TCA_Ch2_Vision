@@ -183,7 +183,8 @@ The BuidNo is automatically increased by one each time the report is rendered. I
 - [ ]  NATURE AND CONCEPTS_1
 - [ ]  NATURE AND CONCEPTS_2
 - [ ]  NATURE AND CONCEPTS_1 AND CONCEPTS_2 Change to NATURE from OPEN ALEX
-- [ ]  Introduction
+
+## Introduction
 
 All searches are done on all works in OpenAlex. The search in the TCA Corpus is not possibly at the moment, but we are working on it.
 
