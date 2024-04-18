@@ -2767,9 +2767,9 @@ lapply(
     }
 ) |>
     do.call(what = rbind) |>
-    knitr::kable(
-        caption = "Number of hits",
-        col.names = c("Strategy", "Concept", "Count")
+    IPBES.R::table_dt(
+        fn = "strategies_options_counts",
+        fixedColumns = list(leftColumns = 2)
     )
 ```
 
