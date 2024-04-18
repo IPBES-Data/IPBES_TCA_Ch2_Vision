@@ -2626,6 +2626,8 @@ The file [strategies_options.txt](input/tca_corpus/search terms/strategies_optio
 
 I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](input/tca_corpus/search terms/tca_corpus.txt).
 
+### Methods
+
 ```{r}
 #| label: strategies_options
 #|
@@ -2739,22 +2741,36 @@ if (!file.exists(file.path("data", "tca_corpus", "strategies_options.rds"))) {
 
 ### Results
 
-#### Number of hits of TCA Corpus AND Concept
-
+#### Count of Concepts
 ```{r}
 #| label: strategies_options_counts
-#| render: asis
+#|
 
 result <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
 
-
-for (str in names(result)) {
-    cat("\n\n##### ", str)
-    for (con in names(result[[str]])) {
-        cat("\n###### ", con)
-        cat("\nCount: ", result[[str]][[con]]$count)
+lapply(
+    names(result),
+    function(str) {
+        lapply(
+            names(result[[str]]),
+            function(con) {
+                return(
+                    data.frame(
+                        Strategy = str,
+                        Concept = con,
+                        Count = result[[str]][[con]]$count
+                    )
+                )
+            }
+        ) |>
+            do.call(what = rbind)
     }
-}
+) |>
+    do.call(what = rbind) |>
+    knitr::kable(
+        caption = "Number of hits",
+        col.names = c("Strategy", "Concept", "Count")
+    )
 ```
 
 #### Assesment of individual terms
@@ -2763,17 +2779,19 @@ These numbers are the number of hits of TCA Corpus AND each individual term of t
 
 ```{r}
 #| label: strategies_options_asess
-#|
+#| output: asis
 
 lapply(
     names(result),
     function(str) {
+        # cat("\n\n### ", str, "\n")
         lapply(
             names(result[[str]]),
             function(con) {
+                # cat("\n#### ", con, "\n")
                 result[[str]][[con]]$assess_search_terms |>
                     knitr::kable(
-                        caption = paste0(str, "\n", con)
+                        caption = paste0(str, " -- ", con)
                     )
             }
         )
@@ -2781,45 +2799,27 @@ lapply(
 )
 ```
 
-#### Counts over years for each TCA Corpus AND Concept
+#### Counts over Years for each TCA Corpus AND Concept
 
 ```{r}
 #| label: strategies_options_years
-#|
+#| output: asis
+
 
 lapply(
     names(result),
     function(str) {
+        # cat("\n\n### ", str, "\n")
         lapply(
             names(result[[str]]),
             function(con) {
+                # cat("\n#### ", con, "\n")
                 result[[str]][[con]]$years |>
                     knitr::kable(
-                        caption = paste0(str, "\n", con)
+                        caption = paste0(str, " -- ", con)
                     )
             }
         )
     }
 )
-
 ```
-
-<!-- 
-
-TODO: one search term per chapter with OR
-TODO: CH 5 search terms missing - check in emails
-
-TODO: 
-- Tranformative
-- Nature
-- Ch1 01-06 OR 
-- Ch2 
-- Ch3 01-06 OR
-- Ch4 01-02 OR
-- Ch5 MISSING (Options?)
-- Case-Studies
-
-TODO: which key papers are still missing? -->
-
-
-- TODO: Histogram / table with topics identified to identify non-relevant papers
