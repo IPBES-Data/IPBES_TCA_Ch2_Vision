@@ -23,7 +23,6 @@ MPA OR
 "Marine park" OR
 "Other Effective area-based Conservation Measure" OR
 OECM OR
-"Other effective Conservation Measure" OR
 "Protected area" OR
 "Remedial action" OR
 Restoration OR
@@ -531,7 +530,6 @@ Participation OR
 ### International agreements
 
 "Agenda 21" OR
-"Aichi Biodiversity Target" OR
 "Bilateral agreement" OR
 "Basel Convention" OR
 "Cartagena Protocol" OR
