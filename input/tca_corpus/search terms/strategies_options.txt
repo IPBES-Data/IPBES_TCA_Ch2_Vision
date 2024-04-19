@@ -12,15 +12,11 @@
 "Community-led conservation" OR
 "Community protocol" OR
 "Convivial conservation" OR
-"Ecosystem restoration" OR
-"Ecosystem-based adaptation and disaster risk reduction" OR
 "Ecosystem-based approach" OR
 "Forest conservation" OR
-"Habitat restoration" OR
 "High sea conservation" OR
 "Indigenous and Community Conserved Area" OR
 ICCA OR
-"Landscape restoration" OR
 "Marine protected area" OR
 MPA OR
 "Marine reserve" OR
@@ -37,10 +33,8 @@ Rewilding OR
 "Transboundary protected area" OR
 "High seas conservation" OR
 "Indigenous-led conservation" OR
-"Indigenous co-governance" OR
 "Co-management" OR
-"Land sovereignty" OR
-"Tribal park" 
+"Land sovereignty"
 
 
 ### Conservation finance
@@ -67,24 +61,17 @@ Rewilding OR
 "Agri-Environmental and Climate Measure" OR
 "Environmental Impact Assessment" OR
 "Environmental Law" OR
-"Environmental defender protection" OR
 "Environmental public interest litigation" OR
 "Habitat Conservation Plan" OR
 "Invasive Species Regulation" OR
 "Land Use Regulation" OR
-"Large-scale land acquisition regulation" OR
 "Legal pluralism" OR
-"Limit on habitat destruction" OR
-"Limit on resource extraction" OR
 "Logging regulation" OR
 "National biodiversity strategy and action plan" OR
-"Natural resource use restriction" OR
 NBSAP OR
 "Official development assistance" OR
-"Public Participation and Access to Information Law" OR
 "Resource Management Law" OR
 "Seasonal restriction" OR
-"Wild species protection" OR
 "Waste Management Regulation" OR
 "Zoning Regulation"
 
@@ -279,7 +266,6 @@ microgrid OR
 
 ### Market-based mechanisms
 
-"Biodiversity bond" OR
 "Biodiversity compensation policy" OR
 "Biodiversity offset" OR
 "Cap and Trade System" OR
@@ -289,12 +275,9 @@ microgrid OR
 "Commodity future" OR
 "Compensation for environmental damage" OR
 "Corporate Social Responsibility" OR
-"cross-compliance incentive" OR
 "Derivative trading" OR
 "Ecological fiscal transfer" OR
-"Environmental-positive subsidy" OR
 "Environmental Tax" OR
-"Eco-entrepreneurship Support" OR
 "income transfer" OR
 "Mitigation for environmental damage" OR
 "Market-based financing mechanism" OR
@@ -332,7 +315,7 @@ Quota OR
 
 ### Sustainable production
 
-Agroecolog" OR
+Agroecology OR
 Agroforestry OR
 "Best practice in production" OR
 "Biological agriculture" OR
@@ -512,17 +495,13 @@ recycle OR
 "Community-Based Participatory Research" OR
 "Deliberative Democracy Process" OR
 "Global action network" OR
-"Indigenous and local community participation in decision-making" OR
-"Legal and Policy Framework for Participation" OR
 "Multi-stakeholder platform" OR
 "Online Platform and Social Media" OR
 Participation OR
 "Participation in international process" OR
-"Participatory approach to restoration" OR
 "Participatory evaluation and learning" OR
 "Participatory Mapping and GIS" OR
 "Public Consultation and Hearing" OR
-"Public participation in environmental impact assessment" OR
 "Stakeholder engagement"
 
 
@@ -557,22 +536,13 @@ Participation OR
 "Basel Convention" OR
 "Cartagena Protocol" OR
 "Convention on Biological Diversity" OR
-"Convention on Migratory Species" OR
 CMS OR
 "Convention on International Trade in Endangered Species of Wild Fauna and Flora" OR
 CITES OR
-"BBNJ Agreement" OR
-"High Seas Treaty" OR
-"Agreement under the United Nations Convention on the Law of the Sea on the Conservation and Sustainable Use of Marine Biological Diversity of Areas beyond National Jurisdiction" OR
-"International Convention for the Prevention of Pollution from Ships" OR
 "MARPOL" OR
 "EU Green Deal" OR
-"Freshwater treaty" OR
-"Genetic resource agreement" OR
-"Global deal for nature" OR
 "Global trade system" OR
 "International agreement" OR
-"International Treaty on Plant Genetic Resources for Food and Agriculture" OR
 "Kyoto Protocol" OR
 "Minamata Convention" OR
 "Montreal Protocol" OR
@@ -581,8 +551,6 @@ CITES OR
 "Paris Agreement" OR
 "Rio Declaration" OR
 "Ramsar Convention" OR
-"Rotterdam Convention" OR
-"Shipping agreement" OR
 "Sustainable Development Goal" OR
 SDG OR
 "Stockholm Convention" OR
