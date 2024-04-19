@@ -2957,14 +2957,26 @@ lapply(
             names(strategies_options[[str]]),
             function(con) {
                 # cat("\n#### ", con, "\n")
-                strategies_options[[str]][[con]]$assess_search_terms |>
-                    knitr::kable(
-                        caption = paste0(str, " -- ", con)
-                    )
+                res <- data.frame(
+                    Strategy = str,
+                    Concept = con,
+                    Term = strategies_options[[str]][[con]]$assess_search_terms$term,
+                    Count = strategies_options[[str]][[con]]$assess_search_terms$count
+                )
+                # strategies_options[[str]][[con]]$assess_search_terms |>
+                #     knitr::kable(
+                #         caption = paste0(str, " -- ", con)
+                #     )
             }
-        )
+        ) |>
+            do.call(what = rbind)
     }
-)
+) |>
+    do.call(what = rbind) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_assessment_terms",
+        fixedColumns = list(leftColumns = 2)
+    )
 ```
 
 #### Counts over Years for each TCA Corpus AND Concept
