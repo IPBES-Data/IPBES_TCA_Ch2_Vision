@@ -191,6 +191,8 @@ library(parallel)
 library(duckdb)
 library(arrow)
 
+library(diffviewer)
+
 # if not (require(plantuml)){
 #     install.packages('plantuml', repos = c('https://rkrug.r-universe.dev', 'https://cloud.r-project.org'))
 #     library(plantuml)
@@ -2891,5 +2893,31 @@ lapply(
             }
         )
     }
+)
+```
+
+## Differences between Initial and Final Search Terms 
+
+The differences are shown as a 
+
+### CASE
+
+The differences are between the [original search term](./input/tca_corpus/search%20terms/case.txt.org) and the [used search term](./input/tca_corpus/search%20terms/case.txt) for `CASES`.
+
+```{r}
+diffviewer::visual_diff(
+    file.path("input", "tca_corpus", "search terms", "case.org.txt"),
+    file.path("input", "tca_corpus", "search terms", "case.txt")
+)
+```
+
+### Strategies / Concepts
+
+The differences are between the [original search term](./input/tca_corpus/search%20terms/strategies_options.txt.org) and the [used search term](./input/tca_corpus/search%20terms/strategies_options.txt) for `STRATEGIES_CONCEPTS`.
+
+```{r}
+diffviewer::visual_diff(
+    file.path("input", "tca_corpus", "search terms", "strategies_options.org.txt"),
+    file.path("input", "tca_corpus", "search terms", "strategies_options.txt")
 )
 ```

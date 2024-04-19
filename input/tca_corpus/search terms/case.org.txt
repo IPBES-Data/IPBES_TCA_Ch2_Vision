@@ -1,0 +1,64 @@
+data-driven OR
+observational OR
+statistical OR
+experimental OR
+real-world OR
+"evidence-based" OR
+factual OR
+quantitative OR
+qualitative OR
+measure OR
+research OR
+analysis OR
+findings OR
+investigation OR
+survey OR
+fieldwork OR
+documented OR
+verifiable OR
+practical OR
+objective OR
+"scientifically-tested" OR
+"data-collection" OR
+control OR
+"results-oriented" OR
+methodology OR
+variable OR
+inference OR
+"empirical-evidence" OR
+comparative OR
+replication OR
+"case-specific" OR
+"empirical-research" OR
+interpretative OR
+"statistical-analysis" OR
+behavioural OR
+outcome OR
+dataset OR
+modeling OR
+contextual OR
+evaluation OR
+insight  OR
+instance OR
+case OR
+sample OR
+"case analysis" OR
+"case report" OR
+"detailed analysis" OR
+"example examination" OR
+"research case" OR
+"instance evaluation" OR
+"illustrative example" OR
+"empirical investigation" OR
+"subject study" OR
+"profile analysis" OR
+"specific study" OR
+"prototype study" OR
+"field study" OR
+"observational study" OR
+"practical example" OR
+"exploratory study" OR
+"diagnostic study" OR
+"experimental study" OR
+"investigative study" OR
+"in-depth study"
