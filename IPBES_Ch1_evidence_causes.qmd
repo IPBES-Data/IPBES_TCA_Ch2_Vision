@@ -184,16 +184,16 @@ The BuidNo is automatically increased by one each time the report is rendered. I
 - [ ]  NATURE AND CONCEPTS_2
 - [ ]  NATURE AND CONCEPTS_1 AND CONCEPTS_2 Change to NATURE from OPEN ALEX
 
-## Introduction
+# Introduction
 
 All searches are done on all works in OpenAlex. The search in the TCA Corpus is not possibly at the moment, but we are working on it.
 
 
-### The following steps will be done in documented in this report:
+## The following steps will be done in documented in this report:
 
 See [Google Doc with search terms and questions](https://docs.google.com/document/d/1OHK7TKwN11XazDNLJbADmmhYRXdlMKVJBtqTRpX3S-A/edit) for details.
 
-## Methods
+# Methods
 
 ```{r}
 #| label: get_corpus_count
@@ -215,7 +215,7 @@ count$tca_corpus <- openalexR::oa_fetch(
 )$count
 ```
 
-### 1. Ethical arguments for transformative change
+## 1. Ethical arguments for transformative change
 
 The search terms is [ethical](input/ch1_evidence_causes/ethical.txt){target=_blank}
 on **OpenAlex**.
@@ -249,7 +249,7 @@ count$ethical_tca <- openalexR::oa_fetch(
 ```
 
 
-### 2. Assessing broader biodiversity concepts
+## 2. Assessing broader biodiversity concepts
 
 The search terms is [concepts_1](input/ch1_evidence_causes/concepts_1.txt){target=_blank}
 Open Alex search.
@@ -286,11 +286,11 @@ count$concepts_1_2 <- openalexR::oa_fetch(
 
 
 
-### 3. Assessing disciplinary bias in the nature corpus
+## 3. Assessing disciplinary bias in the nature corpus
 
 To be discussed
 
-### 4. Narrowed transformative change corpus
+## 4. Narrowed transformative change corpus
 
 Here the term [narrowed_tca](input/ch1_evidence_causes/narrowed_tca.txt){target=_blank} is used to narrow down the TCA corpus.
 
@@ -321,7 +321,7 @@ count$narrowed_tca_nature <- openalexR::oa_fetch(
 )$count
 ```
 
-### 5. Assessing criteria in the narrowed TFC corpus
+## 5. Assessing criteria in the narrowed TFC corpus
 
 Here the terms about criteria are used:
 - [criteria_1](input/ch1_evidence_causes/criteria_1.txt){target=_blank}
@@ -361,7 +361,7 @@ count$narrowed_tca_c4 <- openalexR::oa_fetch(
 
 ```
 
-### 6. Assessing the literature that discusses the causes of biodiversity loss 
+## 6. Assessing the literature that discusses the causes of biodiversity loss 
 
 (using the full Nature corpus, the narrowed TFC corpus and the overlap between the full nature corpus and the narrowed TFC corpus) – for thematic analysis
 
@@ -505,7 +505,7 @@ count$biodiv_loss_nat_narrowed_s_5 <- openalexR::oa_fetch(
 
 ```
 
-#### Download Corpora
+### Download Corpora
 
 ```{r}
 #| label: download_corpus_6
@@ -645,9 +645,9 @@ if (!file.exists(params$fn_corpus_6)) {
 saveRDS(count, params$fn_count)
 ```
 
-## Export data
+### Export data
 
-### export Part 6 to Excel
+#### export Part 6 to Excel
 
 ```{r}
 if (!file.exists(params$fn_corpus_6_xlsx)) {

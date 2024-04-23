@@ -193,6 +193,15 @@ library(arrow)
 
 library(diffviewer)
 
+if (!require("plantuml")) {
+    install.packages("plantuml", repos = c("https://rkrug.r-universe.dev", "https://cran.r-project.org"))
+    library(plantuml)
+}
+
+plantuml::server_set("remote")
+
+
+
 # if not (require(plantuml)){
 #     install.packages('plantuml', repos = c('https://rkrug.r-universe.dev', 'https://cloud.r-project.org'))
 #     library(plantuml)
@@ -241,8 +250,50 @@ The following terminology is used in this document:
 The following searches are conducted on Title and Abstrat only as the availability of fulltext drops in 2020. OpenAlex did "inherit" fro Microsoft Academic their initial corpus in 2021 which contained a lot of fulltext for searches. After that time, other sources had to be used which did not include fulltext for searches. To eliminate this bias, we linit the search for terms in abstract and title only.
 
 ## Schematic Overview
-TODO
 
+```{r}
+#| label: tca_corpus_overview_plantuml
+#| 
+
+basename <- file.path("figures", "tca_corpus", "tca_corpus")
+
+nf <- list.files(
+    path = dirname(basename),
+    pattern = basename(basename)
+) |>
+    length()
+
+if (nf < 3) {
+    puml <- readLines(file.path("input", "tca_corpus", "tca_corpus.plantuml"))
+
+    puml |>
+        paste(collapse = "\n") |>
+        plantuml::plantuml() |>
+        plantuml::get_graph(
+            file = file.path("figures", "tca_corpus", "tca_corpus_overview.pdf")
+        )
+
+    puml |>
+        paste(collapse = "\n") |>
+        plantuml::plantuml() |>
+        plantuml::get_graph(
+            file = file.path("figures", "tca_corpus", "tca_corpus_overview.svg")
+        )
+
+    puml |>
+        paste(collapse = "\n") |>
+        plantuml::plantuml() |>
+        plantuml::get_graph(
+            file = file.path("figures", "tca_corpus", "tca_corpus_overview.png")
+        )
+}
+```
+
+![Schematic overview of the TCA Corpus as well as othher corpora using the TCA Corpus](figures/tca_corpus/tca_corpus_overview.png)
+
+- To download png, [click here](figures/tca_corpus/tca_corpus_overview.png){target="_blank"}.
+- To download high resolution pdf, [click here](figures/tca_corpus/tca_corpus_overview.pdf){target="_blank"}.
+- To download high resolution svg, [click here](figures/tca_corpus/tca_corpus_overview.svg){target="_blank"}.
 
 
 ## Search Terms {#sec-search_terms}
