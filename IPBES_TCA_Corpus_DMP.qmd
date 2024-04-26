@@ -74,7 +74,11 @@ params:
     s_1_ch4_01: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch4_01.txt")), collapse = "\n")     
     s_1_ch4_02: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch4_02.txt")), collapse = "\n")
     s_1_case:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")),   collapse = "\n")
-    
+
+    st_art:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "art.txt")),   collapse = "\n")
+    st_media: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "media.txt")),   collapse = "\n")
+
+
     # s_1_case_corpus: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
 
 
@@ -606,9 +610,6 @@ if (!file.exists(fn)) {
         gsub(pattern = "^ch", replacement = "Chapter ") |>
         gsub(pattern = "_", replacement = " ")
 
-
-
-
     saveRDS(search_term_hits, file = fn)
 } else {
     search_term_hits <- readRDS(fn)
@@ -616,6 +617,38 @@ if (!file.exists(fn)) {
 ```
 
 
+
+```{r}
+#| label: get_art_media_hits
+#|
+
+fn <- file.path(".", "data", "tca_corpus", "art_media_table.rds")
+if (!file.exists(fn)) {
+
+    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_art, ")") |>
+        compact()
+
+    c_art <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_media, ")") |>
+        compact()
+
+    c_media <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    st <- params$s_1_tca_corpus |>
+        compact()
+
+    c_all <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    data.frame(
+        Category = c("TCA Corpus", "Media Subset", "Art Subset"),
+        Count = c(c_all, c_media, c_art),
+        Proportion = c(c_all, c_media, c_art) / c_all,
+        Timestamp = Sys.time()
+    ) |>
+    saveRDS(file = fn)
+}
+```
 
 
 
@@ -2687,6 +2720,24 @@ prim_topics_tca_corpus |>
         escape = FALSE
     )
 ```
+
+
+## Art and Media subsets
+
+```{r}
+file.path(".", "data", "tca_corpus", "art_media_table.rds") |>
+    readRDS() |>
+    knitr::kable()
+```
+
+Differences between the used [media search term](input/tca_corpus/search terms/media.txt) and the original media search term:
+```{r}
+diffviewer::visual_diff(
+    "input/tca_corpus/search terms/media.org.txt",
+    "input/tca_corpus/search terms/media.txt"
+)
+```
+
 
 # ==== APPENDIX ====
 
