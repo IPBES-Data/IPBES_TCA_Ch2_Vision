@@ -2,7 +2,6 @@
 
 ## Conserve manage and monitor
 "Forest conservation" OR
-"High sea conservation" OR
 "Marine protected area" OR
 MPA OR
 "Marine reserve" OR
@@ -12,29 +11,22 @@ MPA OR
 "Forest Reserve" OR
 "private reserve" OR
 "nature reserve" OR
-"ecosystem reserve" OR
 "Transboundary protected area" OR
-"High seas conservation" OR
-"Marine resource areas" OR
 "marine waters" OR
 "marine managed area" OR
 "national park" OR
-"Agri-Environmental and Climate Measure" OR
 "Environmental Law" OR
 "Habitat Conservation Plan" OR
 "Invasive Species Regulation"  OR
 "National biodiversity strategy and action plan" OR
 NBSAP OR
-"Wild species protection" OR
 "Waste Management Regulation" OR
 "Coastal management" OR
-"Coastal waters management" OR
 "Integrated coastal zone management" OR
 "watershed management" OR
 "catchment management" OR
 "Integrated landscape management" OR
 "Invasive alien species management" OR
-"Marine and coastal governance" OR
 "Marine governance" OR
 "Coastal governance" OR
 "Ocean governance" OR
@@ -133,7 +125,7 @@ OECM OR
 "Environmental Impact assessment" OR
 "Buffer zone" OR
 "land law" OR
-"coastal planning area"
+"coastal planning area" OR
 
 ## Regenerate
 "Ecosystem restoration" OR
@@ -151,7 +143,6 @@ Rewilding OR
 
 ## Regulate
 "Cap resource consumption" OR
-"conversion off-budget subsidies" OR
 "Corporate social responsibility" OR
 "Licensing and Permitting" OR
 "Limit on pollution" OR
@@ -170,12 +161,8 @@ Rewilding OR
 "trade regulation" OR
 "land policy" OR
 "land regulation" OR
-"Large-scale land acquisition regulation" OR
 "Land Use Regulation" OR
-"Limit on habitat destruction" OR
-"Limit on resource extraction" OR
 "Logging regulation" OR
-"Natural resource use restriction" OR
 "Zoning Regulation" OR
 "territorial use-rights for fisheries" OR
 "consumption fee" OR
@@ -695,14 +682,12 @@ TNFD OR
 
 ## Shifts in values
 "Connection to nature" OR
-"Continuity with ancestors" OR
 "Cultural preservation" OR
 "Cultural revitalization" OR
 "Environmental stewardship" OR
 "Ethical framework" OR
 "Human-nature connection"  OR
 "Spiritual connection" OR
-"Human-nature relation" OR
 "nature connectedness" OR
 "environment connectedness" OR
 "Community health" OR
@@ -711,14 +696,10 @@ TNFD OR
 "Ecohealth" OR
 "Harmony with nature" OR
 "Holistic worldview" OR
-"Interconnectedness of all life forms" OR
 "Living in balance" OR
 "One health" OR
 "Planetary health" OR
-"planetary wellbeing" OR
-"intrinsic value of biodiversity" OR
 "biocultural diversity" OR
-"Unitive vision" OR
 "Water-energy-food nexus" OR
 "Holistic management" OR
 "Indigenous worldview" OR

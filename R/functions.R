@@ -65,7 +65,7 @@ assess_search_term <- function(
     st <- gsub(pattern = remove, replacement = "", st)
     result <- data.frame(
         term = st,
-        count = pbmcapply::pbmclapply(
+        count = pbapply::pblapply(
             st,
             function(x) {
                 if (excl_others) {
@@ -87,8 +87,7 @@ assess_search_term <- function(
                     count_only = TRUE,
                     verbose = verbose
                 )$count
-            },
-            mc.cores = mc.cores
+            }
         ) |>
             unlist()
     )

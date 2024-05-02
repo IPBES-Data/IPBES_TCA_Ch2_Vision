@@ -2843,73 +2843,34 @@ I will now iterate through all of them and identify the number of hits per indiv
 
 fn <- file.path("data", "tca_corpus", "strategies_options_terms.rds")
 if (!file.exists(fn)) {
-    # Read the lines from the file
-    sts <- params$sts_strategies_options
-
-    # Remove empty or NA lines or Main header ("# ")
-    sts <- sts[!is.na(sts) & nchar(sts) > 0]
-    sts <- grep("^# ", sts, invert = TRUE, value = TRUE)
-
-    # Create a vector that indicates where each new first-level element should start
-    split_points_level1 <- cumsum(grepl("^## \\(", sts))
-
-    # Split the vector into a list
-    list_sts_level1 <- split(sts, split_points_level1)
-
-    # For each first-level element, split into second-level elements
-    list_sts_level2 <- lapply(list_sts_level1, function(x) {
-        split_points_level2 <- cumsum(grepl("^###", x))
-        split(x, split_points_level2)
-    })
-
-    # Remove the lines with "## (" and "###" from each element of the list
-    strategies_options_terms <- lapply(
-        list_sts_level2,
-        function(x) {
-            lapply(
-                x,
-                function(y) {
-                    res <- y[!grepl("^## \\(|^###", y)]
-                    if (length(res) == 0) {
-                        res <- NULL
-                    }
-                    return(res)
-                }
-            )
-        }
+    sts <- data.frame(
+        "Strategy" = NA,
+        "Option" = NA,
+        term = params$sts_strategies_options
     )
-
-    # Remove empty elements from the second-level lists
-    strategies_options_terms <- lapply(
-        strategies_options_terms,
-        function(sts) {
-            i <- sapply(
-                sts,
-                length
-            ) > 0
-            return(sts[i])
+    sts <- sts[sts$term != "", ]
+    for (i in 1:nrow(sts)) {
+        if (grepl("^# ", sts$term[i])) {
+            strategy <- gsub("^# ", "", sts$term[i])
+        } else if (grepl("^## ", sts$term[i])) {
+            option <- gsub("^## ", "", sts$term[i])
+        } else {
+            sts$Strategy[i] <- strategy
+            sts$Option[i] <- option
         }
-    )
+    }
+    sts <- sts[!is.na(sts$Strategy), ]
+    sts <- sts[!is.na(sts$Option), ]
 
+    sts$Name <- paste0(sts$Strategy, " ||| ", sts$Option)
 
-    # Extract the names for the first-level list
-    names_level1 <- gsub("^## \\(|\\)$", "", sts[grepl("^## \\(", sts)])
-
-    # Extract the names for the second-level lists
-    names_level2 <- lapply(list_sts_level1, function(x) gsub("^### |\\)$", "", x[grepl("^###", x)]))
-    names(names_level2) <- names_level1
-
-    # Assign the names to the first and second level list
-    names(strategies_options_terms) <- names_level1
-    strategies_options_terms <- Map(setNames, strategies_options_terms, names_level2)
+    strategies_options_terms <- split(sts$term, sts$Name)
 
     saveRDS(strategies_options_terms, file = fn)
-} else {
-    strategies_options_terms <- readRDS(fn)
 }
 ```
 
-#### First Run the search terms
+#### Run the search terms
 ```{r}
 #| label: strategies_options_get_counts
 
@@ -2918,92 +2879,63 @@ if (!file.exists(file.path(fn))) {
     strategies_options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
     strategies_options <- lapply(
         names(strategies_options_terms),
-        function(sec) {
-            message("- ", sec)
-            lapply(
-                names(strategies_options_terms[[sec]]),
-                function(conc) {
-                    message("    |- ", conc)
-                    result <- list()
-                    result$term <- paste(strategies_options_terms[[sec]][[conc]], collapse = " ")
-                    result$count <- NA
-                    result$shortened <- TRUE
-                    rel_excluded <- NA
-                    result$years <- NA
-                    result$assess_search_terms <- NA
-                    try(
-                        {
-                            result$count <- openalexR::oa_fetch(
-                                title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
-                                count_only = TRUE,
-                                output = "list",
-                                verbose = FALSE
-                            )$count
-                            result$shortened <- FALSE
-                            result$assess_search_terms <- assess_search_term(
-                                st = strategies_options_terms[[sec]][[conc]],
-                                remove = " OR$",
-                                excl_others = FALSE,
-                                mc.cores = params$mc.cores
-                            ) |>
-                                dplyr::arrange(desc(count))
-                            result$years <- openalexR::oa_fetch(
-                                title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
-                                group_by = "publication_year",
-                                output = "dataframe",
-                                verbose = FALSE
-                            ) |>
-                                dplyr::select(
-                                    publication_year = key_display_name,
-                                    count
-                                ) |>
-                                dplyr::arrange(
-                                    publication_year
-                                )
-                        },
-                        silent = TRUE
-                    )
-                    if (result$shortened) {
-                        x <- reduce_search_term_length(
-                            search_term = result$term,
-                            AND_term = params$s_1_tca_corpus,
-                            verbose = FALSE
+        function(strategy) {
+            message("- ", strategy)
+            result <- list()
+            result$term <- paste(strategies_options_terms[[strategy]], collapse = " ")
+            result$count <- NA
+            result$years <- data.frame(publication_year = NA, count = NA)
+            result$assess_search_terms <- assess_search_term(
+                st = strategies_options_terms[[strategy]],
+                # AND_term = params$s_1_tca_corpus,
+                remove = " OR$",
+                excl_others = FALSE,
+                verbose = TRUE,
+                mc.cores = params$mc.cores
+            ) |>
+                dplyr::arrange(desc(count))
+            #
+            try(
+                {
+                    result$count <- openalexR::oa_fetch(
+                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                        count_only = TRUE,
+                        output = "list",
+                        verbose = TRUE
+                    )$count
+                    message("  - ", result$count, " hits")
+                    #
+                    result$years <- openalexR::oa_fetch(
+                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                        group_by = "publication_year",
+                        output = "dataframe",
+                        verbose = FALSE
+                    ) |>
+                        dplyr::select(
+                            publication_year = key_display_name,
+                            count
+                        ) |>
+                        dplyr::arrange(
+                            publication_year
                         )
-                        result$term <- x$search_term
-                        result$count <- x$final_count
-                        result$shortened <- TRUE
-                        result$rel_excluded <- x$rel_excluded
-                        result$years <- openalexR::oa_fetch(
-                            title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
-                            group_by = "publication_year",
-                            output = "dataframe",
-                            verbose = FALSE,
-                            progress = TRUE
-                        )
-                        result$assess_search_terms <- x$assessment
-                    }
-                    return(result)
-                }
+                },
+                silent = FALSE
             )
+            return(result)
         }
     )
 
     # Assign the names to the first and second level list
     names(strategies_options) <- names(strategies_options_terms)
-    for (sec in names(strategies_options)) {
-        names(strategies_options[[sec]]) <- names(strategies_options_terms[[sec]])
-    }
 
     saveRDS(strategies_options, file = fn)
-} else {
-    strategies_options <- readRDS(fn)
 }
 ```
 
 
 ### Results
 
-#### Count of Strategies / Options
+#### Count of Strategies / Options Table
 ```{r}
 #| label: strategies_options_counts_data
 #|
@@ -3012,22 +2944,14 @@ strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_option
 
 data <- lapply(
     names(strategies_options),
-    function(str) {
-        lapply(
-            names(strategies_options[[str]]),
-            function(con) {
-                return(
-                    data.frame(
-                        Strategy = str,
-                        Concept = con,
-                        Count = strategies_options[[str]][[con]]$count,
-                        Count_until_1992 = sum(strategies_options[[str]][[con]]$years$count[strategies_options[[str]][[con]]$years$publication_year <= 1992]),
-                        Count_after_1992 = sum(strategies_options[[str]][[con]]$years$count[strategies_options[[str]][[con]]$years$publication_year > 1992])
-                    )
-                )
-            }
-        ) |>
-            do.call(what = rbind)
+    function(strategy) {
+        data.frame(
+            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+            Count = strategies_options[[strategy]]$count,
+            Count_until_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year <= 1992]),
+            Count_after_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year > 1992])
+        )
     }
 ) |>
     do.call(what = rbind)
@@ -3038,6 +2962,8 @@ data |>
         fixedColumns = list(leftColumns = 2)
     )
 ```
+
+
 #### Plot of the Count of the Strategies / Options split at 1992
 
 This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in thap perio as reflected on [OpenAlex](https://openalex.org).
@@ -3141,25 +3067,13 @@ strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_option
 
 lapply(
     names(strategies_options),
-    function(str) {
-        # cat("\n\n### ", str, "\n")
-        lapply(
-            names(strategies_options[[str]]),
-            function(con) {
-                # cat("\n#### ", con, "\n")
-                res <- data.frame(
-                    Strategy = str,
-                    Concept = con,
-                    Term = strategies_options[[str]][[con]]$assess_search_terms$term,
-                    Count = strategies_options[[str]][[con]]$assess_search_terms$count
-                )
-                # strategies_options[[str]][[con]]$assess_search_terms |>
-                #     knitr::kable(
-                #         caption = paste0(str, " -- ", con)
-                #     )
-            }
-        ) |>
-            do.call(what = rbind)
+    function(strategy) {
+        res <- data.frame(
+            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+            Term = strategies_options[[strategy]]$assess_search_terms$term,
+            Count = strategies_options[[strategy]]$assess_search_terms$count
+        )
     }
 ) |>
     do.call(what = rbind) |>
@@ -3179,27 +3093,13 @@ strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_option
 
 lapply(
     names(strategies_options),
-    function(str) {
-        # cat("\n\n### ", str, "\n")
-        lapply(
-            names(strategies_options[[str]]),
-            function(con) {
-                # cat("\n#### ", con, "\n")
-                res <- data.frame(
-                    Strategy = str,
-                    Concept = con,
-                    Year = strategies_options[[str]][[con]]$years,
-                    Count = strategies_options[[str]][[con]]$count
-                )
-
-
-                # strategies_options[[str]][[con]]$years |>
-                #     knitr::kable(
-                #         caption = paste0(str, " -- ", con)
-                #     )
-            }
-        ) |>
-            do.call(what = rbind)
+    function(strategy) {
+        data.frame(
+            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+            Year = strategies_options[[strategy]]$years$publication_year,
+            Count = strategies_options[[strategy]]$years$count
+        )
     }
 ) |>
     do.call(what = rbind) |>

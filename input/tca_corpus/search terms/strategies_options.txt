@@ -1,6 +1,6 @@
 # 1) Conserve and regenerate places of value to nature and people. 
 
-## Conserve, manage and monitor
+## Conserve manage and monitor
 "Forest conservation" OR
 "High sea conservation" OR
 "Marine protected area" OR
@@ -59,13 +59,13 @@ NBSAP OR
 ## Right-based approaches
 "Access and benefit sharing" OR
 "community rights" OR
-"Free, prior and informed consent" OR
+"Free prior and informed consent" OR
 FPIC OR
 "Human right" OR
 "Indigenous and local language" OR
 "Intellectual property right" OR
 "International Covenant on Civil and Political Right" OR
-"International Covenant on Economic, Social and Cultural Right" OR
+"International Covenant on Economic Social and Cultural Right" OR
 "International Human Right Treaty" OR
 "International Labour Organization Convention" OR
 "Right of nature" OR
@@ -133,7 +133,7 @@ OECM OR
 "Environmental Impact assessment" OR
 "Buffer zone" OR
 "land law" OR
-"coastal planning area"or 
+"coastal planning area"
 
 ## Regenerate
 "Ecosystem restoration" OR
@@ -296,7 +296,7 @@ Compost OR
 "sustainable land management" OR
 "sustainable aquaculture" OR
 "Sustainable Small-Scale Fisheries" OR
-"Guidelines on the Responsible Governance of Tenure of Land, Fisheries, and Forests" OR
+"Guidelines on the Responsible Governance of Tenure of Land Fisheries and Forests" OR
 "Land and water stewardship" OR
 "responsible fisheries" OR
 "Collaborative Consumption" OR
@@ -476,7 +476,7 @@ TNFD OR
 "nature-positive business" OR
 "relocalize economy"
 
-# 4) Transform governance systems to be inclusive, accountable and adaptive. 
+# 4) Transform governance systems to be inclusive accountable and adaptive. 
 
 ## Integrated decision making
 "institutional arrangement" OR
@@ -487,7 +487,8 @@ TNFD OR
 "Institutional reform"
 
 ## Inclusive governance
-"Access to information law"or "Citizen Science Initiative" OR
+"Access to information law" OR
+"Citizen Science Initiative" OR
 "Community-based natural resource management" OR
 "Community Meeting" OR
 "Community-Based Participatory Research" OR
@@ -507,7 +508,8 @@ TNFD OR
 "Bottom-up governance approach" OR
 "Gender-responsive governance" OR
 "Gender inclusive governance" OR
-"Public participation law"or "Public Participation and Access to Information Law" OR
+"Public participation law" OR
+"Public Participation and Access to Information Law" OR
 "Resource Management Law" OR
 "Environmental public interest litigation"
 
@@ -569,8 +571,8 @@ TNFD OR
 "informed governance" OR
 "accountable governance" OR
 "accountability" OR
-"planning, monitoring, evaluation and review" OR
-"monitoring, evaluation and learning" OR
+"planning monitoring evaluation and review" OR
+"monitoring evaluation and learning" OR
 "reflexive governance" OR
 "Community-based monitoring"
 
@@ -598,7 +600,7 @@ TNFD OR
 "Intergenerational knowledge transmission" OR
 "Resource stewardship" 
 
-# 5) Shift underlying societal norms, philosophies, and goals to align with the 2050 Biodiversity Vision and related global sustainability goals.
+# 5) Shift underlying societal norms philosophies and goals to align with the 2050 Biodiversity Vision and related global sustainability goals.
 
 ## Inner change
 "Behavioral change" OR
@@ -702,7 +704,8 @@ TNFD OR
 "Spiritual connection" OR
 "Human-nature relation" OR
 "nature connectedness" OR
-"environment connectedness"or "Community health" OR
+"environment connectedness" OR
+"Community health" OR
 "Cultural pluralism" OR
 "Eco-centrism" OR
 "Ecohealth" OR
