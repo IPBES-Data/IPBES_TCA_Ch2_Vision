@@ -77,7 +77,10 @@ params:
 
     st_art:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "art.txt")),   collapse = "\n")
     st_media: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "media.txt")),   collapse = "\n")
-
+    st_imaginative: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "imaginative.txt")),   collapse = "\n")
+    st_rights_of_nature: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "rights_of_nature.txt")),   collapse = "\n")
+    st_initiative: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "initiative.txt")),   collapse = "\n")
+    sts_strategies_options: !expr readLines(file.path("input", "tca_corpus", "search terms", "strategies_options.txt"))
 
     # s_1_case_corpus: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
 
@@ -257,7 +260,7 @@ The following searches are conducted on Title and Abstrat only as the availabili
 
 ```{r}
 #| label: tca_corpus_overview_plantuml
-#| 
+#|
 
 basename <- file.path("figures", "tca_corpus", "tca_corpus")
 
@@ -268,25 +271,21 @@ nf <- list.files(
     length()
 
 if (nf < 3) {
-    puml <- readLines(file.path("input", "tca_corpus", "tca_corpus.plantuml"))
+    puml <- readLines(file.path("input", "tca_corpus", "tca_corpus.plantuml")) |>
+        paste(collapse = "\n") |>
+        plantuml::plantuml()
 
     puml |>
-        paste(collapse = "\n") |>
-        plantuml::plantuml() |>
         plantuml::get_graph(
             file = file.path("figures", "tca_corpus", "tca_corpus_overview.pdf")
         )
 
     puml |>
-        paste(collapse = "\n") |>
-        plantuml::plantuml() |>
         plantuml::get_graph(
             file = file.path("figures", "tca_corpus", "tca_corpus_overview.svg")
         )
 
     puml |>
-        paste(collapse = "\n") |>
-        plantuml::plantuml() |>
         plantuml::get_graph(
             file = file.path("figures", "tca_corpus", "tca_corpus_overview.png")
         )
@@ -529,6 +528,34 @@ cat(params$s_1_ch4_01)
 cat(params$s_1_ch4_02)
 ```
 
+### Art
+
+```{r}
+#| label: st_art
+#|
+
+cat(params$st_art)
+```
+
+### Media
+
+```{r}
+#| label: st_media
+#|
+
+cat(params$st_art)
+```
+
+### Strategies and Options
+
+In contrast to the other search term, this opne contains multiple sets of search terms
+
+```{r}
+#| label: sts_strategies_options
+#|
+
+cat(params$sts_strategies_options)
+```
 
 ### Chapter 5
 
@@ -619,37 +646,98 @@ if (!file.exists(fn)) {
 
 
 ```{r}
-#| label: get_art_media_hits
+#| label: get_additional_search_hits
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "art_media_table.rds")
+fn <- file.path(".", "data", "tca_corpus", "additional_search.rds")
 if (!file.exists(fn)) {
-
-    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_art, ")") |>
-        compact()
-
-    c_art <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
-
-    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_media, ")") |>
-        compact()
-
-    c_media <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
-
+    # oa
     st <- params$s_1_tca_corpus |>
         compact()
 
-    c_all <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+    count_all <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
 
-    data.frame(
-        Category = c("TCA Corpus", "Media Subset", "Art Subset"),
-        Count = c(c_all, c_media, c_art),
-        Proportion = c(c_all, c_media, c_art) / c_all,
+    # art
+    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_art, ")") |>
+        compact()
+    count <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    result <- data.frame(
+        Category = "Art",
+        Count = count,
+        Proportion = count / count_all,
         Timestamp = Sys.time()
-    ) |>
-    saveRDS(file = fn)
+    )
+
+    # media
+    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_media, ")") |>
+        compact()
+
+    count <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    result <- rbind(
+        result,
+        data.frame(
+            Category = "Media",
+            Count = count,
+            Proportion = count / count_all,
+            Timestamp = Sys.time()
+        )
+    )
+
+    # imaginative
+    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_imaginative, ")") |>
+        compact()
+
+    count <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    result <- rbind(
+        result,
+        data.frame(
+            Category = "Imaginative",
+            Count = count,
+            Proportion = count / count_all,
+            Timestamp = Sys.time()
+        )
+    )
+
+    # Rights of Nature
+    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_rights_of_nature, ")") |>
+        compact()
+
+    count <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    result <- rbind(
+        result,
+        data.frame(
+            Category = "Rights of Nature",
+            Count = count,
+            Proportion = count / count_all,
+            Timestamp = Sys.time()
+        )
+    )
+
+    # Initiative
+    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_initiative, ")") |>
+        compact()
+
+    count <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    result <- rbind(
+        result,
+        data.frame(
+            Category = "Initiative",
+            Count = count,
+            Proportion = count / count_all,
+            Timestamp = Sys.time()
+        )
+    )
+
+
+    # save it
+    saveRDS(result, file = fn)
 }
 ```
-
 
 
 ```{r}
@@ -2722,10 +2810,10 @@ prim_topics_tca_corpus |>
 ```
 
 
-## Art and Media subsets
+## Additional Searches subsets
 
 ```{r}
-file.path(".", "data", "tca_corpus", "art_media_table.rds") |>
+file.path(".", "data", "tca_corpus", "additional_search.rds") |>
     readRDS() |>
     knitr::kable()
 ```
@@ -2741,7 +2829,7 @@ diffviewer::visual_diff(
 
 # ==== APPENDIX ====
 
-## Assesment of Sectors / Contcepts search terms
+## Strategies/Options/Instruments for transformative change 
 
 The file [strategies_options.txt](input/tca_corpus/search terms/strategies_options.txt) contains the terms for the different strategies and options.
 
@@ -2756,7 +2844,7 @@ I will now iterate through all of them and identify the number of hits per indiv
 fn <- file.path("data", "tca_corpus", "strategies_options_terms.rds")
 if (!file.exists(fn)) {
     # Read the lines from the file
-    sts <- readLines("input/tca_corpus/search terms/strategies_options.txt")
+    sts <- params$sts_strategies_options
 
     # Remove empty or NA lines or Main header ("# ")
     sts <- sts[!is.na(sts) & nchar(sts) > 0]
@@ -2915,7 +3003,7 @@ if (!file.exists(file.path(fn))) {
 
 ### Results
 
-#### Count of Concepts
+#### Count of Strategies / Options
 ```{r}
 #| label: strategies_options_counts_data
 #|
@@ -2950,9 +3038,9 @@ data |>
         fixedColumns = list(leftColumns = 2)
     )
 ```
-#### Plot of the Count of the Concepts split at 1992
+#### Plot of the Count of the Strategies / Options split at 1992
 
-This data is corrected for ifferent research oputput before and after 1992 by dividing by the overall reasarch output in thap perio as reflected on [OpenAlex](https://openalex.org).
+This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in thap perio as reflected on [OpenAlex](https://openalex.org).
 
 ```{r}
 #| label: strategies_options_counts_figure
@@ -3033,17 +3121,17 @@ ggplot2::ggsave(
 )
 ```
 
-![The graph shows the by overall research output corrected publications before and after 1992 for each `Strategy ||| Concept`](`r file.path("figures", "tca_corpus", "strategies_options_time_split.png")`)
+![The graph shows the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("figures", "tca_corpus", "strategies_options_time_split.png")`)
 
 To download high resolution, [click here](`r file.path("figures", "tca_corpus", "strategies_options_time_split.pdf")`){target="_blank"}
 
-![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Strategy ||| Concept`](`r file.path("figures", "tca_corpus", "strategies_options_time_split_p.png")`)
+![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("figures", "tca_corpus", "strategies_options_time_split_p.png")`)
 
 To download high resolution, [click here](`r file.path("figures", "tca_corpus", "strategies_options_time_split+p.pdf")`){target="_blank"}
 
 #### Assesment of individual terms
 
-These numbers are the number of hits of TCA Corpus AND each individual term of the Concept
+These numbers are the number of hits of TCA Corpus AND each individual term of the Option
 
 ```{r}
 #| label: strategies_options_asess
@@ -3081,7 +3169,7 @@ lapply(
     )
 ```
 
-#### Counts over Years for each TCA Corpus AND Concept
+#### Counts over Years for each TCA Corpus AND Strategies / Options
 
 ```{r}
 #| label: strategies_options_years
