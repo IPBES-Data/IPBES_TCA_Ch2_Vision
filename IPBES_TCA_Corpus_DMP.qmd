@@ -2909,7 +2909,7 @@ if (!file.exists(file.path(fn))) {
                         title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
                         group_by = "publication_year",
                         output = "dataframe",
-                        verbose = FALSE
+                        verbose = TRUE
                     ) |>
                         dplyr::select(
                             publication_year = key_display_name,
@@ -3083,6 +3083,20 @@ lapply(
     )
 ```
 
+
+#### Differences between Original and shortened search terms
+
+Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
+
+The differences the [original search term](./input/tca_corpus/search%20terms/strategies_options.org.txt) and the [used search term](./input/tca_corpus/search%20terms/strategies_options.txt) is shown below
+
+```{r}
+diffviewer::visual_diff(
+    file.path("input", "tca_corpus", "search terms", "strategies_options.org.txt"),
+    file.path("input", "tca_corpus", "search terms", "strategies_options.txt")
+)
+```
+
 #### Counts over Years for each TCA Corpus AND Strategies / Options
 
 ```{r}
@@ -3125,13 +3139,3 @@ diffviewer::visual_diff(
 )
 ```
 
-### Strategies / Concepts
-
-The differences are between the [original search term](./input/tca_corpus/search%20terms/strategies_options.txt.org) and the [used search term](./input/tca_corpus/search%20terms/strategies_options.txt) for `STRATEGIES_CONCEPTS`.
-
-```{r}
-diffviewer::visual_diff(
-    file.path("input", "tca_corpus", "search terms", "strategies_options.org.txt"),
-    file.path("input", "tca_corpus", "search terms", "strategies_options.txt")
-)
-```
