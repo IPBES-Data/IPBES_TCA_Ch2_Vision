@@ -80,7 +80,9 @@ params:
     st_imaginative: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "imaginative.txt")),   collapse = "\n")
     st_rights_of_nature: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "rights_of_nature.txt")),   collapse = "\n")
     st_initiative: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "initiative.txt")),   collapse = "\n")
-    sts_strategies_options: !expr readLines(file.path("input", "tca_corpus", "search terms", "strategies_options.txt"))
+    
+    sts_strategies_options: !expr readLines(file.path("input", "tca_corpus", "search terms", "strategies_options.md"))
+    sts_actors: !expr readLines(file.path("input", "tca_corpus", "search terms", "actors.md"))
 
     # s_1_case_corpus: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
 
@@ -2831,7 +2833,7 @@ diffviewer::visual_diff(
 
 ## Strategies/Options/Instruments for transformative change 
 
-The file [strategies_options.txt](input/tca_corpus/search terms/strategies_options.txt) contains the terms for the different strategies and options.
+The file [strategies_options.md](input/tca_corpus/search terms/strategies_options.md) contains the terms for the different strategies and options.
 
 I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](input/tca_corpus/search terms/tca_corpus.txt).
 
@@ -2873,6 +2875,7 @@ if (!file.exists(fn)) {
 #### Run the search terms
 ```{r}
 #| label: strategies_options_get_counts
+#|
 
 fn <- file.path("data", "tca_corpus", "strategies_options.rds")
 if (!file.exists(file.path(fn))) {
@@ -2887,11 +2890,11 @@ if (!file.exists(file.path(fn))) {
             result$years <- data.frame(publication_year = NA, count = NA)
             result$assess_search_terms <- assess_search_term(
                 st = strategies_options_terms[[strategy]],
-                # AND_term = params$s_1_tca_corpus,
+                AND_term = params$s_1_tca_corpus,
                 remove = " OR$",
                 excl_others = FALSE,
-                verbose = TRUE,
-                mc.cores = params$mc.cores
+                verbose = FALSE,
+                mc.cores = 1
             ) |>
                 dplyr::arrange(desc(count))
             #
@@ -2901,7 +2904,7 @@ if (!file.exists(file.path(fn))) {
                         title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
                         count_only = TRUE,
                         output = "list",
-                        verbose = TRUE
+                        verbose = FALSE
                     )$count
                     message("  - ", result$count, " hits")
                     #
@@ -2909,7 +2912,7 @@ if (!file.exists(file.path(fn))) {
                         title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
                         group_by = "publication_year",
                         output = "dataframe",
-                        verbose = TRUE
+                        verbose = FALSE
                     ) |>
                         dplyr::select(
                             publication_year = key_display_name,
@@ -2966,11 +2969,12 @@ data |>
 
 #### Plot of the Count of the Strategies / Options split at 1992
 
-This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in thap perio as reflected on [OpenAlex](https://openalex.org).
+This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in that perio as reflected on [OpenAlex](https://openalex.org).
 
 ```{r}
 #| label: strategies_options_counts_figure
 #|
+strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
 
 oa <- openalexR::oa_fetch(
     search = "",
@@ -2981,7 +2985,19 @@ oa <- openalexR::oa_fetch(
 oa_until_1992 <- sum(oa$count[oa$key < 1992])
 oa_after_1992 <- sum(oa$count[oa$key > 1992])
 
-data <- data |>
+data <- lapply(
+    names(strategies_options),
+    function(strategy) {
+        data.frame(
+            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+            Count = strategies_options[[strategy]]$count,
+            Count_until_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year <= 1992]),
+            Count_after_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year > 1992])
+        )
+    }
+) |>
+    do.call(what = rbind) |>
     dplyr::mutate(
         Strategy = paste0(Strategy, " |||| ", Concept),
         Count_until_1992 = Count_until_1992 / oa_until_1992,
@@ -3088,12 +3104,15 @@ lapply(
 
 Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
 
-The differences the [original search term](./input/tca_corpus/search%20terms/strategies_options.org.txt) and the [used search term](./input/tca_corpus/search%20terms/strategies_options.txt) is shown below
+The differences the [original search term](./input/tca_corpus/search%20terms/strategies_options.org.md) and the [used search term](./input/tca_corpus/search%20terms/strategies_options.md) is shown below
 
 ```{r}
+#| label: strategies_options_diff
+#|
+
 diffviewer::visual_diff(
-    file.path("input", "tca_corpus", "search terms", "strategies_options.org.txt"),
-    file.path("input", "tca_corpus", "search terms", "strategies_options.txt")
+    file.path("input", "tca_corpus", "search terms", "strategies_options.org.md"),
+    file.path("input", "tca_corpus", "search terms", "strategies_options.md")
 )
 ```
 
@@ -3124,18 +3143,309 @@ lapply(
 ```
 
 
-## Differences between Initial and Final Search Terms 
 
-The differences are shown as a 
 
-### CASE
+## Actors for transformative change 
 
-The differences are between the [original search term](./input/tca_corpus/search%20terms/case.txt.org) and the [used search term](./input/tca_corpus/search%20terms/case.txt) for `CASES`.
+The file [actors.md](input/tca_corpus/search terms/actors.md) contains the terms for the different actors.
+
+I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](input/tca_corpus/search terms/tca_corpus.txt).
+
+### Methods
+
+#### Prepare Search Terms
+```{r}
+#| label: actors_prepare_searchterms
+
+fn <- file.path("data", "tca_corpus", "actors_terms.rds")
+if (!file.exists(fn)) {
+    sts <- data.frame(
+        Actor = NA,
+        term = params$sts_actors
+    )
+    sts <- sts[sts$term != "", ]
+
+    for (i in 1:nrow(sts)) {
+        if (grepl("^# ", sts$term[i])) {
+            actor <- gsub("^# ", "", sts$term[i])
+        } else {
+            sts$Actor[i] <- actor
+        }
+    }
+    sts <- sts[!is.na(sts$Actor), ]
+
+    sts$Name <- paste0(sts$Actor)
+
+    actors_terms <- split(sts$term, sts$Name)
+
+    saveRDS(actors_terms, file = fn)
+}
+```
+
+#### Run the search terms
+```{r}
+#| label: actors_get_counts
+
+fn <- file.path("data", "tca_corpus", "actors.rds")
+if (!file.exists(file.path(fn))) {
+    actors_terms <- readRDS(file.path("data", "tca_corpus", "actors_terms.rds"))
+    actors_options <- lapply(
+        names(actors_terms),
+        function(actor) {
+            message("- ", actor)
+            result <- list()
+            result$term <- paste(actors_terms[[actor]], collapse = " ")
+            result$count <- NA
+            result$years <- data.frame(publication_year = NA, count = NA)
+            result$assess_search_terms <- assess_search_term(
+                st = actors_terms[[actor]],
+                AND_term = params$s_1_tca_corpus,
+                remove = " OR$",
+                excl_others = FALSE,
+                verbose = FALSE,
+                mc.cores = params$mc.cores
+            ) |>
+                dplyr::arrange(desc(count))
+            #
+            try(
+                {
+                    result$count <- openalexR::oa_fetch(
+                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                        count_only = TRUE,
+                        output = "list",
+                        verbose = TRUE
+                    )$count
+                    message("  - ", result$count, " hits")
+                    #
+                    result$years <- openalexR::oa_fetch(
+                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                        group_by = "publication_year",
+                        output = "dataframe",
+                        verbose = FALSE
+                    ) |>
+                        dplyr::select(
+                            publication_year = key_display_name,
+                            count
+                        ) |>
+                        dplyr::arrange(
+                            publication_year
+                        )
+                },
+                silent = FALSE
+            )
+            return(result)
+        }
+    )
+
+    # Assign the names to the first and second level list
+    names(actors_options) <- names(actors_terms)
+
+    saveRDS(actors_options, file = fn)
+}
+```
+
+### Results
+
+#### Count of Actors Table
+```{r}
+#| label: actors_counts_data
+#|
+
+actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+
+data <- lapply(
+    names(actors),
+    function(actor) {
+        data.frame(
+            Actor = actor,
+            Count = actors[[actor]]$count,
+            Count_until_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year <= 1992]),
+            Count_after_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year > 1992])
+        )
+    }
+) |>
+    do.call(what = rbind)
+
+data |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_counts",
+        fixedColumns = list(leftColumns = 2)
+    )
+```
+
+
+#### Assesment of individual terms
+
+These numbers are the number of hits of TCA Corpus AND each individual term of the Option
 
 ```{r}
+#| label: actors_asess
+#| output: asis
+
+actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+
+lapply(
+    names(actors),
+    function(actor) {
+        res <- data.frame(
+            Actor = actor,
+            Term = actors[[actor]]$assess_search_terms$term,
+            Count = actors[[actor]]$assess_search_terms$count
+        )
+    }
+) |>
+    do.call(what = rbind) |>
+    IPBES.R::table_dt(
+        fn = "actors_assessment_terms",
+        fixedColumns = list(leftColumns = 2)
+    )
+```
+
+
+#### Differences between Original and shortened search terms
+
+Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
+
+The differences the [original search term](./input/tca_corpus/search%20terms/actors.org.md) and the [used search term](./input/tca_corpus/search%20terms/actors.md) is shown below
+
+```{r}
+#| label: diff_actors
+#|
+
 diffviewer::visual_diff(
-    file.path("input", "tca_corpus", "search terms", "case.org.txt"),
-    file.path("input", "tca_corpus", "search terms", "case.txt")
+    file.path("input", "tca_corpus", "search terms", "actors.org.md"),
+    file.path("input", "tca_corpus", "search terms", "actors.md")
 )
 ```
 
+
+#### Counts over Years for each TCA Corpus AND Actors
+
+```{r}
+#| label: actors_years
+#|
+
+actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+
+lapply(
+    names(actors),
+    function(actor) {
+        data.frame(
+            Actor = actor,
+            Year = actors[[actor]]$years$publication_year,
+            Count = actors[[actor]]$years$count
+        )
+    }
+) |>
+    do.call(what = rbind) |>
+    IPBES.R::table_dt(
+        fn = "actors_counts_per_year",
+        fixedColumns = list(leftColumns = 2)
+    )
+```
+
+
+#### Plot of the Count of the Actors split at 1992
+
+This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in that perio as reflected on [OpenAlex](https://openalex.org).
+
+```{r}
+#| label: actors_counts_figure
+#|
+
+actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+
+oa <- openalexR::oa_fetch(
+    search = "",
+    group_by = "publication_year",
+    output = "dataframe",
+    verbose = FALSE
+)
+oa_until_1992 <- sum(oa$count[oa$key < 1992])
+oa_after_1992 <- sum(oa$count[oa$key > 1992])
+
+data <- lapply(
+    names(actors),
+    function(actor) {
+        data.frame(
+            Actor = actor,
+            Count = actors[[actor]]$count,
+            Count_until_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year <= 1992]),
+            Count_after_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year > 1992])
+        )
+    }
+) |>
+    do.call(what = rbind) |>
+    dplyr::mutate(
+        Count_until_1992 = Count_until_1992 / oa_until_1992,
+        Count_after_1992 = Count_after_1992 / oa_after_1992,
+    ) |>
+    dplyr::group_by(
+        Actor
+    ) |>
+    dplyr::mutate(
+        Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
+        Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
+    )
+
+
+figure <- data |>
+    tidyr::pivot_longer(
+        cols = c(Count_until_1992, Count_after_1992),
+        names_to = "Period",
+        values_to = "Count_year"
+    ) |>
+    # Create the plot
+    ggplot(aes(x = Actor, y = Count_year, fill = Period)) +
+    geom_bar(stat = "identity") +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+    labs(x = "Actors", y = "Count", fill = "Period")
+
+
+ggplot2::ggsave(
+    file.path("figures", "tca_corpus", "actors_time_split.pdf"),
+    width = 12,
+    height = 18,
+    figure
+)
+ggplot2::ggsave(
+    file.path("figures", "tca_corpus", "actors_time_split.png"),
+    width = 12,
+    height = 18,
+    figure
+)
+
+figure <- data |>
+    tidyr::pivot_longer(
+        cols = c(Count_until_1992_p, Count_after_1992_p),
+        names_to = "Period",
+        values_to = "Count_p_year"
+    ) |>
+    # Create the plot
+    ggplot(aes(x = Actor, y = Count_p_year, fill = Period)) +
+    geom_bar(stat = "identity") +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+    labs(x = "Actor", y = "Count", fill = "Period")
+
+
+ggplot2::ggsave(
+    file.path("figures", "tca_corpus", "actors_time_split_p.pdf"),
+    width = 12,
+    height = 18,
+    figure
+)
+ggplot2::ggsave(
+    file.path("figures", "tca_corpus", "actors_time_split_p.png"),
+    width = 12,
+    height = 18,
+    figure
+)
+```
+
+![The graph shows the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("figures", "tca_corpus", "actors_time_split.png")`)
+
+To download high resolution, [click here](`r file.path("figures", "tca_corpus", "actors_time_split.pdf")`){target="_blank"}
+
+![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("figures", "tca_corpus", "actors_time_split_p.png")`)
+
+To download high resolution, [click here](`r file.path("figures", "tca_corpus", "actors_time_split+p.pdf")`){target="_blank"}
