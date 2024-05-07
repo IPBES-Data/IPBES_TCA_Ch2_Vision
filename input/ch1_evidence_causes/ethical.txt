@@ -1,4 +1,0 @@
-moral OR 
-ethical OR 
-philosophical OR 
-(intrinsic AND value)
