@@ -73,7 +73,10 @@ params:
     s_1_ch3_06: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_06.txt")), collapse = "\n")
     s_1_ch4_01: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch4_01.txt")), collapse = "\n")     
     s_1_ch4_02: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch4_02.txt")), collapse = "\n")
-    s_1_case:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")),   collapse = "\n")
+    # s_1_case:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")),   collapse = "\n")
+    s_1_case: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
+
+
 
     st_art:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "art.txt")),   collapse = "\n")
     st_media: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "media.txt")),   collapse = "\n")
@@ -84,7 +87,6 @@ params:
     sts_strategies_options: !expr readLines(file.path("input", "tca_corpus", "search terms", "strategies_options.md"))
     sts_actors: !expr readLines(file.path("input", "tca_corpus", "search terms", "actors.md"))
 
-    # s_1_case_corpus: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
 
 
     # s_1_ch2_vision_case: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch2.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
@@ -1048,27 +1050,6 @@ if (!file.exists(fn)) {
             everything()
         )
     #
-    message("TCA AND CASE ...")
-    oa_count$tca_case_years <- openalexR::oa_fetch(
-        title_and_abstract.search = compact(paste0("(", params$s_1_tca_corpus, ") AND (", params$s_1_case, ")")),
-        group_by = "publication_year",
-        output = "dataframe",
-        verbose = TRUE
-    ) |>
-        dplyr::mutate(
-            publication_year = as.integer(as.character(key_display_name)),
-            key = NULL,
-            key_display_name = NULL,
-            p = count / sum(count)
-        ) |>
-        dplyr::arrange(publication_year) |>
-        dplyr::mutate(
-            p_cum = cumsum(p)
-        ) |>
-        dplyr::select(
-            publication_year,
-            everything()
-        )
     saveRDS(oa_count, file = fn)
 }
 ```
@@ -1183,13 +1164,13 @@ tic()
 
 IPBES.R::corpus_download(
     pages_dir = params$pages_cases_dir,
-    title_and_abstract_search = compact(paste(params$s_1_tca_corpus, " AND (", params$s_1_case, ")")),
+    title_and_abstract_search = compact(params$s_1_case),
     continue = TRUE,
     delete_pages_dir = FALSE,
-    set_size = 2000,
-    dry_run = TRUE,
+    set_size = 1999,
+    dry_run = FALSE,
     verbose = TRUE,
-    mc_cores = 6
+    mc_cores = 1
 )
 
 toc()
@@ -2983,7 +2964,7 @@ oa <- openalexR::oa_fetch(
     output = "dataframe",
     verbose = FALSE
 )
-oa_until_1992 <- sum(oa$count[oa$key < 1992])
+oa_until_1992 <- sum(oa$count[oa$key <= 1992])
 oa_after_1992 <- sum(oa$count[oa$key > 1992])
 
 data <- lapply(
@@ -3362,7 +3343,7 @@ oa <- openalexR::oa_fetch(
     output = "dataframe",
     verbose = FALSE
 )
-oa_until_1992 <- sum(oa$count[oa$key < 1992])
+oa_until_1992 <- sum(oa$count[oa$key <= 1992])
 oa_after_1992 <- sum(oa$count[oa$key > 1992])
 
 data <- lapply(

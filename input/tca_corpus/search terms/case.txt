@@ -1,38 +1,15 @@
-"data driven" OR
-observational OR
-experimental OR
-"real world" OR
-"evidence based" OR
-factual OR
-quantitative OR
-qualitative OR
-findings OR
-survey OR
-fieldwork OR
-documented OR
-verifiable OR
-practical OR
-"scientifically tested" OR
-"data collection" OR
-"results oriented" OR
-variable OR
-inference OR
-"empirical evidence" OR
-comparative OR
-replication OR
-interpretative OR
-behavioural OR
-outcome OR
-dataset OR
-instance OR
-case OR
-sample OR
-"example examination" OR
-"illustrative example" OR
-"subject study" OR
-"specific study" OR
-"prototype study" OR
-"field study" OR
-"exploratory study" OR
-"diagnostic study" OR
-"in depth study"
+"case study"
+AND (
+    "field work"
+    OR "concrete case"
+    OR empirical
+    OR "real world example"
+    OR observational
+    OR practical
+    OR experimental
+    OR "in  depth"
+    OR "real life case"
+    OR ethnography
+    OR "specific study"
+    OR "illustrative example"
+)

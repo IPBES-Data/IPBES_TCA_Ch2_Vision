@@ -1,158 +1,117 @@
+
 # Individual citizens
 
-"champions of the Earth" OR
+"Adolescent" OR
+"Champion of the Earth" OR
+"Change agent" OR
+"Citizen" OR
+"Common people" OR
+"Consumer" OR
+"Female" OR
 "Individual" OR
-"citizen" OR
-"neighbour" OR
-"motivated individual" OR
-"change agent" OR
-"common people" OR
-"lay person" OR
-"lay people"
+"Land manager" OR
+"Land owner" OR
+"Lay person" OR
+"Lay people" OR
+"Millenial" OR
+"Neighbour" OR
+"Teenager" OR
+"Unemployed" OR
+"Youth" OR
+"Woman"
 
 # Local communities
 
-"affinity group" OR
+"Affinity group" OR
 "Agricultural worker" OR
-"Artisanal miner" OR
-"artisanal fisher" OR
-"small-scale fisher" OR
-"community" OR
-"community forest user" OR
-"Consumer" OR
-"Consumer group" OR
+"Artisanal fisher" OR
+"Coastal community" OR
+"Community Association" OR
 "Diver" OR
 "Farmer" OR
 "Fisher" OR
 "Fishmonger" OR
 "Fish seller" OR
+"Fishing community" OR
 "Forest dweller" OR
-"Forest users group" OR
 "Gatherer" OR
 "Herbalist" OR
-"Hunters" OR
-"Land manager" OR
-"Land owner" OR
+"Hunter" OR
+"Forest users group" OR
 "Local community" OR
-"Medicine man" OR
 "Miner" OR
 "Pastoralist" OR
+"Neighbourhood" OR
 "Peasant" OR
 "Poacher" OR
-"Self-help group" OR
-"Self-help organization" OR
 "Smallholder" OR
+"Small-scale fishing community" OR
 "Trader" OR
-"Unemployed" OR
-"Village group" OR
-"neighbourhood" OR
-"fishing community" OR
-"coastal community"
+"Village group"
 
 # Civil society organizations
 
+"Citizen group" OR
 "Civil society organization" OR
-"Advocacy group" OR
-"Arts and Culture Organization"  OR
-"Civic Organization" OR
 "Community-based organization" OR
-"Community Development Corporation" OR
-"Consumer organization" OR
-"Cooperative organization" OR
+"Consumer group" OR
+"Cooperative" OR
 "Cultural group" OR
+"Faith-based organization" OR
+"Faith community"  OR
+"Grassroots organization" OR
+"Human rights organization" OR
+"Neighborhood" OR
+"Non-profit organization" OR
+"Labor organization" OR
+"Labor union" OR
+"Professional association" OR
+"Religious group" OR
+"Religious institution" OR
+"Religious organization" OR
 "Social service agency" OR
-"Solidarity organization" OR
-"Sporting association" OR
+"Self-help group" OR
+"Social organization" OR
+"Trade union" OR
 "Voluntary organization" OR
-"volunteer group" OR
 "Welfare organization"  OR
-"social organization" OR
-"citizen groups"
-
-# Youth
-
-"Youth farmer" OR
 "Youth group" OR
-"Youth organization" OR
-"young people" OR
-"adolescents" OR
-"teenagers" OR
-"young generation" OR
-"Junior generation" OR
-"youth empowerment" OR
-"youth engagement" OR
-"youth culture" OR
-"millenial"
+"Youth organization"  OR
+"Women’s group"
 
 # Indigenous people
 
-"Indigenous Peoples" OR
-"Native peoples" OR
+"Adivasi" OR
+"Autochthonous people" OR
+"First australian" OR
 "First nations" OR
-"aboriginal peoples" OR
-"original inhabitants" OR
-"tribal communities" OR
-"first peoples" OR
-"autochthonous  peoples" OR
-"adivasi" OR
-"native americans" OR
-"first australians"
+"First people" OR
+"Indigenous People" OR
+"Native american" OR
+"Native people" OR
+"Aboriginal people" OR
+"Original inhabitant" OR
+"Tribal community"
 
-# Women and intersectionality
-
-"Female farmer" OR
-"Medicine woman" OR
-"fisherwoman" OR
-"Women farmer" OR
-"Women group" OR
-"women’s collective" OR
-"women’s community" OR
-"female" OR
-"gender" OR
-"intersectionality" OR
-"woman" OR
-"shellfishwoman"
-
-# Social movements/activists
+# Environmental movements/activists
 
 "Advocacy group" OR
+"Change-maker" OR
+"Conservation group" OR
+"Conservation organization" OR
 "Environmental defender" OR
-"ocean defender" OR
 "Environmental group" OR
 "Environmental justice movement" OR
 "Environmental movement" OR
 "Environmental Organization" OR
-"Grassroots organization" OR
-"Human rights organization" OR
-"Neighborhood association" OR
-"Community Association" OR
-"Non-profit organization"  OR
-"Peace organization" OR
-"Professional association" OR
-"Social movement" OR
-"environmental activist" OR
-"environmental advocate" OR
-"environmental protester" OR
-"environmental campaigner" OR
-"environmental leader" OR
-"change-maker" OR
-"environmental reformer"  OR
-"Conservation group" OR
-"conservation organization"
-
-# Trade Unions
-
-"Trade union" OR
-"Labor organization" OR
-"Worker organization" OR
-"union members" OR
-"labor organizers" OR
-"labor force" OR
-"labor union" OR
-"trade association" OR
-"worker association" OR
-"employee unions" OR
-"Employees organization"
+"Environmental social movement" OR
+"Environmental activist" OR
+"Environmental advocate" OR
+"Environmental protester" OR
+"Environmental campaigner" OR
+"Environmental leader" OR
+"Environmental reformer" OR
+"Ocean defender"
 
 # NGO
 
@@ -162,111 +121,91 @@
 "Environmental NGO" OR
 "Non-state actor" OR
 "The Nature Conservancy" OR
+"TNC" OR
 "Third-sector organisation" OR
 "World Wide Fund for Nature" OR
-"environmental non-governmental organization" OR
-"independent sector" OR
-"oceana" OR
-"greenpeace"
+"WWF" OR
+"Environmental non-governmental organization" OR
+"Independent sector" OR
+"Oceana" OR
+"Greenpeace"
 
 # Donor/foundations
 
 "Foundation" OR
-"donor" OR
-"Philanthropic organizations" OR
-"benefactors" OR
-"sponsors" OR
-"grantmakers" OR
+"Donor" OR
+"Philanthropic organization" OR
+"Benefactor" OR
+"Sponsor" OR
+"Grantmaker" OR
 "Charity" OR
-"charitable organization" OR
-"grant-making" OR
-"fundraisers" OR
-"impact investors" OR
-"financial bakers" OR
-"endowment managers" OR
-"social investors" OR
-"environmental defense fund"
-
-# Faith-based organizations
-
-"Faith-Based Organization" OR
-"Religious group" OR
-"Religious organization" OR
-"spiritual group" OR
-"spiritual organisation" OR
-"synagogue" OR
-"temple communities" OR
-"mosque communities" OR
-"Priest" OR
-"Church groups" OR
-"faith-based groups" OR
-"Religious institutions" OR
-"faith communities" OR
-"Parish organizations" OR
-"Temple associations" OR
-"Synagogue groups" OR
-"faith leaders" OR
-"devotees" OR
-"spiritual leaders"
+"Charitable organization" OR
+"Grant-making" OR
+"Fundraiser" OR
+"Impact investor" OR
+"Endowment manager" OR
+"Social investor" OR
+"Environmental defense fund"
 
 # Local/regional government
 
-"city councillor" OR
+"City councillor" OR
 "City Council" OR
-"county commission" OR
-"county commissioners" OR
-"county government" OR
-"department" OR
-"local administrator" OR
-"local board" OR
-"local government" OR
-"local official" OR
-"mayor" OR
-"municipal government" OR
-"municipality" OR
-"prefectures" OR
-"province" OR
-"region" OR
-"state" OR
-"territory" OR
-"township trustees" OR
-"village committee"
+"County commission" OR
+"County commissioner" OR
+"County government" OR
+"Local administrator" OR
+"Local board" OR
+"Local government" OR
+"Local official" OR
+"Mayor" OR
+"Municipal government" OR
+"Municipality" OR
+"Prefecture" OR
+"Provincial government" OR
+"Regional government" OR
+"State government" OR
+"Village committee"
 
 # National government
 
-"civil servant" OR
-"departments" OR
-"government" OR
-"government officers" OR
-"internal security agencies" OR
-"judges" OR
-"judicial officers" OR
-"magistrates" OR
-"military" OR
-"minister" OR
-"ministers" OR
-"ministry" OR
-"Members of Congress" OR
-"Members of Parliament" OR
-"parliament" OR
-"political parties" OR
-"police" OR
-"royalty" OR
-"state executive agency"
+"Civil servant" OR
+"Government" OR
+"Government officer" OR
+"Internal security agency" OR
+"Judge" OR
+"Judicial officer" OR
+"Magistrate" OR
+"Military" OR
+"Minister" OR
+"Ministry" OR
+"Member of Congress" OR
+"Member of Parliament" OR
+"Parliament" OR
+"Political party" OR
+"Police" OR
+"Royalty" OR
+"Congress"
 
 # Intergovernmental organizations
 
-"Biosafety Information Network and Advisory Services" OR
 "European Environmental Agency" OR
+"EEA" OR
+"Global Environment Facility" OR
+"GEF" OR
 "Intergovernmental Panel on Climate Change" OR
+"IPCC" OR
 "Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services" OR
+"IPBES" OR
+"Intergovernmental organization" OR
+"International Union for Conservation of Nature" OR
+"IUCN" OR
 "United Nations Development Programme" OR
+"UNDP" OR
 "World Conservation Monitoring Centre" OR
 "United Nations Framework Convention on Climate Change" OR
-"Global Environment Facility" OR
-"Earth System Governance Project" OR
-"International Union for Conservation of Nature" OR
-"environmental intergovernmental organization"
+"UNCCC" OR
+"Earth System Governance Project"
 
 # Financial sector
 
@@ -277,16 +216,17 @@
 "Clearinghouse" OR
 "Commercial Bank" OR
 "Credit Rating Agency" OR
-"Donor" OR
 "Federal Reserve System" OR
 "Financial Action Task Force" OR
 "Financial Stability Board" OR
 "Fintech Companies" OR
-"Funders" OR
+"Funder" OR
 "Insurance Company" OR
 "International Monetary Fund" OR
 "Investment Bank" OR
 "Investor" OR
+"Micro-credit" OR
+"Micro-banking" OR
 "Pension Fund" OR
 "Private Equity firm" OR
 "Regulatory Authority" OR
@@ -295,36 +235,32 @@
 "Stock Exchange" OR
 "Treasury Department" OR
 "Venture Capital Firm" OR
-"World Bank Group" OR
-"micro-credit" OR
-"savings and loan"
+"World Bank Group"
 
 # Private sector
 
-"Board of Director" OR
+"Board of Directors" OR
 "Business owner" OR
 "CEO" OR
 "Chamber of commerce" OR
 "Consultant" OR
 "Contractor" OR
-"Corporate entity" OR
 "Customer" OR
 "Employee" OR
 "Entrepreneur" OR
 "Executive" OR
 "Farm manager" OR
 "Farm owner" OR
-"Forest concession" OR
 "Franchise" OR
-"Investor" OR
 "Large enterprise" OR
 "Logger" OR
 "Logging company" OR
 "Manager" OR
 "Mining company" OR
 "Mining concession" OR
-"Partner" OR
+"Business partner" OR
 "Park manager" OR
+"Plantation manager" OR
 "Plantation owner" OR
 "Producer" OR
 "Rancher" OR
@@ -332,29 +268,22 @@
 "Small and medium-sized enterprise" OR
 "Stockholder" OR
 "Supplier" OR
-"Trade association" OR
-"Trade organization" OR
-"Trade union" OR
-"Vendor" OR
-"Worker"
+"Vendor"
 
 # Scientific community
 
 "Academia" OR
-"Citizen Science Initiative"  OR
-"Expert" OR
+"Citizen Science Initiative" OR
 "Grant-Making Body" OR
 "Government Research Agency" OR
 "International Research Collaboration" OR
 "Nonprofit Research Organization" OR
-"Private Research and Development Laboratory" OR
+"Research and Development" OR
 "Professional" OR
 "Professional School" OR
-"R&D" OR
 "Research Center" OR
 "Research Institute" OR
 "Research Professional" OR
-"Science Communication and Outreach Organization" OR
 "Scientific Institution" OR
 "Scientific Journal" OR
 "Scientific Publication" OR
@@ -363,15 +292,14 @@
 "Think Tank" OR
 "University" OR
 "International research institute" OR
-"scholar" OR
-"researcher"
+"Scholar"
 
 # Education sector
 
 "College" OR
 "Custodian" OR
 "Curriculum Developer" OR
-"docent" OR
+"Docent" OR
 "Education Researcher" OR
 "Educator" OR
 "Guidance Counsellor" OR
@@ -379,21 +307,18 @@
 "Headmistress" OR
 "Higher Education Institution" OR
 "IT Specialist" OR
-"lecturer" OR
+"Lecturer" OR
 "Librarian" OR
 "Principal" OR
 "Professor" OR
 "School" OR
 "School Board" OR
 "Student" OR
-"Teacher Union" OR
 "Teacher" OR
 "Teachers Association" OR
 "Technical Institute" OR
-"University" OR
-"instructor" OR
-"lecturers" OR
-"training institute"
+"Instructor" OR
+"Training institute"
 
 # Justice system
 
@@ -430,7 +355,6 @@
 "Documentary" OR
 "Editor" OR
 "Editor-in-Chief" OR
-"Entertainment Content" OR
 "Filmmaker" OR
 "Freelancer" OR
 "Journalist" OR
@@ -440,7 +364,6 @@
 "News Broadcast" OR
 "News Website" OR
 "Online Media" OR
-"Online News Outlet" OR
 "Online News Platform" OR
 "Photojournalist" OR
 "Podcast" OR
