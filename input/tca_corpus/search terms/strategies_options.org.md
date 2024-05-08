@@ -1,10 +1,58 @@
 # 1) Conserve and regenerate places of value to nature and people
 
+## Conservation of "territories of life"
+
+"Biocultural conservation" OR
+"Bottom-up environmental initiative"  OR
+"Community-based management" OR
+"Community-led conservation" OR
+"Community protocol" OR
+"Community quota" OR
+"Convivial conservation" OR
+"Comanagement" OR
+"Farmers market" OR
+"Indigenous and Community Conserved Area" OR
+"Indigenous-led conservation"  OR
+"Legal pluralism" OR
+"Multi-functional landscape" OR
+"Other effective area-based conservation measure" OR
+"Recreation area" OR
+"Sacred grove" OR
+"Sacred site" OR
+"Stewardship" OR
+"Territories of life" OR
+"Tribal park"
+
+## Right-based approaches
+
+"Access and benefit sharing" OR
+"Community rights" OR
+"Ecocide" OR
+"Food sovereignty" OR
+"Free prior and informed consent" OR
+"Human rights" OR
+"Indigenous and local language" OR
+"Intellectual property rights" OR
+"Civil and Political Rights" OR
+"Economic Social and Cultural Rights" OR
+"International Human Rights" OR
+"International Labour Organization Convention" OR
+"Land sovereignty" OR
+"Land tenure" OR
+"Legal empowerment" OR
+"Nature rights" OR
+"Rights of nature" OR
+"Right to water" OR
+"Tenure rights" OR
+"Rights of Indigenous Peoples" OR
+"Indigenous Peoples rights"
+
 ## Environmental conservation and protection
 
 "Biosphere reserve" OR
 "Blue park" OR
 "Environmental impact assessment" OR
+"Ethical space" OR
 "Forest conservation" OR
 "Forest Reserve" OR
 "Habitat Conservation Plan" OR
@@ -15,10 +63,10 @@
 "Marine park" OR
 "Marine protected area" OR
 "Marine reserve" OR
-"Marine resource areas" OR
+"Marine resource area" OR
 "National biodiversity strategy and action plan" OR
-"national park" OR
-"nature reserve" OR
+"National park" OR
+"Nature reserve" OR
 "Private reserve" OR
 "Protected area" OR
 "Remedial action" OR
@@ -43,80 +91,32 @@
 "Marine governance" OR
 "Marine mammal monitoring" OR
 "Marine monitoring" OR
-"Ocean governance" OR
 "Ocean monitoring" OR
-"sustainable land management" OR
+"Sustainable land management" OR
 "Sustainable wildlife management" OR
 "Species monitoring" OR
 "Transboundary water management" OR
-"Waste Management" OR
+"Waste management" OR
 "Watershed management"
 
-## Right-based approaches
-
-"Access and benefit sharing" OR
-"Community rights" OR
-"Food sovereignty" OR
-"Free prior and informed consent" OR
-"Human rights" OR
-"Indigenous and local language" OR
-"Intellectual property right" OR
-"Civil and Political Rights" OR
-"Economic Social and Cultural Rights" OR
-"International Human Rights Treaty" OR
-"International Labour Organization Convention" OR
-"Land sovereignty" OR
-"Land tenure" OR
-"Legal empowerment" OR
-"Individual transferable rights" OR
-"Nature rights" OR
-"Rights of nature" OR
-"Right to water" OR
-"Tenure right" OR
-"Rights of Indigenous Peoples"
-
-## Conservation through multiple values of nature
-
-"Biocultural conservation" OR
-"Bottom-up environmental initiative"  OR
-"Community-based management" OR
-"Community-led conservation" OR
-"Community-led conservation" OR
-"Community protocol" OR
-"Community quota" OR
-"Convivial conservation" OR
-"Comanagement" OR
-"Farmers Market" OR
-"Indigenous and Community Conserved Area" OR
-"Indigenous co-governance" OR
-"Indigenous-led conservation"  OR
-"Legal pluralism" OR
-"Multi-functional Landscape" OR
-"Other effective area-based Conservation Measure" OR
-"Recreation area" OR
-"Sacred grove" OR
-"Sacred site" OR
-"Stewardship" OR
-"Tribal park"
-
-## Spatial planning and land use management
+## Spatial planning
 
  "Buffer zone" OR
-"Coastal planning area" OR
-"Development Control Regulation" OR
-"Environmental Spatial Analysis" OR
-"Infrastructure Planning" OR
-"Land Law" OR
-"Land Use Permit" OR
-"Land Use Planning" OR
-"Marine Spatial Planning" OR
-"Master Plan"  OR
-"Ocean Planning" OR
-"Participatory Planning" OR
-"Spatial Planning" OR
-"Strategic Environmental Assessment"
+"Coastal planning" OR
+"Development control regulation" OR
+"Environmental spatial analysis" OR
+"Infrastructure planning" OR
+"Land law" OR
+"Land use permit" OR
+"Land use planning" OR
+"Marine spatial planning" OR
+"Master plan"  OR
+"Ocean planning" OR
+"Participatory planning" OR
+"Spatial planning" OR
+"Strategic environmental assessment"
 
-## Restoration and regeneration
+## Regeneration and restoration
 
 "Biodiversity restoration" OR
 "Connectivity restoration" OR
@@ -129,77 +129,67 @@
 "Regenerative agriculture" OR
 "Regenerative farming" OR
 "Rewilding" OR
-"soil restoration"
+"Soil restoration" OR
+"Restoration ecology" OR
+"Regeneration" OR
+"Regenerative system" OR
+"Ecological regeneration"
 
 # 2) Drive systemic change in the sectors most responsible for natures decline
 
-## Regulation measures for resource management
+## Regulation of resource extraction
 
-"Cap resource consumption" OR
+"Capping resource use" OR
 "Consumption fee" OR
 "Consumption regulation" OR
-"Conversion off-budget subsidies" OR
 "Cross-compliance" OR
 "Emission caps" OR
-"habitat protection" OR
+"Habitat protection" OR
 "Land use regulation" OR
 "Land acquisition regulation" OR
 "Licensing and permitting"  OR
 "Logging regulation" OR
 "Pollution control" OR
 "Process regulation" OR
-"Regulation of resource extraction" OR
+"Resource extraction regulation" OR
 "Regulatory measure" OR
-"Resource use restriction" OR
+"Resource capping" OR
 "Sustainable public procurement" OR
-"Tax on consumption" OR
 "Territorial use-rights for fisheries" OR
 "Trade regulation" OR
 "Wildlife trade regulation" OR
 "Zoning regulation"
 
-## Market-Based innovative instruments for conservation
+## Innovative economic instruments forconservation
 
-"Biodiversity bond" OR
 "Biodiversity compensation" OR
 "Biodiversity conservation banking" OR
-"Biodiversity offset" OR
 "Cap and Trade" OR
-"Cap and share" OR
-"Carbon credit" OR
-"Commodity future" OR
-"Corporate Social Responsibility" OR
-"Cross-compliance incentive" OR
-"Derivative trading" OR
-"Ecological fiscal transfer" OR
-"environmental Mitigation" OR
-"Environmental Tax"  OR
-"Environmental impact bonds" OR
-"Green subsidy" OR
-"internalization of externalities" OR
+"Cap and share"  OR
+"Corporate Social Responsibility"  OR
+"Environmental Mitigation"  OR
+"Internalization of externalities" OR
 "Market-based financing mechanism" OR
- "No net loss" OR
+"No net loss" OR
 "Payment for ecosystem services" OR
 "Reducing Emissions from Deforestation and Forest Degradation" OR
-"remediation" OR
-"Subsidy reform" OR
-"Tradable permit" OR
-"Trade ban" OR
+"Remediation" OR
+"Subsidy reform"  OR
 "True cost pricing" OR
 "Zero deforestation"
 
-## Standards, certification, and supply chain initiatives
+## Standards certification and supply chain initiatives
 
 "Certification" OR
 "Collaborative supply chain initiative" OR
 "Commodity chain regulation" OR
 "Consumer demand for transparency" OR
-"Corporate disclosure mandate" OR
+"Corporate disclosure" OR
 "Eco Labeling" OR
 "Fair Trade Certification" OR
 "Forest Stewardship Council Certification" OR
-"Global sustainable seafood initiative" OR
-"green branding" OR
+"Sustainable seafood initiative" OR
+"Green branding" OR
 "Guideline" OR
 "ISO Standard" OR
 "Labeling" OR
@@ -211,56 +201,10 @@
 "Participatory Guarantee System" OR
 "Production standards" OR
 "Standard" OR
-"Supplier code of conduct requirement" OR
 "Sustainable sourcing" OR
 "Third-party auditing" OR
 "Third-party verification" OR
-"seafood watch"
-
-## Sustainable consumption
-
-"Collaborative Consumption" OR
-"Dietary transition" OR
-"Food Cooperative" OR
-"Food waste reduction" OR
-"frugal consumption" OR
-"green consumption" OR
-"Localized food system" OR
-"low-impact diet" OR
-"plant-based diet" OR
-"Reduce consumption" OR
-"Recycle" OR
-"Responsible consumption" OR
-"Reuse" OR
-"shared consumption" OR
-"shared ownership" OR
-"Sustainable consumption" OR
-"Sustainable use"
-
-## Sustainable production
-
-"Agri-Environmental and Climate Measure" OR
-"Agroecology" OR
-"Agroforestry" OR
-"Biological agriculture" OR
-"Best practice in production" OR
-"Carbon farming" OR
-"Climate-smart agriculture" OR
-"Community-supported Agriculture" OR
-"Conservation tillage" OR
-"Crop diversification" OR
-"downscale production" OR
-"Holistic planned grazing" OR
-"Organic agriculture" OR
-"Reduced impact logging" OR
-"Responsible production" OR
-"Sustainable agricultural intensification" OR
-"sustainable aquaculture" OR
-"Sustainable design" OR
-"Sustainable fishing" OR
-"Sustainable production" OR
-"Sustainable Small-Scale Fisheries" OR
-"Swidden agriculture"
+"Seafood watch"  
 
 ## Nature finance
 
@@ -275,40 +219,63 @@
 "Ecological finance" OR
 "Environmental finance" OR
 "Environmental harmful subsidies" OR
-"Nature-dependent economic activities" OR
+"Nature-dependent economic activity" OR
 "Nature finance" OR
+"Lost and damage" OR
 "Ocean finance" OR
 "Public funding for conservation" OR
 "Public-private partnership"
 
-## Community activism and environmental advocacy
+## Community activism and advocacy
 
-"boycotts" OR
-"Citizen-led environmental initiative" OR
-"collective action networks" OR
-"Community Garden" OR
-"environmental action groups" OR
-"environmental defenders" OR
-"environmental lawsuits" OR
-"environmental mobilizations" OR
-"environmental social movements" OR
-"Formal petitions" OR
-"hunger strikes" OR
-"land occupation" OR
-"media-based activism" OR
-"name and shame" OR
+"Boycott" OR
+"Collective action network" OR
+"Community garden" OR
+"Environmental action group" OR
+"Environmental defender" OR
+"Environmental lawsuit" OR
+"Environmental mobilization" OR
+"Environmental social movement" OR
+"Formal petition" OR
+"Hunger strike" OR
+"Land occupation" OR
+"Media-based activism" OR
+"Name and shame" OR
 "Non-cooperation" OR
 "Non-violent protest" OR
-"objections to environmental impacts assessments" OR
-"persuasion" OR
-"public campaigns" OR
-"refusal of compensation payments" OR
-"road blockades" OR
-"Strikes" OR
-"street protests" OR
-"Transition Town Movement" OR
+"Persuasion" OR
+"Public campaign" OR
+"Road blockade" OR
+"Social movement" OR
+"Strike" OR
+"Street protest" OR
+"Transition town" OR
 "Urban gardening" OR
-"Zero Waste Community"
+"Zero waste"
+
+## Technology-based solutions
+
+"Biofuel" OR
+"Biomass energy production" OR
+"Biomimetic" OR
+"Climate-smart agriculture" OR
+"Coordinated transport" OR
+"Coordinated heating"  OR
+"Digital agriculture" OR
+"Energy sharing platform" OR
+"Fuel-efficient vehicle" OR
+"Geothermal energy" OR
+"Green building material" OR
+"Green technology" OR
+"Hybrid vehicle" OR
+"Minigrid" OR
+"Microgrid" OR
+"Replacement fertilizer" OR
+"Renewable energy" OR
+"Smart technologies" OR
+"Solar panel" OR
+"Solar photovoltaic system" OR
+"Wind turbine"
 
 ## Green infrastructure
 
@@ -321,13 +288,13 @@
 "Floodplain restoration" OR
 "Green architecture" OR
 "Green infrastructure" OR
-"green logistics" OR
+"Green logistics" OR
 "Green roof" OR
 "Green street" OR
 "Green wall" OR
 "Living shoreline" OR
 "Multi-purpose structure" OR
-"nature-based solution" OR
+"Nature-based solution" OR
 "Permeable pavement" OR
 "Public transport" OR
 "Rain garden" OR
@@ -338,36 +305,12 @@
 "Urban forest" OR
 "Urban park" OR
 "Vegetated swale" OR
-"Water infrastructure"  
+"Water infrastructure"
 
-## Green technology
-
-"Biofuel" OR
-"Biomass energy production" OR
-"Biomimetic" OR
-"Climate-smart agriculture" OR
-"Coordinated transport" OR
-"Coordinated heating"  OR
-"energy sharing platform" OR
-"Fuel-efficient vehicle" OR
-"Geothermal energy" OR
-"Green building material" OR
-"green technology" OR
-"Hybrid vehicle" OR
-"Minigrid" OR
-"microgrid" OR
-"Replacement fertilizer" OR
-"Small renewable energy technology" OR
-"Smart meter" OR
-"Solar panel" OR
-"Solar photovoltaic system" OR
-"Wind turbine"
-
-# 3) Transform economic systems to address power inequities and extractivist activities
+# 3) Transform economic systems for nature and equity
 
 ## Alternative measures of wellbeing
 
-"Doughnut planning" OR
 "Ecological Footprint" OR
 "Genuine Progress Indicator" OR
 "Green GDP" OR
@@ -376,25 +319,37 @@
 "Human Development Index" OR
 "Inclusive Wealth Index" OR
 "Index of Sustainable Economic Welfare" OR
-"inequality index" OR
-"real wealth of nations" OR
+"Inequality index" OR
+"Real wealth" OR
 "Social Progress Index" OR
-"wellbeing budget"  
+"Wellbeing budget"  
 
 ## Financial system reform
 
+"Biodiversity offset" OR
+"Carbon credit" OR
+"Commodity future" OR
 "Central bank reform" OR
-"debt relief" OR
+"Debt relief" OR
 "Debt service suspension" OR
-"dismantle off-shore accounts" OR
+"Derivative trading" OR
+"Ecological fiscal transfer" OR
+"Environmental Tax"  OR
+"Environmental impact bonds" OR
+"Green subsidy" OR
+"Green public procurement" OR
+"Global exchange price" OR
 "International Monetary Fund reform" OR
-"financial reform" OR
-"progressive taxation on wealth"  OR
-"reduce tax havens" OR
-"regulate inequalities" OR
-"sustainable finance" OR
-"tobin tax" OR
-"wealth tax" OR
+"Financial reform" OR
+"Progressive taxation"  OR
+"Tax haven" OR
+"Regulate inequalities" OR
+"Sustainable finance" OR
+"Tradable permit" OR
+"Trade ban" OR
+"Tobin tax" OR
+"Universal basic income" OR
+"Wealth tax" OR
 "World Trade Organization reform"
 
 ## Alternative economic models
@@ -406,47 +361,96 @@
 "Business for Nature" OR
 "Caring economy" OR
 "Circular economy" OR
-"circular bioeconomy" OR
+"Circular bioeconomy" OR
 "Commoning" OR
 "Cradle-to-Cradle" OR
 "Degrowth" OR
 "Doughnut Economics" OR
 "Economic of Biodiversity" OR
-"ecological economics" OR
+"Ecological economics" OR
 "Ecosystem accounting" OR
 "Mainstreaming biodiversity" OR
-"Life-Centered Economics" OR
-"nature positive economy" OR
+"Nature positive economy" OR
 "Natural capital accounting" OR
 "Natural Social Contract" OR
-"nature-related financial disclosure" OR
-"nature-positive business" OR
-"not-for-profit economy" OR
-"regenerative business" OR
-"regenerative capitalism" OR
-"relocalize economy" OR
+"Nature-related financial disclosure" OR
+"Not-for-profit economy" OR
+"Regenerative business" OR
+"Regenerative capitalism" OR
+"Relocalize" OR
 "Sharing economy" OR
 "Steady state economy" OR
 "System of Environmental Economic Accounting" OR
 "Wellbeing Economics"
 
-# 4) Transform governance systems to be inclusive, accountable, and adaptive
+## Sustainable consumption
+
+"Collaborative Consumption" OR
+"Consumption reduction" OR
+"Dietary transition" OR
+"Ethical consumerism" OR
+"Food Cooperative" OR
+"Food waste reduction" OR
+"Frugal consumption" OR
+"Green consumption" OR
+"Lifestyle change" OR
+"Localized food system" OR
+"Low-impact diet" OR
+"Minimalist lifestyle" OR
+"Plant-based diet" OR
+"Reduce consumption" OR
+"Recycle" OR
+"Responsible consumption" OR
+"Reuse" OR
+"Shared consumption" OR
+"Shared ownership" OR
+"Simple living" OR
+"Sustainable consumption" OR
+"Sustainable use" OR
+"Sustainable practices" OR
+"Tax on consumption"
+
+## Sustainable production
+
+"Agri-Environmental and Climate Measure" OR
+"Agroecology" OR
+"Agroforestry" OR
+"Biological agriculture" OR
+"Best practice in production" OR
+"Carbon farming" OR
+"Climate-smart agriculture" OR
+"Community-supported Agriculture" OR
+"Conservation tillage" OR
+"Crop diversification" OR
+"Downscale production" OR
+"Holistic planned grazing" OR
+"Organic agriculture" OR
+"Reduced impact logging" OR
+"Responsible production" OR
+"Sustainable agricultural intensification" OR
+"Sustainable aquaculture" OR
+"Sustainable design" OR
+"Sustainable fishing" OR
+"Sustainable production" OR
+"Sustainable Small-Scale Fisheries" OR
+"Swidden agriculture"
+
+# 4) Transform governance systems to be inclusive accountable and adaptive
 
 ## Integrated governance
 
-"biodiversity advocacy" OR
-"cross-sectoral coordination" OR
+"Cross-sectoral coordination" OR
 "Ecosystem-based management" OR
-"environmental advocacy" OR
+"Environmental advocacy" OR
 "Institutional arrangement" OR
 "Institutional entrepreneurship" OR
 "Institutional reform" OR
-"integrated assessment" OR
-"multilevel governance" OR
+"Integrated assessment" OR
+"Integrated governance" OR
+"Multilevel governance" OR
 "Policy coordination" OR
-"social capital" OR
-"strategic planning" OR
-"strategy visioning"
+"Strategic planning" OR
+"Visioning"
 
 ## Inclusive governance
 
@@ -461,8 +465,7 @@
 "Gender inclusive governance" OR
 "Gender-responsive governance" OR
 "Global action network" OR
-"Indigenous and local community participation" OR
-"Legal and Policy Framework for Participation" OR
+"Indigenous peoples and local communities participation" OR
 "Multi-stakeholder platform" OR
 "Participatory evaluation and learning" OR
 "Participatory restoration" OR
@@ -487,63 +490,64 @@
 "International Convention for the Prevention of Pollution from Ships" OR
 "International Treaty on Plant Genetic Resources for Food and Agriculture" OR
 "Kyoto Protocol" OR
-"Law of the Sea on Biodiversity Beyond National Jurisdiction" OR
+"BBNJ Treaty" OR
 "Minamata Convention" OR
 "Montreal Protocol" OR
-"Multilateral environmental agreement" OR
+"Multilateral agreement" OR
 "Nagoya Protocol" OR
 "Paris Agreement" OR
 "Ramsar Convention" OR
 "Rio Declaration" OR
 "Rotterdam Convention" OR
-"Shipping agreement" OR
 "Stockholm Convention" OR
-"Sustainable Development Goal"
+"Sustainable Development Goal" OR
+"International ocean governance"
 
 ## Adaptive governance
 
 "Accountability" OR
-"adaptive governance" OR
+"Adaptive governance" OR
 "Adaptive management framework" OR
 "Advocacy network" OR
-"Conflict resolution mechanism" OR
-"Deliberative democracy mechanism" OR
+"Conflict resolution" OR
+"Deliberative democracy" OR
 "Deep democracy" OR
-"flexible regulation" OR
+"Flexible regulation" OR
 "Informed governance" OR
-"iterative decision making" OR
-"iterative planning" OR
+"Iterative decision making" OR
+"Iterative planning" OR
 "Local governance structure" OR
 "Monitoring evaluation and learning" OR
 "Open government initiative" OR
 "Policy monitoring" OR
-"Planning monitoring evaluation and review" OR
+"Planning monitoring and evaluation" OR
 "Reflexive governance" OR
-"risk assessment" OR
+"Risk assessment" OR
 "Transparency and accountability"
 
 ## Transparent governance
 
+"Access to environmental information" OR
 "Anti-corruption measures" OR
 "Anti-discrimination law" OR
 "Convention against Corruption" OR
-"conflict of interest regulation" OR
+"Conflict of interest regulation" OR
 "Corporate Sustainability Reporting Directive" OR
 "Decentralization law" OR
+"Disclosure of financial information" OR
 "Equitable access to justice" OR
+"Financial disclosure" OR
 "Freedom of information law" OR
-"independent oversight and audit institutions" OR
+"Institutional independence" OR
 "Judicial independence" OR
-"lobbying reform" OR
-"lobbying regulation" OR
-"measures against corruption" OR
-"media and press freedom" OR
-"nature-related financial disclosure" OR
-"Ombudsman institution" OR
-"open data initiatives" OR
-"public access to environmental information" OR
-"public disclosure of financial information" OR
-"transparency requirements" OR
+"Lobbying reform" OR
+"Lobbying regulation" OR
+"Measures against corruption" OR
+"Press freedom"  OR
+"Ombudsman" OR
+"Open data"  OR
+"Transparency" OR
+"Transparent governance" OR
 "Whistleblower protection law"
 
 ## Customary governance
@@ -558,35 +562,12 @@
 "Intergenerational knowledge transmission" OR
 "Resource stewardship"
 
-# 5) Shift underlying societal norms, philosophies, and goals to align with the 2050 Biodiversity Vision and related global sustainability goals
-
-## Inner change
-
-"Behavioral change" OR
-"Biophilia" OR
-"Connection with Nature" OR
-"Consumption reduction" OR
-"Dietary transition" OR
-"Ecological Connection" OR
-"Environmental Connection" OR
-"Ethical consumerism" OR
-"Food waste reduction" OR
-"Inner capacity" OR
-"Inner development goal" OR
-"Identity shift" OR
-"Inner transformation" OR
-"Lifestyle change" OR
-"Minimalism"  OR
-"Personal meaning" OR
-"Personal transformation" OR
-"Simple living" OR
-"Sustainable practices"
+# 5) Shift underlying societal norms philosophies and goals
 
 ## Narrative and discourse change
 
 "Awareness campaign" OR
-"Behavioral nudge" OR
-"Campaign on consumer goods" OR
+"Behavioral nudge"  OR
 "Choice architecture" OR
 "Community dialogue" OR
 "Cultural narrative" OR
@@ -594,17 +575,15 @@
 "Environmental discourse" OR
 "Environmental narrative" OR
 "Environmental perspective" OR
-"Environmental storyline" OR
 "Green discourse" OR
 "Green narrative" OR
 "Green perspective" OR
-"Green storyline" OR
 "Mass media campaign" OR
+"Marketing campaign" OR
 "Normative feedback" OR
 "Nudging" OR
 "Peer-to-peer communication" OR
-"Regenerative culture" OR
-"Social media platform" OR
+"Regenerative culture"   OR
 "Storytelling initiative" OR
 "Unitive narrative" OR
 "Youth empowerment program"
@@ -622,6 +601,7 @@
 "Experiential teaching" OR
 "Imagination infrastructure" OR
 "Indigenous education" OR
+"Inner capacity" OR
 "Practical learning" OR
 "Sacred teaching" OR
 "Social learning" OR
@@ -646,40 +626,42 @@
 "Jointly constructed knowledge" OR
 "Knowledge co-creation" OR
 "Knowledge co-design" OR
-"Participatory knowledge creation" OR
-"Participatory research and development" OR
 "Multiple evidence-based approach" OR
+"Participatory knowledge creation" OR
+"Participatory research and development"  OR
 "Weaving knowledge"
 
 ## Value change
 
 "Balanced relation" OR
+"Biophilia" OR
 "Caring for nature" OR
 "Community health" OR
-"Connection to nature" OR
-"Cultural preservation" OR
+"Connection with nature" OR
 "Cultural pluralism" OR
 "Cultural revitalization" OR
 "Eco-centrism" OR
 "Ecohealth" OR
+"Environmental connection" OR
 "Environmental stewardship" OR
 "Harmony with nature" OR
 "Holistic worldview" OR
 "Human-nature connection" OR
 "Human-nature relation" OR
+"Inner development" OR
+"Inner transformation" OR
 "Intrinsic value" OR
-"Interconnectedness of all life forms" OR
 "Indigenous worldview" OR
 "One health" OR
 "Planetary health" OR
 "Planetary wellbeing" OR
+"Personal transformation" OR
 "Relationality" OR
 "Relational values" OR
 "Respect for Diversity" OR
 "Spiritual connection" OR
 "Unitive vision" OR
-"Utilitarian value" OR
-"Water-energy-food nexus"
+"Utilitarian value"
 
 ## Collaboration and networking
 
@@ -691,7 +673,7 @@
 "Community bond" OR
 "Community network" OR
 "Community solidarity" OR
-"Connector" OR
+"Broker" OR
 "Facilitator" OR
 "Indigenous peoples network" OR
 "Innovation broker" OR
@@ -700,7 +682,6 @@
 "Learning network" OR
 "Middle actor" OR
 "Multi-stakeholder platform" OR
-"New collaborative setting" OR
 "Partnership network" OR
 "Policy network" OR
 "Respectful partnership" OR
