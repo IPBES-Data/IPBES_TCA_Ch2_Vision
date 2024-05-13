@@ -133,6 +133,8 @@ params:
 
     pages_dir: !expr file.path(".", "data", "tca_corpus", "pages")
     pages_cases_dir: !expr file.path(".", "data", "tca_corpus", "pages_cases")
+    pages_strategies_dir: !expr file.path(".", "data", "tca_corpus", "pages_strategies")
+    pages_actors_dir: !expr file.path(".", "data", "tca_corpus", "pages_actors")
 
     corpus_dir: !expr file.path(".", "data", "tca_corpus", "corpus")
     corpus_topics_dir: !expr file.path(".", "data", "tca_corpus", "corpus_topics")
@@ -1160,7 +1162,7 @@ lapply(
 
 tic()
 
-IPBES.R::corpus_download_cust(
+IPBES.R::corpus_download(
     pages_dir = params$pages_cases_dir,
     title_and_abstract_search = compact(params$s_1_case),
     continue = TRUE,
@@ -2916,6 +2918,104 @@ if (!file.exists(file.path(fn))) {
 ```
 
 
+#### Download Strategies Corpus (only ids)
+
+```{r}
+#| label: download_strategies_corpus
+#| eval: false
+#|
+
+tic()
+
+strategies_options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
+lapply(
+    names(strategies_options_terms),
+    function(strategy) {
+        message("- ", strategy)
+        IPBES.R::corpus_download(
+            pages_dir = paste0(params$pages_strategies_dir, "_", make.names(strategy)),
+            title_and_abstract_search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", paste0(strategies_options_terms[[strategy]], collapse = " "), ")")),
+            select_fields = c("id"),
+            continue = TRUE,
+            delete_pages_dir = FALSE,
+            dry_run = FALSE,
+            verbose = TRUE,
+            mc_cores = 8
+        )
+    }
+)
+
+toc()
+```
+
+
+#### Convert Strategies Pages to rds (only ids)
+
+```{r}
+#| label: convert_strategies_corpus
+#|
+
+tic()
+
+fn <- file.path("data", "tca_corpus", "strategies_options_ids.rds")
+
+if (!file.exists(fn)) {
+    strategies__options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
+    strategies_options_ids <- lapply(
+        names(strategies_terms),
+        function(strategy) {
+            message("- ", strategy)
+            paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
+                list.files(
+                    pattern = ".rds$",
+                    recursive = TRUE,
+                    full.names = TRUE
+                ) |>
+                sapply(
+                    FUN = function(f) {
+                        readRDS(f)
+                    }
+                ) |>
+                unlist() |>
+                as.vector() |>
+                unique()
+        }
+    )
+    names(strategies_options_ids) <- names(strategies__options_terms)
+
+    saveRDS(strategies_options_ids, file = fn)
+}
+
+toc()
+```
+
+
+#### Create Strategies Matrix
+
+```{r}
+#| label: strategies_options_overlap
+#|
+
+fn <- file.path("data", "tca_corpus", "strategies_options_overlap.rds")
+
+if (!file.exists(fn)) {
+    strategies_options_ids <- readRDS(file.path("data", "tca_corpus", "strategies_options_ids.rds"))
+
+    overlap_count <- function(x, y) {
+        length(intersect(x, y))
+    }
+
+    strategies_options_overlap <- outer(
+        strategies_options_ids,
+        strategies_options_ids,
+        Vectorize(overlap_count)
+    )
+
+    saveRDS(strategies_options_overlap, file = fn)
+    write.csv(strategies_options_overlap, file = gsub("rds$", "csv", fn))
+}
+```
+
 ### Results
 
 #### Count of Strategies / Options Table
@@ -3223,6 +3323,103 @@ if (!file.exists(file.path(fn))) {
     saveRDS(actors_options, file = fn)
 }
 ```
+
+#### Download Actors Corpus (only ids)
+
+```{r}
+#| label: download_actors_corpus
+#| eval: false
+#|
+
+tic()
+
+actors_terms <- readRDS(file.path("data", "tca_corpus", "actors_terms.rds"))
+lapply(
+    names(actors_terms),
+    function(actor) {
+        message("- ", actor)
+        IPBES.R::corpus_download(
+            pages_dir = paste0(params$pages_actors_dir, "_", make.names(actor)),
+            title_and_abstract_search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", paste0(actors_terms[[actor]], collapse = " "), ")")),
+            select_fields = c("id"),
+            continue = TRUE,
+            delete_pages_dir = FALSE,
+            dry_run = FALSE,
+            verbose = TRUE,
+            mc_cores = 8
+        )
+    }
+)
+
+toc()
+```
+
+#### Convert Actors Pages to rds (only ids)
+
+```{r}
+#| label: convert_actors_corpus
+#|
+
+tic()
+
+fn <- file.path("data", "tca_corpus", "actors_ids.rds")
+
+if (!file.exists(fn)) {
+    actors_terms <- readRDS(file.path("data", "tca_corpus", "actors_terms.rds"))
+    actors_ids <- lapply(
+        names(actors_terms),
+        function(actor) {
+            message("- ", actor)
+            paste0(params$pages_actors_dir, "_", make.names(actor)) |>
+                list.files(
+                    pattern = ".rds$",
+                    recursive = TRUE,
+                    full.names = TRUE
+                ) |>
+                sapply(
+                    FUN = function(f) {
+                        readRDS(f)
+                    }
+                ) |>
+                unlist() |>
+                as.vector() |>
+                unique()
+        }
+    )
+    names(actors_ids) <- names(actors_terms)
+
+    saveRDS(actors_ids, file = fn)
+}
+
+toc()
+```
+
+#### Create Actors Matrix
+
+```{r}
+#| label: actors_overlap
+#|
+
+fn <- file.path("data", "tca_corpus", "actors_overlap.rds")
+
+if (!file.exists(fn)) {
+    actors_ids <- readRDS(file.path("data", "tca_corpus", "actors_ids.rds"))
+
+    overlap_count <- function(x, y) {
+        length(intersect(x, y))
+    }
+
+    actors_overlap <- outer(
+        actors_ids,
+        actors_ids,
+        Vectorize(overlap_count)
+    )
+
+    saveRDS(actors_overlap, file = fn)
+    write.csv(actors_overlap, file = gsub("rds$", "csv", fn))
+}
+```
+
 
 ### Results
 
