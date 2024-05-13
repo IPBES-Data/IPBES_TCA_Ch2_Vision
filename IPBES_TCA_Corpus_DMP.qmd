@@ -3073,6 +3073,45 @@ if (!file.exists(fn)) {
 }
 ```
 
+#### Strategies / Options in Case Corpus
+
+```{r}
+#| label: cases_strategies_options_corpus
+#|
+
+fn <- file.path("data", "tca_corpus", "strategies_options_case.rds")
+
+if (!file.exists(fn)) {
+    case_ids <- corpus_read(params$corpus_cases_dir) |>
+        dplyr::distinct(id) |>
+        collect() |>
+        unlist()
+    strategies_options_ids <- readRDS(file.path("data", "tca_corpus", "strategies_options_ids.rds"))
+
+    strategies_options_case <- lapply(
+        names(strategies_options_ids),
+        function(strategy) {
+            message("- ", strategy)
+            count <- sum(strategies_options_ids[[strategy]] %in% case_ids)
+            data.frame(
+                strategy_option = strategy,
+                count_cases = count,
+                count_tca = length(strategies_options_ids[[strategy]]),
+                p_cases = count / length(strategies_options_ids[[strategy]])
+            )
+        }
+    ) |>
+        do.call(what = rbind)
+
+    strategies_options_case <- list(
+        timestamp = Sys.time(),
+        strategies_options_case = strategies_options_case
+    )
+
+    saveRDS(strategies_options_case, file = fn)
+}
+```
+
 ### Results
 
 #### Count of Strategies / Options Table
@@ -3111,93 +3150,105 @@ This data is corrected for different research oputput before and after 1992 by d
 ```{r}
 #| label: strategies_options_counts_figure
 #|
-strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
 
-oa <- openalexR::oa_fetch(
-    search = "",
-    group_by = "publication_year",
-    output = "dataframe",
-    verbose = FALSE
-)
-oa_until_1992 <- sum(oa$count[oa$key <= 1992])
-oa_after_1992 <- sum(oa$count[oa$key > 1992])
+figname <- file.path("figures", "tca_corpus", "strategies_options_time_split")
 
-data <- lapply(
-    names(strategies_options),
-    function(strategy) {
-        data.frame(
-            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
-            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
-            Count = strategies_options[[strategy]]$count,
-            Count_until_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year <= 1992]),
-            Count_after_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year > 1992])
-        )
-    }
+figs <- list.files(
+    path = dirname(figname),
+    pattern = basename(figname),
+    recursive = TRUE
 ) |>
-    do.call(what = rbind) |>
-    dplyr::mutate(
-        Strategy = paste0(Strategy, " |||| ", Concept),
-        Count_until_1992 = Count_until_1992 / oa_until_1992,
-        Count_after_1992 = Count_after_1992 / oa_after_1992,
+    length()
+
+if (figs < 4) {
+    strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+
+    oa <- openalexR::oa_fetch(
+        search = "",
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = FALSE
+    )
+    oa_until_1992 <- sum(oa$count[oa$key <= 1992])
+    oa_after_1992 <- sum(oa$count[oa$key > 1992])
+
+    data <- lapply(
+        names(strategies_options),
+        function(strategy) {
+            data.frame(
+                Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+                Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+                Count = strategies_options[[strategy]]$count,
+                Count_until_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year <= 1992]),
+                Count_after_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year > 1992])
+            )
+        }
     ) |>
-    dplyr::group_by(Strategy) |>
-    dplyr::mutate(
-        Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
-        Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
+        do.call(what = rbind) |>
+        dplyr::mutate(
+            Strategy = paste0(Strategy, " |||| ", Concept),
+            Count_until_1992 = Count_until_1992 / oa_until_1992,
+            Count_after_1992 = Count_after_1992 / oa_after_1992,
+        ) |>
+        dplyr::group_by(Strategy) |>
+        dplyr::mutate(
+            Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
+            Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
+        )
+
+
+    figure <- data |>
+        tidyr::pivot_longer(
+            cols = c(Count_until_1992, Count_after_1992),
+            names_to = "Period",
+            values_to = "Count_year"
+        ) |>
+        # Create the plot
+        ggplot(aes(x = Strategy, y = Count_year, fill = Period)) +
+        geom_bar(stat = "identity") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "Strategy", y = "Count", fill = "Period")
+
+
+    ggplot2::ggsave(
+        paste0(figname, ".pdf"),
+        width = 12,
+        height = 18,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, ".png"),
+        width = 12,
+        height = 18,
+        figure
     )
 
-
-figure <- data |>
-    tidyr::pivot_longer(
-        cols = c(Count_until_1992, Count_after_1992),
-        names_to = "Period",
-        values_to = "Count_year"
-    ) |>
-    # Create the plot
-    ggplot(aes(x = Strategy, y = Count_year, fill = Period)) +
-    geom_bar(stat = "identity") +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-    labs(x = "Strategy", y = "Count", fill = "Period")
-
-
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "strategies_options_time_split.pdf"),
-    width = 12,
-    height = 18,
-    figure
-)
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "strategies_options_time_split.png"),
-    width = 12,
-    height = 18,
-    figure
-)
-
-figure <- data |>
-    tidyr::pivot_longer(
-        cols = c(Count_until_1992_p, Count_after_1992_p),
-        names_to = "Period",
-        values_to = "Count_p_year"
-    ) |>
-    # Create the plot
-    ggplot(aes(x = Strategy, y = Count_p_year, fill = Period)) +
-    geom_bar(stat = "identity") +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-    labs(x = "Strategy", y = "Count", fill = "Period")
+    figure <- data |>
+        tidyr::pivot_longer(
+            cols = c(Count_until_1992_p, Count_after_1992_p),
+            names_to = "Period",
+            values_to = "Count_p_year"
+        ) |>
+        # Create the plot
+        ggplot(aes(x = Strategy, y = Count_p_year, fill = Period)) +
+        geom_bar(stat = "identity") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "Strategy", y = "Count", fill = "Period")
 
 
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "strategies_options_time_split_p.pdf"),
-    width = 12,
-    height = 18,
-    figure
-)
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "strategies_options_time_split_p.png"),
-    width = 12,
-    height = 18,
-    figure
-)
+    ggplot2::ggsave(
+        paste0(figname, "_p.pdf"),
+        width = 12,
+        height = 18,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, "_p.png"),
+        width = 12,
+        height = 18,
+        figure
+    )
+}
 ```
 
 ![The graph shows the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("figures", "tca_corpus", "strategies_options_time_split.png")`)
@@ -3276,6 +3327,22 @@ lapply(
     IPBES.R::table_dt(
         fn = "strategies_options_counts_per_year",
         fixedColumns = list(leftColumns = 2)
+    )
+```
+
+#### Strategies / Options Works in Case Corpus
+
+```{r}
+#| label: actors_strategies_options_table
+#|
+
+readRDS(file.path("data", "tca_corpus", "strategies_options_case.rds"))$strategies_options_case |>
+    dplyr::mutate(
+        p_cases = round(p_cases, 4)
+    ) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options__cases",
+        fixedColumns = list(leftColumns = 1)
     )
 ```
 
@@ -3478,6 +3545,45 @@ if (!file.exists(fn)) {
 ```
 
 
+#### Actors in Case Corpus
+
+```{r}
+#| label: cases_actors_corpus
+#|
+
+fn <- file.path("data", "tca_corpus", "actors_case.rds")
+
+if (!file.exists(fn)) {
+    case_ids <- corpus_read(params$corpus_cases_dir) |>
+        dplyr::distinct(id) |>
+        collect() |>
+        unlist()
+    actors_ids <- readRDS(file.path("data", "tca_corpus", "actors_ids.rds"))
+
+    actors_case <- lapply(
+        names(actors_ids),
+        function(actor) {
+            message("- ", actor)
+            count <- sum(actors_ids[[actor]] %in% case_ids)
+            data.frame(
+                actor = actor,
+                count_cases = count,
+                count_tca = length(actors_ids[[actor]]),
+                p_cases = count / length(actors_ids[[actor]])
+            )
+        }
+    ) |>
+        do.call(what = rbind)
+
+    actors_cases <- list(
+        timestamp = Sys.time(),
+        actors_case = actors_case
+    )
+
+    saveRDS(actors_cases, file = fn)
+}
+```
+
 ### Results
 
 #### Count of Actors Table
@@ -3587,93 +3693,105 @@ This data is corrected for different research oputput before and after 1992 by d
 #| label: actors_counts_figure
 #|
 
-actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+figname <- file.path("figures", "tca_corpus", "actors_time_split")
 
-oa <- openalexR::oa_fetch(
-    search = "",
-    group_by = "publication_year",
-    output = "dataframe",
-    verbose = FALSE
-)
-oa_until_1992 <- sum(oa$count[oa$key <= 1992])
-oa_after_1992 <- sum(oa$count[oa$key > 1992])
+figs <- list.files(
+    path = dirname(figname),
+    pattern = basename(figname),
+    recursive = TRUE
+) |> length()
 
-data <- lapply(
-    names(actors),
-    function(actor) {
-        data.frame(
-            Actor = actor,
-            Count = actors[[actor]]$count,
-            Count_until_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year <= 1992]),
-            Count_after_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year > 1992])
+if (figs < 4) {
+    actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+
+
+    oa <- openalexR::oa_fetch(
+        search = "",
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = FALSE
+    )
+    oa_until_1992 <- sum(oa$count[oa$key <= 1992])
+    oa_after_1992 <- sum(oa$count[oa$key > 1992])
+
+    data <- lapply(
+        names(actors),
+        function(actor) {
+            data.frame(
+                Actor = actor,
+                Count = actors[[actor]]$count,
+                Count_until_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year <= 1992]),
+                Count_after_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year > 1992])
+            )
+        }
+    ) |>
+        do.call(what = rbind) |>
+        dplyr::mutate(
+            Count_until_1992 = Count_until_1992 / oa_until_1992,
+            Count_after_1992 = Count_after_1992 / oa_after_1992,
+        ) |>
+        dplyr::group_by(
+            Actor
+        ) |>
+        dplyr::mutate(
+            Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
+            Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
         )
-    }
-) |>
-    do.call(what = rbind) |>
-    dplyr::mutate(
-        Count_until_1992 = Count_until_1992 / oa_until_1992,
-        Count_after_1992 = Count_after_1992 / oa_after_1992,
-    ) |>
-    dplyr::group_by(
-        Actor
-    ) |>
-    dplyr::mutate(
-        Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
-        Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
+
+
+    figure <- data |>
+        tidyr::pivot_longer(
+            cols = c(Count_until_1992, Count_after_1992),
+            names_to = "Period",
+            values_to = "Count_year"
+        ) |>
+        # Create the plot
+        ggplot(aes(x = Actor, y = Count_year, fill = Period)) +
+        geom_bar(stat = "identity") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "Actors", y = "Count", fill = "Period")
+
+
+    ggplot2::ggsave(
+        paste0(figname, ".pdf"),
+        width = 12,
+        height = 18,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, ".png"),
+        width = 12,
+        height = 18,
+        figure
     )
 
-
-figure <- data |>
-    tidyr::pivot_longer(
-        cols = c(Count_until_1992, Count_after_1992),
-        names_to = "Period",
-        values_to = "Count_year"
-    ) |>
-    # Create the plot
-    ggplot(aes(x = Actor, y = Count_year, fill = Period)) +
-    geom_bar(stat = "identity") +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-    labs(x = "Actors", y = "Count", fill = "Period")
-
-
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "actors_time_split.pdf"),
-    width = 12,
-    height = 18,
-    figure
-)
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "actors_time_split.png"),
-    width = 12,
-    height = 18,
-    figure
-)
-
-figure <- data |>
-    tidyr::pivot_longer(
-        cols = c(Count_until_1992_p, Count_after_1992_p),
-        names_to = "Period",
-        values_to = "Count_p_year"
-    ) |>
-    # Create the plot
-    ggplot(aes(x = Actor, y = Count_p_year, fill = Period)) +
-    geom_bar(stat = "identity") +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-    labs(x = "Actor", y = "Count", fill = "Period")
+    figure <- data |>
+        tidyr::pivot_longer(
+            cols = c(Count_until_1992_p, Count_after_1992_p),
+            names_to = "Period",
+            values_to = "Count_p_year"
+        ) |>
+        # Create the plot
+        ggplot(aes(x = Actor, y = Count_p_year, fill = Period)) +
+        geom_bar(stat = "identity") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "Actor", y = "Count", fill = "Period")
 
 
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "actors_time_split_p.pdf"),
-    width = 12,
-    height = 18,
-    figure
-)
-ggplot2::ggsave(
-    file.path("figures", "tca_corpus", "actors_time_split_p.png"),
-    width = 12,
-    height = 18,
-    figure
-)
+    ggplot2::ggsave(
+        paste0(figname, "_p.pdf"),
+        width = 12,
+        height = 18,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, "_p.png"),
+        width = 12,
+        height = 18,
+        figure
+    )
+}
+
 ```
 
 ![The graph shows the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("figures", "tca_corpus", "actors_time_split.png")`)
@@ -3683,6 +3801,23 @@ To download high resolution, [click here](`r file.path("figures", "tca_corpus", 
 ![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("figures", "tca_corpus", "actors_time_split_p.png")`)
 
 To download high resolution, [click here](`r file.path("figures", "tca_corpus", "actors_time_split+p.pdf")`){target="_blank"}
+
+#### Actors Works in Case Corpus
+
+```{r}
+#| label: actors_cases_table
+#|
+
+readRDS(file.path("data", "tca_corpus", "actors_case.rds"))$actors_case |>
+    dplyr::mutate(
+        p_cases = round(p_cases, 4)
+    ) |>
+    IPBES.R::table_dt(
+        fn = "actors_cases",
+        fixedColumns = list(leftColumns = 1)
+    )
+```
+
 
 # Tries
 
