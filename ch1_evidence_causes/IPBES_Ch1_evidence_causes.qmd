@@ -16,9 +16,6 @@ author:
 abstract: > 
   A short description what this is about.
   This is not a tracditional abstract, but rather something else ...
-# keywords:
-#   - aaaaa
-#   - bbbbb
 license: "CC BY"
 copyright: 
   holder: No idea
@@ -29,7 +26,6 @@ citation:
   doi: XXXXXX
 doi: XXXXXX
 version: 0.0.1
-
 format:
     html:
         toc: true
@@ -162,7 +158,6 @@ if (file.exists(params$fn_corpus_6)) {
         timestamp = Sys.time()
     )
 }
-# source(file.path("R", "ch1_evidence_causes", "functions.R"))
 ```
 
 ## Working Title
@@ -262,7 +257,21 @@ The [concepts_1](input/concepts_1.txt){target=_blank} search returns a subset of
 #|
 
 count$concepts_1 <- openalexR::oa_fetch(
-    title_and_abstract.search = compact(concepts_1_st),
+    title_and_abstract.search = compact(paste0("(", nature_st, ") AND (", concepts_1_st, ")")),
+    count_only = TRUE,
+    output = "list",
+    verbose = TRUE
+)$count
+```
+
+
+```{r}
+#| label: get_concepts_2_count
+#| eval: !expr "calc_count"
+#|
+
+count$concepts_2 <- openalexR::oa_fetch(
+    title_and_abstract.search = compact(paste0("(", nature_st, ") AND (", concepts_2_st, ")")),
     count_only = TRUE,
     output = "list",
     verbose = TRUE
@@ -277,7 +286,7 @@ Assessing the broader biodiversity concepts by searching for [concepts_1 corpus]
 #|
 
 count$concepts_1_2 <- openalexR::oa_fetch(
-    title_and_abstract.search = compact(paste0("(", concepts_1_st, ") AND (", concepts_2_st, ")")),
+    title_and_abstract.search = compact(paste0("(", nature_st, ") AND (", concepts_1_st, ") AND (", concepts_2_st, ")")),
     count_only = TRUE,
     output = "list",
     verbose = TRUE
@@ -1035,6 +1044,12 @@ if (nf < 3) {
     )
     puml <- gsub(
         pattern = "%$%2.2%$%",
+        replacement = paste0("**n = ", count$concepts_2 |> format(big.mark = ","), "**\\n---\\nconcepts_2"),
+        x = puml,
+        fixed = TRUE
+    )
+    puml <- gsub(
+        pattern = "%$%2.3%$%",
         replacement = paste0("**n = ", count$concepts_1_2 |> format(big.mark = ","), "**\\n---\\nconcepts_1_2"),
         x = puml,
         fixed = TRUE

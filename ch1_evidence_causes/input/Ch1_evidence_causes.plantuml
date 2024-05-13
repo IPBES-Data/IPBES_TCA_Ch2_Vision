@@ -34,13 +34,18 @@ ch1_ethical --> ch1_ethical_count
 
 ' part 2
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/concepts_1.txt CONCEPTS 1]]" as ch1_concepts_1
-openalex --> ch1_concepts_1
+ch1_nature --> ch1_concepts_1
 storage "Number of Works\n--2.1--\n%$%2.1%$%" as ch1_concepts_1_count #Khaki
 ch1_concepts_1 --> ch1_concepts_1_count
 
 action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/concepts_2.txt CONCEPTS 2]]" as ch1_concepts_2
+ch1_nature --> ch1_concepts_2 #pink;line.dashed
+storage "Number of Works\n--2.2--\n%$%2.2%$%" as ch1_concepts_2_count #Khaki
+ch1_concepts_2 --> ch1_concepts_2_count #pink;line.dashed
+
+action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/concepts_2.txt CONCEPTS 2]]" as ch1_concepts_2
 ch1_concepts_1 --> ch1_concepts_2
-storage "Number of Works\n--2.2--\n%$%2.2%$%" as ch1_concepts_1_concepts_2_count #Khaki
+storage "Number of Works\n--2.3--\n%$%2.3%$%" as ch1_concepts_1_concepts_2_count #Khaki
 ch1_concepts_2 --> ch1_concepts_1_concepts_2_count
 
 
