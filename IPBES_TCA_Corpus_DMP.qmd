@@ -925,6 +925,50 @@ if (!file.exists(fn)) {
 }
 ```
 
+
+```{r}
+#| label: get_languages_tca_corpus
+#|
+
+fn <- file.path(".", "data", "tca_corpus", "tca_corpus_languages.rds")
+
+if (!file.exists(fn)) {
+    list(
+        timestamp <- Sys.time(),
+        languages = openalexR::oa_fetch(
+            entity = "works",
+            title_and_abstract.search = compact(params$s_1_tca_corpus),
+            group_by = "language",
+            output = "list",
+            verbose = TRUE
+        ) |>
+            lapply(
+                function(x) {
+                    result <- data.frame(
+                        language = ifelse(
+                            is.null(x["key_display_name"]),
+                            as.character(NA),
+                            as.character(x["key_display_name"])
+                        ),
+                        count = ifelse(
+                            is.null(x["count"]),
+                            as.integer(NA),
+                            as.integer(x["count"])
+                        )
+                    )
+                    return(result)
+                }
+            ) |>
+            do.call(what = rbind) |>
+            dplyr::arrange(desc(count)) |>
+            dplyr::filter(count > 0)
+    ) |>
+        saveRDS(file = fn)
+}
+
+```
+
+
 ### Works over Time
 
 Get works over time for different search terms
@@ -2574,6 +2618,19 @@ knitr::kable(
 ```
 
 ## TCA Corpus properties
+
+### Languages in TCA Corpus (from OpenAlex call)
+
+These are the languages of the abstract and title. Articles with multiple languages will be counted not accurate. Also, as this is
+the language of the abstract / title, it might not be the language of the full text.
+
+```{r}
+readRDS(file.path(".", "data", "tca_corpus", "tca_corpus_languages.rds"))$languages |>
+    IPBES.R::table_dt(
+        fn = "languages_tca_corpus"
+    )
+```
+
 
 ### Publications over time
 
