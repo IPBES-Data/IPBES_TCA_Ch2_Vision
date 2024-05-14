@@ -1284,6 +1284,35 @@ lapply(
 
 ```
 
+## Export 250 Random Works from Cases Corpus
+
+```{r}
+#| label: export_random_250_cases
+#|
+
+sample_size <- 250
+
+fn <- file.path("data", "tca_corpus", paste0("random_", sample_size, "_tca_cases_corpus.xlsx"))
+if (!file.exists(fn)) {
+    set.seed(13)
+    read_corpus(params$corpus_cases_dir) |>
+        dplyr::select(
+            id,
+            doi,
+            author = author_abbr,
+            title = display_name,
+            abstract = ab
+        ) |>
+        dplyr::slice_sample(
+            n = sample_size
+        ) |>
+        dplyr::mutate(
+            abstract = substr(abstract, 1, 5000)
+        ) |>
+        dplyr::collect() |>
+        writexl::write_xlsx(path = fn)
+}
+```
 
 
 
@@ -1359,7 +1388,7 @@ if (!file.exists(params$duckdb_fn)) {
 ### Export Random Works from TCA Cases Corpus
 
 ```{r}
-#| label: export_random_250_cases
+#| label: export_random_250_tca
 #|
 
 sample_size <- 250
@@ -3046,6 +3075,80 @@ if (!file.exists(fn)) {
 toc()
 ```
 
+#### Extract per year from Strategies Pages
+
+```{r}
+#| label: exy=tract_strategies_per_year_corpus
+#|
+
+tic()
+
+fn <- file.path("data", "tca_corpus", "strategies_options_corpus.rds")
+
+if (!file.exists(fn)) {
+    strategies_options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
+    strategies_options_ids <- readRDS(file.path("data", "tca_corpus", "strategies_options_ids.rds"))
+
+    strategies_options_corpus <- lapply(
+        names(strategies_options_terms),
+        function(strategy) {
+            message("- ", strategy)
+            years <- paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
+                list.files(
+                    pattern = "^set_publication_year=",
+                    recursive = FALSE,
+                    full.names = FALSE
+                ) |>
+                gsub(
+                    pattern = "set_publication_year=",
+                    replacement = ""
+                ) |>
+                as.integer()
+            #
+            result <- list()
+            result$term <- paste(strategies_options_terms[[strategy]], collapse = " ")
+            result$count <- length(strategies_options_ids[[strategy]])
+
+
+            result$years <- data.frame(
+                publication_year = years,
+                count = sapply(
+                    years,
+                    function(year) {
+                        paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
+                            list.files(
+                                pattern = ".rds$",
+                                recursive = TRUE,
+                                full.names = TRUE
+                            ) |>
+                            grep(
+                                pattern = paste0("set_publication_year=", year),
+                                value = TRUE
+                            ) |>
+                            sapply(
+                                FUN = function(f) {
+                                    readRDS(f)
+                                }
+                            ) |>
+                            unlist() |>
+                            as.vector() |>
+                            unique() |>
+                            length()
+                    }
+                )
+            )
+            return(result)
+        }
+    )
+
+    names(strategies_options_corpus) <- names(strategies_options_terms)
+
+    saveRDS(strategies_options_corpus, file = fn)
+}
+
+toc()
+```
+
 
 #### Create Strategies Matrix
 
@@ -3116,10 +3219,14 @@ if (!file.exists(fn)) {
 
 #### Count of Strategies / Options Table
 ```{r}
-#| label: strategies_options_counts_data
+#| label: strategies_options_corpus_counts_data
 #|
 
-strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+# data from OpernAlex vie count
+# strategies_options_corpus <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+
+# data from corpora
+strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options_corpus.rds"))
 
 data <- lapply(
     names(strategies_options),
@@ -3137,7 +3244,7 @@ data <- lapply(
 
 data |>
     IPBES.R::table_dt(
-        fn = "strategies_options_counts",
+        fn = "strategies_options_corpus_counts",
         fixedColumns = list(leftColumns = 2)
     )
 ```
@@ -3161,7 +3268,11 @@ figs <- list.files(
     length()
 
 if (figs < 4) {
-    strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+    # data from OpernAlex vie count
+    # strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+
+    # data from corpora
+    strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options_corpus.rds"))
 
     oa <- openalexR::oa_fetch(
         search = "",
@@ -3263,6 +3374,8 @@ To download high resolution, [click here](`r file.path("figures", "tca_corpus", 
 
 These numbers are the number of hits of TCA Corpus AND each individual term of the Option
 
+This is based on the data from OpenAlex using API calls to get the count.
+
 ```{r}
 #| label: strategies_options_asess
 #| output: asis
@@ -3309,8 +3422,13 @@ diffviewer::visual_diff(
 ```{r}
 #| label: strategies_options_years
 #|
+# data from OpernAlex vie count
+# strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
 
-strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+# data from corpora
+strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options_corpus.rds"))
+
+
 
 lapply(
     names(strategies_options),
@@ -3518,6 +3636,82 @@ if (!file.exists(fn)) {
 toc()
 ```
 
+
+
+#### Extract per year from Actors Pages
+
+```{r}
+#| label: extract_actors_per_year_corpus
+#|
+
+tic()
+
+fn <- file.path("data", "tca_corpus", "actors_corpus.rds")
+
+if (!file.exists(fn)) {
+    actors_terms <- readRDS(file.path("data", "tca_corpus", "actors_terms.rds"))
+    actors_ids <- readRDS(file.path("data", "tca_corpus", "actors_ids.rds"))
+
+    actors_corpus <- lapply(
+        names(actors_terms),
+        function(actor) {
+            message("- ", actor)
+            years <- paste0(params$pages_actors_dir, "_", make.names(actor)) |>
+                list.files(
+                    pattern = "^set_publication_year=",
+                    recursive = FALSE,
+                    full.names = FALSE
+                ) |>
+                gsub(
+                    pattern = "set_publication_year=",
+                    replacement = ""
+                ) |>
+                as.integer()
+            #
+            result <- list()
+            result$term <- paste(actors_terms[[actor]], collapse = " ")
+            result$count <- length(actors_ids[[actor]])
+
+
+            result$years <- data.frame(
+                publication_year = years,
+                count = sapply(
+                    years,
+                    function(year) {
+                        paste0(params$pages_actors_dir, "_", make.names(actor)) |>
+                            list.files(
+                                pattern = ".rds$",
+                                recursive = TRUE,
+                                full.names = TRUE
+                            ) |>
+                            grep(
+                                pattern = paste0("set_publication_year=", year),
+                                value = TRUE
+                            ) |>
+                            sapply(
+                                FUN = function(f) {
+                                    readRDS(f)
+                                }
+                            ) |>
+                            unlist() |>
+                            as.vector() |>
+                            unique() |>
+                            length()
+                    }
+                )
+            )
+            return(result)
+        }
+    )
+
+    names(actors_corpus) <- names(actors_terms)
+
+    saveRDS(actors_corpus, file = fn)
+}
+
+toc()
+```
+
 #### Create Actors Matrix
 
 ```{r}
@@ -3591,7 +3785,11 @@ if (!file.exists(fn)) {
 #| label: actors_counts_data
 #|
 
-actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+# data from OpernAlex vie count
+# actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+
+# data from corpora
+actors <- readRDS(file.path("data", "tca_corpus", "actors_corpus.rds"))
 
 data <- lapply(
     names(actors),
@@ -3665,7 +3863,11 @@ diffviewer::visual_diff(
 #| label: actors_years
 #|
 
-actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+# data from OpernAlex vie count
+# actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+
+# data from corpora
+actors <- readRDS(file.path("data", "tca_corpus", "actors_corpus.rds"))
 
 lapply(
     names(actors),
@@ -3702,7 +3904,11 @@ figs <- list.files(
 ) |> length()
 
 if (figs < 4) {
-    actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+    # data from OpernAlex vie count
+    # actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+
+    # data from corpora
+    actors <- readRDS(file.path("data", "tca_corpus", "actors_corpus.rds"))
 
 
     oa <- openalexR::oa_fetch(
