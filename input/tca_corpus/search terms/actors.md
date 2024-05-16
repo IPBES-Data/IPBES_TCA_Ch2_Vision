@@ -376,5 +376,4 @@
 "Talk Show" OR
 "Television" OR
 "Television Network" OR
-"Website" OR
-"Influencer"
+"Website"

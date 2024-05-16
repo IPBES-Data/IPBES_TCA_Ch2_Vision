@@ -83,6 +83,7 @@ params:
     st_imaginative: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "imaginative.txt")),   collapse = "\n")
     st_rights_of_nature: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "rights_of_nature.txt")),   collapse = "\n")
     st_initiative: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "initiative.txt")),   collapse = "\n")
+    st_creativity: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "creativity.txt")),   collapse = "\n")
     
     sts_strategies_options: !expr readLines(file.path("input", "tca_corpus", "search terms", "strategies_options.md"))
     sts_actors: !expr readLines(file.path("input", "tca_corpus", "search terms", "actors.md"))
@@ -547,7 +548,7 @@ cat(params$st_art)
 #| label: st_media
 #|
 
-cat(params$st_art)
+cat(params$st_media)
 ```
 
 ### Strategies and Options
@@ -737,6 +738,21 @@ if (!file.exists(fn)) {
         )
     )
 
+    # Creativity
+    st <- paste0("(", params$s_1_tca_corpus, ") AND (", params$st_creativity,  ")") |>
+        compact()
+
+    count <- openalexR::oa_fetch(title_and_abstract.search = st, count_only = TRUE, verbose = TRUE, output = "list")$count
+
+    result <- rbind(
+        result,
+        data.frame(
+            Category = "Creativity",
+            Count = count,
+            Proportion = count / count_all,
+            Timestamp = Sys.time()
+        )
+    )
 
     # save it
     saveRDS(result, file = fn)
