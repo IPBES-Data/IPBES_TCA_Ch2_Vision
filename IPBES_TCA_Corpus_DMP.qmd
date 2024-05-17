@@ -177,38 +177,38 @@ if (!exists("params")) {
 
 knitr::opts_chunk$set(message = NA)
 
-library(openalexR)
-library(dplyr)
-library(ggplot2)
-library(patchwork)
-
-library(tictoc)
-
 library(parallel)
 library(pbmcapply)
 library(pbapply)
 
+library(openalexR)
+
+library(dplyr)
 library(tibble)
 
-library(knitr)
+library(ggplot2)
+library(patchwork)
+library(igraph)
+library(ggraph)
+library(visNetwork)
 library(DT)
+
+library(tictoc)
+
+
+library(knitr)
 
 library(arrow)
 library(parquetize)
 library(purrr)
 library(base64enc)
 
-library(pbapply)
-library(pbmcapply)
-library(parallel)
-
 library(diffviewer)
 
 library(collapsibleTree)
+
 library(htmlwidgets)
 
-library(igraph)
-library(ggraph)
 
 if (!require("plantuml")) {
     install.packages("plantuml", repos = c("https://rkrug.r-universe.dev", "https://cran.r-project.org"))
@@ -3094,7 +3094,7 @@ toc()
 #### Extract per year from Strategies Pages
 
 ```{r}
-#| label: exy=tract_strategies_per_year_corpus
+#| label: extract_strategies_per_year_corpus
 #|
 
 tic()
@@ -3481,6 +3481,86 @@ readRDS(file.path("data", "tca_corpus", "strategies_options_case.rds"))$strategi
 ```
 
 
+
+#### Matrix showing overlap of Strategies / Options
+
+```{r}
+#| label: strategies_option_overlap_figure
+#|
+
+fn <- file.path("figures", "tca_corpus", "strategies_options_interactive_matrix")
+
+if (!file.exists(paste0(fn, ".html"))) {
+    data <- readRDS(file.path("data", "tca_corpus", "strategies_options_overlap.rds"))
+
+    # Create a graph from the adjacency matrix
+    g <- igraph::graph_from_adjacency_matrix(data, mode = "undirected", weighted = TRUE, diag = FALSE)
+
+    # Convert the graph to a data frame
+    nodes <- data.frame(
+        id = igraph::V(g)$name,
+        label = igraph::V(g)$name,
+        value = diag(data)
+    ) # |>
+    # arrange(desc(value))
+
+    edges <- igraph::as_data_frame(
+        g,
+        what = "edges"
+    )
+
+    names(edges) <- c("from", "to", "width")
+    edges$width <- (edges$width / max(edges$width)) * 20
+
+    # Calculate grid positions for the nodes
+    grid_size <- ceiling(sqrt(nrow(nodes)))
+    nodes$x <- rep(1:grid_size, each = grid_size)[1:nrow(nodes)] * 200 # scale x coordinates
+    nodes$y <- rep(1:grid_size, times = grid_size)[1:nrow(nodes)] * 200 # scale y coordinates
+
+    # Center the nodes
+    nodes$x <- nodes$x - max(nodes$x) / 2
+    nodes$y <- nodes$y - max(nodes$y) / 2
+
+    # Create the interactive network graph
+
+    p <- visNetwork(nodes, edges, width = "100%") |>
+        visNodes(
+            x = nodes$x,
+            y = nodes$y,
+            fixed = TRUE,
+            font = list(
+                size = 16
+            )
+        ) |>
+        visEdges(
+            color = list(
+                color = "lightgray",
+                highlight = "black"
+            )
+        )
+
+    htmlwidgets::saveWidget(
+        p,
+        file = paste0(fn, ".html")
+    )
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"))
+
+    unlink(paste0(fn, "_files"), recursive = TRUE)
+}
+```
+
+<iframe src="figures/tca_corpus/strategies_options_interactive_matrix.html" width="100%" height="800px"></iframe>
+
+```{r}
+#| label: strategies_option_overlap_table
+#|
+
+readRDS(file.path("data", "tca_corpus", "strategies_options_overlap.rds")) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_overlap",
+        fixedColumns = list(leftColumns = 1)
+    )
+```
 
 
 ## Actors for transformative change 
@@ -4040,6 +4120,85 @@ readRDS(file.path("data", "tca_corpus", "actors_case.rds"))$actors_case |>
     )
 ```
 
+
+#### Matrix showing overlap of Actors
+
+```{r}
+#| label: actors_overlap_figure
+#|
+
+fn <- file.path("figures", "tca_corpus", "actors_interactive_matrix")
+
+if (!file.exists(paste0(fn, ".html"))) {
+    data <- readRDS(file.path("data", "tca_corpus", "actors_overlap.rds"))
+
+    # Create a graph from the adjacency matrix
+    g <- igraph::graph_from_adjacency_matrix(data, mode = "undirected", weighted = TRUE, diag = FALSE)
+
+    # Convert the graph to a data frame
+    nodes <- data.frame(
+        id = igraph::V(g)$name,
+        label = igraph::V(g)$name,
+        value = diag(data)
+    ) |>
+        arrange(desc(value))
+
+    edges <- igraph::as_data_frame(
+        g,
+        what = "edges"
+    )
+
+    names(edges) <- c("from", "to", "width")
+    edges$width <- (edges$width / max(edges$width)) * 20
+
+    # Calculate grid positions for the nodes
+    grid_size <- ceiling(sqrt(nrow(nodes)))
+    nodes$x <- rep(1:grid_size, each = grid_size)[1:nrow(nodes)] * 200 # scale x coordinates
+    nodes$y <- rep(1:grid_size, times = grid_size)[1:nrow(nodes)] * 200 # scale y coordinates
+
+    # Center the nodes
+    nodes$x <- nodes$x - max(nodes$x) / 2
+    nodes$y <- nodes$y - max(nodes$y) / 2
+
+    # Create the interactive network graph
+
+    p <- visNetwork(nodes, edges, width = "100%") |>
+        visNodes(
+            x = nodes$x,
+            y = nodes$y,
+            fixed = TRUE,
+            font = list(
+                size = 16
+            )
+        ) |>
+        visEdges(
+            color = list(
+                color = "lightgray",
+                highlight = "black"
+            )
+        )
+
+    htmlwidgets::saveWidget(
+        p,
+        file = paste0(fn, ".html")
+    )
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"))
+    unlink(paste0(fn, "_files"), recursive = TRUE)
+}
+```
+
+<iframe src="figures/tca_corpus/actors_interactive_matrix.html" width="100%" height="800px"></iframe>
+
+```{r}
+#| label: actors_overlap_table
+#|
+
+readRDS(file.path("data", "tca_corpus", "actors_overlap.rds")) |>
+    IPBES.R::table_dt(
+        fn = "actors_overlap",
+        fixedColumns = list(leftColumns = 1)
+    )
+```
 
 # Tries
 
