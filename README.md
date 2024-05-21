@@ -59,7 +59,7 @@ See [here](https://docs.google.com/document/d/1WkuSySXbqag1qob37rhvoVrYtbpoGqa69
 - [TCA Chapter 1 Evidence Causes](IPBES_Ch1_evidence_causes.html)
   - Status see [Issue #11](https://github.com/IPBES-Data/IPBES_TCA_Corpus/issues/11)
 - [TCA Chapter 2 Technology](IPBES_Ch2_technology.html)
-- [TCA Chapter 5 Subsidies Reform](IPBES_TCA_Corpus_DMP.html)
+- [TCA Chapter 5 Subsidies Reform](IPBES_TCA_Ch5_subsidies_reform.html)
 
 ### Data Management Report
 
