@@ -40,9 +40,9 @@ format:
             margin-width: 200px
             gutter-width: 1.5rem 
 params:
-    fn_count: !expr file.path("data", "count.rds")
-    fn_corpus_6: !expr file.path("data", "corpus_6.rds") 
-    fn_corpus_6_xlsx:  !expr file.path("data", "corpus_6_all.xlsx") 
+    fn_count: !expr file.path("ch1_evidence_causes", "data", "count.rds")
+    fn_corpus_6: !expr file.path("ch1_evidence_causes", "data", "corpus_6.rds") 
+    fn_corpus_6_xlsx:  !expr file.path("ch1_evidence_causes", "data", "corpus_6_all.xlsx") 
 ---
 
 
@@ -59,9 +59,9 @@ if (!exists("params")) {
     params <- rmarkdown::yaml_front_matter("IPBES_Ch1_evidence_causes.qmd")$params
 }
 
-build <- as.integer(readLines("buildNo"))
+build <- as.integer(readLines(file.path("ch1_evidence_causes", "buildNo")))
 build <- build + 1
-writeLines(as.character(build), "buildNo")
+writeLines(as.character(build), file.path("ch1_evidence_causes", "buildNo"))
 
 knitr::opts_chunk$set(message = NA)
 
@@ -78,61 +78,61 @@ if (!require("plantuml")) {
 
 plantuml::server_set("remote")
 
-ethical_st <- readLines(file.path("input", "ethical.txt")) |>
+ethical_st <- readLines(file.path("ch1_evidence_causes", "input", "ethical.txt")) |>
     paste(collapse = " ")
 
-concepts_1_st <- readLines(file.path("input", "concepts_1.txt")) |>
+concepts_1_st <- readLines(file.path("ch1_evidence_causes", "input", "concepts_1.txt")) |>
     paste(collapse = " ")
 
-concepts_2_st <- readLines(file.path("input", "concepts_2.txt")) |>
+concepts_2_st <- readLines(file.path("ch1_evidence_causes", "input", "concepts_2.txt")) |>
     paste(collapse = " ")
 
-narrowed_tca_st <- readLines(file.path("input", "narrowed_tca.txt")) |>
+narrowed_tca_st <- readLines(file.path("ch1_evidence_causes", "input", "narrowed_tca.txt")) |>
     paste(collapse = " ")
 
-criteria_1_st <- readLines(file.path("input", "criteria_1.txt")) |>
+criteria_1_st <- readLines(file.path("ch1_evidence_causes", "input", "criteria_1.txt")) |>
     paste(collapse = " ")
 
-criteria_2_st <- readLines(file.path("input", "criteria_2.txt")) |>
+criteria_2_st <- readLines(file.path("ch1_evidence_causes", "input", "criteria_2.txt")) |>
     paste(collapse = " ")
 
-criteria_3_st <- readLines(file.path("input", "criteria_3.txt")) |>
+criteria_3_st <- readLines(file.path("ch1_evidence_causes", "input", "criteria_3.txt")) |>
     paste(collapse = " ")
 
-criteria_4_st <- readLines(file.path("input", "criteria_4.txt")) |>
+criteria_4_st <- readLines(file.path("ch1_evidence_causes", "input", "criteria_4.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_1_st <- readLines(file.path("input", "biodiv_loss_1.txt")) |>
+biodiv_loss_1_st <- readLines(file.path("ch1_evidence_causes", "input", "biodiv_loss_1.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_2_st <- readLines(file.path("input", "biodiv_loss_2.txt")) |>
+biodiv_loss_2_st <- readLines(file.path("ch1_evidence_causes", "input", "biodiv_loss_2.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_1_st <- readLines(file.path("input", "biodiv_loss_3_1.txt")) |>
+biodiv_loss_3_1_st <- readLines(file.path("ch1_evidence_causes", "input", "biodiv_loss_3_1.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_2_st <- readLines(file.path("input", "biodiv_loss_3_2.txt")) |>
+biodiv_loss_3_2_st <- readLines(file.path("ch1_evidence_causes", "input", "biodiv_loss_3_2.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_3_st <- readLines(file.path("input", "biodiv_loss_3_3.txt")) |>
+biodiv_loss_3_3_st <- readLines(file.path("ch1_evidence_causes", "input", "biodiv_loss_3_3.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_4_st <- readLines(file.path("input", "biodiv_loss_3_4.txt")) |>
+biodiv_loss_3_4_st <- readLines(file.path("ch1_evidence_causes", "input", "biodiv_loss_3_4.txt")) |>
     paste(collapse = " ")
 
-biodiv_loss_3_5_st <- readLines(file.path("input", "biodiv_loss_3_5.txt")) |>
+biodiv_loss_3_5_st <- readLines(file.path("ch1_evidence_causes", "input", "biodiv_loss_3_5.txt")) |>
     paste(collapse = " ")
 
-# pages_dir <- file.path(".", "data", "pages")
-# arrow_dir <- file.path(".", "data", "corpus")
-# arrow_tca_dir <- file.path(".", "data", "corpus_tca")
+# pages_dir <- file.path(".", "ch1_evidence_causes", "data", "pages")
+# arrow_dir <- file.path(".", "ch1_evidence_causes", "data", "corpus")
+# arrow_tca_dir <- file.path(".", "ch1_evidence_causes", "data", "corpus_tca")
 
 ##########
 
-nature_st <- readLines(file.path("..", "input", "tca_corpus", "search terms", "nature.txt")) |>
+nature_st <- readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")) |>
     paste(collapse = " ")
 
-tfc_st <- readLines(file.path("..", "input", "tca_corpus", "search terms", "tfc.txt")) |>
+tfc_st <- readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")) |>
     paste(collapse = " ")
 
 st_1_nat <- compact(paste0("(", nature_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
@@ -356,7 +356,7 @@ data |>
         title = display_name,
         abstract = ab
     ) |>
-    writexl::write_xlsx(path = file.path("data", "samples_4.2_narrowed_tca.xlsx"))
+    writexl::write_xlsx(path = file.path("ch1_evidence_causes", "data", "samples_4.2_narrowed_tca.xlsx"))
 rm(data)
 
 ##########
@@ -424,7 +424,7 @@ data |>
         title = display_name,
         abstract = ab
     ) |>
-    writexl::write_xlsx(path = file.path("data", "samples_5.1_narrowed_criteria1.xlsx"))
+    writexl::write_xlsx(path = file.path("ch1_evidence_causes", "data", "samples_5.1_narrowed_criteria1.xlsx"))
 rm(data)
 
 ##########
@@ -470,7 +470,7 @@ data |>
         title = display_name,
         abstract = ab
     ) |>
-    writexl::write_xlsx(path = file.path("data", "samples_5.2_narrowed_criteria2.xlsx"))
+    writexl::write_xlsx(path = file.path("ch1_evidence_causes", "data", "samples_5.2_narrowed_criteria2.xlsx"))
 rm(data)
 
 ##########
@@ -516,7 +516,7 @@ data |>
         title = display_name,
         abstract = ab
     ) |>
-    writexl::write_xlsx(path = file.path("data", "samples_5.3_narrowed_criteria3.xlsx"))
+    writexl::write_xlsx(path = file.path("ch1_evidence_causes", "data", "samples_5.3_narrowed_criteria3.xlsx"))
 rm(data)
 
 ##########
@@ -562,7 +562,7 @@ data |>
         title = display_name,
         abstract = ab
     ) |>
-    writexl::write_xlsx(path = file.path("data", "samples_5.4_narrowed_criteria4.xlsx"))
+    writexl::write_xlsx(path = file.path("ch1_evidence_causes", "data", "samples_5.4_narrowed_criteria4.xlsx"))
 rm(data)
 
 ##########
@@ -1002,7 +1002,7 @@ if (!file.exists(params$fn_corpus_6_xlsx)) {
 #| label: create_plantuml_graph
 #|
 
-basename <- file.path("figures", "Ch1_evidence_causes")
+basename <- file.path("ch1_evidence_causes", "figures", "Ch1_evidence_causes")
 
 nf <- list.files(
     path = dirname(basename),
@@ -1011,7 +1011,7 @@ nf <- list.files(
     length()
 
 if (nf < 3) {
-    puml <- readLines(file.path("input", "Ch1_evidence_causes.plantuml"))
+    puml <- readLines(file.path("ch1_evidence_causes", "input", "Ch1_evidence_causes.plantuml"))
 
     ## 0.[1:2]]
     puml <- gsub(
@@ -1218,21 +1218,21 @@ if (nf < 3) {
         paste(collapse = "\n") |>
         plantuml::plantuml() |>
         plantuml::get_graph(
-            file = file.path("figures", "Ch1_evidence_causes.pdf")
+            file = file.path("ch1_evidence_causes", "figures", "Ch1_evidence_causes.pdf")
         )
 
     puml |>
         paste(collapse = "\n") |>
         plantuml::plantuml() |>
         plantuml::get_graph(
-            file = file.path("figures", "Ch1_evidence_causes.svg")
+            file = file.path("ch1_evidence_causes", "figures", "Ch1_evidence_causes.svg")
         )
 
     puml |>
         paste(collapse = "\n") |>
         plantuml::plantuml() |>
         plantuml::get_graph(
-            file = file.path("figures", "Ch1_evidence_causes.png")
+            file = file.path("ch1_evidence_causes", "figures", "Ch1_evidence_causes.png")
         )
 }
 ```
@@ -1329,8 +1329,8 @@ There are the following numbers of wotks in the Nature Corpus AND Narrowed TCA C
 
 ## Diagram
 
-![Overview of the analysis and results.](figures/Ch1_evidence_causes.svg){width=100% height=100%}
+![Overview of the analysis and results.](ch1_evidence_causes/figures/Ch1_evidence_causes.svg){width=100% height=100%}
 
-- To download png, [click here](figures/Ch1_evidence_causes.png){target="_blank"}.
-- To download high resolution pdf, [click here](figures/Ch1_evidence_causes.pdf){target="_blank"}.
-- To download high resolution svg, [click here](figures/Ch1_evidence_causes.svg){target="_blank"}.
+- To download png, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.png){target="_blank"}.
+- To download high resolution pdf, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.pdf){target="_blank"}.
+- To download high resolution svg, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.svg){target="_blank"}.
