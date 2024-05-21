@@ -3055,7 +3055,8 @@ toc()
 
 ```{r}
 #| label: convert_strategies_corpus
-#|
+#| eval: false
+#| 
 
 tic()
 
@@ -3064,7 +3065,7 @@ fn <- file.path("data", "tca_corpus", "strategies_options_ids.rds")
 if (!file.exists(fn)) {
     strategies__options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
     strategies_options_ids <- lapply(
-        names(strategies_terms),
+        names(strategies__options_terms),
         function(strategy) {
             message("- ", strategy)
             paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
@@ -3493,6 +3494,13 @@ fn <- file.path("figures", "tca_corpus", "strategies_options_interactive_matrix"
 if (!file.exists(paste0(fn, ".html"))) {
     data <- readRDS(file.path("data", "tca_corpus", "strategies_options_overlap.rds"))
 
+    value <- diag(data)
+
+    for (i in 1:nrow(data)) {
+        data[i, ] <- data[i, ] / data[i, i]
+    }
+
+
     # Create a graph from the adjacency matrix
     g <- igraph::graph_from_adjacency_matrix(data, mode = "undirected", weighted = TRUE, diag = FALSE)
 
@@ -3500,7 +3508,7 @@ if (!file.exists(paste0(fn, ".html"))) {
     nodes <- data.frame(
         id = igraph::V(g)$name,
         label = igraph::V(g)$name,
-        value = diag(data)
+        value = value
     ) # |>
     # arrange(desc(value))
 
@@ -3514,22 +3522,40 @@ if (!file.exists(paste0(fn, ".html"))) {
 
     # Calculate grid positions for the nodes
     grid_size <- ceiling(sqrt(nrow(nodes)))
-    nodes$x <- rep(1:grid_size, each = grid_size)[1:nrow(nodes)] * 200 # scale x coordinates
-    nodes$y <- rep(1:grid_size, times = grid_size)[1:nrow(nodes)] * 200 # scale y coordinates
+    nodes$x <- rep(1:grid_size, each = grid_size)[1:nrow(nodes)] * 300 # scale x coordinates
+    nodes$y <- rep(1:grid_size, times = grid_size)[1:nrow(nodes)] * 300 # scale y coordinates
 
     # Center the nodes
     nodes$x <- nodes$x - max(nodes$x) / 2
     nodes$y <- nodes$y - max(nodes$y) / 2
 
+    nodes$strategy <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 1)
+    nodes$option <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 2)
+
+    colors <- rainbow(length(nodes$strategy)) # Generate a color for each strategy
+    names(colors) <- nodes$strategy
+    nodes$color <- colors[nodes$strategy]
+
+    nodes$label <- nodes$option
+
     # Create the interactive network graph
 
-    p <- visNetwork(nodes, edges, width = "100%") |>
+    p <- visNetwork(
+        nodes,
+        edges,
+        width = "100%"
+    ) |>
         visNodes(
             x = nodes$x,
             y = nodes$y,
             fixed = TRUE,
             font = list(
-                size = 16
+                size = 16,
+                multi = TRUE
+            ),
+            color = list(
+                background = nodes$color,
+                border = nodes$color
             )
         ) |>
         visEdges(
@@ -3577,24 +3603,30 @@ I will now iterate through all of them and identify the number of hits per indiv
 
 fn <- file.path("data", "tca_corpus", "actors_terms.rds")
 if (!file.exists(fn)) {
-    sts <- data.frame(
-        Actor = NA,
+
+     sts <- data.frame(
+        "Sector" = NA,
+        "Actor_Group" = NA,
         term = params$sts_actors
     )
     sts <- sts[sts$term != "", ]
-
     for (i in 1:nrow(sts)) {
         if (grepl("^# ", sts$term[i])) {
-            actor <- gsub("^# ", "", sts$term[i])
+            sector <- gsub("^# ", "", sts$term[i])
+        } else if (grepl("^## ", sts$term[i])) {
+            actor_group <- gsub("^## ", "", sts$term[i])
         } else {
-            sts$Actor[i] <- actor
+            sts$Sector[i] <- sector
+            sts$Actor_Group[i] <- actor_group
         }
     }
-    sts <- sts[!is.na(sts$Actor), ]
+    sts <- sts[!is.na(sts$Sector), ]
+    sts <- sts[!is.na(sts$Actor_Group), ]
 
-    sts$Name <- paste0(sts$Actor)
+    sts$Name <- paste0(sts$Sector, " ||| ", sts$Actor_Group)
 
     actors_terms <- split(sts$term, sts$Name)
+    #############
 
     saveRDS(actors_terms, file = fn)
 }
@@ -3631,7 +3663,7 @@ if (!file.exists(file.path(fn))) {
                         title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
                         count_only = TRUE,
                         output = "list",
-                        verbose = TRUE
+                        verbose = FALSE
                     )$count
                     message("  - ", result$count, " hits")
                     #
@@ -3683,7 +3715,7 @@ lapply(
             continue = TRUE,
             delete_pages_dir = FALSE,
             dry_run = FALSE,
-            verbose = TRUE,
+            verbose = FALSE,
             mc_cores = 8
         )
     }
@@ -4132,6 +4164,12 @@ fn <- file.path("figures", "tca_corpus", "actors_interactive_matrix")
 if (!file.exists(paste0(fn, ".html"))) {
     data <- readRDS(file.path("data", "tca_corpus", "actors_overlap.rds"))
 
+    value <- diag(data)
+
+    for (i in 1:nrow(data)) {
+        data[i, ] <- data[i, ] / data[i,i]
+    }
+
     # Create a graph from the adjacency matrix
     g <- igraph::graph_from_adjacency_matrix(data, mode = "undirected", weighted = TRUE, diag = FALSE)
 
@@ -4139,10 +4177,8 @@ if (!file.exists(paste0(fn, ".html"))) {
     nodes <- data.frame(
         id = igraph::V(g)$name,
         label = igraph::V(g)$name,
-        value = diag(data)
-    ) |>
-        arrange(desc(value))
-
+        value = value
+    )
     edges <- igraph::as_data_frame(
         g,
         what = "edges"
@@ -4153,8 +4189,8 @@ if (!file.exists(paste0(fn, ".html"))) {
 
     # Calculate grid positions for the nodes
     grid_size <- ceiling(sqrt(nrow(nodes)))
-    nodes$x <- rep(1:grid_size, each = grid_size)[1:nrow(nodes)] * 200 # scale x coordinates
-    nodes$y <- rep(1:grid_size, times = grid_size)[1:nrow(nodes)] * 200 # scale y coordinates
+    nodes$x <- rep(1:grid_size, each = grid_size)[1:nrow(nodes)] * 300 # scale x coordinates
+    nodes$y <- rep(1:grid_size, times = grid_size)[1:nrow(nodes)] * 300 # scale y coordinates
 
     # Center the nodes
     nodes$x <- nodes$x - max(nodes$x) / 2
@@ -4200,9 +4236,101 @@ readRDS(file.path("data", "tca_corpus", "actors_overlap.rds")) |>
     )
 ```
 
+
+## Actors x Stategies / Options
+
+```{r}
+#| label: actors_strategies_options_overlap_data
+
+fn <- file.path("data", "tca_corpus", "actors_strategies_options_overlap.rds")
+
+if (!file.exists(fn)) {
+    actors_ids <- file.path("data", "tca_corpus", "actors_ids.rds") |> readRDS()
+    strategies_options_ids <- file.path("data", "tca_corpus", "strategies_options_ids.rds") |> readRDS()
+    sapply(actors_ids, function(actor) {
+        sapply(strategies_options_ids, function(strategy_option) {
+            length(intersect(actor, strategy_option))
+        })
+    }) |>
+        saveRDS(file = fn)
+}
+```
+
+```{r}
+#| label: actors_strategies_options_overlap_table
+readRDS(file.path("data", "tca_corpus", "actors_strategies_options_overlap.rds")) |>
+    IPBES.R::table_dt(
+        fn = "actors_strategies_options_overlap",
+        fixedColumns = list(leftColumns = 1)
+    )
+```
+
+```{r}
+#| label: actors_strategies_options_overlap_figure
+#|
+
+fn <- file.path("figures", "tca_corpus", "actors_strategies_options_matrix")
+
+n <- list.files(
+    path = dirname(fn),
+    pattern = basename(fn),
+    recursive = TRUE
+) |> length()
+
+if (n < 2) {
+    data <- readRDS(file.path("data", "tca_corpus", "actors_strategies_options_overlap.rds"))
+    actors_count <- sapply(
+        readRDS(file.path("data", "tca_corpus", "actors_ids.rds")),
+        length
+    )
+    strategies_options_count <- sapply(
+        readRDS(file.path("data", "tca_corpus", "strategies_options_ids.rds")),
+        length
+    )
+
+    for (i in 1:nrow(data)) {
+        data[i, ] <- data[i, ] / strategies_options_count[i]
+    }
+
+
+    for (i in 1:ncol(data)) {
+        data[, i] <- data[, i] / actors_count[i]
+    }
+
+    colnames(data)  <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+    rownames(data)  <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+    
+    p <- as.data.frame(as.table(data)) |>
+        ggplot(aes(x = Var2, y = Var1, fill = Freq)) +
+        geom_tile() +
+        scale_fill_gradient(low = "white", high = "red") +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".png"),
+        width = 12,
+        height = 6
+    )
+}
+```
+
+
+![](`r file.path("figures", "tca_corpus", "actors_strategies_options_matrix.png")`)
+
+To download high resolution, [click here](figures/tca_corpus/actors_strategies_options_matrix.pdf`){target="_blank"}
+
 # Tries
 
-#### Create data for Dendrogram
+## Dendrograms
+### Strategies Dendrogram
 
 ```{r}
 #| label: strategies_options_tree_data
@@ -4240,7 +4368,7 @@ sts <- sts[!is.na(sts$Option), ]
 #|
 
 
-fn <- file.path("figures", "tca_corpus", "dendrogram_interactive.html")
+fn <- file.path("figures", "tca_corpus", "strategies_options_dendrogram_interactive.html")
 if (!file.exists(fn)) {
     p <- collapsibleTree::collapsibleTree(
         sts,
@@ -4252,13 +4380,13 @@ if (!file.exists(fn)) {
         file = fn
     )
 
-    unlink(file.path("figures", "tca_corpus", "dendrogram_interactive_files"), recursive = TRUE)
+    unlink(file.path("figures", "tca_corpus", "strategies_options_dendrogram_interactive_files"), recursive = TRUE)
 }
 ```
 
-<iframe src="figures/tca_corpus/dendrogram_interactive.html" width="100%" height="800px"></iframe>
+<iframe src="figures/tca_corpus/strategies_options_dendrogram_interactive.html" width="100%" height="800px"></iframe>
 
-To open the interactive graph or to download it, [click here](figures/tca_corpus/dendrogram_interactive.html){target="_blank"}
+To open the interactive graph or to download it, [click here](figures/tca_corpus/strategies_options_dendrogram_interactive.html){target="_blank"}
 
 ```{r}
 #| label: strategies_options_static_tree_plot
@@ -4266,7 +4394,7 @@ To open the interactive graph or to download it, [click here](figures/tca_corpus
 #| fig.width: 10
 
 
-if (length(list.files(file.path("figures", "tca_corpus"), pattern = "dendrogram_circular")) < 2) {
+if (length(list.files(file.path("figures", "tca_corpus"), pattern = "strategies_options_dendrogram_circular")) < 2) {
     strategies_options_tree <- data.frame(
         from = c(rep("x", length(sts$Strategy)), sts$Strategy),
         to = c(sts$Strategy, sts$Option)
@@ -4299,7 +4427,7 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "dendrogram_
         circular = TRUE
     ) +
         ggraph::geom_edge_diagonal() +
-        ggraph::geom_node_(
+        ggraph::geom_node_label(
             ggplot2::aes(
                 label = to,
                 colour = color,
@@ -4313,20 +4441,148 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "dendrogram_
 
     ggplot2::ggsave(
         plot = p,
-        file.path("figures", "tca_corpus", "dendrogram_circular.pdf"),
+        file.path("figures", "tca_corpus", "strategies_options_dendrogram_circular.pdf"),
         width = 12,
         height = 6
     )
     ggplot2::ggsave(
         plot = p,
-        file.path("figures", "tca_corpus", "dendrogram_circular.png"),
+        file.path("figures", "tca_corpus", "strategies_options_dendrogram_circular.png"),
         width = 12,
         height = 6
     )
 }
 ```
 
-![](`r file.path("figures", "tca_corpus", "dendrogram_circular.png")`)
+![](`r file.path("figures", "tca_corpus", "strategies_options_dendrogram_circular.png")`)
 
-To download high resolution, [click here](figures/tca_corpus/dendrogram_circular.pdf`){target="_blank"}
+To download high resolution, [click here](figures/tca_corpus/strategies_options_dendrogram_circular.pdf`){target="_blank"}
+
+### Actors Dendrogram
+
+```{r}
+#| label: actors_tree_data
+#|
+sts <- data.frame(
+    "Sector" = NA,
+    "Actor_Group" = NA,
+    term = params$sts_actors |>
+        gsub(pattern = "\"", replacement = "") |>
+        gsub(pattern = " OR$", replacement = "")
+)
+
+sts <- sts[sts$term != "", ]
+for (i in 1:nrow(sts)) {
+    if (grepl("^# ", sts$term[i])) {
+        sector <- gsub("^# ", "", sts$term[i]) |>
+            gsub(pattern = "\"", replacement = "") |>
+            gsub(pattern = " OR$", replacement = "")
+    } else if (grepl("^## ", sts$term[i])) {
+        actor <- gsub("^## ", "", sts$term[i]) |>
+            gsub(pattern = "\"", replacement = "") |>
+            gsub(pattern = " OR$", replacement = "")
+    } else {
+        sts$Sector[i] <- sector
+        sts$Actor_Group[i] <- actor
+    }
+}
+sts <- sts[!is.na(sts$Sector), ]
+sts <- sts[!is.na(sts$Actor_Group), ]
+```
+
+```{r}
+#| label: actors_tree
+#| eval: true
+#|
+
+
+fn <- file.path("figures", "tca_corpus", "actors_dendrogram_interactive.html")
+if (!file.exists(fn)) {
+    p <- collapsibleTree::collapsibleTree(
+        sts,
+        hierarchy = c("Sector", "Actor_Group", "term")
+    )
+
+    htmlwidgets::saveWidget(
+        p,
+        file = fn
+    )
+
+    unlink(file.path("figures", "tca_corpus", "actors_dendrogram_interactive_files"), recursive = TRUE)
+}
+```
+
+<iframe src="figures/tca_corpus/actors_dendrogram_interactive.html" width="100%" height="800px"></iframe>
+
+To open the interactive graph or to download it, [click here](figures/tca_corpus/actors_dendrogram_interactive.html){target="_blank"}
+
+```{r}
+#| label: actors_static_tree_plot
+#| fig.height: 10
+#| fig.width: 10
+
+
+if (length(list.files(file.path("figures", "tca_corpus"), pattern = "actors_dendrogram_circular")) < 2) {
+    actors_tree <- data.frame(
+        from = c(rep("x", length(sts$Sector)), sts$Sector),
+        to = c(sts$Sector, sts$Actor_Group)
+    ) |>
+        dplyr::distinct()
+
+    vertices <- data.frame(
+        names = unique(c(actors_tree$from, actors_tree$to)),
+        to = unique(c(actors_tree$from, actors_tree$to))
+    )
+    vertices$color <- ifelse(vertices$names %in% sts$Sector, "blue", "red")
+    vertices$hjust <- 0.5
+    vertices$vjust <- 0
+    vertices$vjust[grep("5)", vertices$to)] <- -0.3
+    # vertices$hjust[grep("5)", vertices$to)] <- 1
+    vertices$vjust[grep("1)", vertices$to)] <- 1
+    vertices$to[grep("5)", vertices$to)] <- gsub(", and", ",\nand", vertices$to[grep("5)", vertices$to)])
+    vertices$to[grep("5)", vertices$to)] <- gsub("ion and", "ion\nand", vertices$to[grep("5)", vertices$to)])
+
+
+    tree <- igraph::graph_from_data_frame(
+        d = actors_tree,
+        vertices = vertices
+    )
+
+
+    p <- ggraph::ggraph(
+        tree,
+        layout = "dendrogram",
+        circular = TRUE
+    ) +
+        ggraph::geom_edge_diagonal() +
+        ggraph::geom_node_label(
+            ggplot2::aes(
+                label = to,
+                colour = color,
+                vjust = vjust,
+                hjust = hjust
+            ),
+            angle = 0
+        ) +
+        ggplot2::ylim(-1, 1) +
+        ggplot2::xlim(-1.5, 1.5)
+
+    ggplot2::ggsave(
+        plot = p,
+        file.path("figures", "tca_corpus", "actors_dendrogram_circular.pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        file.path("figures", "tca_corpus", "actors_dendrogram_circular.png"),
+        width = 12,
+        height = 6
+    )
+}
+```
+
+![](`r file.path("figures", "tca_corpus", "actors_dendrogram_circular.png")`)
+
+To download high resolution, [click here](figures/tca_corpus/actors_dendrogram_circular.pdf`){target="_blank"}
 
