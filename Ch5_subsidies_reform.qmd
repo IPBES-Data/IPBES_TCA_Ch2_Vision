@@ -95,9 +95,9 @@ dir.create(params$gdm_dir, showWarnings = FALSE, recursive = TRUE)
 
 st <- paste(
     "(",
-    paste0(readLines(file.path("..", "IPBES_TCA_Corpus", "input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"),
+    paste0(readLines(file.path("..", "IPBES_TCA_Corpus", "tca_corpus", "input", "search terms", "nature.txt")), collapse = "\n"),
     ") AND (",
-    paste0(readLines(file.path("..", "IPBES_TCA_Corpus", "input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"),
+    paste0(readLines(file.path("..", "IPBES_TCA_Corpus", "tca_corpus", "input", "search terms", "tfc.txt")), collapse = "\n"),
     ") AND (",
     params$st_subsidies,
     ")"
