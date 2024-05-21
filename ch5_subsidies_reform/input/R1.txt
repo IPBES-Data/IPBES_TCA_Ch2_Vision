@@ -1,0 +1,103 @@
+"Agriculture reform" OR
+"ocean reform" OR
+"energy reform" OR
+"decarbonization" OR
+"Eco-friendly Subsidies" OR
+"Green Subsidies" OR
+"Polluter Pays Principle" OR
+"Environmental Externalities" OR
+"Biodiversity Offsetting" OR
+"Conservation Finance" OR
+"Payment for Ecosystem Services" OR
+"Agri-environmental Schemes" OR
+"Cross-compliance" OR
+"Eco-taxes" OR
+"Sustainable Agriculture Incentives" OR
+"Carbon Pricing" OR
+"Biodiversity Credits" OR
+"Habitat Banking" OR
+"Rewilding Incentives" OR
+"Green Bonds" OR
+"Ecological Fiscal Transfers" OR
+"Renewable Energy Subsidies" OR
+"Water Quality Trading" OR
+"Sustainable Fisheries Subsidies" OR
+"Green Certification Schemes" OR
+"Conservation Easements" OR
+"Environmental Impact Bonds" OR
+"Climate Smart Agriculture" OR
+"Natural Capital Financing" OR
+"Bioenergy" OR
+"Forest Carbon Credits" OR
+"Blue Carbon Initiatives" OR
+"Green Public Procurement" OR
+"Integrated Pest Management Incentives"
+"Wildlife Corridors Funding" OR
+"Biodiversity Banking" OR
+"Climate Adaptation Finance" OR
+"Deforestation Reduction Programs" OR
+"Green Infrastructure Investments" OR
+"High Conservation Value Incentives" OR
+"Landscape Restoration Funds" OR
+"Marine Protected Areas Support" OR
+"Organic Farming Subsidies" OR
+"Permaculture Design Grants" OR
+"Pollination Services Payments" OR
+"Protected Area Financing" OR
+"Regenerative Agriculture Support" OR
+"Sustainability Linked Loans" OR
+"Urban Greening Grants" OR
+"Wetlands Restoration Funding" OR
+"Zero Emission Vehicle Incentives" OR
+"Adaptive Management Practices" OR
+"Biodiversity Informatics" OR
+"Climate Bonds" OR
+"Debt-for-Nature Swap" OR
+"Ecosystem-Based Adaptation" OR
+"Forest Stewardship Council Certification" OR
+"Greenhouse Gas Inventory"
+"Habitat Restoration Grants" OR
+"Invasive Species Control Funding" OR
+"Land Degradation Neutrality Fund" OR
+"Mitigation Banking" OR
+"Non-Timber Forest Product Incentives"
+"Ocean Acidification Research Grants" OR
+"Pollinator Habitat Enhancement" OR
+"Renewable Energy Certificates" OR
+"Soil Health Improvement Programs" OR
+"Tree Planting Campaigns" OR
+"Wildlife Management Areas" OR
+"Biodiversity Strategy and Action Plans" OR
+"Circular Economy Initiatives" OR
+"Disaster Risk Reduction Funding" OR
+"DRR Funding" OR
+"Ecosystem Valuation" OR
+"Fisheries Improvement Projects" OR
+"Green Job Training Programs" OR
+"Holistic Management Funding" OR
+"Indigenous Peoples' Biodiversity Conservation" OR
+"Landscape Connectivity Projects" OR
+"Mangrove Restoration Initiatives" OR
+"Nature-based Solutions" OR
+"Organic Certification Cost Share" OR
+"Peatland Restoration and Management" OR
+"Quantitative Easing for the Planet" OR
+"Riparian Buffer Zones Support" OR
+"Sustainable Land Management" OR
+"Threatened Species Recovery Plans" OR
+"Urban Biodiversity Enhancement" OR
+"Vertical Farming Incentives" OR
+"Water Efficiency Programs" OR
+"Xeriscaping Rebates" OR
+"Youth Engagement in Conservation" OR
+"Zero-waste Strategies" OR
+"Agrobiodiversity Conservation Subsidies" OR
+"Biochar Production Incentives" OR
+"Climate Resilience Building" OR
+"Drought Management Assistance" OR
+"Eco-labeling Programs" OR
+"Functional Biodiversity Promotion" OR
+"Green Supply Chain Financing" OR
+"Hedgerow Restoration Support" OR
+"Integrated Water Resources Management Funding" OR
+"Jungle Restoration Projects"

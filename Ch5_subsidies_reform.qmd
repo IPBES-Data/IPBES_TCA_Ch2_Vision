@@ -44,24 +44,24 @@ format:
             margin-width: 200px
             gutter-width: 1.5rem
 params:
-    st_subsidies: !expr paste(readLines(file.path("input", "ch_5_subsidies_reform", "government_financial_support.txt")), collapse = " ")
-    gdm_dir: !expr file.path("data", "gdm_dir")
+    st_subsidies: !expr paste(readLines(file.path("ch5_subsidies_reform", "input", "government_financial_support.txt")), collapse = " ")
+    gdm_dir: !expr file.path("ch5_subsidies_reform", "data", "gdm_dir")
     #
-    pages_dir: !expr file.path(".", "data", "ch_5_subsidies_reform", "pages")
+    pages_dir: !expr file.path(".", "ch5_subsidies_reform", "data", "pages")
     #
     # corpora
-    corpus_dir: !expr file.path("data", "ch_5_subsidies_reform", "corpus")
-    corpus_authors_dir: !expr file.path("data", "ch_5_subsidies_reform", "corpus_authors")
-    corpus_topics_dir: !expr file.path("data", "ch_5_subsidies_reform", "corpus_topics")
+    corpus_dir: !expr file.path("ch5_subsidies_reform", "data", "corpus")
+    corpus_authors_dir: !expr file.path("ch5_subsidies_reform", "data", "corpus_authors")
+    corpus_topics_dir: !expr file.path("ch5_subsidies_reform", "data", "corpus_topics")
     #
     # input
-    fn_sentiment_results: !expr file.path("input", "ch_5_subsidies_reform", "sentiment_results.rds")
+    fn_sentiment_results: !expr file.path("ch5_subsidies_reform", "input", "sentiment_results.rds")
     # data
-    fn_count: !expr file.path("data", "ch_5_subsidies_reform", "st_count.rds")
-    fn_publications_per_country_data: !expr file.path("data", "ch_5_subsidies_reform", "publications_per_country_data.rds")
-    fn_publications_temporal: !expr file.path("data", "ch_5_subsidies_reform", "publications_over_time.rds")
-    fn_sentiment_spatial_data: !expr file.path("data", "ch_5_subsidies_reform", "sentiment_spatial_data.rds")
-    fn_sentiment_temporal_data: !expr file.path("data", "ch_5_subsidies_reform", "sentiment_temporal_data.rds")
+    fn_count: !expr file.path("ch5_subsidies_reform", "data", "st_count.rds")
+    fn_publications_per_country_data: !expr file.path("ch5_subsidies_reform", "data", "publications_per_country_data.rds")
+    fn_publications_temporal: !expr file.path("ch5_subsidies_reform", "data", "publications_over_time.rds")
+    fn_sentiment_spatial_data: !expr file.path("ch5_subsidies_reform", "data", "sentiment_spatial_data.rds")
+    fn_sentiment_temporal_data: !expr file.path("ch5_subsidies_reform", "data", "sentiment_temporal_data.rds")
     #
     # figures parameter
     min_count_sentiment_timeseries: 10
@@ -82,12 +82,12 @@ library(duckdb)
 library(DBI)
 
 if (!exists("params")) {
-    params <- rmarkdown::yaml_front_matter("Ch5_subsidies_reform.qmd")$params
+    params <- rmarkdown::yaml_front_matter("ch5_subsidies_reform.qmd")$params
 }
 
-build <- as.integer(readLines("buildNo"))
+build <- as.integer(readLines(file.path("ch5_subsidies_reform", "buildNo")))
 build <- build + 1
-writeLines(as.character(build), "buildNo")
+writeLines(as.character(build), file.path("ch5_subsidies_reform", "buildNo"))
 
 knitr::opts_chunk$set(message = NA)
 
@@ -287,7 +287,7 @@ NOW IF EVERYTHING IS OK, DELETE THE OLD CORPUS AND RENAME THE NEW ONE
 #| label: export_sentiment_analysis
 #|
 
-fn <- file.path("data", "ch_5_subsidies_reform", "sent_analysis_subsidies.parquet")
+fn <- file.path("ch5_subsidies_reform", "data", "sent_analysis_subsidies.parquet")
 if (!file.exists(fn)) {
     read_corpus(params$corpus_dir) |>
         dplyr::select(id, publication_year, ab) |>
@@ -302,7 +302,7 @@ if (!file.exists(fn)) {
 #|
 
 
-fn <- file.path("data", "ch_5_subsidies_reform", "random_250_subsidies_in_tca.xlsx")
+fn <- file.path("ch5_subsidies_reform", "data", "random_250_subsidies_in_tca.xlsx")
 if (!file.exists(fn)) {
     set.seed(15)
     read_corpus(params$corpus_dir) |>
@@ -317,7 +317,7 @@ if (!file.exists(fn)) {
 }
 
 
-fn <- file.path("data", "ch_5_subsidies_reform", "random_50_subsidies_in_tca.xlsx")
+fn <- file.path("ch5_subsidies_reform", "data", "random_50_subsidies_in_tca.xlsx")
 if (!file.exists(fn)) {
     set.seed(13)
     read_corpus(params$corpus_dir) |>
@@ -348,7 +348,7 @@ if (!dir.exists(params$corpus_topics_dir)) {
     corpus_read(params$corpus_dir) |>
         arrow::to_duckdb(table_name = "corpus", con = con) |>
         invisible()
-    corpus_read(file.path("input", "ch_5_subsidies_reform", "sectors_def.parquet")) |>
+    corpus_read(file.path("ch5_subsidies_reform", "input", "sectors_def.parquet")) |>
         arrow::to_duckdb(table_name = "sectors", con = con) |>
         invisible()
 
@@ -492,7 +492,7 @@ if (!file.exists(params$fn_publications_temporal)) {
 ```{r}
 #| label: publications_over_time_figure
 #|
-if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), pattern = "publications_over_time")) < 2) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), pattern = "publications_over_time")) < 2) {
     figure <- readRDS(params$fn_publications_temporal) |>
         dplyr::filter(publication_year >= 1900) |>
         ggplot() +
@@ -520,13 +520,13 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
         )
 
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "publications_over_time.pdf"),
+        file.path("ch5_subsidies_reform", "figures", "publications_over_time.pdf"),
         width = 12,
         height = 6,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "publications_over_time.png"),
+        file.path("ch5_subsidies_reform", "figures", "publications_over_time.png"),
         width = 12,
         height = 6,
         figure
@@ -645,7 +645,7 @@ if (!file.exists(params$fn_publications_per_country_data)) {
 #| label: publications_per_country_author_map
 #|
 
-if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern = "publications_countries")) < 2) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "maps"), pattern = "publications_countries")) < 2) {
     data <- readRDS(params$fn_publications_per_country_data) |>
         dplyr::group_by(iso3c) |>
         dplyr::summarize(
@@ -769,13 +769,13 @@ if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern
     )
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "publications_countries.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "publications_countries.pdf"),
         width = 12,
         height = 8,
         map
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "publications_countries.png"),
+        file.path("ch5_subsidies_reform", "maps", "publications_countries.png"),
         width = 12,
         height = 8,
         map
@@ -846,7 +846,7 @@ if (!file.exists(params$fn_sentiment_spatial_data)) {
 #| label: sentiment_neu_per_countries_map
 #|
 
-if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern = "sentiment_neu_per_countries")) < 4) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "maps"), pattern = "sentiment_neu_per_countries")) < 4) {
     data <- readRDS(params$fn_sentiment_spatial_data)
 
     map <- data |>
@@ -869,26 +869,26 @@ if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern
         ggplot2::ggtitle("Mean neutral sentiment (0 - 1) - more than 10 works")
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_all.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_all.pdf"),
         width = 12,
         height = 8,
         map
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_all.png"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_all.png"),
         width = 12,
         height = 8,
         map
     )
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_10.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.pdf"),
         width = 12,
         height = 8,
         map_sel
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_10.png"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.png"),
         width = 12,
         height = 8,
         map_sel
@@ -903,7 +903,7 @@ if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern
 #| label: sentiment_pos_per_countries_map
 #|
 
-if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern = "sentiment_pos_per_countries")) < 4) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "maps"), pattern = "sentiment_pos_per_countries")) < 4) {
     data <- readRDS(params$fn_sentiment_spatial_data)
 
     map <- data |>
@@ -926,26 +926,26 @@ if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern
         ggplot2::ggtitle("Mean positive sentiment (0 - 1) - more than 10 works")
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_pos_per_countries_all.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_all.pdf"),
         width = 12,
         height = 8,
         map
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_pos_per_countries_all.png"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_all.png"),
         width = 12,
         height = 8,
         map
     )
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_pos_per_countries_10.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_10.pdf"),
         width = 12,
         height = 8,
         map_sel
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_pos_per_countries_10.png"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_10.png"),
         width = 12,
         height = 8,
         map_sel
@@ -958,7 +958,7 @@ if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern
 ```{r}
 #| label: sentiment_neg_per_countries_map
 #|
-if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern = "sentiment_neg_per_countries")) < 4) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "maps"), pattern = "sentiment_neg_per_countries")) < 4) {
     data <- readRDS(params$fn_sentiment_spatial_data)
 
     map <- data |>
@@ -982,26 +982,26 @@ if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern
 
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_neg_per_countries_all.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_all.pdf"),
         width = 12,
         height = 8,
         map
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_neg_per_countries_all.png"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_all.png"),
         width = 12,
         height = 8,
         map
     )
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_neg_per_countries_10.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_10.pdf"),
         width = 12,
         height = 8,
         map_sel
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_neg_per_countries_10.png"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_10.png"),
         width = 12,
         height = 8,
         map_sel
@@ -1017,7 +1017,7 @@ if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern
 #| label: sentiment_compound_per_countries_map
 #|
 
-if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern = "sentiment_comp_per_countries")) < 4) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "maps"), pattern = "sentiment_comp_per_countries")) < 4) {
     data <- readRDS(params$fn_sentiment_spatial_data)
 
     map <- data |>
@@ -1040,26 +1040,26 @@ if (length(list.files(path = file.path("maps", "ch_5_subsidies_reform"), pattern
         ggplot2::ggtitle("Mean compound sentiment (-1: negative; 1: positive) - more than 10 works")
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_comp_per_countries_all.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_all.pdf"),
         width = 12,
         height = 8,
         map
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_comp_per_countries_all.png"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_all.png"),
         width = 12,
         height = 8,
         map
     )
 
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_comp_per_countries_10.pdf"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_10.pdf"),
         width = 12,
         height = 8,
         map_sel
     )
     ggplot2::ggsave(
-        file.path("maps", "ch_5_subsidies_reform", "sentiment_comp_per_countries_10.png"),
+        file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_10.png"),
         width = 12,
         height = 8,
         map_sel
@@ -1102,7 +1102,7 @@ if (!file.exists(params$fn_sentiment_temporal_data)) {
 #| label: sentiments_over_time_all_figure
 #|
 
-if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), pattern = "sentiments_over_time")) < 2) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), pattern = "sentiments_over_time")) < 2) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1122,13 +1122,13 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
 
 
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_over_time.pdf"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_over_time.pdf"),
         width = 12,
         height = 6,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_over_time.png"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_over_time.png"),
         width = 12,
         height = 6,
         figure
@@ -1142,7 +1142,7 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
 #| label: sentiments_over_time_table_neg_pos_figure
 #|
 
-if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), pattern = "sentiments_over_time_neg_pos")) < 2) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), pattern = "sentiments_over_time_neg_pos")) < 2) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1162,13 +1162,13 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
 
 
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_over_time_neg_pos.pdf"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_over_time_neg_pos.pdf"),
         width = 12,
         height = 6,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_over_time_neg_pos.png"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_over_time_neg_pos.png"),
         width = 12,
         height = 6,
         figure
@@ -1182,7 +1182,7 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
 #| label: sentiments_neg_over_time_figure
 #|
 
-if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), pattern = "sentiments_neg_over_time")) < 2) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), pattern = "sentiments_neg_over_time")) < 2) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1197,13 +1197,13 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
         ggplot2::theme_minimal()
 
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_neg_over_time.pdf"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_neg_over_time.pdf"),
         width = 12,
         height = 6,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_neg_over_time.png"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_neg_over_time.png"),
         width = 12,
         height = 6,
         figure
@@ -1216,7 +1216,7 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
 ```{r}
 #| label: sentiments_neu_over_time_figure
 #|
-if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), pattern = "sentiments_neu_over_time")) < 2) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), pattern = "sentiments_neu_over_time")) < 2) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1231,13 +1231,13 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
         ggplot2::theme_minimal()
 
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_neu_over_time.pdf"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_neu_over_time.pdf"),
         width = 12,
         height = 6,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_neu_over_time.png"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_neu_over_time.png"),
         width = 12,
         height = 6,
         figure
@@ -1252,7 +1252,7 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
 #| label: sentiments_pos_over_time_figure
 #|
 
-if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), pattern = "sentiments_pos_over_time")) < 2) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), pattern = "sentiments_pos_over_time")) < 2) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1267,13 +1267,13 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
         ggplot2::theme_minimal()
 
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_pos_over_time.pdf"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_pos_over_time.pdf"),
         width = 12,
         height = 6,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_pos_over_time.png"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_pos_over_time.png"),
         width = 12,
         height = 6,
         figure
@@ -1287,7 +1287,7 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
 ```{r}
 #| label: sentiments_comp_over_time_figure
 #|
-if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), pattern = "sentiments_comp_over_time")) < 2) {
+if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), pattern = "sentiments_comp_over_time")) < 2) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1302,13 +1302,13 @@ if (length(list.files(path = file.path("figures", "ch_5_subsidies_reform"), patt
         ggplot2::theme_minimal()
 
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_comp_over_time.pdf"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_comp_over_time.pdf"),
         width = 12,
         height = 6,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "ch_5_subsidies_reform", "sentiments_comp_over_time.png"),
+        file.path("ch5_subsidies_reform", "figures", "sentiments_comp_over_time.png"),
         width = 12,
         height = 6,
         figure
@@ -1345,9 +1345,9 @@ The red line is the cumulative proportion of publications, the blue line the cum
 
 
 
-![](`r file.path("figures", "ch_5_subsidies_reform", "publications_over_time.png")`)
+![](`r file.path("ch5_subsidies_reform", "figures", "publications_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "ch_5_subsidies_reform", "publications_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "publications_over_time.pdf")`){target="_blank"}
 
 ```{r}
 #| label: publications_per_year_table
@@ -1373,9 +1373,9 @@ These are based on three different counts:
 - `**count_all**`: Count of first authors of all papers in the Subsidies Corpus per country, weighted by `1/NO_AUTHORS_PER_PAPER`
 
 
-![Countries of the works in different corpi. Left column: first author Open Alex Corpus; Middle Column: first author Subsidies Corpus; Right column: All authors weighted by inverse number of authors per paper of Subsidies Corpus" "](`r file.path("maps", "ch_5_subsidies_reform", "publications_countries.png")`)
+![Countries of the works in different corpi. Left column: first author Open Alex Corpus; Middle Column: first author Subsidies Corpus; Right column: All authors weighted by inverse number of authors per paper of Subsidies Corpus" "](`r file.path("ch5_subsidies_reform", "maps", "publications_countries.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "publications_countries.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "publications_countries.pdf")`){target="_blank"}
 
 ```{r}
 #| label: map_countries_table
@@ -1424,16 +1424,16 @@ rm(data)
 This graphs shows the sentiment scores of the sentiment analysis over time.
 
 
-![](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_over_time.png")`)
+![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time.pdf")`){target="_blank"}
 
 
 For clarity, here only the positive and egative sentiments.
 
-![](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_over_time_neg_pos.png")`)
+![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time_neg_pos.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_over_time_neg_pos.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time_neg_pos.pdf")`){target="_blank"}
 
 
 ### Negative Sentiment
@@ -1443,20 +1443,20 @@ To download high resolution, [click here](`r file.path("figures", "ch_5_subsidie
 This graphs shows the **negative score** of the sentiment analysis over time. It only 
 
 
-![](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_neg_over_time.png")`)
+![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neg_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_neg_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neg_over_time.pdf")`){target="_blank"}
 
 
 #### Per country
 
-![](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neg_per_countries_all.png")`)
+![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_all.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neg_per_countries_all.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_all.pdf")`){target="_blank"}
 
-![](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neg_per_countries_10.png")`)
+![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_10.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neg_per_countries_10.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_10.pdf")`){target="_blank"}
 
 
 ### Neutral Sentiment
@@ -1467,21 +1467,21 @@ This graphs shows the **compound score** of the sentiment analysis over time. It
 
 
 
-![](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_neu_over_time.png")`)
+![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neu_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_neu_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neu_over_time.pdf")`){target="_blank"}
 
 
 #### Per country
 
 
-![](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_all.png")`)
+![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_all.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_all.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_all.pdf")`){target="_blank"}
 
-![](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_10.png")`)
+![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_10.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.pdf")`){target="_blank"}
 
 
 
@@ -1492,19 +1492,19 @@ To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_r
 
 This graphs shows the **compound score** of the sentiment analysis over time. It only 
 
-![](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_pos_over_time.png")`)
+![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_pos_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_pos_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_pos_over_time.pdf")`){target="_blank"}
 
 #### Per country
 
-![](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_pos_per_countries_all.png")`)
+![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_all.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_pos_per_countries_all.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_all.pdf")`){target="_blank"}
 
-![](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_pos_per_countries_10.png")`)
+![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_10.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_neu_per_countries_10.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.pdf")`){target="_blank"}
 
 
 
@@ -1515,18 +1515,18 @@ To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_r
 
 This graphs shows the **compound score** of the sentiment analysis over time. It only 
 
-![](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_comp_over_time.png")`)
+![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_comp_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "ch_5_subsidies_reform", "sentiments_comp_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_comp_over_time.pdf")`){target="_blank"}
 
 #### Per country
 
 
-![](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_comp_per_countries_all.png")`)
+![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_all.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_comp_per_countries_all.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_all.pdf")`){target="_blank"}
 
-![](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_comp_per_countries_10.png")`)
+![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_10.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "ch_5_subsidies_reform", "sentiment_comp_per_countries_10.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_10.pdf")`){target="_blank"}
 
