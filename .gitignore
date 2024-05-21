@@ -159,3 +159,22 @@ ch_5_subsidies_reform/sent_analysis_subsidies_tca.parquet
 
 ch_5_subsidies_reform/input/sectors_def.parquet
 /ch5_subsidies_reform/data
+
+#############################
+### Ch 2 Technology       ###
+#############################
+
+
+.vscode/*
+**/.DS_Store
+
+**/pages_complete/*
+**/corpus/*
+**/corpus_complete/*
+**/corpus*/*
+
+**/corpus_tca.serialised/*
+**/corpus.serialised/*
+
+ch2_technology/data/sent_analysis_technology_tca.parquet
+ch2_technology/data/sent_analysis_technology.parquet
