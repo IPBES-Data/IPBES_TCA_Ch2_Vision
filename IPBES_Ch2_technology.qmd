@@ -60,7 +60,7 @@ params:
     corpus_topics_dir: !expr file.path("ch2_technology", "data", "corpus_topics")
     #
     corpus_tca_dir: !expr file.path("ch2_technology", "data", "tca_corpus", "corpus")
-    corpus_cases_dir: !expr file.path("ch2_technology", "data", "tca_corpus", "corpus_cases")
+    corpus_cases_dir: !expr file.path("..", "IPBES_TCA_Corpus", "ch2_technology", "data", "tca_corpus", "corpus_cases")
     #
     fn_count: !expr file.path("ch2_technology", "data", "oa_count.rds")
     fn_ids_tech_in_tca: !expr file.path("ch2_technology", "data", "ids_tech_in_tca.rds")
