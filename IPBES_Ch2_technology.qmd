@@ -50,7 +50,7 @@ params:
     #
     fn_sentiment_results: !expr file.path("ch2_technology", "input", "sentiment_results.rds")
     #
-    st_case: !expr paste(readLines(file.path("..", "IPBES_TCA_Corpus", "input", "tca_corpus", "search terms", "case.txt")), collapse = " ")
+    st_case: !expr paste(readLines(file.path("tca_corpus", "input", "search terms", "case.txt")), collapse = " ")
     #
     pages_dir: !expr file.path(".", "ch2_technology", "data", "pages_complete")
     #
@@ -59,8 +59,8 @@ params:
     corpus_authors_dir: !expr file.path("ch2_technology", "data", "corpus_authors")
     corpus_topics_dir: !expr file.path("ch2_technology", "data", "corpus_topics")
     #
-    corpus_tca_dir: !expr file.path("ch2_technology", "data", "tca_corpus", "corpus")
-    corpus_cases_dir: !expr file.path("..", "IPBES_TCA_Corpus", "ch2_technology", "data", "tca_corpus", "corpus_cases")
+    corpus_tca_dir: !expr file.path("ch2_technology", "data", "corpus")
+    corpus_cases_dir: !expr file.path("tca_corpus", "data", "corpus_cases")
     #
     fn_count: !expr file.path("ch2_technology", "data", "oa_count.rds")
     fn_ids_tech_in_tca: !expr file.path("ch2_technology", "data", "ids_tech_in_tca.rds")
@@ -119,7 +119,7 @@ if (get_count) {
 
 #####
 
-source(file.path("R", "ch2_technology", "functions.R"))
+source(file.path("ch2_technology", "R", "functions.R"))
 
 ```
 
