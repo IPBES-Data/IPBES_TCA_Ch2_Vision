@@ -1,9 +1,0 @@
-(
-    root
-    OR underlying
-    OR indirect
-)
-AND (
-    driver
-    OR cause
-)

@@ -27,3 +27,65 @@ data/tca_corpus/tca_corpus_without_fts.duckdb
 data/tca_corpus/tca_corpus*.duckdb
 
 .vscode/settings.json
+
+tca_corpus/input/key papers/Ch 2 - Sebastian/*.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 1/OneDrive_4_18-10-2023/*.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/A joint climate and nature cure A transformative change Rusch et al 2022.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Beyond PES and REDD+ Costa Rica on the way to climate-smart Wallbott et al 2019.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Buckton et al. Regen Lens 2023 .pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Buen Vivir.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Challenges and opportunities for building urban resileince Weichselgartner + Kelman 2014 (1).pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Challenges and opportunities for building urban resileince Weichselgartner + Kelman 2014.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Charonis-Degrowth SSE-CircE0-SocReg-2021.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Coscieme-MythMainstreamEc-WellbeingEc-Sust2019.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Crist-ProtectHalfPlanet-Frontiers-2021.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Dasgupta_Review_-_Headline_Messages.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Dinerstein-GlobalDealNature-SciAdvR-2019.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Folke et al-Future in Anthropocene Biospheres-2021.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Geissdorfer-Circular Economy-JCP-2017.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Gudynas 2011-Buen Vivir.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Harden-Davies 2020.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Huntjens-Kemp-Natural Social Contracts-2022.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Integrated index-based assessment reveals long-term conservation progress in implementation of CBD Hu et al 2022.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Locke-Nature Needs Half-Parks 2014.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Mirza et al-Inst Ineq Biodiv Loss-ES-2020pdf.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/O_Neill-Good Life-Planetary Boundaries Nat Sus-2018.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Otero et al., Biodiversity POlicy Beyond Econ Growth-ConsLtrs 2020.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Raworth-Doughnut Anthrop-Lancet PlanetHealth-2017.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Rockstrom-SafeJustBound-Nature-2023.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Stahel Circular Economy -Nature-2016.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Transforming biodiversity governance Parks + Tsioumani 2023.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 2/OneDrive_5_18-10-2023/Wyborn-Imagining T-Biodiv Futures-NatSus-2020.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 6 - Structural/The environmental state and the glass ceiling of transformation.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 6 - Structural/Paterson 2021.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 6 - Structural/ostrom_lecture.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 6 - Structural/Greening Leviathan the rise of the environmental state.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 6 - Structural/Eckersley 2021.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 6 - Structural/Beyond the environmental state The political prospects of a sustainability transformation (1).pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 5 - Empowerment/Stirling_etal_2007.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 5 - Empowerment/Rutting_etal_2022.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 5 - Empowerment/Narayan-Parker_2005.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 5 - Empowerment/Massarella_etal_2021.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 5 - Empowerment/Crowley_etal_2020.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 5 - Empowerment/Batliwala_2007.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 4 - inner transformation/Woiwode et al., 2021.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 4 - inner transformation/Wamsler, 2020_.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 4 - inner transformation/O_Brien, 2012.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 4 - inner transformation/Horlings, 2015_.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 4 - inner transformation/Horcea-Milcu et al., 2020.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 4 - inner transformation/Fazey et al., 2020_.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 4 - inner transformation/Abson et al., 2017.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 3 - Systems/Preiser et al., 2018.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 3 - Systems/Olsson 2006.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 3 - Systems/Olsson 2004.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 3 - Systems/Meadows 1999.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 3 - Systems/Geels 2002.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 3 - Systems/Berkes and Turner 2002.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Cluster 1 - Technology solutions/Asafu-Adjaye et al., 2015.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Scoones 2020a.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Patterson et al. 2017.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Loorbach-et-al-2017.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Fisher et al 2022.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Feola 2015.pdf
+tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Evans et al., 2023.pdf
+tca_corpus/data/tca_corpus.duckdb

@@ -55,94 +55,94 @@ params:
     # s_tfc_rev: "('transformative change'  OR  'deliberate transformation*'  OR  'transformative turn*'  OR  'transition*'  OR  'social-ecological change*'  OR  'deep change'  OR  'fundamental alteration'  OR  'profound change'  OR  'profound transformation'  OR  'radical transformation'  OR  'transformational change'  OR  'complete change'  OR  'complete transformation'  OR  'drastic change'  OR  'in-depth transformation'  OR  'progressive change'  OR  'radical alteration'  OR  'radical change'  OR  'revolutionary change'  OR  'significant modification'  OR  'total transformation'  OR  'transition'  OR  'pathway'  OR  'power'  OR  'agency'  OR  'scale'  OR  'leverage'  OR  'context'  OR  'process'  OR  'regime'  OR  'shift'  OR  'views'  OR  'value*'  OR  'structure*'  OR  'institution*' OR  'deliberate'  OR  'structural'  OR  'fundamental'  OR  'system*'  OR  'deep'  OR  'radical'  OR  'profound'  OR  'drastic'  OR  'widespread'  OR  'political'  OR  'economical'  OR  'structur*'  OR  'complete'  OR  'progressive'  OR  'revolutionary'  OR  'substantial'  OR  'significant') AND ('transformation'  OR  'alteration'  OR  'change'  OR  'turn'  OR  'action' OR  'transition'  OR  'shift' )"
  
     s_1_oa: ""
-    s_1_transformative_change: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n")
-    s_1_nature_environment: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n")
-    s_1_tca_corpus: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ")")
-    s_1_ch1_01: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_01.txt")), collapse = "\n")
-    s_1_ch1_02: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_02.txt")), collapse = "\n")
-    s_1_ch1_03: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_03.txt")), collapse = "\n")
-    s_1_ch1_04: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_04.txt")), collapse = "\n")
-    s_1_ch1_05: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_05.txt")), collapse = "\n")
-    s_1_ch1_06: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch1_06.txt")), collapse = "\n")
-    s_1_ch2:    !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch2.txt")),    collapse = "\n")
-    s_1_ch3_01: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_01.txt")), collapse = "\n")
-    s_1_ch3_02: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_02.txt")), collapse = "\n")
-    s_1_ch3_03: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_03.txt")), collapse = "\n")
-    s_1_ch3_04: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_04.txt")), collapse = "\n")
-    s_1_ch3_05: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_05.txt")), collapse = "\n")
-    s_1_ch3_06: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch3_06.txt")), collapse = "\n")
-    s_1_ch4_01: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch4_01.txt")), collapse = "\n")     
-    s_1_ch4_02: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch4_02.txt")), collapse = "\n")
-    # s_1_case:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")),   collapse = "\n")
-    s_1_case: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
+    s_1_transformative_change: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "tfc.txt")), collapse = "\n")
+    s_1_nature_environment: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "nature.txt")), collapse = "\n")
+    s_1_tca_corpus: !expr paste("(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "tfc.txt")), collapse = "\n"), ")")
+    s_1_ch1_01: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch1_01.txt")), collapse = "\n")
+    s_1_ch1_02: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch1_02.txt")), collapse = "\n")
+    s_1_ch1_03: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch1_03.txt")), collapse = "\n")
+    s_1_ch1_04: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch1_04.txt")), collapse = "\n")
+    s_1_ch1_05: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch1_05.txt")), collapse = "\n")
+    s_1_ch1_06: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch1_06.txt")), collapse = "\n")
+    s_1_ch2:    !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch2.txt")),    collapse = "\n")
+    s_1_ch3_01: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch3_01.txt")), collapse = "\n")
+    s_1_ch3_02: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch3_02.txt")), collapse = "\n")
+    s_1_ch3_03: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch3_03.txt")), collapse = "\n")
+    s_1_ch3_04: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch3_04.txt")), collapse = "\n")
+    s_1_ch3_05: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch3_05.txt")), collapse = "\n")
+    s_1_ch3_06: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch3_06.txt")), collapse = "\n")
+    s_1_ch4_01: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch4_01.txt")), collapse = "\n")     
+    s_1_ch4_02: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch4_02.txt")), collapse = "\n")
+    # s_1_case:   !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "case.txt")),   collapse = "\n")
+    s_1_case: !expr paste("(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "tfc.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "case.txt")), collapse = "\n"), ")")
 
 
 
-    st_art:   !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "art.txt")),   collapse = "\n")
-    st_media: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "media.txt")),   collapse = "\n")
-    st_imaginative: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "imaginative.txt")),   collapse = "\n")
-    st_rights_of_nature: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "rights_of_nature.txt")),   collapse = "\n")
-    st_initiative: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "initiative.txt")),   collapse = "\n")
-    st_creativity: !expr paste0(readLines(file.path("input", "tca_corpus", "search terms", "creativity.txt")),   collapse = "\n")
+    st_art:   !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "art.txt")),   collapse = "\n")
+    st_media: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "media.txt")),   collapse = "\n")
+    st_imaginative: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "imaginative.txt")),   collapse = "\n")
+    st_rights_of_nature: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "rights_of_nature.txt")),   collapse = "\n")
+    st_initiative: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "initiative.txt")),   collapse = "\n")
+    st_creativity: !expr paste0(readLines(file.path("tca_corpus", "input", "search terms", "creativity.txt")),   collapse = "\n")
     
-    sts_strategies_options: !expr readLines(file.path("input", "tca_corpus", "search terms", "strategies_options.md"))
-    sts_actors: !expr readLines(file.path("input", "tca_corpus", "search terms", "actors.md"))
+    sts_strategies_options: !expr readLines(file.path("tca_corpus", "input", "search terms", "strategies_options.md"))
+    sts_actors: !expr readLines(file.path("tca_corpus", "input", "search terms", "actors.md"))
 
 
 
-    # s_1_ch2_vision_case: !expr paste("(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "ch2.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "case.txt")), collapse = "\n"), ")")
+    # s_1_ch2_vision_case: !expr paste("(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "ch2.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "case.txt")), collapse = "\n"), ")")
    
     concept_cuttoff: 0.6
 
     key_papers:
     # Ch_1:
-        - "./input/tca_corpus/key papers/Ch 1 - Arun.csv"
-        - "./input/tca_corpus/key papers/Ch 1 - pdf.csv"
-        - "./input/tca_corpus/key papers/Ch 1 - word.csv"
+        - "./tca_corpus/input/key papers/Ch 1 - Arun.csv"
+        - "./tca_corpus/input/key papers/Ch 1 - pdf.csv"
+        - "./tca_corpus/input/key papers/Ch 1 - word.csv"
     # Ch_2:
-        - "./input/tca_corpus/key papers/Ch 2 - pdf.csv"
-        - "./input/tca_corpus/key papers/Ch 2 - Sebastian.csv"
+        - "./tca_corpus/input/key papers/Ch 2 - pdf.csv"
+        - "./tca_corpus/input/key papers/Ch 2 - Sebastian.csv"
     # Ch_3_Cl_1:
-        - "./input/tca_corpus/key papers/Ch 3 - Cl1.csv"
+        - "./tca_corpus/input/key papers/Ch 3 - Cl1.csv"
     # Ch_3_Cl_3:
-        - "./input/tca_corpus/key papers/Ch 3 - Cl3.csv"
+        - "./tca_corpus/input/key papers/Ch 3 - Cl3.csv"
     # Ch_3_Cl_4:
-        - "./input/tca_corpus/key papers/Ch 3 - Cl4.csv"
+        - "./tca_corpus/input/key papers/Ch 3 - Cl4.csv"
     # Ch_3_Cl_5:
-        - "./input/tca_corpus/key papers/Ch 3 - Cl5.csv"
+        - "./tca_corpus/input/key papers/Ch 3 - Cl5.csv"
     # Ch_3Cl_6:
-        - "./input/tca_corpus/key papers/Ch 3 - Cl6.csv"
+        - "./tca_corpus/input/key papers/Ch 3 - Cl6.csv"
     # Ch_3:
-        - "./input/tca_corpus/key papers/Ch 3 - pdf.csv"
+        - "./tca_corpus/input/key papers/Ch 3 - pdf.csv"
     # Ch_4_Cl_1:
-        - "./input/tca_corpus/key papers/Ch 4 - Challenge 1.csv"
+        - "./tca_corpus/input/key papers/Ch 4 - Challenge 1.csv"
     # Ch_4_Cl_2:
-        - "./input/tca_corpus/key papers/Ch 4 - Challenge 2.csv"
+        - "./tca_corpus/input/key papers/Ch 4 - Challenge 2.csv"
     # Ch_4_Cl_3:
-        - "./input/tca_corpus/key papers/Ch 4 - Challenge 3.csv"
+        - "./tca_corpus/input/key papers/Ch 4 - Challenge 3.csv"
     # Ch_4_Cl_4:
-        - "./input/tca_corpus/key papers/Ch 4 - Challenge 4.csv"
+        - "./tca_corpus/input/key papers/Ch 4 - Challenge 4.csv"
     # Ch_4_Cl_5:
-        - "./input/tca_corpus/key papers/Ch 4 - Challenge 5.csv"
+        - "./tca_corpus/input/key papers/Ch 4 - Challenge 5.csv"
     # Ch_5:
-        - "./input/tca_corpus/key papers/Ch 5 - Hannah.csv"
-        - "./input/tca_corpus/key papers/Ch 5 - Victoria.csv"
-        - "./input/tca_corpus/key papers/Ch 5 -.csv"
+        - "./tca_corpus/input/key papers/Ch 5 - Hannah.csv"
+        - "./tca_corpus/input/key papers/Ch 5 - Victoria.csv"
+        - "./tca_corpus/input/key papers/Ch 5 -.csv"
 
 
-    gdm_dir: !expr file.path(".", "data", "gdm_dir")
+    gdm_dir: !expr file.path(".", "tca_corpus", "data", "gdm_dir")
 
-    pages_dir: !expr file.path(".", "data", "tca_corpus", "pages")
-    pages_cases_dir: !expr file.path(".", "data", "tca_corpus", "pages_cases")
-    pages_strategies_dir: !expr file.path(".", "data", "tca_corpus", "pages_strategies")
-    pages_actors_dir: !expr file.path(".", "data", "tca_corpus", "pages_actors")
+    pages_dir: !expr file.path(".", "tca_corpus", "data", "pages")
+    pages_cases_dir: !expr file.path(".", "tca_corpus", "data", "pages_cases")
+    pages_strategies_dir: !expr file.path(".", "tca_corpus", "data", "pages_strategies")
+    pages_actors_dir: !expr file.path(".", "tca_corpus", "data", "pages_actors")
 
-    corpus_dir: !expr file.path(".", "data", "tca_corpus", "corpus")
-    corpus_topics_dir: !expr file.path(".", "data", "tca_corpus", "corpus_topics")
-    corpus_authors_dir: !expr file.path(".", "data", "tca_corpus", "corpus_authors")
-    corpus_cases_dir: !expr file.path(".", "data", "tca_corpus", "corpus_cases")
+    corpus_dir: !expr file.path(".", "tca_corpus", "data", "corpus")
+    corpus_topics_dir: !expr file.path(".", "tca_corpus", "data", "corpus_topics")
+    corpus_authors_dir: !expr file.path(".", "tca_corpus", "data", "corpus_authors")
+    corpus_cases_dir: !expr file.path(".", "tca_corpus", "data", "corpus_cases")
 
-    duckdb_fn: !expr file.path(".", "data", "tca_corpus", "tca_corpus.duckdb")
+    duckdb_fn: !expr file.path(".", "tca_corpus", "data", "tca_corpus.duckdb")
 
     sample_size: 10000
     mc.cores: 8
@@ -162,14 +162,14 @@ params:
 #| include: false
 
 # paste(
-#     "(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")), collapse = "\n"), ")"
+#     "(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "nature.txt")), collapse = "\n"), ") \nAND \n(", paste0(readLines(file.path("tca_corpus", "input", "search terms", "tfc.txt")), collapse = "\n"), ")"
 # )
 
 knitr::opts_chunk$set(message = NA)
 
-build <- as.integer(readLines("buildNo"))
+build <- as.integer(readLines(file.path("tca_corpus", "buildNo")))
 build <- build + 1
-writeLines(as.character(build), "buildNo")
+writeLines(as.character(build), file.path("tca_corpus", "buildNo"))
 
 if (!exists("params")) {
     params <- rmarkdown::yaml_front_matter("./IPBES_TCA_Corpus_DMP.qmd")$params
@@ -236,7 +236,7 @@ if (!require("IPBES.R")) {
     }
 }
 
-source(file.path("R", "functions.R"))
+source(file.path("tca_corpus", "R", "functions.R"))
 
 # A single core request is needed to make multicore parallel processing work
 invisible(oa_request(oa_query("bidiversity"), count_only = TRUE))
@@ -267,7 +267,7 @@ The following searches are conducted on Title and Abstrat only as the availabili
 #| label: tca_corpus_overview_plantuml
 #|
 
-basename <- file.path("figures", "tca_corpus", "tca_corpus")
+basename <- file.path("tca_corpus", "figures")
 
 nf <- list.files(
     path = dirname(basename),
@@ -276,32 +276,32 @@ nf <- list.files(
     length()
 
 if (nf < 3) {
-    puml <- readLines(file.path("input", "tca_corpus", "tca_corpus.plantuml")) |>
+    puml <- readLines(file.path("tca_corpus", "input", "tca_corpus.plantuml")) |>
         paste(collapse = "\n") |>
         plantuml::plantuml()
 
     puml |>
         plantuml::get_graph(
-            file = file.path("figures", "tca_corpus", "tca_corpus_overview.pdf")
+            file = file.path("tca_corpus", "figures", "tca_corpus_overview.pdf")
         )
 
     puml |>
         plantuml::get_graph(
-            file = file.path("figures", "tca_corpus", "tca_corpus_overview.svg")
+            file = file.path("tca_corpus", "figures", "tca_corpus_overview.svg")
         )
 
     puml |>
         plantuml::get_graph(
-            file = file.path("figures", "tca_corpus", "tca_corpus_overview.png")
+            file = file.path("tca_corpus", "figures", "tca_corpus_overview.png")
         )
 }
 ```
 
-![Schematic overview of the TCA Corpus as well as othher corpora using the TCA Corpus](figures/tca_corpus/tca_corpus_overview.png)
+![Schematic overview of the TCA Corpus as well as othher corpora using the TCA Corpus](tca_corpus/figures/tca_corpus_overview.png)
 
-- To download png, [click here](figures/tca_corpus/tca_corpus_overview.png){target="_blank"}.
-- To download high resolution pdf, [click here](figures/tca_corpus/tca_corpus_overview.pdf){target="_blank"}.
-- To download high resolution svg, [click here](figures/tca_corpus/tca_corpus_overview.svg){target="_blank"}.
+- To download png, [click here](tca_corpus/tca_corpus_overview.png){target="_blank"}.
+- To download high resolution pdf, [click here](tca_corpus/figures/tca_corpus_overview.pdf){target="_blank"}.
+- To download high resolution svg, [click here](tca_corpus/figures/tca_corpus_overview.svg){target="_blank"}.
 
 
 ## Search Terms {#sec-search_terms}
@@ -610,7 +610,7 @@ These data is gathered from OpenAlex directly, not using the downloaded TCA Corp
 #| label: get_search_term_hits
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "search_term_hits.rds")
+fn <- file.path("tca_corpus", "data", "search_term_hits.rds")
 if (!file.exists(fn)) {
     s_t <- grep("s_1_", names(params), value = TRUE)
     search_term_hits <- parallel::mclapply(
@@ -654,7 +654,7 @@ if (!file.exists(fn)) {
 #| label: get_additional_search_hits
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "additional_search.rds")
+fn <- file.path(".", "tca_corpus", "data", "additional_search.rds")
 if (!file.exists(fn)) {
     # oa
     st <- params$s_1_tca_corpus |>
@@ -764,7 +764,7 @@ if (!file.exists(fn)) {
 #| label: get_key_papers
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "key_papers.rds")
+fn <- file.path(".", "tca_corpus", "data", "key_papers.rds")
 if (!file.exists(fn)) {
     key_papers <- lapply(
         params$key_papers,
@@ -811,8 +811,8 @@ if (!file.exists(fn)) {
 #| label: get_key_works
 #|
 
-fn_kw <- file.path(".", "data", "tca_corpus", "key_works.rds")
-fn_kw_df <- file.path(".", "data", "tca_corpus", "key_works_df.rds")
+fn_kw <- file.path(".", "tca_corpus", "data", "key_works.rds")
+fn_kw_df <- file.path(".", "tca_corpus", "data", "key_works_df.rds")
 if (!all(file.exists(fn_kw, fn_kw_df))) {
     key_works <- parallel::mclapply(
         key_papers,
@@ -862,7 +862,7 @@ if (!all(file.exists(fn_kw, fn_kw_df))) {
 #| label: get_key_works_hits
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "key_works_hits.rds")
+fn <- file.path(".", "tca_corpus", "data", "key_works_hits.rds")
 if (!file.exists(fn)) {
     kws <- key_works_df
     kws$all <- key_works_df |>
@@ -946,7 +946,7 @@ if (!file.exists(fn)) {
 #| label: get_languages_tca_corpus
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "tca_corpus_languages.rds")
+fn <- file.path(".", "tca_corpus", "data", "tca_corpus_languages.rds")
 
 if (!file.exists(fn)) {
     list(
@@ -993,7 +993,7 @@ Get works over time for different search terms
 #| label: get_count_years
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "oa_count.rds")
+fn <- file.path(".", "tca_corpus", "data", "oa_count.rds")
 if (!file.exists(fn)) {
     oa_count <- list(
         timestamp = Sys.time()
@@ -1308,7 +1308,7 @@ lapply(
 
 sample_size <- 250
 
-fn <- file.path("data", "tca_corpus", paste0("random_", sample_size, "_tca_cases_corpus.xlsx"))
+fn <- file.path("tca_corpus", "data", paste0("random_", sample_size, "_tca_cases_corpus.xlsx"))
 if (!file.exists(fn)) {
     set.seed(13)
     read_corpus(params$corpus_cases_dir) |>
@@ -1348,7 +1348,7 @@ The following steps are conducted:
 if (!file.exists(params$duckdb_fn)) {
     sql <- paste0(
         "CREATE TABLE tca_corpus AS SELECT id, author_abbr, publication_year, doi, display_name, ab FROM parquet_scan('",
-        file.path(".", "data", "tca_corpus", "corpus", "**", "*.parquet"),
+        file.path(".", "tca_corpus", "data", "corpus", "**", "*.parquet"),
         "')"
     )
 
@@ -1409,7 +1409,7 @@ if (!file.exists(params$duckdb_fn)) {
 
 sample_size <- 250
 
-fn <- file.path("data", "tca_corpus", paste0("random_", sample_size, "_tca_cases_corpus.xlsx"))
+fn <- file.path("tca_corpus", "data", paste0("random_", sample_size, "_tca_cases_corpus.xlsx"))
 if (!file.exists(fn)) {
     set.seed(13)
     read_corpus(params$corpus_cases_dir) |>
@@ -1447,7 +1447,7 @@ if (!dir.exists(params$corpus_topics_dir)) {
     corpus_read(params$corpus_dir) |>
         arrow::to_duckdb(table_name = "corpus", con = con) |>
         invisible()
-    corpus_read(file.path("input", "tca_corpus", "sectors_def.parquet")) |>
+    corpus_read(file.path("tca_corpus", "input", "sectors_def.parquet")) |>
         arrow::to_duckdb(table_name = "sectors", con = con) |>
         invisible()
 
@@ -1502,7 +1502,7 @@ if (!dir.exists(params$corpus_topics_dir)) {
     #     as.vector() |>
     #     sort()
 
-    # sectors <- read.csv(file.path("input", "tca_corpus", "sectors_def.csv")) |>
+    # sectors <- read.csv(file.path("tca_corpus", "input", "sectors_def.csv")) |>
     #     tibble::as_tibble() |>
     #     dplyr::mutate(
     #         id = paste0("https://openalex.org/subfields/", id),
@@ -1595,7 +1595,7 @@ if (!dir.exists(params$corpus_authors_dir)) {
 #| label: get_prim_topic_tca_corpus
 #| eval: true
 
-fn <- file.path(".", "data", "tca_corpus", paste0("prim_topics_tca_corpus.rds"))
+fn <- file.path(".", "tca_corpus", "data", paste0("prim_topics_tca_corpus.rds"))
 if (!file.exists(fn)) {
     prim_topics_tca_corpus <- corpus_read(params$corpus_topics_dir) |>
         dplyr::filter(
@@ -1610,7 +1610,7 @@ if (!file.exists(fn)) {
             count = n()
         ) |>
         dplyr::left_join(
-            read.csv(file.path("input", "tca_corpus", "OpenAlex_topic_mapping_table - final_topic_field_subfield_table.csv")),
+            read.csv(file.path("tca_corpus", "input", "OpenAlex_topic_mapping_table - final_topic_field_subfield_table.csv")),
             by = c("id" = "topic_id")
         ) |>
         dplyr::arrange(desc(count)) |>
@@ -1628,7 +1628,7 @@ if (!file.exists(fn)) {
 #| label: publications_over_time_data
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")
+fn <- file.path(".", "tca_corpus", "data", "publications_over_time_tca_corpus.rds")
 
 if (!file.exists(fn)) {
     read_corpus(params$corpus_dir) |>
@@ -1675,8 +1675,8 @@ if (!file.exists(fn)) {
 #| label: publications_over_time_plot
 #|
 
-if (length(list.files(file.path("figures", "tca_corpus"), pattern = "publications_over_time")) < 2) {
-    figure <- readRDS(file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")) |>
+if (length(list.files(file.path("tca_corpus", "figures"), pattern = "publications_over_time")) < 2) {
+    figure <- readRDS(file.path(".", "tca_corpus", "data", "publications_over_time_tca_corpus.rds")) |>
         dplyr::filter(publication_year >= 1900) |>
         ggplot() +
         geom_bar(aes(x = publication_year, y = p), stat = "identity") +
@@ -1697,13 +1697,13 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "publication
 
 
     ggplot2::ggsave(
-        file.path("figures", "tca_corpus", "publications_over_time.pdf"),
+        file.path("tca_corpus", "figures", "publications_over_time.pdf"),
         width = 12,
         height = 6,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "tca_corpus", "publications_over_time.png"),
+        file.path("tca_corpus", "figures", "publications_over_time.png"),
         width = 12,
         height = 6,
         figure
@@ -1720,7 +1720,7 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "publication
 #| label: countries_tca_corpus_data
 #|
 
-fn <- file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")
+fn <- file.path(".", "tca_corpus", "data", "countries_tca_corpus.rds")
 if (!file.exists(fn)) {
     corpus <- corpus_read(params$corpus_authors_dir)
 
@@ -1825,7 +1825,7 @@ Some check of the data
 #| echo: false
 #|
 
-data <- readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds"))
+data <- readRDS(file.path(".", "tca_corpus", "data", "countries_tca_corpus.rds"))
 data <- data |>
     filter(!is.na(iso3c)) |>
     tidyr::pivot_wider(names_from = position, values_from = count) |>
@@ -1840,8 +1840,8 @@ data <- data |>
 #| label: countries_tca_corpus_map
 #|
 
-if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publications_countries")) < 2) {
-    data <- readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")) |>
+if (length(list.files(path = file.path("tca_corpus", "maps"), pattern = "publications_countries")) < 2) {
+    data <- readRDS(file.path(".", "tca_corpus", "data", "countries_tca_corpus.rds")) |>
         dplyr::group_by(iso3c) |>
         dplyr::summarize(
             count_first = sum(count[position == "first"], na.rm = TRUE),
@@ -1986,13 +1986,13 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
     )
 
     ggplot2::ggsave(
-        file.path("maps", "tca_corpus", "publications_countries.pdf"),
+        file.path("tca_corpus", "maps", "publications_countries.pdf"),
         width = 12,
         height = 8,
         map
     )
     ggplot2::ggsave(
-        file.path("maps", "tca_corpus", "publications_countries.png"),
+        file.path("tca_corpus", "maps", "publications_countries.png"),
         width = 12,
         height = 8,
         map
@@ -2005,8 +2005,8 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
 #| label: xx_countries_tca_corpus_before_2016_map
 #| eval: false
 
-if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publications_countries_before_2016")) < 2) {
-    data <- readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")) |>
+if (length(list.files(path = file.path("tca_corpus", "maps"), pattern = "publications_countries_before_2016")) < 2) {
+    data <- readRDS(file.path(".", "tca_corpus", "data", "countries_tca_corpus.rds")) |>
         dplyr::filter(
             publication_year < 2016
         ) |>
@@ -2139,13 +2139,13 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
     )
 
     ggplot2::ggsave(
-        file.path("maps", "tca_corpus", "publications_countries_before_2016.pdf"),
+        file.path("tca_corpus", "maps", "publications_countries_before_2016.pdf"),
         width = 12,
         height = 8,
         map
     )
     ggplot2::ggsave(
-        file.path("maps", "tca_corpus", "publications_countries_before_2016.png"),
+        file.path("tca_corpus", "maps", "publications_countries_before_2016.png"),
         width = 12,
         height = 8,
         map
@@ -2159,8 +2159,8 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
 #| eval: false
 
 
-if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publications_countries_after_2019")) < 2) {
-    data <- readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")) |>
+if (length(list.files(path = file.path("tca_corpus", "maps"), pattern = "publications_countries_after_2019")) < 2) {
+    data <- readRDS(file.path(".", "tca_corpus", "data", "countries_tca_corpus.rds")) |>
         dplyr::filter(
             publication_year > 2019
         ) |>
@@ -2293,13 +2293,13 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
     )
 
     ggplot2::ggsave(
-        file.path("maps", "tca_corpus", "publications_countries_after_2019.pdf"),
+        file.path("tca_corpus", "maps", "publications_countries_after_2019.pdf"),
         width = 12,
         height = 8,
         map
     )
     ggplot2::ggsave(
-        file.path("maps", "tca_corpus", "publications_countries_after_2019.png"),
+        file.path("tca_corpus", "maps", "publications_countries_after_2019.png"),
         width = 12,
         height = 8,
         map
@@ -2315,7 +2315,7 @@ if (length(list.files(path = file.path("maps", "tca_corpus"), pattern = "publica
 #| label: sectors_over_time_data
 #|
 
-fn <- file.path("data", "tca_corpus", "sectors_over_time.rds")
+fn <- file.path("tca_corpus", "data", "sectors_over_time.rds")
 if (!file.exists(fn)) {
     data <- IPBES.R::corpus_read(params$corpus_topics_dir) |>
         dplyr::filter(
@@ -2382,8 +2382,8 @@ if (!file.exists(fn)) {
 #| label: sectors_over_time_plot
 #|
 
-if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_over_time")) < 2) {
-    figure_1 <- readRDS(file.path(file.path("data", "tca_corpus", "sectors_over_time.rds"))) |>
+if (length(list.files(file.path("tca_corpus", "figures"), pattern = "sectors_over_time")) < 2) {
+    figure_1 <- readRDS(file.path(file.path("tca_corpus", "data", "sectors_over_time.rds"))) |>
         dplyr::filter(
             publication_year >= 1950
         ) |>
@@ -2413,7 +2413,7 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_ove
             # axis.text.y.right = element_text(color = "red")
         )
 
-    figure_all <- readRDS(file.path(file.path("data", "tca_corpus", "sectors_over_time.rds"))) |>
+    figure_all <- readRDS(file.path(file.path("tca_corpus", "data", "sectors_over_time.rds"))) |>
         dplyr::filter(
             publication_year >= 1950
         ) |>
@@ -2450,13 +2450,13 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_ove
     )
 
     ggplot2::ggsave(
-        file.path("figures", "tca_corpus", "sectors_over_time.pdf"),
+        file.path("tca_corpus", "figures", "sectors_over_time.pdf"),
         width = 12,
         height = 12,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "tca_corpus", "sectors_over_time.png"),
+        file.path("tca_corpus", "figures", "sectors_over_time.png"),
         width = 12,
         height = 12,
         figure
@@ -2471,8 +2471,8 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_ove
 #| label: sectors_proportions over_time_plot
 #|
 
-if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_proportions_over_time")) < 2) {
-    figure <- readRDS(file.path(file.path("data", "tca_corpus", "sectors_over_time.rds"))) |>
+if (length(list.files(file.path("tca_corpus", "figures"), pattern = "sectors_proportions_over_time")) < 2) {
+    figure <- readRDS(file.path(file.path("tca_corpus", "data", "sectors_over_time.rds"))) |>
         dplyr::filter(
             publication_year >= 1950
         ) |>
@@ -2503,13 +2503,13 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "sectors_pro
         )
 
     ggplot2::ggsave(
-        file.path("figures", "tca_corpus", "sectors_proportions_over_time.pdf"),
+        file.path("tca_corpus", "figures", "sectors_proportions_over_time.pdf"),
         width = 12,
         height = 12,
         figure
     )
     ggplot2::ggsave(
-        file.path("figures", "tca_corpus", "sectors_proportions_over_time.png"),
+        file.path("tca_corpus", "figures", "sectors_proportions_over_time.png"),
         width = 12,
         height = 12,
         figure
@@ -2670,7 +2670,7 @@ These are the languages of the abstract and title. Articles with multiple langua
 the language of the abstract / title, it might not be the language of the full text.
 
 ```{r}
-readRDS(file.path(".", "data", "tca_corpus", "tca_corpus_languages.rds"))$languages |>
+readRDS(file.path(".", "tca_corpus", "data", "tca_corpus_languages.rds"))$languages |>
     IPBES.R::table_dt(
         fn = "languages_tca_corpus"
     )
@@ -2682,12 +2682,12 @@ readRDS(file.path(".", "data", "tca_corpus", "tca_corpus_languages.rds"))$langua
 The red line is the cumulative proportion of publications, the blue line the cumulative proportion of all of the Op[enAlex corpus. Both use the secondeary (red) axis.
 
 
-![](`r file.path("figures", "tca_corpus", "publications_over_time.png")`)
+![](`r file.path("tca_corpus", "figures", "publications_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "tca_corpus", "publications_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "publications_over_time.pdf")`){target="_blank"}
 
 ```{r}
-readRDS(file.path(".", "data", "tca_corpus", "publications_over_time_tca_corpus.rds")) |>
+readRDS(file.path(".", "tca_corpus", "data", "publications_over_time_tca_corpus.rds")) |>
     IPBES.R::table_dt(fn = "publications_over_time")
 ```
 
@@ -2708,15 +2708,15 @@ The following calculations were done:
 
 
 ```{r}
-readRDS(file.path(".", "data", "tca_corpus", "countries_tca_corpus.rds")) |>
+readRDS(file.path(".", "tca_corpus", "data", "countries_tca_corpus.rds")) |>
     IPBES.R::table_dt(fn = "publications_per_country")
 ```
 
 #### All Years
 
-![](`r file.path("maps", "tca_corpus", "publications_countries.png")`)
+![](`r file.path("tca_corpus", "maps", "publications_countries.png")`)
 
-To download high resolution, [click here](`r file.path("maps", "tca_corpus", "publications_countries.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "maps", "publications_countries.pdf")`){target="_blank"}
 
 
 ### Sectors over time
@@ -2724,19 +2724,19 @@ To download high resolution, [click here](`r file.path("maps", "tca_corpus", "pu
 For clarity, the log of the cumulative sum of the sectors over time are shown here. 
 
 
-![The top graph shows only the primary sector assigned, the bottom graph all sectors (first, secondary and tertiary)](figures/tca_corpus/sectors_over_time.png)
+![The top graph shows only the primary sector assigned, the bottom graph all sectors (first, secondary and tertiary)](tca_corpus/figures/sectors_over_time.png)
 
-To download high resolution, [click here](`r file.path("maps", "tca_corpus", "sectors_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_over_time.pdf")`){target="_blank"}
 
 
-![The graph shows the proportion of the different sectors over time](figures/tca_corpus/sectors_proportions_over_time.png)
+![The graph shows the proportion of the different sectors over time](tca_corpus/figures/sectors_proportions_over_time.png)
 
-To download high resolution, [click here](`r file.path("maps", "tca_corpus", "sectors_proportions_over_time.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_proportions_over_time.pdf")`){target="_blank"}
 
 
 
 ```{r}
-readRDS(file.path(".", "data", "tca_corpus", "sectors_over_time.rds")) |>
+readRDS(file.path(".", "tca_corpus", "data", "sectors_over_time.rds")) |>
     IPBES.R::table_dt(
         fn = "sectors_over_time",
         fixedColumns = list(leftColumns = 3)
@@ -2898,16 +2898,16 @@ prim_topics_tca_corpus |>
 ## Additional Searches subsets
 
 ```{r}
-file.path(".", "data", "tca_corpus", "additional_search.rds") |>
+file.path(".", "tca_corpus", "data", "additional_search.rds") |>
     readRDS() |>
     knitr::kable()
 ```
 
-Differences between the used [media search term](input/tca_corpus/search terms/media.txt) and the original media search term:
+Differences between the used [media search term](tca_corpus/input/search terms/media.txt) and the original media search term:
 ```{r}
 diffviewer::visual_diff(
-    "input/tca_corpus/search terms/media.org.txt",
-    "input/tca_corpus/search terms/media.txt"
+    "tca_corpus/input/search terms/media.org.txt",
+    "tca_corpus/input/search terms/media.txt"
 )
 ```
 
@@ -2916,9 +2916,9 @@ diffviewer::visual_diff(
 
 ## Strategies/Options/Instruments for transformative change 
 
-The file [strategies_options.md](input/tca_corpus/search terms/strategies_options.md) contains the terms for the different strategies and options.
+The file [strategies_options.md](tca_corpus/input/search terms/strategies_options.md) contains the terms for the different strategies and options.
 
-I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](input/tca_corpus/search terms/tca_corpus.txt).
+I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](tca_corpus/input/search terms/tca_corpus.txt).
 
 ### Methods
 
@@ -2926,7 +2926,7 @@ I will now iterate through all of them and identify the number of hits per indiv
 ```{r}
 #| label: strategies_options_prepare_searchterms
 
-fn <- file.path("data", "tca_corpus", "strategies_options_terms.rds")
+fn <- file.path("tca_corpus", "data", "strategies_options_terms.rds")
 if (!file.exists(fn)) {
     sts <- data.frame(
         "Strategy" = NA,
@@ -2961,9 +2961,9 @@ if (!file.exists(fn)) {
 #| label: strategies_options_get_counts
 #|
 
-fn <- file.path("data", "tca_corpus", "strategies_options.rds")
+fn <- file.path("tca_corpus", "data", "strategies_options.rds")
 if (!file.exists(file.path(fn))) {
-    strategies_options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
+    strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
     strategies_options <- lapply(
         names(strategies_options_terms),
         function(strategy) {
@@ -3029,7 +3029,7 @@ if (!file.exists(file.path(fn))) {
 
 tic()
 
-strategies_options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
+strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
 lapply(
     names(strategies_options_terms),
     function(strategy) {
@@ -3060,10 +3060,10 @@ toc()
 
 tic()
 
-fn <- file.path("data", "tca_corpus", "strategies_options_ids.rds")
+fn <- file.path("tca_corpus", "data", "strategies_options_ids.rds")
 
 if (!file.exists(fn)) {
-    strategies__options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
+    strategies__options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
     strategies_options_ids <- lapply(
         names(strategies__options_terms),
         function(strategy) {
@@ -3100,11 +3100,11 @@ toc()
 
 tic()
 
-fn <- file.path("data", "tca_corpus", "strategies_options_corpus.rds")
+fn <- file.path("tca_corpus", "data", "strategies_options_corpus.rds")
 
 if (!file.exists(fn)) {
-    strategies_options_terms <- readRDS(file.path("data", "tca_corpus", "strategies_options_terms.rds"))
-    strategies_options_ids <- readRDS(file.path("data", "tca_corpus", "strategies_options_ids.rds"))
+    strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
+    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
 
     strategies_options_corpus <- lapply(
         names(strategies_options_terms),
@@ -3173,10 +3173,10 @@ toc()
 #| label: strategies_options_overlap
 #|
 
-fn <- file.path("data", "tca_corpus", "strategies_options_overlap.rds")
+fn <- file.path("tca_corpus", "data", "strategies_options_overlap.rds")
 
 if (!file.exists(fn)) {
-    strategies_options_ids <- readRDS(file.path("data", "tca_corpus", "strategies_options_ids.rds"))
+    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
 
     overlap_count <- function(x, y) {
         length(intersect(x, y))
@@ -3199,14 +3199,14 @@ if (!file.exists(fn)) {
 #| label: cases_strategies_options_corpus
 #|
 
-fn <- file.path("data", "tca_corpus", "strategies_options_case.rds")
+fn <- file.path("tca_corpus", "data", "strategies_options_case.rds")
 
 if (!file.exists(fn)) {
     case_ids <- corpus_read(params$corpus_cases_dir) |>
         dplyr::distinct(id) |>
         collect() |>
         unlist()
-    strategies_options_ids <- readRDS(file.path("data", "tca_corpus", "strategies_options_ids.rds"))
+    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
 
     strategies_options_case <- lapply(
         names(strategies_options_ids),
@@ -3240,10 +3240,10 @@ if (!file.exists(fn)) {
 #|
 
 # data from OpernAlex vie count
-# strategies_options_corpus <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+# strategies_options_corpus <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
 
 # data from corpora
-strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options_corpus.rds"))
+strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
 
 data <- lapply(
     names(strategies_options),
@@ -3275,7 +3275,7 @@ This data is corrected for different research oputput before and after 1992 by d
 #| label: strategies_options_counts_figure
 #|
 
-figname <- file.path("figures", "tca_corpus", "strategies_options_time_split")
+figname <- file.path("tca_corpus", "figures", "strategies_options_time_split")
 
 figs <- list.files(
     path = dirname(figname),
@@ -3286,10 +3286,10 @@ figs <- list.files(
 
 if (figs < 4) {
     # data from OpernAlex vie count
-    # strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+    # strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
 
     # data from corpora
-    strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options_corpus.rds"))
+    strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
 
     oa <- openalexR::oa_fetch(
         search = "",
@@ -3379,13 +3379,13 @@ if (figs < 4) {
 }
 ```
 
-![The graph shows the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("figures", "tca_corpus", "strategies_options_time_split.png")`)
+![The graph shows the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "tca_corpus", "strategies_options_time_split.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split.pdf")`){target="_blank"}
 
-![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("figures", "tca_corpus", "strategies_options_time_split_p.png")`)
+![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "tca_corpus", "strategies_options_time_split+p.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split+p.pdf")`){target="_blank"}
 
 #### Assesment of individual terms
 
@@ -3397,7 +3397,7 @@ This is based on the data from OpenAlex using API calls to get the count.
 #| label: strategies_options_asess
 #| output: asis
 
-strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
 
 lapply(
     names(strategies_options),
@@ -3422,15 +3422,15 @@ lapply(
 
 Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
 
-The differences the [original search term](./input/tca_corpus/search%20terms/strategies_options.org.md) and the [used search term](./input/tca_corpus/search%20terms/strategies_options.md) is shown below
+The differences the [original search term](./tca_corpus/input/search%20terms/strategies_options.org.md) and the [used search term](./tca_corpus/input/search%20terms/strategies_options.md) is shown below
 
 ```{r}
 #| label: strategies_options_diff
 #|
 
 diffviewer::visual_diff(
-    file.path("input", "tca_corpus", "search terms", "strategies_options.org.md"),
-    file.path("input", "tca_corpus", "search terms", "strategies_options.md")
+    file.path("tca_corpus", "input", "search terms", "strategies_options.org.md"),
+    file.path("tca_corpus", "input", "search terms", "strategies_options.md")
 )
 ```
 
@@ -3440,10 +3440,10 @@ diffviewer::visual_diff(
 #| label: strategies_options_years
 #|
 # data from OpernAlex vie count
-# strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options.rds"))
+# strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
 
 # data from corpora
-strategies_options <- readRDS(file.path("data", "tca_corpus", "strategies_options_corpus.rds"))
+strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
 
 
 
@@ -3471,7 +3471,7 @@ lapply(
 #| label: actors_strategies_options_table
 #|
 
-readRDS(file.path("data", "tca_corpus", "strategies_options_case.rds"))$strategies_options_case |>
+readRDS(file.path("tca_corpus", "data", "strategies_options_case.rds"))$strategies_options_case |>
     dplyr::mutate(
         p_cases = round(p_cases, 4)
     ) |>
@@ -3489,10 +3489,10 @@ readRDS(file.path("data", "tca_corpus", "strategies_options_case.rds"))$strategi
 #| label: strategies_option_overlap_figure
 #|
 
-fn <- file.path("figures", "tca_corpus", "strategies_options_interactive_matrix")
+fn <- file.path("tca_corpus", "figures", "strategies_options_interactive_matrix")
 
 if (!file.exists(paste0(fn, ".html"))) {
-    data <- readRDS(file.path("data", "tca_corpus", "strategies_options_overlap.rds"))
+    data <- readRDS(file.path("tca_corpus", "data", "strategies_options_overlap.rds"))
 
     value <- diag(data)
 
@@ -3575,13 +3575,13 @@ if (!file.exists(paste0(fn, ".html"))) {
 }
 ```
 
-<iframe src="figures/tca_corpus/strategies_options_interactive_matrix.html" width="100%" height="800px"></iframe>
+<iframe src="tca_corpus/figures/strategies_options_interactive_matrix.html" width="100%" height="800px"></iframe>
 
 ```{r}
 #| label: strategies_option_overlap_table
 #|
 
-readRDS(file.path("data", "tca_corpus", "strategies_options_overlap.rds")) |>
+readRDS(file.path("tca_corpus", "data", "strategies_options_overlap.rds")) |>
     IPBES.R::table_dt(
         fn = "strategies_options_overlap",
         fixedColumns = list(leftColumns = 1)
@@ -3591,9 +3591,9 @@ readRDS(file.path("data", "tca_corpus", "strategies_options_overlap.rds")) |>
 
 ## Actors for transformative change 
 
-The file [actors.md](input/tca_corpus/search terms/actors.md) contains the terms for the different actors.
+The file [actors.md](tca_corpus/input/search terms/actors.md) contains the terms for the different actors.
 
-I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](input/tca_corpus/search terms/tca_corpus.txt).
+I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](tca_corpus/input/search terms/tca_corpus.txt).
 
 ### Methods
 
@@ -3601,7 +3601,7 @@ I will now iterate through all of them and identify the number of hits per indiv
 ```{r}
 #| label: actors_prepare_searchterms
 
-fn <- file.path("data", "tca_corpus", "actors_terms.rds")
+fn <- file.path("tca_corpus", "data", "actors_terms.rds")
 if (!file.exists(fn)) {
 
      sts <- data.frame(
@@ -3636,9 +3636,9 @@ if (!file.exists(fn)) {
 ```{r}
 #| label: actors_get_counts
 
-fn <- file.path("data", "tca_corpus", "actors.rds")
+fn <- file.path("tca_corpus", "data", "actors.rds")
 if (!file.exists(file.path(fn))) {
-    actors_terms <- readRDS(file.path("data", "tca_corpus", "actors_terms.rds"))
+    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
     actors_options <- lapply(
         names(actors_terms),
         function(actor) {
@@ -3703,7 +3703,7 @@ if (!file.exists(file.path(fn))) {
 
 tic()
 
-actors_terms <- readRDS(file.path("data", "tca_corpus", "actors_terms.rds"))
+actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
 lapply(
     names(actors_terms),
     function(actor) {
@@ -3732,10 +3732,10 @@ toc()
 
 tic()
 
-fn <- file.path("data", "tca_corpus", "actors_ids.rds")
+fn <- file.path("tca_corpus", "data", "actors_ids.rds")
 
 if (!file.exists(fn)) {
-    actors_terms <- readRDS(file.path("data", "tca_corpus", "actors_terms.rds"))
+    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
     actors_ids <- lapply(
         names(actors_terms),
         function(actor) {
@@ -3774,11 +3774,11 @@ toc()
 
 tic()
 
-fn <- file.path("data", "tca_corpus", "actors_corpus.rds")
+fn <- file.path("tca_corpus", "data", "actors_corpus.rds")
 
 if (!file.exists(fn)) {
-    actors_terms <- readRDS(file.path("data", "tca_corpus", "actors_terms.rds"))
-    actors_ids <- readRDS(file.path("data", "tca_corpus", "actors_ids.rds"))
+    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
 
     actors_corpus <- lapply(
         names(actors_terms),
@@ -3846,10 +3846,10 @@ toc()
 #| label: actors_overlap
 #|
 
-fn <- file.path("data", "tca_corpus", "actors_overlap.rds")
+fn <- file.path("tca_corpus", "data", "actors_overlap.rds")
 
 if (!file.exists(fn)) {
-    actors_ids <- readRDS(file.path("data", "tca_corpus", "actors_ids.rds"))
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
 
     overlap_count <- function(x, y) {
         length(intersect(x, y))
@@ -3873,14 +3873,14 @@ if (!file.exists(fn)) {
 #| label: cases_actors_corpus
 #|
 
-fn <- file.path("data", "tca_corpus", "actors_case.rds")
+fn <- file.path("tca_corpus", "data", "actors_case.rds")
 
 if (!file.exists(fn)) {
     case_ids <- corpus_read(params$corpus_cases_dir) |>
         dplyr::distinct(id) |>
         collect() |>
         unlist()
-    actors_ids <- readRDS(file.path("data", "tca_corpus", "actors_ids.rds"))
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
 
     actors_case <- lapply(
         names(actors_ids),
@@ -3914,10 +3914,10 @@ if (!file.exists(fn)) {
 #|
 
 # data from OpernAlex vie count
-# actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+# actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
 
 # data from corpora
-actors <- readRDS(file.path("data", "tca_corpus", "actors_corpus.rds"))
+actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
 
 data <- lapply(
     names(actors),
@@ -3948,7 +3948,7 @@ These numbers are the number of hits of TCA Corpus AND each individual term of t
 #| label: actors_asess
 #| output: asis
 
-actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
 
 lapply(
     names(actors),
@@ -3972,15 +3972,15 @@ lapply(
 
 Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
 
-The differences the [original search term](./input/tca_corpus/search%20terms/actors.org.md) and the [used search term](./input/tca_corpus/search%20terms/actors.md) is shown below
+The differences the [original search term](./tca_corpus/input/search%20terms/actors.org.md) and the [used search term](./tca_corpus/input/search%20terms/actors.md) is shown below
 
 ```{r}
 #| label: diff_actors
 #|
 
 diffviewer::visual_diff(
-    file.path("input", "tca_corpus", "search terms", "actors.org.md"),
-    file.path("input", "tca_corpus", "search terms", "actors.md")
+    file.path("tca_corpus", "input", "search terms", "actors.org.md"),
+    file.path("tca_corpus", "input", "search terms", "actors.md")
 )
 ```
 
@@ -3992,10 +3992,10 @@ diffviewer::visual_diff(
 #|
 
 # data from OpernAlex vie count
-# actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+# actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
 
 # data from corpora
-actors <- readRDS(file.path("data", "tca_corpus", "actors_corpus.rds"))
+actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
 
 lapply(
     names(actors),
@@ -4023,7 +4023,7 @@ This data is corrected for different research oputput before and after 1992 by d
 #| label: actors_counts_figure
 #|
 
-figname <- file.path("figures", "tca_corpus", "actors_time_split")
+figname <- file.path("tca_corpus", "figures", "actors_time_split")
 
 figs <- list.files(
     path = dirname(figname),
@@ -4033,10 +4033,10 @@ figs <- list.files(
 
 if (figs < 4) {
     # data from OpernAlex vie count
-    # actors <- readRDS(file.path("data", "tca_corpus", "actors.rds"))
+    # actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
 
     # data from corpora
-    actors <- readRDS(file.path("data", "tca_corpus", "actors_corpus.rds"))
+    actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
 
 
     oa <- openalexR::oa_fetch(
@@ -4128,13 +4128,13 @@ if (figs < 4) {
 
 ```
 
-![The graph shows the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("figures", "tca_corpus", "actors_time_split.png")`)
+![The graph shows the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "tca_corpus", "actors_time_split.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split.pdf")`){target="_blank"}
 
-![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("figures", "tca_corpus", "actors_time_split_p.png")`)
+![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split_p.png")`)
 
-To download high resolution, [click here](`r file.path("figures", "tca_corpus", "actors_time_split+p.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split+p.pdf")`){target="_blank"}
 
 #### Actors Works in Case Corpus
 
@@ -4142,7 +4142,7 @@ To download high resolution, [click here](`r file.path("figures", "tca_corpus", 
 #| label: actors_cases_table
 #|
 
-readRDS(file.path("data", "tca_corpus", "actors_case.rds"))$actors_case |>
+readRDS(file.path("tca_corpus", "data", "actors_case.rds"))$actors_case |>
     dplyr::mutate(
         p_cases = round(p_cases, 4)
     ) |>
@@ -4159,10 +4159,10 @@ readRDS(file.path("data", "tca_corpus", "actors_case.rds"))$actors_case |>
 #| label: actors_overlap_figure
 #|
 
-fn <- file.path("figures", "tca_corpus", "actors_interactive_matrix")
+fn <- file.path("tca_corpus", "figures", "actors_interactive_matrix")
 
 if (!file.exists(paste0(fn, ".html"))) {
-    data <- readRDS(file.path("data", "tca_corpus", "actors_overlap.rds"))
+    data <- readRDS(file.path("tca_corpus", "data", "actors_overlap.rds"))
 
     value <- diag(data)
 
@@ -4223,13 +4223,13 @@ if (!file.exists(paste0(fn, ".html"))) {
 }
 ```
 
-<iframe src="figures/tca_corpus/actors_interactive_matrix.html" width="100%" height="800px"></iframe>
+<iframe src="tca_corpus/figures/actors_interactive_matrix.html" width="100%" height="800px"></iframe>
 
 ```{r}
 #| label: actors_overlap_table
 #|
 
-readRDS(file.path("data", "tca_corpus", "actors_overlap.rds")) |>
+readRDS(file.path("tca_corpus", "data", "actors_overlap.rds")) |>
     IPBES.R::table_dt(
         fn = "actors_overlap",
         fixedColumns = list(leftColumns = 1)
@@ -4242,11 +4242,11 @@ readRDS(file.path("data", "tca_corpus", "actors_overlap.rds")) |>
 ```{r}
 #| label: actors_strategies_options_overlap_data
 
-fn <- file.path("data", "tca_corpus", "actors_strategies_options_overlap.rds")
+fn <- file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")
 
 if (!file.exists(fn)) {
-    actors_ids <- file.path("data", "tca_corpus", "actors_ids.rds") |> readRDS()
-    strategies_options_ids <- file.path("data", "tca_corpus", "strategies_options_ids.rds") |> readRDS()
+    actors_ids <- file.path("tca_corpus", "data", "actors_ids.rds") |> readRDS()
+    strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids.rds") |> readRDS()
     sapply(actors_ids, function(actor) {
         sapply(strategies_options_ids, function(strategy_option) {
             length(intersect(actor, strategy_option))
@@ -4258,7 +4258,7 @@ if (!file.exists(fn)) {
 
 ```{r}
 #| label: actors_strategies_options_overlap_table
-readRDS(file.path("data", "tca_corpus", "actors_strategies_options_overlap.rds")) |>
+readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")) |>
     IPBES.R::table_dt(
         fn = "actors_strategies_options_overlap",
         fixedColumns = list(leftColumns = 1)
@@ -4269,7 +4269,7 @@ readRDS(file.path("data", "tca_corpus", "actors_strategies_options_overlap.rds")
 #| label: actors_strategies_options_overlap_figure
 #|
 
-fn <- file.path("figures", "tca_corpus", "actors_strategies_options_matrix")
+fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix")
 
 n <- list.files(
     path = dirname(fn),
@@ -4278,13 +4278,13 @@ n <- list.files(
 ) |> length()
 
 if (n < 2) {
-    data <- readRDS(file.path("data", "tca_corpus", "actors_strategies_options_overlap.rds"))
+    data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
     actors_count <- sapply(
-        readRDS(file.path("data", "tca_corpus", "actors_ids.rds")),
+        readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
         length
     )
     strategies_options_count <- sapply(
-        readRDS(file.path("data", "tca_corpus", "strategies_options_ids.rds")),
+        readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds")),
         length
     )
 
@@ -4323,9 +4323,9 @@ if (n < 2) {
 ```
 
 
-![](`r file.path("figures", "tca_corpus", "actors_strategies_options_matrix.png")`)
+![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix.png")`)
 
-To download high resolution, [click here](figures/tca_corpus/actors_strategies_options_matrix.pdf`){target="_blank"}
+To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix.pdf`){target="_blank"}
 
 # Tries
 
@@ -4368,7 +4368,7 @@ sts <- sts[!is.na(sts$Option), ]
 #|
 
 
-fn <- file.path("figures", "tca_corpus", "strategies_options_dendrogram_interactive.html")
+fn <- file.path("tca_corpus", "figures", "strategies_options_dendrogram_interactive.html")
 if (!file.exists(fn)) {
     p <- collapsibleTree::collapsibleTree(
         sts,
@@ -4380,13 +4380,13 @@ if (!file.exists(fn)) {
         file = fn
     )
 
-    unlink(file.path("figures", "tca_corpus", "strategies_options_dendrogram_interactive_files"), recursive = TRUE)
+    unlink(file.path("tca_corpus", "figures", "strategies_options_dendrogram_interactive_files"), recursive = TRUE)
 }
 ```
 
-<iframe src="figures/tca_corpus/strategies_options_dendrogram_interactive.html" width="100%" height="800px"></iframe>
+<iframe src="tca_corpus/figures/strategies_options_dendrogram_interactive.html" width="100%" height="800px"></iframe>
 
-To open the interactive graph or to download it, [click here](figures/tca_corpus/strategies_options_dendrogram_interactive.html){target="_blank"}
+To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_dendrogram_interactive.html){target="_blank"}
 
 ```{r}
 #| label: strategies_options_static_tree_plot
@@ -4394,7 +4394,7 @@ To open the interactive graph or to download it, [click here](figures/tca_corpus
 #| fig.width: 10
 
 
-if (length(list.files(file.path("figures", "tca_corpus"), pattern = "strategies_options_dendrogram_circular")) < 2) {
+if (length(list.files(file.path("tca_corpus", "figures"), pattern = "strategies_options_dendrogram_circular")) < 2) {
     strategies_options_tree <- data.frame(
         from = c(rep("x", length(sts$Strategy)), sts$Strategy),
         to = c(sts$Strategy, sts$Option)
@@ -4441,22 +4441,22 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "strategies_
 
     ggplot2::ggsave(
         plot = p,
-        file.path("figures", "tca_corpus", "strategies_options_dendrogram_circular.pdf"),
+        file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.pdf"),
         width = 12,
         height = 6
     )
     ggplot2::ggsave(
         plot = p,
-        file.path("figures", "tca_corpus", "strategies_options_dendrogram_circular.png"),
+        file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.png"),
         width = 12,
         height = 6
     )
 }
 ```
 
-![](`r file.path("figures", "tca_corpus", "strategies_options_dendrogram_circular.png")`)
+![](`r file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.png")`)
 
-To download high resolution, [click here](figures/tca_corpus/strategies_options_dendrogram_circular.pdf`){target="_blank"}
+To download high resolution, [click here](tca_corpus/figures/strategies_options_dendrogram_circular.pdf`){target="_blank"}
 
 ### Actors Dendrogram
 
@@ -4496,7 +4496,7 @@ sts <- sts[!is.na(sts$Actor_Group), ]
 #|
 
 
-fn <- file.path("figures", "tca_corpus", "actors_dendrogram_interactive.html")
+fn <- file.path("tca_corpus", "figures", "actors_dendrogram_interactive.html")
 if (!file.exists(fn)) {
     p <- collapsibleTree::collapsibleTree(
         sts,
@@ -4508,13 +4508,13 @@ if (!file.exists(fn)) {
         file = fn
     )
 
-    unlink(file.path("figures", "tca_corpus", "actors_dendrogram_interactive_files"), recursive = TRUE)
+    unlink(file.path("tca_corpus", "figures", "actors_dendrogram_interactive_files"), recursive = TRUE)
 }
 ```
 
-<iframe src="figures/tca_corpus/actors_dendrogram_interactive.html" width="100%" height="800px"></iframe>
+<iframe src="tca_corpus/figures/actors_dendrogram_interactive.html" width="100%" height="800px"></iframe>
 
-To open the interactive graph or to download it, [click here](figures/tca_corpus/actors_dendrogram_interactive.html){target="_blank"}
+To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_dendrogram_interactive.html){target="_blank"}
 
 ```{r}
 #| label: actors_static_tree_plot
@@ -4522,7 +4522,7 @@ To open the interactive graph or to download it, [click here](figures/tca_corpus
 #| fig.width: 10
 
 
-if (length(list.files(file.path("figures", "tca_corpus"), pattern = "actors_dendrogram_circular")) < 2) {
+if (length(list.files(file.path("tca_corpus", "figures"), pattern = "actors_dendrogram_circular")) < 2) {
     actors_tree <- data.frame(
         from = c(rep("x", length(sts$Sector)), sts$Sector),
         to = c(sts$Sector, sts$Actor_Group)
@@ -4569,20 +4569,20 @@ if (length(list.files(file.path("figures", "tca_corpus"), pattern = "actors_dend
 
     ggplot2::ggsave(
         plot = p,
-        file.path("figures", "tca_corpus", "actors_dendrogram_circular.pdf"),
+        file.path("tca_corpus", "figures", "actors_dendrogram_circular.pdf"),
         width = 12,
         height = 6
     )
     ggplot2::ggsave(
         plot = p,
-        file.path("figures", "tca_corpus", "actors_dendrogram_circular.png"),
+        file.path("tca_corpus", "figures", "actors_dendrogram_circular.png"),
         width = 12,
         height = 6
     )
 }
 ```
 
-![](`r file.path("figures", "tca_corpus", "actors_dendrogram_circular.png")`)
+![](`r file.path("tca_corpus", "figures", "actors_dendrogram_circular.png")`)
 
-To download high resolution, [click here](figures/tca_corpus/actors_dendrogram_circular.pdf`){target="_blank"}
+To download high resolution, [click here](tca_corpus/figures/actors_dendrogram_circular.pdf`){target="_blank"}
 
