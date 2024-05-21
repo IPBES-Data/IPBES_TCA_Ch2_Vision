@@ -9,6 +9,6 @@
 **/corpus_tca.serialised/*
 **/corpus.serialised/*
 
-data/Ch2_technology/sent_analysis_technology_tca.parquet
-data/Ch2_technology/sent_analysis_technology.parquet
+ch2_technology/data/sent_analysis_technology_tca.parquet
+ch2_technology/data/sent_analysis_technology.parquet
 
