@@ -366,7 +366,6 @@
 "Research center" OR
 "Research institute" OR
 "Research organization" OR
-"Researcher" OR
 "Scientific institution" OR
 "Scientific society" OR
 "Scientific association" OR
