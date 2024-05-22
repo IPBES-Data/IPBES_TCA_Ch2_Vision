@@ -3477,13 +3477,17 @@ readRDS(file.path("tca_corpus", "data", "strategies_options_case.rds"))$strategi
     ) |>
     IPBES.R::table_dt(
         fn = "strategies_options__cases",
-        fixedColumns = list(leftColumns = 1)
+        fixedColumns = list(leftColumns = 0)
     )
 ```
 
 
 
 #### Matrix showing overlap of Strategies / Options
+
+The size of the nodes indicates the number of works in each node, while the thicknes of the nodes indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+The nodes can be moved and if selected, the links to / from that node are highlighted.
 
 ```{r}
 #| label: strategies_option_overlap_figure
@@ -3496,13 +3500,19 @@ if (!file.exists(paste0(fn, ".html"))) {
 
     value <- diag(data)
 
-    for (i in 1:nrow(data)) {
-        data[i, ] <- data[i, ] / data[i, i]
+    for (i in 1:ncol(data)) {
+        for (j in 1:nrow(data)){
+            data[i, j] <- data[i, j] / min(value[i], value[j])
+        }
     }
 
-
     # Create a graph from the adjacency matrix
-    g <- igraph::graph_from_adjacency_matrix(data, mode = "undirected", weighted = TRUE, diag = FALSE)
+    g <- igraph::graph_from_adjacency_matrix(
+        data,
+        mode = "max",
+        weighted = TRUE,
+        diag = FALSE
+    )
 
     # Convert the graph to a data frame
     nodes <- data.frame(
@@ -3520,62 +3530,102 @@ if (!file.exists(paste0(fn, ".html"))) {
     names(edges) <- c("from", "to", "width")
     edges$width <- (edges$width / max(edges$width)) * 20
 
-    # Calculate grid positions for the nodes
-    grid_size <- ceiling(sqrt(nrow(nodes)))
-    nodes$x <- rep(1:grid_size, each = grid_size)[1:nrow(nodes)] * 300 # scale x coordinates
-    nodes$y <- rep(1:grid_size, times = grid_size)[1:nrow(nodes)] * 300 # scale y coordinates
-
-    # Center the nodes
-    nodes$x <- nodes$x - max(nodes$x) / 2
-    nodes$y <- nodes$y - max(nodes$y) / 2
-
-    nodes$strategy <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 1)
-    nodes$option <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 2)
+    nodes$strategy <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 1)
+    nodes$option <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 2)
+    nodes$option <- sapply(
+        strsplit(nodes$option, "\\. |: "),
+        function(x) {
+            return(x[length(x)])
+        }
+    )
 
     colors <- rainbow(length(nodes$strategy)) # Generate a color for each strategy
     names(colors) <- nodes$strategy
     nodes$color <- colors[nodes$strategy]
 
-    nodes$label <- nodes$option
+
+    nodes$label <- sapply(
+        strsplit(nodes$option, "\\. |: "),
+        function(x) {
+            return(x[length(x)])
+        }
+    )
+
+    # Calculate grid positions for the nodes
+
+    node_x <- 1:length(unique(nodes$strategy))
+    names(node_x) <- unique(nodes$strategy)
+    nodes$x <- node_x[nodes$strategy] * 300
+
+    node_y <- 1:length(unique(nodes$option))
+    offset <- 0
+    for (strategy in unique(nodes$strategy)) {
+        id_s <- nodes$strategy == strategy
+        names(node_y) <- unique(nodes$option[id_s])
+        nodes$y[id_s] <- (node_y[nodes$option[id_s]] + offset) * 200
+        if (offset == 0.4) {
+            offset <- 0
+        } else {
+            offset <- 0.4
+        }
+    }
+
+
+    # Center the nodes
+    nodes$x <- (nodes$x - max(nodes$x) / 2) / 3
+    nodes$y <- (nodes$y - max(nodes$y) / 2) / 3
+
 
     # Create the interactive network graph
 
     p <- visNetwork(
         nodes,
         edges,
-        width = "100%"
+        height = "900px",
+        width = "1800px"
     ) |>
         visNodes(
             x = nodes$x,
             y = nodes$y,
-            fixed = TRUE,
+            fixed = FALSE,
+            physics = FALSE,
             font = list(
-                size = 16,
-                multi = TRUE
-            ),
-            color = list(
-                background = nodes$color,
-                border = nodes$color
+                size = 10
             )
         ) |>
         visEdges(
+            physics = TRUE,
             color = list(
                 color = "lightgray",
                 highlight = "black"
             )
+        ) |>
+        visPhysics(
+            solver = "barnesHut",
+            timestep = 0.1,
+            stabilization = list(
+                iterations = 1000
+            )
         )
+
+
 
     htmlwidgets::saveWidget(
         p,
         file = paste0(fn, ".html")
     )
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"))
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
 
     unlink(paste0(fn, "_files"), recursive = TRUE)
 }
 ```
 
 <iframe src="tca_corpus/figures/strategies_options_interactive_matrix.html" width="100%" height="800px"></iframe>
+
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_interactive_matrix.html){target="_blank"}
+
+To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix.pdf")`){target="_blank"}
 
 ```{r}
 #| label: strategies_option_overlap_table
@@ -3584,7 +3634,7 @@ if (!file.exists(paste0(fn, ".html"))) {
 readRDS(file.path("tca_corpus", "data", "strategies_options_overlap.rds")) |>
     IPBES.R::table_dt(
         fn = "strategies_options_overlap",
-        fixedColumns = list(leftColumns = 1)
+        fixedColumns = list(leftColumns = 0)
     )
 ```
 
@@ -4148,12 +4198,17 @@ readRDS(file.path("tca_corpus", "data", "actors_case.rds"))$actors_case |>
     ) |>
     IPBES.R::table_dt(
         fn = "actors_cases",
-        fixedColumns = list(leftColumns = 1)
+        fixedColumns = list(leftColumns = 0)
     )
 ```
 
 
 #### Matrix showing overlap of Actors
+
+The size of the nodes indicates the number of works in each node, while the thicknes of the nodes indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+
+The nodes can be moved and if selected, the links to / from that node are highlighted.
 
 ```{r}
 #| label: actors_overlap_figure
@@ -4166,12 +4221,20 @@ if (!file.exists(paste0(fn, ".html"))) {
 
     value <- diag(data)
 
-    for (i in 1:nrow(data)) {
-        data[i, ] <- data[i, ] / data[i,i]
+    for (i in 1:ncol(data)) {
+        for (j in 1:nrow(data)) {
+            data[i, j] <- data[i, j] / min(value[i], value[j])
+        }
     }
 
+
     # Create a graph from the adjacency matrix
-    g <- igraph::graph_from_adjacency_matrix(data, mode = "undirected", weighted = TRUE, diag = FALSE)
+    g <- igraph::graph_from_adjacency_matrix(
+        data,
+        mode = "max",
+        weighted = TRUE,
+        diag = FALSE
+    )
 
     # Convert the graph to a data frame
     nodes <- data.frame(
@@ -4187,30 +4250,68 @@ if (!file.exists(paste0(fn, ".html"))) {
     names(edges) <- c("from", "to", "width")
     edges$width <- (edges$width / max(edges$width)) * 20
 
+    nodes$sector <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 1)
+    nodes$actor_group <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 2)
+
+    colors <- rainbow(length(nodes$sector)) # Generate a color for each sector
+    names(colors) <- nodes$sector
+    nodes$color <- colors[nodes$sector]
+
+    nodes$label <- nodes$option
+
     # Calculate grid positions for the nodes
-    grid_size <- ceiling(sqrt(nrow(nodes)))
-    nodes$x <- rep(1:grid_size, each = grid_size)[1:nrow(nodes)] * 300 # scale x coordinates
-    nodes$y <- rep(1:grid_size, times = grid_size)[1:nrow(nodes)] * 300 # scale y coordinates
+    node_x <- 1:length(unique(nodes$sector))
+    names(node_x) <- unique(nodes$sector)
+    nodes$x <- node_x[nodes$sector] * 300
+
+    node_y <- 1:length(unique(nodes$actor_group))
+    offset <- 0
+    for (sector in unique(nodes$sector)) {
+        id_s <- nodes$sector == sector
+        names(node_y) <- unique(nodes$actor_group[id_s])
+        nodes$y[id_s] <- (node_y[nodes$actor_group[id_s]] + offset) * 200
+        if (offset == 0.5) {
+            offset <- 0
+        } else {
+            offset <- 0.5
+        }
+    }
 
     # Center the nodes
     nodes$x <- nodes$x - max(nodes$x) / 2
     nodes$y <- nodes$y - max(nodes$y) / 2
 
+    nodes$label <- nodes$actor_group
+
     # Create the interactive network graph
 
-    p <- visNetwork(nodes, edges, width = "100%") |>
+    p <- visNetwork(
+        nodes,
+        edges,
+        height = "900px",
+        width = "1800px"
+    ) |>
         visNodes(
             x = nodes$x,
             y = nodes$y,
-            fixed = TRUE,
+            fixed = FALSE,
+            physics = FALSE,
             font = list(
-                size = 16
+                size = 24
             )
         ) |>
         visEdges(
+            physics = TRUE,
             color = list(
                 color = "lightgray",
                 highlight = "black"
+            )
+        ) |>
+        visPhysics(
+            solver = "barnesHut",
+            timestep = 0.1,
+            stabilization = list(
+                iterations = 1000
             )
         )
 
@@ -4218,12 +4319,17 @@ if (!file.exists(paste0(fn, ".html"))) {
         p,
         file = paste0(fn, ".html")
     )
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"))
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
     unlink(paste0(fn, "_files"), recursive = TRUE)
 }
 ```
 
 <iframe src="tca_corpus/figures/actors_interactive_matrix.html" width="100%" height="800px"></iframe>
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_interactive_matrix.html){target="_blank"}
+
+To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix.pdf")`){target="_blank"}
+
 
 ```{r}
 #| label: actors_overlap_table
@@ -4265,6 +4371,8 @@ readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")
     )
 ```
 
+The colour indicates s indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
 ```{r}
 #| label: actors_strategies_options_overlap_figure
 #|
@@ -4279,6 +4387,7 @@ n <- list.files(
 
 if (n < 2) {
     data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
+
     actors_count <- sapply(
         readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
         length
@@ -4288,31 +4397,36 @@ if (n < 2) {
         length
     )
 
-    for (i in 1:nrow(data)) {
-        data[i, ] <- data[i, ] / strategies_options_count[i]
+    for (i in 1:length(strategies_options_count)) {
+        for (j in 1:length(actors_count)) {
+            data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
+        }
     }
 
+    sector <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
+    strategy <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
 
-    for (i in 1:ncol(data)) {
-        data[, i] <- data[, i] / actors_count[i]
-    }
+    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
 
-    colnames(data)  <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
-    rownames(data)  <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+    # data$hline <- c(0, diff(as.numeric(factor(sector))) != 0)
+    # data$vline <- c(0, diff(as.numeric(factor(strategy))) != 0)
     
     p <- as.data.frame(as.table(data)) |>
-        ggplot(aes(x = Var2, y = Var1, fill = Freq)) +
+        ggplot(
+            aes(x = Var2, y = Var1, fill = Freq)
+        ) +
         geom_tile() +
         scale_fill_gradient(low = "white", high = "red") +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
+    
 
     ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".pdf"),
-        width = 12,
-        height = 6
-    )
+            plot = p,
+            paste0(fn, ".pdf"),
+            width = 12,
+            height = 6
+        )
     ggplot2::ggsave(
         plot = p,
         paste0(fn, ".png"),
@@ -4325,7 +4439,7 @@ if (n < 2) {
 
 ![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix.png")`)
 
-To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix.pdf`){target="_blank"}
+To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix.pdf){target="_blank"}
 
 # Tries
 
