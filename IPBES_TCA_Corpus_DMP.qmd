@@ -3385,7 +3385,7 @@ To download high resolution, [click here](`r file.path("tca_corpus", "figures", 
 
 ![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.png")`)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split+p.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.pdf")`){target="_blank"}
 
 #### Assesment of individual terms
 
@@ -4134,7 +4134,7 @@ To download high resolution, [click here](`r file.path("tca_corpus", "figures", 
 
 ![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split_p.png")`)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split+p.pdf")`){target="_blank"}
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split_p.pdf")`){target="_blank"}
 
 #### Actors Works in Case Corpus
 
