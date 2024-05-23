@@ -4753,7 +4753,7 @@ n <- list.files(
     recursive = TRUE
 ) |> length()
 
-if (n < 2) {
+if (n < 6) {
     data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
 
     actors_count <- sapply(
@@ -4793,6 +4793,12 @@ if (n < 2) {
     ggplot2::ggsave(
         plot = p,
         paste0(fn, ".pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".svg"),
         width = 12,
         height = 6
     )
@@ -4859,7 +4865,7 @@ n <- list.files(
     recursive = TRUE
 ) |> length()
 
-if (n < 4) {
+if (n < 6) {
     data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds"))
 
     actors_count <- sapply(
@@ -4904,6 +4910,12 @@ if (n < 4) {
     )
     ggplot2::ggsave(
         plot = p,
+        paste0(fn, ".svg"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
         paste0(fn, ".png"),
         width = 12,
         height = 6
@@ -4915,6 +4927,124 @@ if (n < 4) {
 ![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases.png")`)
 
 To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_cases.pdf){target="_blank"}
+
+
+## Differenct Cases / all
+
+
+The colour indicates s indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+```{r}
+#| label: actors_strategies_options_overlap_difference_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference")
+
+n <- list.files(
+    path = dirname(fn),
+    pattern = basename(fn),
+    recursive = TRUE
+) |> length()
+
+if (n < 6) {
+    data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
+
+    actors_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
+        length
+    )
+    strategies_options_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds")),
+        length
+    )
+
+    for (i in 1:length(strategies_options_count)) {
+        for (j in 1:length(actors_count)) {
+            data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
+        }
+    }
+
+    rm(actors_count, strategies_options_count)
+
+    ####
+
+    data_cases <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds"))
+
+    actors_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds")),
+        length
+    )
+    strategies_options_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "strategies_options_ids_cases.rds")),
+        length
+    )
+
+    for (i in 1:length(strategies_options_count)) {
+        for (j in 1:length(actors_count)) {
+            data_cases[i, j] <- data_cases[i, j] / min(strategies_options_count[i], actors_count[j])
+        }
+    }
+    rm(actors_count, strategies_options_count)
+
+    ####
+
+    data <- data - data_cases
+    rm(data_cases)
+
+    ####
+
+    sector <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
+    strategy <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
+
+    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+
+    # data$hline <- c(0, diff(as.numeric(factor(sector))) != 0)
+    # data$vline <- c(0, diff(as.numeric(factor(strategy))) != 0)
+
+    p <- as.data.frame(as.table(data)) |>
+        dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Proportion" = Freq) |>
+        ggplot(
+            aes(x = Actors, y = `Strategies / Optinons`, fill = Proportion)
+        ) +
+        geom_tile() +
+        scale_fill_gradient2(
+            low = "#D73027", # Red color for negative values
+            mid = "white", # White color for zero
+            high = "blue", # Green color for positive values
+            midpoint = 0 # Set the midpoint to zero
+        ) +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".svg"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".png"),
+        width = 12,
+        height = 6
+    )
+}
+```
+
+
+![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference.png")`)
+
+To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_difference.pdf){target="_blank"}
+
+
+
 # Tries
 
 ## Dendrograms
