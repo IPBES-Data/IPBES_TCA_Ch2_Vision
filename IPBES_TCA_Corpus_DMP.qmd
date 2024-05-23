@@ -4163,23 +4163,22 @@ if (!file.exists(fn)) {
 fn <- file.path("tca_corpus", "data", "actors_overlap_cases.rds")
 
 if (!file.exists(fn)) {
-    actors_overlap_cases <- file.path("tca_corpus", "data", "actors_ids_cases.rds") |>
-        readRDS()
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds"))
 
-    actors_overlap_cases <- sapply(
-        names(actors_overlap_cases),
-        FUN = function(s1) {
-            sapply(
-                names(actors_overlap_cases),
-                function(s2) {
-                    length(intersect(actors_overlap_cases[[s1]], actors_overlap_cases[[s2]]))
-                }
-            )
-        }
+    overlap_count <- function(x, y) {
+        length(intersect(x, y))
+    }
+
+    actors_overlap <- outer(
+        actors_ids,
+        actors_ids,
+        Vectorize(overlap_count)
     )
 
-    saveRDS(actors_overlap_cases, file = fn)
-    write.csv(actors_overlap_cases, file = gsub("rds$", "csv", fn))
+    saveRDS(actors_overlap, file = fn)
+    write.csv(actors_overlap, file = gsub("rds$", "csv", fn))
+    
+    rm(actors_overlap)
 }
 ```
 

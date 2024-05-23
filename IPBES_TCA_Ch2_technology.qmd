@@ -925,7 +925,7 @@ if (!file.exists(params$fn_publications_over_time)) {
 ```{r}
 #| label: publications_over_time_figure
 
-if (length(list.files(path = dirname(params$fig_publications_over_time), pattern = basename(params$fig_publications_over_time))) < 2) {
+if (length(list.files(path = dirname(params$fig_publications_over_time), pattern = basename(params$fig_publications_over_time)))< 6) {
     sec_axi_fact <- 0.5e-5
 
 
@@ -984,6 +984,12 @@ if (length(list.files(path = dirname(params$fig_publications_over_time), pattern
         figure
     )
     ggplot2::ggsave(
+        paste0(params$fig_publications_over_time, ".svg"),
+        width = 12,
+        height = 12,
+        figure
+    )
+    ggplot2::ggsave(
         paste0(params$fig_publications_over_time, ".png"),
         width = 12,
         height = 12,
@@ -998,7 +1004,7 @@ if (length(list.files(path = dirname(params$fig_publications_over_time), pattern
 ```{r}
 #| label: publications_over_time_yearly_figure
 ##| # | |
-if (length(list.files(path = dirname(params$fig_publications_over_time), pattern = basename(params$fig_publications_over_time_yearly))) < 2) {
+if (length(list.files(path = dirname(params$fig_publications_over_time), pattern = basename(params$fig_publications_over_time_yearly)))< 3) {
     data <- readRDS(params$fn_publications_over_time)
     max_count_technology_vision <- max(data$count_technology_vision, na.rm = TRUE)
     sec_axi_fact <- 1e3
@@ -1101,6 +1107,12 @@ if (length(list.files(path = dirname(params$fig_publications_over_time), pattern
         figure
     )
     ggplot2::ggsave(
+        paste0(params$fig_publications_over_time_yearly, ".svg"),
+        width = 12,
+        height = 12,
+        figure
+    )
+    ggplot2::ggsave(
         paste0(params$fig_publications_over_time_yearly, ".png"),
         width = 12,
         height = 12,
@@ -1188,7 +1200,7 @@ if (!file.exists(params$fn_sentiment_spatial_data)) {
 #| label: sentiment_neu_per_countries_map
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sentiment_neu_per_countries")) < 4) {
+if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sentiment_neu_per_countries"))< 6) {
     data <- readRDS(params$fn_sentiment_spatial_data)
 
     map <- data |>
@@ -1217,6 +1229,12 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
         map
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "maps", "sentiment_neu_per_countries_all.svg"),
+        width = 12,
+        height = 8,
+        map
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "maps", "sentiment_neu_per_countries_all.png"),
         width = 12,
         height = 8,
@@ -1225,6 +1243,12 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
 
     ggplot2::ggsave(
         file.path("ch2_technology", "maps", "sentiment_neu_per_countries_10.pdf"),
+        width = 12,
+        height = 8,
+        map_sel
+    )
+    ggplot2::ggsave(
+        file.path("ch2_technology", "maps", "sentiment_neu_per_countries_10.svg"),
         width = 12,
         height = 8,
         map_sel
@@ -1245,7 +1269,7 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
 #| label: sentiment_pos_per_countries_map
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sentiment_pos_per_countries")) < 4) {
+if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sentiment_pos_per_countries"))< 6) {
     data <- readRDS(params$fn_sentiment_spatial_data)
 
     map <- data |>
@@ -1274,6 +1298,12 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
         map
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "maps", "sentiment_pos_per_countries_all.svg"),
+        width = 12,
+        height = 8,
+        map
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "maps", "sentiment_pos_per_countries_all.png"),
         width = 12,
         height = 8,
@@ -1282,6 +1312,12 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
 
     ggplot2::ggsave(
         file.path("ch2_technology", "maps", "sentiment_pos_per_countries_10.pdf"),
+        width = 12,
+        height = 8,
+        map_sel
+    )
+    ggplot2::ggsave(
+        file.path("ch2_technology", "maps", "sentiment_pos_per_countries_10.svg"),
         width = 12,
         height = 8,
         map_sel
@@ -1300,7 +1336,7 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
 ```{r}
 #| label: sentiment_neg_per_countries_map
 #|
-if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sentiment_neg_per_countries")) < 4) {
+if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sentiment_neg_per_countries"))< 6) {
     data <- readRDS(params$fn_sentiment_spatial_data)
 
     map <- data |>
@@ -1330,6 +1366,12 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
         map
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "maps", "sentiment_neg_per_countries_all.svg"),
+        width = 12,
+        height = 8,
+        map
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "maps", "sentiment_neg_per_countries_all.png"),
         width = 12,
         height = 8,
@@ -1338,6 +1380,12 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
 
     ggplot2::ggsave(
         file.path("ch2_technology", "maps", "sentiment_neg_per_countries_10.pdf"),
+        width = 12,
+        height = 8,
+        map_sel
+    )
+    ggplot2::ggsave(
+        file.path("ch2_technology", "maps", "sentiment_neg_per_countries_10.svg"),
         width = 12,
         height = 8,
         map_sel
@@ -1359,7 +1407,7 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
 #| label: sentiment_compound_per_countries_map
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sentiment_comp_per_countries")) < 4) {
+if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sentiment_comp_per_countries"))< 6) {
     data <- readRDS(params$fn_sentiment_spatial_data)
 
     map <- data |>
@@ -1388,6 +1436,12 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
         map
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "maps", "sentiment_comp_per_countries_all.svg"),
+        width = 12,
+        height = 8,
+        map
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "maps", "sentiment_comp_per_countries_all.png"),
         width = 12,
         height = 8,
@@ -1396,6 +1450,12 @@ if (length(list.files(path = file.path("ch2_technology", "maps"), pattern = "sen
 
     ggplot2::ggsave(
         file.path("ch2_technology", "maps", "sentiment_comp_per_countries_10.pdf"),
+        width = 12,
+        height = 8,
+        map_sel
+    )
+    ggplot2::ggsave(
+        file.path("ch2_technology", "maps", "sentiment_comp_per_countries_10.svg"),
         width = 12,
         height = 8,
         map_sel
@@ -1475,7 +1535,7 @@ if (!file.exists(params$fn_sentiment_marine_temporal_data)) {
 #| label: sentiments_over_time_all_figure
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_over_time")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_over_time"))< 9) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1501,6 +1561,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_over_time.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_over_time.png"),
         width = 12,
         height = 6,
@@ -1515,7 +1581,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 #| label: sentiments_over_time_table_neg_pos_figure
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_over_time_neg_pos")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_over_time_neg_pos"))< 6) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1541,6 +1607,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_over_time_neg_pos.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_over_time_neg_pos.png"),
         width = 12,
         height = 6,
@@ -1556,7 +1628,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 #| label: sentiments_marine_over_time_table_neg_pos_figure
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_marine_over_time_neg_pos")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_marine_over_time_neg_pos"))< 6) {
     figure <- readRDS(params$fn_sentiment_marine_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1582,6 +1654,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_marine_over_time_neg_pos.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_marine_over_time_neg_pos.png"),
         width = 12,
         height = 6,
@@ -1596,7 +1674,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 #| label: sentiments_neg_over_time_figure
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_neg_over_time")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_neg_over_time"))< 3) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1617,6 +1695,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_neg_over_time.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_neg_over_time.png"),
         width = 12,
         height = 6,
@@ -1630,7 +1714,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 ```{r}
 #| label: sentiments_neu_over_time_figure
 #|
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_neu_over_time")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_neu_over_time"))< 3) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1651,6 +1735,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_neu_over_time.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_neu_over_time.png"),
         width = 12,
         height = 6,
@@ -1666,7 +1756,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 #| label: sentiments_pos_over_time_figure
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_pos_over_time")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_pos_over_time"))< 3) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1687,6 +1777,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_pos_over_time.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_pos_over_time.png"),
         width = 12,
         height = 6,
@@ -1701,7 +1797,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 ```{r}
 #| label: sentiments_comp_over_time_figure
 #|
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_comp_over_time")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_comp_over_time"))< 3) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1722,6 +1818,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_comp_over_time.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_comp_over_time.png"),
         width = 12,
         height = 6,
@@ -1736,7 +1838,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 #| label: sentiments_marine_over_time_neg_pos_ridgeplot_figure
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_marine_over_time_neg_pos_ridge")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_marine_over_time_neg_pos_ridge"))< 3) {
     figure <- readRDS(params$fn_sentiment_results) |>
         select(
             work_id = id,
@@ -1795,6 +1897,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_marine_over_time_neg_pos_ridge.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_marine_over_time_neg_pos_ridge.png"),
         width = 12,
         height = 6,
@@ -1809,7 +1917,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 #| label: sentiments_over_time_neg_pos_ridgeplot_figure
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_over_time_neg_pos_ridge")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_over_time_neg_pos_ridge"))< 3) {
     figure <- readRDS(params$fn_sentiment_results) |>
         select(
             work_id = id,
@@ -1864,6 +1972,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
         figure
     )
     ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_over_time_neg_pos_ridge.svg"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_over_time_neg_pos_ridge.png"),
         width = 12,
         height = 6,
@@ -1877,7 +1991,7 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 #| label: sentiments_marine_over_time_neg_pos_figure
 #|
 
-if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_over_time_neg_pos")) < 2) {
+if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "sentiments_over_time_neg_pos")) < 3) {
     figure <- readRDS(params$fn_sentiment_temporal_data) |>
         dplyr::filter(
             n > params$min_count_sentiment_timeseries
@@ -1898,6 +2012,12 @@ if (length(list.files(path = file.path("ch2_technology", "figures"), pattern = "
 
     ggplot2::ggsave(
         file.path("ch2_technology", "figures", "sentiments_over_time_neg_pos.pdf"),
+        width = 12,
+        height = 6,
+        figure
+    )
+    ggplot2::ggsave(
+        file.path("ch2_technology", "figures", "sentiments_over_time_neg_pos.svg"),
         width = 12,
         height = 6,
         figure
