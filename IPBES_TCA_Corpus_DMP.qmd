@@ -3092,6 +3092,34 @@ if (!file.exists(fn)) {
 toc()
 ```
 
+
+#### [x] Convert Strategies Pages in Cases to rds (only ids)
+
+```{r}
+#| label: convert_strategies_corpus_cases
+#|
+
+fn <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds")
+
+if (!file.exists(fn)) {
+    case_ids <- corpus_read(params$corpus_cases_dir) |>
+        dplyr::distinct(id) |>
+        collect() |>
+        unlist()
+    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
+
+    strategies_options_ids_cases <- lapply(
+        strategies_options_ids,
+        function(strategy) {
+            intersect(strategy, case_ids)
+        }
+    )
+
+    saveRDS(strategies_options_ids_cases, file = fn)
+}
+```
+
+
 #### Extract per year from Strategies Pages
 
 ```{r}
@@ -3193,44 +3221,36 @@ if (!file.exists(fn)) {
 }
 ```
 
-#### Strategies / Options in Case Corpus
+#### [x] Create Strategies Matrix Cases Only
 
 ```{r}
-#| label: cases_strategies_options_corpus
+#| label: strategies_options_overlap_cases
 #|
 
-fn <- file.path("tca_corpus", "data", "strategies_options_case.rds")
+fn <- file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds")
 
 if (!file.exists(fn)) {
-    case_ids <- corpus_read(params$corpus_cases_dir) |>
-        dplyr::distinct(id) |>
-        collect() |>
-        unlist()
-    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
+    strategies_options_overlap_cases <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
+        readRDS()
 
-    strategies_options_case <- lapply(
-        names(strategies_options_ids),
-        function(strategy) {
-            message("- ", strategy)
-            count <- sum(strategies_options_ids[[strategy]] %in% case_ids)
-            data.frame(
-                strategy_option = strategy,
-                count_cases = count,
-                count_tca = length(strategies_options_ids[[strategy]]),
-                p_cases = count / length(strategies_options_ids[[strategy]])
+    strategies_options_overlap_cases <- sapply(
+        names(strategies_options_overlap_cases),
+        FUN = function(s1) {
+            sapply(
+                names(strategies_options_overlap_cases),
+                function(s2) {
+                    length(intersect(strategies_options_overlap_cases[[s1]], strategies_options_overlap_cases[[s2]]))
+                }
             )
         }
-    ) |>
-        do.call(what = rbind)
-
-    strategies_options_case <- list(
-        timestamp = Sys.time(),
-        strategies_options_case = strategies_options_case
     )
 
-    saveRDS(strategies_options_case, file = fn)
+    saveRDS(strategies_options_overlap_cases, file = fn)
+    write.csv(strategies_options_overlap_cases, file = gsub("rds$", "csv", fn))
 }
 ```
+
+
 
 ### Results
 
@@ -3445,8 +3465,6 @@ diffviewer::visual_diff(
 # data from corpora
 strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
 
-
-
 lapply(
     names(strategies_options),
     function(strategy) {
@@ -3465,13 +3483,13 @@ lapply(
     )
 ```
 
-#### Strategies / Options Works in Case Corpus
+<!-- #### [ ] Strategies / Options Works in Case Corpus -->
 
 ```{r}
 #| label: actors_strategies_options_table
-#|
+#| eval: false
 
-readRDS(file.path("tca_corpus", "data", "strategies_options_case.rds"))$strategies_options_case |>
+readRDS(file.path("tca_corpus", "data", "strategies_options_cases.rds"))$strategies_options_case |>
     dplyr::mutate(
         p_cases = round(p_cases, 4)
     ) |>
@@ -3485,7 +3503,7 @@ readRDS(file.path("tca_corpus", "data", "strategies_options_case.rds"))$strategi
 
 #### Matrix showing overlap of Strategies / Options
 
-The size of the nodes indicates the number of works in each node, while the thicknes of the nodes indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
 
 The nodes can be moved and if selected, the links to / from that node are highlighted.
 
@@ -3638,6 +3656,159 @@ readRDS(file.path("tca_corpus", "data", "strategies_options_overlap.rds")) |>
     )
 ```
 
+#### [x] Matrix showing overlap of Strategies / Options Cases Only
+
+The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+The nodes can be moved and if selected, the links to / from that node are highlighted.
+
+```{r}
+#| label: strategies_option_overlap_cases_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "strategies_options_interactive_matrix_cases")
+
+if (!file.exists(paste0(fn, ".html"))) {
+    data <- readRDS(file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds"))
+
+    value <- diag(data)
+
+    for (i in 1:ncol(data)) {
+        for (j in 1:nrow(data)){
+            data[i, j] <- data[i, j] / min(value[i], value[j])
+        }
+    }
+
+    # Create a graph from the adjacency matrix
+    g <- igraph::graph_from_adjacency_matrix(
+        data,
+        mode = "max",
+        weighted = TRUE,
+        diag = FALSE
+    )
+
+    # Convert the graph to a data frame
+    nodes <- data.frame(
+        id = igraph::V(g)$name,
+        label = igraph::V(g)$name,
+        value = value
+    ) # |>
+    # arrange(desc(value))
+
+    edges <- igraph::as_data_frame(
+        g,
+        what = "edges"
+    )
+
+    names(edges) <- c("from", "to", "width")
+    edges$width <- (edges$width / max(edges$width)) * 20
+
+    nodes$strategy <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 1)
+    nodes$option <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 2)
+    nodes$option <- sapply(
+        strsplit(nodes$option, "\\. |: "),
+        function(x) {
+            return(x[length(x)])
+        }
+    )
+
+    colors <- rainbow(length(nodes$strategy)) # Generate a color for each strategy
+    names(colors) <- nodes$strategy
+    nodes$color <- colors[nodes$strategy]
+
+
+    nodes$label <- sapply(
+        strsplit(nodes$option, "\\. |: "),
+        function(x) {
+            return(x[length(x)])
+        }
+    )
+
+    # Calculate grid positions for the nodes
+
+    node_x <- 1:length(unique(nodes$strategy))
+    names(node_x) <- unique(nodes$strategy)
+    nodes$x <- node_x[nodes$strategy] * 300
+
+    node_y <- 1:length(unique(nodes$option))
+    offset <- 0
+    for (strategy in unique(nodes$strategy)) {
+        id_s <- nodes$strategy == strategy
+        names(node_y) <- unique(nodes$option[id_s])
+        nodes$y[id_s] <- (node_y[nodes$option[id_s]] + offset) * 200
+        if (offset == 0.4) {
+            offset <- 0
+        } else {
+            offset <- 0.4
+        }
+    }
+
+
+    # Center the nodes
+    nodes$x <- (nodes$x - max(nodes$x) / 2) / 3
+    nodes$y <- (nodes$y - max(nodes$y) / 2) / 3
+
+
+    # Create the interactive network graph
+
+    p <- visNetwork(
+        nodes,
+        edges,
+        height = "900px",
+        width = "1800px"
+    ) |>
+        visNodes(
+            x = nodes$x,
+            y = nodes$y,
+            fixed = FALSE,
+            physics = FALSE,
+            font = list(
+                size = 10
+            )
+        ) |>
+        visEdges(
+            physics = TRUE,
+            color = list(
+                color = "lightgray",
+                highlight = "black"
+            )
+        ) |>
+        visPhysics(
+            solver = "barnesHut",
+            timestep = 0.1,
+            stabilization = list(
+                iterations = 1000
+            )
+        )
+
+
+    htmlwidgets::saveWidget(
+        p,
+        file = paste0(fn, ".html")
+    )
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
+
+    unlink(paste0(fn, "_files"), recursive = TRUE)
+}
+```
+
+<iframe src="tca_corpus/figures/strategies_options_interactive_matrix_cases.html" width="100%" height="800px"></iframe>
+
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_interactive_matrix_cases.html){target="_blank"}
+
+To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix_cases.pdf")`){target="_blank"}
+
+```{r}
+#| label: strategies_option_overlap_cases_cases_table
+#|
+
+readRDS(file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds")) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_overlap_cases",
+        fixedColumns = list(leftColumns = 1)
+    )
+```
 
 ## Actors for transformative change 
 
@@ -3816,6 +3987,34 @@ toc()
 
 
 
+#### [x] Convert Actors Pages in Cases to rds (only ids)
+
+```{r}
+#| label: convert_avtors_corpus_cases
+#|
+
+fn <- file.path("tca_corpus", "data", "actors_ids_cases.rds")
+
+if (!file.exists(fn)) {
+    case_ids <- corpus_read(params$corpus_cases_dir) |>
+        dplyr::distinct(id) |>
+        collect() |>
+        unlist()
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
+
+    actors_ids_cases <- lapply(
+        actors_ids,
+        function(actor) {
+            intersect(actor, case_ids)
+        }
+    )
+
+    saveRDS(actors_ids_cases, file = fn)
+}
+```
+
+
+
 #### Extract per year from Actors Pages
 
 ```{r}
@@ -3917,11 +4116,11 @@ if (!file.exists(fn)) {
 ```
 
 
-#### Actors in Case Corpus
+<!-- #### [ ] Actors in Case Corpus -->
 
 ```{r}
 #| label: cases_actors_corpus
-#|
+#| eval: false
 
 fn <- file.path("tca_corpus", "data", "actors_case.rds")
 
@@ -3955,6 +4154,35 @@ if (!file.exists(fn)) {
     saveRDS(actors_cases, file = fn)
 }
 ```
+#### [x] Create Actors Matrix Cases Only
+
+```{r}
+#| label: actors_overlap_cases
+#|
+
+fn <- file.path("tca_corpus", "data", "actors_overlap_cases.rds")
+
+if (!file.exists(fn)) {
+    actors_overlap_cases <- file.path("tca_corpus", "data", "actors_ids_cases.rds") |>
+        readRDS()
+
+    actors_overlap_cases <- sapply(
+        names(actors_overlap_cases),
+        FUN = function(s1) {
+            sapply(
+                names(actors_overlap_cases),
+                function(s2) {
+                    length(intersect(actors_overlap_cases[[s1]], actors_overlap_cases[[s2]]))
+                }
+            )
+        }
+    )
+
+    saveRDS(actors_overlap_cases, file = fn)
+    write.csv(actors_overlap_cases, file = gsub("rds$", "csv", fn))
+}
+```
+
 
 ### Results
 
@@ -4186,11 +4414,11 @@ To download high resolution, [click here](`r file.path("tca_corpus", "figures", 
 
 To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split_p.pdf")`){target="_blank"}
 
-#### Actors Works in Case Corpus
+<!-- #### [ ] Actors Works in Case Corpus -->
 
 ```{r}
 #| label: actors_cases_table
-#|
+#| eval: false
 
 readRDS(file.path("tca_corpus", "data", "actors_case.rds"))$actors_case |>
     dplyr::mutate(
@@ -4205,7 +4433,7 @@ readRDS(file.path("tca_corpus", "data", "actors_case.rds"))$actors_case |>
 
 #### Matrix showing overlap of Actors
 
-The size of the nodes indicates the number of works in each node, while the thicknes of the nodes indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
 
 
 The nodes can be moved and if selected, the links to / from that node are highlighted.
@@ -4338,9 +4566,150 @@ To download high resolution pdf, [click here](`r file.path("tca_corpus", "figure
 readRDS(file.path("tca_corpus", "data", "actors_overlap.rds")) |>
     IPBES.R::table_dt(
         fn = "actors_overlap",
+        fixedColumns = list(leftColumns = 0)
+    )
+```
+
+
+#### [x] Matrix showing overlap of Actors Cases Only
+
+The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+
+The nodes can be moved and if selected, the links to / from that node are highlighted.
+
+```{r}
+#| label: actors_overlap_cases_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_interactive_matrix_cases")
+
+if (!file.exists(paste0(fn, ".html"))) {
+    data <- readRDS(file.path("tca_corpus", "data", "actors_overlap_cases.rds"))
+
+    value <- diag(data)
+
+    for (i in 1:ncol(data)) {
+        for (j in 1:nrow(data)) {
+            data[i, j] <- data[i, j] / min(value[i], value[j])
+        }
+    }
+
+
+    # Create a graph from the adjacency matrix
+    g <- igraph::graph_from_adjacency_matrix(
+        data,
+        mode = "max",
+        weighted = TRUE,
+        diag = FALSE
+    )
+
+    # Convert the graph to a data frame
+    nodes <- data.frame(
+        id = igraph::V(g)$name,
+        label = igraph::V(g)$name,
+        value = value
+    )
+    edges <- igraph::as_data_frame(
+        g,
+        what = "edges"
+    )
+
+    names(edges) <- c("from", "to", "width")
+    edges$width <- (edges$width / max(edges$width)) * 20
+
+    nodes$sector <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 1)
+    nodes$actor_group <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 2)
+
+    colors <- rainbow(length(nodes$sector)) # Generate a color for each sector
+    names(colors) <- nodes$sector
+    nodes$color <- colors[nodes$sector]
+
+    nodes$label <- nodes$option
+
+    # Calculate grid positions for the nodes
+    node_x <- 1:length(unique(nodes$sector))
+    names(node_x) <- unique(nodes$sector)
+    nodes$x <- node_x[nodes$sector] * 300
+
+    node_y <- 1:length(unique(nodes$actor_group))
+    offset <- 0
+    for (sector in unique(nodes$sector)) {
+        id_s <- nodes$sector == sector
+        names(node_y) <- unique(nodes$actor_group[id_s])
+        nodes$y[id_s] <- (node_y[nodes$actor_group[id_s]] + offset) * 200
+        if (offset == 0.5) {
+            offset <- 0
+        } else {
+            offset <- 0.5
+        }
+    }
+
+    # Center the nodes
+    nodes$x <- nodes$x - max(nodes$x) / 2
+    nodes$y <- nodes$y - max(nodes$y) / 2
+
+    nodes$label <- nodes$actor_group
+
+    # Create the interactive network graph
+
+    p <- visNetwork(
+        nodes,
+        edges,
+        height = "900px",
+        width = "1800px"
+    ) |>
+        visNodes(
+            x = nodes$x,
+            y = nodes$y,
+            fixed = FALSE,
+            physics = FALSE,
+            font = list(
+                size = 24
+            )
+        ) |>
+        visEdges(
+            physics = TRUE,
+            color = list(
+                color = "lightgray",
+                highlight = "black"
+            )
+        ) |>
+        visPhysics(
+            solver = "barnesHut",
+            timestep = 0.1,
+            stabilization = list(
+                iterations = 1000
+            )
+        )
+
+    htmlwidgets::saveWidget(
+        p,
+        file = paste0(fn, ".html")
+    )
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
+    unlink(paste0(fn, "_files"), recursive = TRUE)
+}
+```
+
+<iframe src="tca_corpus/figures/actors_interactive_matrix_cases.html" width="100%" height="800px"></iframe>
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_interactive_matrix_cases.html){target="_blank"}
+
+To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix_cases.pdf")`){target="_blank"}
+
+
+```{r}
+#| label: actors_overlap_cases_table
+#|
+
+readRDS(file.path("tca_corpus", "data", "actors_overlap_cases.rds")) |>
+    IPBES.R::table_dt(
+        fn = "actors_overlap",
         fixedColumns = list(leftColumns = 1)
     )
 ```
+
 
 
 ## Actors x Stategies / Options
@@ -4411,22 +4780,23 @@ if (n < 2) {
 
     # data$hline <- c(0, diff(as.numeric(factor(sector))) != 0)
     # data$vline <- c(0, diff(as.numeric(factor(strategy))) != 0)
-    
+
     p <- as.data.frame(as.table(data)) |>
+        dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Proportion" = Freq) |>
         ggplot(
-            aes(x = Var2, y = Var1, fill = Freq)
+            aes(x = Actors, y = `Strategies / Optinons`, fill = Proportion)
         ) +
         geom_tile() +
         scale_fill_gradient(low = "white", high = "red") +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
-    
+
 
     ggplot2::ggsave(
-            plot = p,
-            paste0(fn, ".pdf"),
-            width = 12,
-            height = 6
-        )
+        plot = p,
+        paste0(fn, ".pdf"),
+        width = 12,
+        height = 6
+    )
     ggplot2::ggsave(
         plot = p,
         paste0(fn, ".png"),
@@ -4441,6 +4811,111 @@ if (n < 2) {
 
 To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix.pdf){target="_blank"}
 
+
+
+
+## [x] Actors x Stategies / Options Cases Only
+
+```{r}
+#| label: actors_strategies_options_overlap_cases_data
+
+fn <- file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")
+
+if (!file.exists(fn)) {
+    actors_ids <- file.path("tca_corpus", "data", "actors_ids_cases.rds") |>
+        readRDS()
+
+    strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
+        readRDS()
+
+    sapply(actors_ids, function(actor) {
+        sapply(strategies_options_ids, function(strategy_option) {
+            length(intersect(actor, strategy_option))
+        })
+    }) |>
+        saveRDS(file = fn)
+}
+```
+
+```{r}
+#| label: actors_strategies_options_overlap_cases_table
+readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")) |>
+    IPBES.R::table_dt(
+        fn = "actors_strategies_options_overlap_cases",
+        fixedColumns = list(leftColumns = 1)
+    )
+```
+
+The colour indicates s indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+```{r}
+#| label: actors_strategies_options_overlap_cases_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases")
+
+n <- list.files(
+    path = dirname(fn),
+    pattern = basename(fn),
+    recursive = TRUE
+) |> length()
+
+if (n < 4) {
+    data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds"))
+
+    actors_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds")),
+        length
+    )
+    strategies_options_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "strategies_options_ids_cases.rds")),
+        length
+    )
+
+    for (i in 1:length(strategies_options_count)) {
+        for (j in 1:length(actors_count)) {
+            data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
+        }
+    }
+
+    sector <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
+    strategy <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
+
+    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+
+    # data$hline <- c(0, diff(as.numeric(factor(sector))) != 0)
+    # data$vline <- c(0, diff(as.numeric(factor(strategy))) != 0)
+
+    p <- as.data.frame(as.table(data)) |>
+        dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Proportion" = Freq) |>
+        ggplot(
+            aes(x = Actors, y = `Strategies / Optinons`, fill = Proportion)
+        ) +
+        geom_tile() +
+        scale_fill_gradient(low = "white", high = "red") +
+        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".png"),
+        width = 12,
+        height = 6
+    )
+}
+```
+
+
+![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases.png")`)
+
+To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_cases.pdf){target="_blank"}
 # Tries
 
 ## Dendrograms
