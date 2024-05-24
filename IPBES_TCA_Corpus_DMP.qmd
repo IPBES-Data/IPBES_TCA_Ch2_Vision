@@ -5047,9 +5047,9 @@ if (n < 4) {
     # data$vline <- c(0, diff(as.numeric(factor(strategy))) != 0)
 
     p <- as.data.frame(as.table(data)) |>
-        dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Proportion" = Freq) |>
+        dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Difference in Proportion" = Freq) |>
         ggplot(
-            aes(x = Actors, y = `Strategies / Optinons`, fill = Proportion)
+            aes(x = Actors, y = `Strategies / Optinons`, fill = `Difference in Proportion`)
         ) +
         geom_tile() +
         scale_fill_gradient2(
