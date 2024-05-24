@@ -4753,7 +4753,7 @@ n <- list.files(
     recursive = TRUE
 ) |> length()
 
-if (n < 6) {
+if (n < 12) {
     data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
 
     actors_count <- sapply(
@@ -4777,18 +4777,40 @@ if (n < 6) {
     colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
     rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
 
-    # data$hline <- c(0, diff(as.numeric(factor(sector))) != 0)
-    # data$vline <- c(0, diff(as.numeric(factor(strategy))) != 0)
-
     p <- as.data.frame(as.table(data)) |>
         dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Proportion" = Freq) |>
         ggplot(
             aes(x = Actors, y = `Strategies / Optinons`, fill = Proportion)
         ) +
         geom_tile() +
-        scale_fill_gradient(low = "white", high = "red") +
+        scale_fill_gradient2(
+            low = "#2166ac", # Blue color for negative values
+            mid = "#f7f7f7", # Light beige color for zero
+            high = "#b2182b", # Red color for positive values
+            midpoint = 0 # Set the midpoint to zero
+        ) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
+    vline <- c(0, diff(as.numeric(factor(sector))) != 0)
+    hline <- c(0, diff(as.numeric(factor(strategy))) != 0)
+
+    p <- p + geom_vline(xintercept = 0.5, color = "black")
+    for (i in vline * 1:(length(vline))) {
+        if (i > 0) {
+            p <- p + geom_vline(xintercept = i - 0.5, color = "black")
+        }
+    }
+    p <- p + geom_vline(xintercept = length(vline) + 0.5, color = "black")
+
+    p <- p + geom_hline(yintercept = 0.5, color = "black")
+    for (i in hline * 1:(length(hline))) {
+        if (i > 0) {
+            p <- p + geom_hline(yintercept = i - 0.5, color = "black")
+        }
+    }
+    p <- p + geom_hline(yintercept = length(hline) + 0.5, color = "black")
+
+    saveRDS(p, paste0(fn, ".ggp"))
 
     ggplot2::ggsave(
         plot = p,
@@ -4865,7 +4887,7 @@ n <- list.files(
     recursive = TRUE
 ) |> length()
 
-if (n < 6) {
+if (n < 8) {
     data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds"))
 
     actors_count <- sapply(
@@ -4889,18 +4911,40 @@ if (n < 6) {
     colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
     rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
 
-    # data$hline <- c(0, diff(as.numeric(factor(sector))) != 0)
-    # data$vline <- c(0, diff(as.numeric(factor(strategy))) != 0)
-
     p <- as.data.frame(as.table(data)) |>
         dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Proportion" = Freq) |>
         ggplot(
             aes(x = Actors, y = `Strategies / Optinons`, fill = Proportion)
         ) +
         geom_tile() +
-        scale_fill_gradient(low = "white", high = "red") +
+        scale_fill_gradient2(
+            low = "#2166ac", # Blue color for negative values
+            mid = "#f7f7f7", # Light beige color for zero
+            high = "#b2182b", # Red color for positive values
+            midpoint = 0 # Set the midpoint to zero
+        ) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
+    vline <- c(0, diff(as.numeric(factor(sector))) != 0)
+    hline <- c(0, diff(as.numeric(factor(strategy))) != 0)
+
+    p <- p + geom_vline(xintercept = 0.5, color = "black")
+    for (i in vline * 1:(length(vline))) {
+        if (i > 0) {
+            p <- p + geom_vline(xintercept = i - 0.5, color = "black")
+        }
+    }
+    p <- p + geom_vline(xintercept = length(vline) + 0.5, color = "black")
+
+    p <- p + geom_hline(yintercept = 0.5, color = "black")
+    for (i in hline * 1:(length(hline))) {
+        if (i > 0) {
+            p <- p + geom_hline(yintercept = i - 0.5, color = "black")
+        }
+    }
+    p <- p + geom_hline(yintercept = length(hline) + 0.5, color = "black")
+
+    saveRDS(p, paste0(fn, ".ggp"))
 
     ggplot2::ggsave(
         plot = p,
@@ -4946,7 +4990,7 @@ n <- list.files(
     recursive = TRUE
 ) |> length()
 
-if (n < 6) {
+if (n < 4) {
     data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
 
     actors_count <- sapply(
@@ -5009,13 +5053,33 @@ if (n < 6) {
         ) +
         geom_tile() +
         scale_fill_gradient2(
-            low = "#D73027", # Red color for negative values
-            mid = "white", # White color for zero
-            high = "blue", # Green color for positive values
+            low = "#2166ac", # Blue color for negative values
+            mid = "#f7f7f7", # Light beige color for zero
+            high = "#b2182b", # Red color for positive values
             midpoint = 0 # Set the midpoint to zero
         ) +
         theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
+    vline <- c(0, diff(as.numeric(factor(sector))) != 0)
+    hline <- c(0, diff(as.numeric(factor(strategy))) != 0)
+
+    p <- p + geom_vline(xintercept = 0.5, color = "black")
+    for (i in vline * 1:(length(vline))) {
+        if (i > 0) {
+            p <- p + geom_vline(xintercept = i - 0.5, color = "black")
+        }
+    }
+    p <- p + geom_vline(xintercept = length(vline) + 0.5, color = "black")
+
+    p <- p + geom_hline(yintercept = 0.5, color = "black")
+    for (i in hline * 1:(length(hline))) {
+        if (i > 0) {
+            p <- p + geom_hline(yintercept = i - 0.5, color = "black")
+        }
+    }
+    p <- p + geom_hline(yintercept = length(hline) + 0.5, color = "black")
+
+    saveRDS(p, paste0(fn, ".ggp"))
 
     ggplot2::ggsave(
         plot = p,
@@ -5043,7 +5107,178 @@ if (n < 6) {
 
 To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_difference.pdf){target="_blank"}
 
+## Combined Actors x Stategies Panel
 
+```{r}
+#| label: actors_strategies_options_combined_panel
+#|
+
+p_tca <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix.ggp")) +
+    theme(
+        legend.position = "none"
+    )
+p_cases <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases.ggp")) +
+    theme(
+        axis.title.y = element_blank(),
+        axis.text.y = element_blank()
+    )
+p_diff <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference.ggp"))
+
+p <- (p_tca | p_cases) /
+    p_diff +
+    plot_layout(
+        heights = c(0.5, 1)
+    )
+
+####
+
+fn <- file.path("tca_corpus", "figures", "actors_strategies_options_combined_panel")
+
+saveRDS(
+    p, 
+    paste0(fn, ".ggp")
+)
+
+ggplot2::ggsave(
+    plot = p,
+    paste0(fn, ".pdf"),
+    width = 17,
+    height = 18
+)
+ggplot2::ggsave(
+    plot = p,
+    paste0(fn, ".svg"),
+    width = 17,
+    height = 18
+)
+ggplot2::ggsave(
+    plot = p,
+    paste0(fn, ".png"),
+    width = 17,
+    height = 18
+)
+
+```
+
+![](`r file.path("tca_corpus", "figures", "actors_strategies_options_combined_panel.png")`)
+
+To download high resolution pdf, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
+
+To download high resolution svg, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
+
+## Works not mentioning Actors and Strategies / Options
+
+```{r}
+#| label: works_not_mentioning_actors_strategies_options
+#| 
+
+ids <- list(
+    strategies = file.path("tca_corpus", "data", "strategies_options_ids.rds") |>
+        readRDS() |>
+        unlist(),
+    actors = file.path("tca_corpus", "data", "actors_ids.rds") |>
+        readRDS() |>
+        unlist(),
+    strategies_cases = file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
+        readRDS() |>
+        unlist(),
+    actors_cases = file.path("tca_corpus", "data", "actors_ids_cases.rds") |>
+        readRDS() |>
+        unlist()
+)
+
+list(
+    data.frame(
+        type = "TCA Corpus not in Strategies / Options",
+        not_in_corpus = params$corpus_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            filter(!id %in% ids$strategies) |>
+            collect() |>
+            nrow(),
+        corpus_size = params$corpus_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            collect() |>
+            nrow()
+    ),
+    data.frame(
+        type = "TCA Corpus not in Actors",
+        not_in_corpus = params$corpus_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            filter(!id %in% ids$actors) |>
+            collect() |>
+            nrow(),
+        corpus_size = params$corpus_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            collect() |>
+            nrow()
+    ),
+    data.frame(
+        type = "TCA Corpus not in neither",
+        not_in_corpus = params$corpus_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            filter(!id %in% c(ids$strategies, ids$actors)) |>
+            collect() |>
+            nrow(),
+        corpus_size = params$corpus_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            collect() |>
+            nrow()
+    ),
+    data.frame(
+        type = "Cases Corpus not in Strategies / Options",
+        not_in_corpus = params$corpus_cases_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            filter(!id %in% ids$strategies_cases) |>
+            collect() |>
+            nrow(),
+        corpus_size = params$corpus_cases_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            collect() |>
+            nrow()
+    ),
+    data.frame(
+        type = "Cases Corpus not in Actors",
+        not_in_corpus = params$corpus_cases_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            filter(!id %in% ids$actors_cases) |>
+            collect() |>
+            nrow(),
+        corpus_size = params$corpus_cases_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            collect() |>
+            nrow()
+    ),
+    data.frame(
+        type = "Cases Corpus not in neither",
+        not_in_corpus = params$corpus_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            filter(!id %in% c(ids$strategies, ids$actors)) |>
+            collect() |>
+            nrow(),
+        corpus_size = params$corpus_cases_dir |>
+            corpus_read() |>
+            distinct(id) |>
+            collect() |>
+            nrow()
+    )
+) |>
+    do.call(what = rbind) |>
+    mutate(
+        proportion = not_in_corpus / corpus_size
+    ) |>
+    knitr::kable()
+```
 
 # Tries
 
