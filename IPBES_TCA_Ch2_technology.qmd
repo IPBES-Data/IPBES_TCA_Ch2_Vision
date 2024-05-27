@@ -87,7 +87,7 @@ params:
 #| include: false
 
 if (!exists("params")) {
-    params <- rmarkdown::yaml_front_matter("IPBES_Ch2_technology.qmd")$params
+    params <- rmarkdown::yaml_front_matter("IPBES_TCA_Ch2_technology.qmd")$params
 }
 
 build <- as.integer(readLines(file.path("ch2_technology", "buildNo")))
