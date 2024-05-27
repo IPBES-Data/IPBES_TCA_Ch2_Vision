@@ -4753,43 +4753,56 @@ n <- list.files(
     recursive = TRUE
 ) |> length()
 
-if (n < 12) {
-    data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
+plot_heatmap <- function(data, actors_ids, strategies_options_ids, plot_data = NULL) {
+    if (is.null(plot_data)) {
+        actors_count <- sapply(
+            actors_ids,
+            length
+        )
+        strategies_options_count <- sapply(
+            strategies_options_ids,
+            length
+        )
 
-    actors_count <- sapply(
-        readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
-        length
-    )
-    strategies_options_count <- sapply(
-        readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds")),
-        length
-    )
-
-    for (i in 1:length(strategies_options_count)) {
-        for (j in 1:length(actors_count)) {
-            data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
+        for (i in 1:length(strategies_options_count)) {
+            for (j in 1:length(actors_count)) {
+                data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
+            }
         }
+    } else {
+        data <- plot_data
     }
 
     sector <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
     strategy <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
 
-    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
-    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
+    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |>
+        sapply(FUN = "[[", 2)
+    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |>
+        sapply(FUN = "[[", 2)
 
-    p <- as.data.frame(as.table(data)) |>
-        dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Proportion" = Freq) |>
+    dat_ggplot <- as.data.frame(as.table(data)) |>
+        dplyr::rename("y" = Var1, "x" = Var2, "Proportion" = Freq)
+
+    levels(dat_ggplot$y) <- rownames(data) |>
+        gsub(pattern = "Action ", replacement = "")
+
+    p <- dat_ggplot |>
         ggplot(
-            aes(x = Actors, y = `Strategies / Optinons`, fill = Proportion)
+            aes(x = x, y = y, fill = Proportion)
         ) +
         geom_tile() +
         scale_fill_gradient2(
-            low = "#2166ac", # Blue color for negative values
+            low = "#196C71", # Blue color for negative values
             mid = "#f7f7f7", # Light beige color for zero
-            high = "#b2182b", # Red color for positive values
+            high = "#B65719", # Red color for positive values
             midpoint = 0 # Set the midpoint to zero
         ) +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
+        theme(
+            axis.text.x = element_text(angle = 90, hjust = 1)
+        ) +
+        ggplot2::ylab("Strategies / Actions") +
+        ggplot2::xlab("Actors")
 
     vline <- c(0, diff(as.numeric(factor(sector))) != 0)
     hline <- c(0, diff(as.numeric(factor(strategy))) != 0)
@@ -4809,6 +4822,63 @@ if (n < 12) {
         }
     }
     p <- p + geom_hline(yintercept = length(hline) + 0.5, color = "black")
+
+
+    text_data <- data.frame(
+        text_y = c(24, 19.5, 15, 9, 3.5),
+        label = c(
+            "1. Place-based actions",
+            "2. Changing direct drivers",
+            "3. Transforming economic systems",
+            "4. Transforming governance systems",
+            "5. Shifting vies, values, and paradigms"
+        )
+    )
+    for (i in 1:nrow(text_data)) {
+        p <- p +
+            geom_text(
+                y = text_data$text_y[[i]],
+                x = 0.6,
+                label = text_data$label[[i]],
+                size = 3,
+                hjust = 0
+            )
+    }
+
+    text_data <- data.frame(
+        text_x = c(3.5, 8, 11.5, 15.5),
+        label = c(
+            "Civil society",
+            "Private sector",
+            "Government sector",
+            "Communication and\nknowledge sector"
+        )
+    )
+    for (i in 1:nrow(text_data)) {
+        p <- p +
+            geom_text(
+                y = 25.5,
+                x = text_data$text_x[[i]],
+                label = text_data$label[[i]],
+                size = 3,
+                hjust = "middle"
+            )
+    }
+
+    p <- p +
+        scale_y_discrete(
+            limits = rev(levels(dat_ggplot$y))
+        )
+
+    return(p)
+}
+
+if (n < 12) {
+    p <- plot_heatmap(
+        data = readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")),
+        actors_ids = readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
+        strategies_options_ids = readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
+    )
 
     saveRDS(p, paste0(fn, ".ggp"))
 
@@ -4888,61 +4958,11 @@ n <- list.files(
 ) |> length()
 
 if (n < 8) {
-    data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds"))
-
-    actors_count <- sapply(
-        readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds")),
-        length
+    p <- plot_heatmap(
+        data = readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")),
+        actors_ids = readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds")),
+        strategies_options_ids = readRDS(file.path("tca_corpus", "data", "strategies_options_ids_cases.rds"))
     )
-    strategies_options_count <- sapply(
-        readRDS(file.path("tca_corpus", "data", "strategies_options_ids_cases.rds")),
-        length
-    )
-
-    for (i in 1:length(strategies_options_count)) {
-        for (j in 1:length(actors_count)) {
-            data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
-        }
-    }
-
-    sector <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
-    strategy <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
-
-    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
-    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
-
-    p <- as.data.frame(as.table(data)) |>
-        dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Proportion" = Freq) |>
-        ggplot(
-            aes(x = Actors, y = `Strategies / Optinons`, fill = Proportion)
-        ) +
-        geom_tile() +
-        scale_fill_gradient2(
-            low = "#2166ac", # Blue color for negative values
-            mid = "#f7f7f7", # Light beige color for zero
-            high = "#b2182b", # Red color for positive values
-            midpoint = 0 # Set the midpoint to zero
-        ) +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    vline <- c(0, diff(as.numeric(factor(sector))) != 0)
-    hline <- c(0, diff(as.numeric(factor(strategy))) != 0)
-
-    p <- p + geom_vline(xintercept = 0.5, color = "black")
-    for (i in vline * 1:(length(vline))) {
-        if (i > 0) {
-            p <- p + geom_vline(xintercept = i - 0.5, color = "black")
-        }
-    }
-    p <- p + geom_vline(xintercept = length(vline) + 0.5, color = "black")
-
-    p <- p + geom_hline(yintercept = 0.5, color = "black")
-    for (i in hline * 1:(length(hline))) {
-        if (i > 0) {
-            p <- p + geom_hline(yintercept = i - 0.5, color = "black")
-        }
-    }
-    p <- p + geom_hline(yintercept = length(hline) + 0.5, color = "black")
 
     saveRDS(p, paste0(fn, ".ggp"))
 
@@ -5037,47 +5057,10 @@ if (n < 4) {
 
     ####
 
-    sector <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
-    strategy <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
 
-    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
-    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 2)
-
-    # data$hline <- c(0, diff(as.numeric(factor(sector))) != 0)
-    # data$vline <- c(0, diff(as.numeric(factor(strategy))) != 0)
-
-    p <- as.data.frame(as.table(data)) |>
-        dplyr::rename("Strategies / Optinons" = Var1, "Actors" = Var2, "Difference in Proportion" = Freq) |>
-        ggplot(
-            aes(x = Actors, y = `Strategies / Optinons`, fill = `Difference in Proportion`)
-        ) +
-        geom_tile() +
-        scale_fill_gradient2(
-            low = "#2166ac", # Blue color for negative values
-            mid = "#f7f7f7", # Light beige color for zero
-            high = "#b2182b", # Red color for positive values
-            midpoint = 0 # Set the midpoint to zero
-        ) +
-        theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
-    vline <- c(0, diff(as.numeric(factor(sector))) != 0)
-    hline <- c(0, diff(as.numeric(factor(strategy))) != 0)
-
-    p <- p + geom_vline(xintercept = 0.5, color = "black")
-    for (i in vline * 1:(length(vline))) {
-        if (i > 0) {
-            p <- p + geom_vline(xintercept = i - 0.5, color = "black")
-        }
-    }
-    p <- p + geom_vline(xintercept = length(vline) + 0.5, color = "black")
-
-    p <- p + geom_hline(yintercept = 0.5, color = "black")
-    for (i in hline * 1:(length(hline))) {
-        if (i > 0) {
-            p <- p + geom_hline(yintercept = i - 0.5, color = "black")
-        }
-    }
-    p <- p + geom_hline(yintercept = length(hline) + 0.5, color = "black")
+    p <- plot_heatmap(
+        plot_data = data
+    )
 
     saveRDS(p, paste0(fn, ".ggp"))
 
