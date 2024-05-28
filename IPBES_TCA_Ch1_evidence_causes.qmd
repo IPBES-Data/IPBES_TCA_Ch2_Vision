@@ -56,7 +56,7 @@ params:
 #| include: false
 
 if (!exists("params")) {
-    params <- rmarkdown::yaml_front_matter("IPBES_Ch1_evidence_causes.qmd")$params
+    params <- rmarkdown::yaml_front_matter("IPBES_TCA_Ch1_evidence_causes.qmd")$params
 }
 
 build <- as.integer(readLines(file.path("ch1_evidence_causes", "buildNo")))
@@ -129,10 +129,10 @@ biodiv_loss_3_5_st <- readLines(file.path("ch1_evidence_causes", "input", "biodi
 
 ##########
 
-nature_st <- readLines(file.path("input", "tca_corpus", "search terms", "nature.txt")) |>
+nature_st <- readLines(file.path("tca_corpus", "input", "search terms", "nature.txt")) |>
     paste(collapse = " ")
 
-tfc_st <- readLines(file.path("input", "tca_corpus", "search terms", "tfc.txt")) |>
+tfc_st <- readLines(file.path("tca_corpus", "input", "search terms", "tfc.txt")) |>
     paste(collapse = " ")
 
 st_1_nat <- compact(paste0("(", nature_st, ") AND (", biodiv_loss_1_st, ") AND (", biodiv_loss_2_st, ")"))
