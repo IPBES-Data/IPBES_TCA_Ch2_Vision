@@ -4,21 +4,21 @@
 cloud "<size:24>[[https://openalex.org OpenAlex]]" as openalex #pink
 
 ' part 0
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/nature.txt NATURE]]" as ch1_nature
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/tca_corpus/input/search%20terms/nature.txt NATURE]]" as ch1_nature
 storage "Number of Works\n--0.1--\n%$%0.1%$%" as ch1_nature_count #Lavender
 '
 openalex --> ch1_nature
 ch1_nature --> ch1_nature_count
 
 
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/tfc.txt TFC]]" as ch1_tfc
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/tca_corpus/input/search%20terms/nature.txt NATURE]] AND [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/tca_corpus/input/search%20terms/tfc.txt TFC]]" as ch1_tfc
 storage "Number of Works\n---0.2---\n%$%0.2%$%" as ch1_tfc_count #Lavender
 '
 openalex --> ch1_tfc
 ch1_tfc --> ch1_tfc_count
 
 
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/tfc.txt TFC]]" as ch1_tca
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/tca_corpus/input/search%20terms/nature.txt NATURE]] AND [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/tca_corpus/input/search%20terms/tfc.txt TFC]]" as ch1_tca
 ' storage "Number of Works\n---0.3---" as ch1_tfc_count #Lavender
 '
 ' openalex --> ch1_tca
@@ -26,31 +26,31 @@ action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_co
 
 
 ' part 1
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/ethical.txt ETHITCAL]]" as ch1_ethical
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/ethical.txt ETHITCAL]]" as ch1_ethical
 storage "Number of Works\n--1--\n%$%1%$%" as ch1_ethical_count #Khaki
 '
 openalex --> ch1_ethical
 ch1_ethical --> ch1_ethical_count
 
 ' part 2
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/concepts_1.txt CONCEPTS 1]]" as ch1_concepts_1
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/concepts_1.txt CONCEPTS 1]]" as ch1_concepts_1
 ch1_nature --> ch1_concepts_1
 storage "Number of Works\n--2.1--\n%$%2.1%$%" as ch1_concepts_1_count #Khaki
 ch1_concepts_1 --> ch1_concepts_1_count
 
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/concepts_2.txt CONCEPTS 2]]" as ch1_concepts_2
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/concepts_2.txt CONCEPTS 2]]" as ch1_concepts_2
 ch1_nature --> ch1_concepts_2 #pink;line.dashed
 storage "Number of Works\n--2.2--\n%$%2.2%$%" as ch1_concepts_2_count #Khaki
 ch1_concepts_2 --> ch1_concepts_2_count #pink;line.dashed
 
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/concepts_2.txt CONCEPTS 2]]" as ch1_concepts_2
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/concepts_2.txt CONCEPTS 2]]" as ch1_concepts_2
 ch1_concepts_1 --> ch1_concepts_2
 storage "Number of Works\n--2.3--\n%$%2.3%$%" as ch1_concepts_1_concepts_2_count #Khaki
 ch1_concepts_2 --> ch1_concepts_1_concepts_2_count
 
 
 ' part 4
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/narrowed_tca.txt NARROWED TCA]]" as ch1_narrowed_tca
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/narrowed_tca.txt NARROWED TCA]]" as ch1_narrowed_tca
 '
 openalex --> ch1_narrowed_tca
 ch1_narrowed_tca --> ch1_tca
@@ -62,32 +62,32 @@ ch1_narrowed_tca --> ch1_narrowed_tca_count
 
 
 ' part 5
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/criteria_1.txt CRITERIA 1]]" as ch1_criteria_1
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/criteria_1.txt CRITERIA 1]]" as ch1_criteria_1
 ch1_narrowed_tca --> ch1_criteria_1
 storage "Number of Works\n--5.1--\n%$%5.1%$%" as ch1_narrowed_tca_criteria_1_count #pink
 ch1_criteria_1 --> ch1_narrowed_tca_criteria_1_count
 
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/criteria_2.txt CRITERIA 2]]" as ch1_criteria_2
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/criteria_2.txt CRITERIA 2]]" as ch1_criteria_2
 ch1_narrowed_tca --> ch1_criteria_2
 storage "Number of Works\n--5.2--\n%$%5.2%$%" as ch1_narrowed_tca_criteria_2_count #pink
 ch1_criteria_2 --> ch1_narrowed_tca_criteria_2_count
 
 
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/criteria_3.txt CRITERIA 3]]" as ch1_criteria_3
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/criteria_3.txt CRITERIA 3]]" as ch1_criteria_3
 ch1_narrowed_tca --> ch1_criteria_3
 storage "Number of Works\n--5.3--\n%$%5.3%$%" as ch1_narrowed_tca_criteria_3_count #pink
 ch1_criteria_3 --> ch1_narrowed_tca_criteria_3_count
 
 
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/criteria_4.txt CRITERIA 4]]" as ch1_criteria_4
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/criteria_4.txt CRITERIA 4]]" as ch1_criteria_4
 ch1_narrowed_tca --> ch1_criteria_4
 storage "Number of Works\n--5.4--\n%$%5.4%$%" as ch1_narrowed_tca_criteria_4_count #pink
 ch1_criteria_4 --> ch1_narrowed_tca_criteria_4_count
 
 
 ' part 6
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/biodiv_loss_1.txt BIODIV LOSS 1]]" as ch1_biodiv_loss_1
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/biodiv_loss_2.txt BIODIV LOSS 2]]" as ch1_biodiv_loss_2
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/biodiv_loss_1.txt BIODIV LOSS 1]]" as ch1_biodiv_loss_1
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/biodiv_loss_2.txt BIODIV LOSS 2]]" as ch1_biodiv_loss_2
 ch1_nature --> ch1_biodiv_loss_1 #cyan
 ch1_biodiv_loss_1 --> ch1_biodiv_loss_2 #cyan
 storage "Number of Works\n--6.1--\n%$%6.1%$%" as ch1_nat_biodiv_loss_1_2_count #LightCyan
@@ -105,11 +105,11 @@ storage "Number of Works\n--6.3--\n%$%6.3%$%" as ch1_nat_nar_biodiv_loss_1_2_cou
 ch1_biodiv_loss_2 --> ch1_nat_nar_biodiv_loss_1_2_count #green;line.dashed
 
 
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/biodiv_loss_3_1.txt BIODIV LOSS 3 1]]" as ch1_biodiv_loss_3_1
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/biodiv_loss_3_2.txt BIODIV LOSS 3 2]]" as ch1_biodiv_loss_3_2
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/biodiv_loss_3_3.txt BIODIV LOSS 3 3]]" as ch1_biodiv_loss_3_3
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/biodiv_loss_3_4.txt BIODIV LOSS 3 4]]" as ch1_biodiv_loss_3_4
-action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/ch1_evidence_causes/biodiv_loss_3_5.txt BIODIV LOSS 3 5]]" as ch1_biodiv_loss_3_5
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/biodiv_loss_3_1.txt BIODIV LOSS 3 1]]" as ch1_biodiv_loss_3_1
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/biodiv_loss_3_2.txt BIODIV LOSS 3 2]]" as ch1_biodiv_loss_3_2
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/biodiv_loss_3_3.txt BIODIV LOSS 3 3]]" as ch1_biodiv_loss_3_3
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/biodiv_loss_3_4.txt BIODIV LOSS 3 4]]" as ch1_biodiv_loss_3_4
+action "Search Term [[https://github.com/IPBES-Data/IPBES_TCA_Corpus/raw/DMR_final/ch1_evidence_causes/input/biodiv_loss_3_5.txt BIODIV LOSS 3 5]]" as ch1_biodiv_loss_3_5
 
 ch1_biodiv_loss_2 --> ch1_biodiv_loss_3_1 #cyan
 storage "Number of Works\n--6.1.1--\n%$%6.1.1%$%" as ch1_nat_biodiv_loss_1_2_3_1_count #lightcyan

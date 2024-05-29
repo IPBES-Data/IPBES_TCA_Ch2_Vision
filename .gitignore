@@ -178,3 +178,6 @@ ch_5_subsidies_reform/input/sectors_def.parquet
 
 ch2_technology/data/sent_analysis_technology_tca.parquet
 ch2_technology/data/sent_analysis_technology.parquet
+
+tca_corpus/data/for_deposit/*
+
