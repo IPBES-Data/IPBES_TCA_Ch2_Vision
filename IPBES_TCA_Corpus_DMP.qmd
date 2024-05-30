@@ -1341,7 +1341,7 @@ lapply(
 ```
 
 ```{r}
-#| label: export_dois_tca_corpus
+#| label: export_dois_cases_corpus
 #| eval: false
 
 corpus_read(params$corpus_cases_dir) |>
@@ -3239,6 +3239,80 @@ if (!file.exists(fn)) {
 ```
 
 
+## Extract count Strategies
+```{r}
+strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids.rds") |>
+    readRDS()
+
+strategies_options_ids_cases <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
+    readRDS()
+
+count <- data.frame(
+    strategy = names(strategies_options_ids) |> 
+        strsplit(split = " \\|\\|\\| ") |> 
+        sapply(FUN = "[[", 1) |>
+        unique(),
+    count_tca = c(
+        strategy_1 = strategies_options_ids[grepl("Strategy 1", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_2 = strategies_options_ids[grepl("Strategy 2", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_3 = strategies_options_ids[grepl("Strategy 3", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_4 = strategies_options_ids[grepl("Strategy 4", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_5 = strategies_options_ids[grepl("Strategy 5", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length()
+    ),
+    count_cases = c(
+        strategy_1 = strategies_options_ids_cases[grepl("Strategy 1", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_2 = strategies_options_ids_cases[grepl("Strategy 2", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_3 = strategies_options_ids_cases[grepl("Strategy 3", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_4 = strategies_options_ids_cases[grepl("Strategy 4", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_5 = strategies_options_ids_cases[grepl("Strategy 5", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length()
+    )
+)
+
+
+count$p_tca <- count$count_tca / corpus_read(params$corpus_dir) |>
+    dplyr::distinct(id) |>
+    collect() |>
+    nrow()
+
+count$p_cases <- count$count_cases / corpus_read(params$corpus_cases_dir) |>
+    dplyr::distinct(id) |>
+    collect() |>
+    nrow()
+
+count |> 
+    knitr::kable()
+```
+
 
 ### Results
 
@@ -3270,7 +3344,7 @@ data <- lapply(
 data |>
     IPBES.R::table_dt(
         fn = "strategies_options_corpus_counts",
-        fixedColumns = list(leftColumns = 2)
+        fixedColumns = list(leftColumns = 0)
     )
 ```
 
@@ -4723,7 +4797,7 @@ if (!file.exists(fn)) {
 readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")) |>
     IPBES.R::table_dt(
         fn = "actors_strategies_options_overlap",
-        fixedColumns = list(leftColumns = 1)
+        fixedColumns = list(leftColumns = 0)
     )
 ```
 
@@ -4927,7 +5001,7 @@ if (!file.exists(fn)) {
 readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")) |>
     IPBES.R::table_dt(
         fn = "actors_strategies_options_overlap_cases",
-        fixedColumns = list(leftColumns = 1)
+        fixedColumns = list(leftColumns = 0)
     )
 ```
 

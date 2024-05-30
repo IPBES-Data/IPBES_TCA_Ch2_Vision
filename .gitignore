@@ -181,3 +181,5 @@ ch2_technology/data/sent_analysis_technology.parquet
 
 tca_corpus/data/for_deposit/*
 
+tca_corpus/data/corpus_cases_dois.csv
+tca_corpus/data/corpus_tca_dois.csv
