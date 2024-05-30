@@ -142,8 +142,6 @@ params:
     corpus_authors_dir: !expr file.path(".", "tca_corpus", "data", "corpus_authors")
     corpus_cases_dir: !expr file.path(".", "tca_corpus", "data", "corpus_cases")
 
-    duckdb_fn: !expr file.path(".", "tca_corpus", "data", "tca_corpus.duckdb")
-
     sample_size: 10000
     mc.cores: 8
 ---
@@ -240,7 +238,6 @@ source(file.path("tca_corpus", "R", "functions.R"))
 
 # A single core request is needed to make multicore parallel processing work
 invisible(oa_request(oa_query("bidiversity"), count_only = TRUE))
-
 ```
 
 # Working Title
@@ -303,6 +300,34 @@ if (nf < 3) {
 - To download high resolution pdf, [click here](tca_corpus/figures/tca_corpus_overview.pdf){target="_blank"}.
 - To download high resolution svg, [click here](tca_corpus/figures/tca_corpus_overview.svg){target="_blank"}.
 
+
+# Download of Data Files from Zenodo
+
+The data files of the repository are deposited in a separate Zenodo deposit untder the doi [10.5281/zenodo.11370840](https://doi.org/10.5281/zenodo.11370840). To re-download these, simply delete the `data` directory and run this code (or compile the report).
+
+
+```{r}
+#| label: download_data
+#| eval: false
+
+if (!dir.exists("data")) {
+    dir.create("data")
+}
+
+fns <- c("cluster.rds", "key_works.rds", "snowball.rds", "gdm.zip")
+for (fn in fns) {
+    if (!file.exists(fn)) {
+        url <- paste0("https://zenodo.org/record/11370840/files/", fn) |>
+            download.file(destfile = fn)
+    }
+    if (fn == "gdm.zip") {
+        if (!dir.exists(file.path("data", "gdm"))) {
+            unzip(file.path("data", "gdm.zip"), exdir = "data")
+        }
+    }
+}
+
+```
 
 ## Search Terms {#sec-search_terms}
 Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu to adopt them for OpenAlex.
@@ -1213,6 +1238,21 @@ lapply(
 )
 ```
 
+```{r}
+#| label: export_dois_tca_corpus
+#| eval: false
+
+corpus_read(params$corpus_dir) |>
+    dplyr::distinct(doi) |>
+    dplyr::rename(
+        tca_corpus_dois = doi
+    ) |>
+    dplyr::collect() |>
+    write.csv(
+        file = file.path("tca_corpus", "data", "corpus_tca_dois.csv"), row.names = FALSE
+    )
+```
+
 ## Download TCA AND CASE Corpus
 
 ```{r}
@@ -1300,6 +1340,21 @@ lapply(
 
 ```
 
+```{r}
+#| label: export_dois_tca_corpus
+#| eval: false
+
+corpus_read(params$corpus_cases_dir) |>
+    dplyr::distinct(doi) |>
+    dplyr::rename(
+        tca_corpus_dois = doi
+    ) |>
+    dplyr::collect() |>
+    write.csv(
+        file = file.path("tca_corpus", "data", "corpus_cases_dois.csv"), row.names = FALSE
+    )
+```
+
 ## Export 250 Random Works from Cases Corpus
 
 ```{r}
@@ -1328,73 +1383,6 @@ if (!file.exists(fn)) {
         dplyr::collect() |>
         writexl::write_xlsx(path = fn)
 }
-```
-
-
-
-## Prepare Full Text search of Title and Abstract
-
-This is done using duckDB and the [fts extension](https://duckdb.org/docs/sql/extensions/fts) which is a full text search extension for duckDB (see also [for details](https://duckdb.org/docs/extensions/full_text_search.html) and for [arrow / parquet support](https://duckdb.org/docs/data/parquet/overview.html)).
-
-The following steps are conducted:
-
-1. Create new duckDB called `tca_corpus.duckdb` 
-    - import data needed
-    - create `fts` index for full text search
-
-```{r}
-#| label: create_duckdb
-
-if (!file.exists(params$duckdb_fn)) {
-    sql <- paste0(
-        "CREATE TABLE tca_corpus AS SELECT id, author_abbr, publication_year, doi, display_name, ab FROM parquet_scan('",
-        file.path(".", "tca_corpus", "data", "corpus", "**", "*.parquet"),
-        "')"
-    )
-
-    con <- duckdb::dbConnect(duckdb::duckdb(), dbdir = params$duckdb_fn, read_only = FALSE)
-    #
-    dbExecute(con, "SET autoinstall_known_extensions=1")
-    dbExecute(con, "SET autoload_known_extensions=1")
-    dbExecute(con, sql)
-    #
-    duckdb::dbDisconnect(con, shutdown = TRUE)
-
-    con <- duckdb::dbConnect(duckdb::duckdb(), dbdir = params$duckdb_fn, read_only = FALSE)
-    #
-    dbExecute(con, "INSTALL fts")
-    dbExecute(con, "LOAD fts")
-
-    input_table <- "tca_corpus"
-    input_id <- "id"
-    input_values <- "'display_name', 'ab'"
-
-    sql <- paste0("PRAGMA create_fts_index(", input_table, ", ", input_id, ", ", input_values, ", overwrite=1);")
-
-    dbExecute(con, sql)
-    #
-    duckdb::dbDisconnect(con, shutdown = TRUE)
-}
-
-# con <- dbConnect(duckdb::duckdb(params$duckdb_fn))
-
-# SQL <- "SELECT * FROM tca_corpus WHERE display_name MATCH 'transformative';"
-# dbListTables(con)
-
-#     input_table <- "tca_corpus"
-#     input_id <- "id"
-#     input_values <- "'display_name', 'ab'"
-
-#     query_string <- "'case study'"
-#     fields <- "'display_name', 'ab'"
-
-# sql <- paste0("SELECT fts_main_tca_corpus.match_bm25(", input_id, ", ", query_string, ", fields = ", fields, " FROM tca_corpus)"
-
-# dbExecute(con, sql)
-
-# duckdb::dbDisconnect(con, shutdown = TRUE)
-
-
 ```
 
 
