@@ -126,6 +126,8 @@ tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDri
 tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Evans et al., 2023.pdf
 tca_corpus/data/tca_corpus.duckdb
 
+tca_corpus/data/corpus_cases_dois.csv
+tca_corpus/data/corpus_tca_dois.csv
 
 
 #############################
@@ -135,10 +137,27 @@ tca_corpus/data/tca_corpus.duckdb
 ch1_evidence_causes/data
 
 #############################
-### Ch 5 Subsidies Reform ###
+### Ch 2 Technology       ###
 #############################
 
+.vscode/*
+**/.DS_Store
 
+**/pages_complete/*
+**/corpus/*
+**/corpus_complete/*
+**/corpus*/*
+
+**/corpus_tca.serialised/*
+**/corpus.serialised/*
+
+ch2_technology/data/*
+
+
+
+#############################
+### Ch 5 Subsidies Reform ###
+#############################
 
 **/pages/*
 **/corpus/*
@@ -158,26 +177,4 @@ ch_5_subsidies_reform/sent_analysis_subsidies_tca.parquet
 ch_5_subsidies_reform/input/sectors_def.parquet
 /ch5_subsidies_reform/data
 
-#############################
-### Ch 2 Technology       ###
-#############################
 
-
-.vscode/*
-**/.DS_Store
-
-**/pages_complete/*
-**/corpus/*
-**/corpus_complete/*
-**/corpus*/*
-
-**/corpus_tca.serialised/*
-**/corpus.serialised/*
-
-ch2_technology/data/sent_analysis_technology_tca.parquet
-ch2_technology/data/sent_analysis_technology.parquet
-
-tca_corpus/data/for_deposit/*
-
-tca_corpus/data/corpus_cases_dois.csv
-tca_corpus/data/corpus_tca_dois.csv
