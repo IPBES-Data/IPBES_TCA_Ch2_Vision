@@ -47,19 +47,6 @@ Inputs/**/*.docx
 *.eml
 IPBES_TCA_Corpus_files/
 
-**/pages/
-**/pages_cases/
-**/pages_strategies_**/
-**/pages_actors_**/
-
-**/corpus/
-**/corpus_cases/
-**/corpus_tc/
-
-**/corpus_authors/
-**/corpus_topics/
-**/corpus as converted not cleaned/
-
 tca_corpus/data/*
 
 .vscode/settings.json
@@ -124,10 +111,7 @@ tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDri
 tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Fisher et al 2022.pdf
 tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Feola 2015.pdf
 tca_corpus/input/List of papers_TSU Review Sebastian Villasante/Chapter 3/OneDrive_6_18-10-2023/Evans et al., 2023.pdf
-tca_corpus/data/tca_corpus.duckdb
 
-tca_corpus/data/corpus_cases_dois.csv
-tca_corpus/data/corpus_tca_dois.csv
 
 
 #############################
@@ -143,14 +127,6 @@ ch1_evidence_causes/data
 .vscode/*
 **/.DS_Store
 
-**/pages_complete/*
-**/corpus/*
-**/corpus_complete/*
-**/corpus*/*
-
-**/corpus_tca.serialised/*
-**/corpus.serialised/*
-
 ch2_technology/data/*
 
 
@@ -159,22 +135,9 @@ ch2_technology/data/*
 ### Ch 5 Subsidies Reform ###
 #############################
 
-**/pages/*
-**/corpus/*
-**/corpus_authors/*
-**/corpus_topics/*
-**/corpus_before_deduplication/*
-
-sent_analysis_subsidies.zip
-
-**/corpus_tca/*
-**/corpus_tca.bak/*
-**/corpus.bak/*
-
-ch_5_subsidies_reform/data/sent_analysis_subsidies.parquet
-ch_5_subsidies_reform/sent_analysis_subsidies_tca.parquet
 
 ch_5_subsidies_reform/input/sectors_def.parquet
-/ch5_subsidies_reform/data
+
+ch5_subsidies_reform/data
 
 
