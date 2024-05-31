@@ -45,7 +45,7 @@ Inputs/**/*.pdf
 Inputs/**/*.bib
 Inputs/**/*.docx
 *.eml
-IPBES_TCA_Corpus_DMP_files/
+IPBES_TCA_Corpus_files/
 
 **/pages/
 **/pages_cases/

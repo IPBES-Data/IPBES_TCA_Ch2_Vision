@@ -170,7 +170,7 @@ build <- build + 1
 writeLines(as.character(build), file.path("tca_corpus", "buildNo"))
 
 if (!exists("params")) {
-    params <- rmarkdown::yaml_front_matter("./IPBES_TCA_Corpus_DMP.qmd")$params
+    params <- rmarkdown::yaml_front_matter("./IPBES_TCA_Corpus.qmd")$params
 }
 
 knitr::opts_chunk$set(message = NA)
