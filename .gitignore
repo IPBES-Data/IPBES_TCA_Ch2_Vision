@@ -128,8 +128,11 @@ tca_corpus/data/tca_corpus.duckdb
 
 
 
+#############################
+### Ch 1 Evidence Causes  ###
+#############################
 
-
+ch1_evidence_causes/data
 
 #############################
 ### Ch 5 Subsidies Reform ###
