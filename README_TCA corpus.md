@@ -13,7 +13,7 @@
 - **Project name**: Define, Downloiad and Analyse TCA Corpus 
 - **Chapter**: all
 - **Short Name**: IPBES_TCA_Corpus
-- **Github Repo**: [IPBES_TCA_Corpus(https://github.com/IPBES-Data/IPBES_TCA_Corpus)
+- **Github Repo**: [IPBES_TCA_Corpus](https://github.com/IPBES-Data/IPBES_TCA_Corpus/tree/DMR_final)
 
 - **Project Leaders**
   - [Sebastian Villasante](mailto:s.villasante.arg@gmail.com)

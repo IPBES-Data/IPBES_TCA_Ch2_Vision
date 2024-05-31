@@ -165,19 +165,12 @@ IPBES_TCA_Ch1_evidence_causes
 
 ## Code repo
 
-- [Github repository](https://github.com/IPBES-Data/IPBES_TCA_Corpus)
+- [Github repository](https://github.com/IPBES-Data/IPBES_TCA_Corpus/tree/DMR_final)
 - [Google Doc with search terms and questions](https://docs.google.com/document/d/1OHK7TKwN11XazDNLJbADmmhYRXdlMKVJBtqTRpX3S-A/edit)
 
 ## Build No: `r build`
 
 The BuidNo is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same.
-
-## TODO
-- [ ] Table 6.1, 6.2, 6.3, 6.[1:3].[1:5] (SPM)
-- [ ] random 250 from 4.2, 5.1, 5.2, 5.3, 5.4 (samples SPM)
-- [ ]  NATURE AND CONCEPTS_1
-- [ ]  NATURE AND CONCEPTS_2
-- [ ]  NATURE AND CONCEPTS_1 AND CONCEPTS_2 Change to NATURE from OPEN ALEX
 
 # Introduction
 

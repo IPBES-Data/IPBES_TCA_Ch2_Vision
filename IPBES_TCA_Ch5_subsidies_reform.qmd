@@ -110,7 +110,7 @@ IPBES_TCA_Ch5_Subsidies_Reform
 
 ## Code repo
 
-[Github - private](https://github.com/IPBES-Data/IPBES_TCA_Corpus)
+[Github - private](https://github.com/IPBES-Data/IPBES_TCA_Corpus/tree/DMR_final)
 
 ## Build No: `r build`
 

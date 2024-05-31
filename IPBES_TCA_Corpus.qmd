@@ -245,7 +245,7 @@ IPBES_TCA_Corpus
 
 ## Code repo
 
-[Github repository](https://github.com/IPBES-Data/IPBES_TCA_Corpus)
+[Github repository](https://github.com/IPBES-Data/IPBES_TCA_Corpus/tree/DMR_final)
 
 ## Build No: ``r build``
 
