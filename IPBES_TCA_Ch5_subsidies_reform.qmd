@@ -263,6 +263,26 @@ lapply(
     }
 )
 
+
+
+```{r}
+#| label: export_dois_corpus
+#|
+
+fn <- file.path("ch5_subsidies_reform", "data", "corpus_dois.csv")
+if (!file.exists(fn)) {
+corpus_read(params$corpus_dir) |>
+    dplyr::distinct(doi) |>
+    dplyr::rename(
+        tca_corpus_dois = doi
+    ) |>
+    dplyr::collect() |>
+    write.csv(
+        file = fn, row.names = FALSE
+    )
+}
+```
+
 (read_corpus("./data/ch_5_subsidies_reform/corpus_deduplicated") |> group_by(id) |> summarize(n = n()) |> filter(n > 1) |> collect() |> nrow()) / (corpus_read("./data/ch_5_subsidies_reform/corpus_deduplicated") |> nrow())
 
 id_org <- corpus_read("./data/ch_5_subsidies_reform/corpus") |>
