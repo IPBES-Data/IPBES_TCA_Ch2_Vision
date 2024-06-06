@@ -5,7 +5,7 @@
 
 ## Data Package
 
-[![DOI Data Package](https://zenodo.org/badge/DOI/99.9999/zenodo.9999999.svg)](https://doi.org/99.9999/zenodo.9999999)
+[![DOI Data Package](https://zenodo.org/badge/DOI/10.5281/zenodo.11447149.svg)](https://doi.org/10.5281/zenodo.11389148)
 
 ## Metadata
 
@@ -16,15 +16,17 @@
 - **github repo**: [github repository for the branch](https://github.com/IPBES-Data/IPBES_TCA_Corpus/tree/DMR_final)
 
 - **Project Leaders**:
-  - [Rainer M Krug](mailto:Rainer.Krug@uct.ch,Rainer@krugs.de)
-  - [Esther Turnhout](mailto:e.turnhout@utwente.nl)
-  - ...
+  - [Esther Turnhout](mailto:e.turnhout@utwente.nl) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-2190-2076)
+  - [Julia Leventon](mailto:leventon.j@czechglobe.cz) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-2447-8522)
+  - [Rainer M Krug](mailto:Rainer.Krug@uct.ch,Rainer@krugs.de) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-7490-0066)
 
 - **Researchers**
-  - ...
+  - [Fern Wickson](mailto:fern.wickson@uit.no) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-2841-4155)
+  - [Janita Gurung](mailto:janita.gurung@icimod.org) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0003-1053-4412)
+  - [Jerneja Penca](mailto:Jerneja.Penca@zrs-kp.si) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-2817-3443)
 
 - **Data Curators**
-  - [Rainer M Krug](mailto:Rainer.Krug@uct.ch,Rainer@krugs.de)
+  - [Rainer M Krug](mailto:Rainer.Krug@uct.ch,Rainer@krugs.de) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-7490-0066)
 
 ## Folders
 
@@ -33,8 +35,6 @@
 - **`ch1_evidence_causes/figures`**: figures created during the running of the `IPBES_TCA_Ch1_evidence_causes.qmd` file in low-res as well as high-res.
 
 ## Description
-
-TO BE ADDED
 
 ## Technical Reports
 
