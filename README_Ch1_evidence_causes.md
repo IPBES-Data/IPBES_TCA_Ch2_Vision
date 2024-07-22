@@ -16,9 +16,9 @@
 - **github repo**: [github repository for the branch](https://github.com/IPBES-Data/IPBES_TCA_Corpus/tree/DMR_final)
 
 - **Project Leaders**:
+  - [Rainer M Krug](mailto:Rainer.Krug@uct.ch,Rainer@krugs.de) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-7490-0066)
   - [Esther Turnhout](mailto:e.turnhout@utwente.nl) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-2190-2076)
   - [Julia Leventon](mailto:leventon.j@czechglobe.cz) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-2447-8522)
-  - [Rainer M Krug](mailto:Rainer.Krug@uct.ch,Rainer@krugs.de) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-7490-0066)
 
 - **Researchers**
   - [Fern Wickson](mailto:fern.wickson@uit.no) [![ORCID](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0002-2841-4155)
