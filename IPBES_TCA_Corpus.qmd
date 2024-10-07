@@ -3395,8 +3395,8 @@ if (figs < 4) {
         }
     ) |>
         do.call(what = rbind) |>
-        dplyr::mutate(
-            Strategy = paste0(Strategy, " |||| ", Concept),
+        dplyr::mutate(            
+            Strategy = paste0(Strategy, "\n", Concept),
             Count_until_1992 = Count_until_1992 / oa_until_1992,
             Count_after_1992 = Count_after_1992 / oa_after_1992,
         ) |>
@@ -3405,6 +3405,11 @@ if (figs < 4) {
             Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
             Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
         )
+
+    data$Strategy <- data$Strategy |> as.factor()
+    levels(data$Strategy) <- rev(levels(data$Strategy))
+
+    
 
 
     figure <- data |>
@@ -3417,19 +3422,21 @@ if (figs < 4) {
         ggplot(aes(x = Strategy, y = Count_year, fill = Period)) +
         geom_bar(stat = "identity") +
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "Strategy", y = "Count", fill = "Period")
+        labs(x = "Strategy", y = "Count", fill = "Period") +
+        coord_flip() + 
+        theme(legend.position = "bottom")
 
 
     ggplot2::ggsave(
         paste0(figname, ".pdf"),
-        width = 12,
-        height = 18,
+        width = 8,
+        height = 8,
         figure
     )
     ggplot2::ggsave(
         paste0(figname, ".png"),
-        width = 12,
-        height = 18,
+        width = 8,
+        height = 8,
         figure
     )
 
@@ -3443,19 +3450,21 @@ if (figs < 4) {
         ggplot(aes(x = Strategy, y = Count_p_year, fill = Period)) +
         geom_bar(stat = "identity") +
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "Strategy", y = "Count", fill = "Period")
+        labs(x = "Strategy", y = "Count", fill = "Period") +
+        coord_flip() + 
+        theme(legend.position = "bottom")
 
 
     ggplot2::ggsave(
         paste0(figname, "_p.pdf"),
-        width = 12,
-        height = 18,
+        width = 8,
+        height = 8,
         figure
     )
     ggplot2::ggsave(
         paste0(figname, "_p.png"),
-        width = 12,
-        height = 18,
+        width = 8,
+        height = 8,
         figure
     )
 }
@@ -4412,6 +4421,12 @@ if (figs < 4) {
         )
 
 
+    data$Actor <- gsub("Indigenous people", "Indigenous Peoples", data$Actor)
+    data$Actor <- gsub("NGO", "Non-governmental organizations", data$Actor)
+    data$Actor <- gsub("\\|\\|\\|", "\n", data$Actor)
+    data$Actor <- data$Actor |> as.factor()
+    levels(data$Actor) <- rev(levels(data$Actor))
+
     figure <- data |>
         tidyr::pivot_longer(
             cols = c(Count_until_1992, Count_after_1992),
@@ -4422,19 +4437,21 @@ if (figs < 4) {
         ggplot(aes(x = Actor, y = Count_year, fill = Period)) +
         geom_bar(stat = "identity") +
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "Actors", y = "Count", fill = "Period")
+        labs(x = "Actors", y = "Count", fill = "Period") +
+        coord_flip() + 
+        theme(legend.position = "bottom")
 
 
     ggplot2::ggsave(
         paste0(figname, ".pdf"),
-        width = 12,
-        height = 18,
+        width = 8,
+        height = 8,
         figure
     )
     ggplot2::ggsave(
         paste0(figname, ".png"),
-        width = 12,
-        height = 18,
+        width = 8,
+        height = 8,
         figure
     )
 
@@ -4448,19 +4465,20 @@ if (figs < 4) {
         ggplot(aes(x = Actor, y = Count_p_year, fill = Period)) +
         geom_bar(stat = "identity") +
         theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "Actor", y = "Count", fill = "Period")
-
+        labs(x = "Actor", y = "Count", fill = "Period") +
+        coord_flip() + 
+        theme(legend.position = "bottom")
 
     ggplot2::ggsave(
         paste0(figname, "_p.pdf"),
-        width = 12,
-        height = 18,
+        width = 8,
+        height = 8,
         figure
     )
     ggplot2::ggsave(
         paste0(figname, "_p.png"),
-        width = 12,
-        height = 18,
+        width = 8,
+        height = 8,
         figure
     )
 }
