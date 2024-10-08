@@ -3394,7 +3394,22 @@ if (figs < 4) {
             )
         }
     ) |>
-        do.call(what = rbind) |>
+        do.call(what = rbind)
+
+    ## As in Dendrogram
+    data$Strategy[grep("Strategy 1", data$Strategy)] <- "Strategy 1: Conserve and regenerate places of value to nature and people"
+    data$Strategy[grep("Strategy 2", data$Strategy)] <- "Strategy 2: Drive systemic change in the sectors most responsible for nature's decline"
+    data$Strategy[grep("Strategy 3", data$Strategy)] <- "Strategy 3: Transform economic systems for nature and equity"
+    data$Strategy[grep("Strategy 4", data$Strategy)] <- "Strategy 4: Transform governance systems to be inclusive, accountable and adaptive"
+    data$Strategy[grep("Strategy 5", data$Strategy)] <- "Strategy 5: Shift societal views and values to recognise interconnections between humans and nature"
+
+    # data$Strategy[grep("Strategy 1", data$Strategy)] <- "Strategy 1"
+    # data$Strategy[grep("Strategy 2", data$Strategy)] <- "Strategy 2"
+    # data$Strategy[grep("Strategy 3", data$Strategy)] <- "Strategy 3"
+    # data$Strategy[grep("Strategy 4", data$Strategy)] <- "Strategy 4"
+    # data$Strategy[grep("Strategy 5", data$Strategy)] <- "Strategy 5"
+
+    data <- data |>
         dplyr::mutate(            
             Strategy = paste0(Strategy, "\n", Concept),
             Count_until_1992 = Count_until_1992 / oa_until_1992,
@@ -3408,9 +3423,6 @@ if (figs < 4) {
 
     data$Strategy <- data$Strategy |> as.factor()
     levels(data$Strategy) <- rev(levels(data$Strategy))
-
-    
-
 
     figure <- data |>
         tidyr::pivot_longer(
@@ -3430,13 +3442,13 @@ if (figs < 4) {
     ggplot2::ggsave(
         paste0(figname, ".pdf"),
         width = 8,
-        height = 8,
+        height = 10,
         figure
     )
     ggplot2::ggsave(
         paste0(figname, ".png"),
         width = 8,
-        height = 8,
+        height = 10,
         figure
     )
 
@@ -3458,13 +3470,13 @@ if (figs < 4) {
     ggplot2::ggsave(
         paste0(figname, "_p.pdf"),
         width = 8,
-        height = 8,
+        height = 10,
         figure
     )
     ggplot2::ggsave(
         paste0(figname, "_p.png"),
         width = 8,
-        height = 8,
+        height = 10,
         figure
     )
 }
