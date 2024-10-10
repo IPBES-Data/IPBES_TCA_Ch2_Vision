@@ -4233,6 +4233,18 @@ if (!file.exists(fn)) {
         actors_ids,
         Vectorize(overlap_count)
     )
+    
+    for (i in 1:length(dimnames(actors_overlap))) {
+        dimnames(actors_overlap)[[i]] <- dimnames(actors_overlap)[[i]] |>
+            gsub(
+                pattern = "NGO", 
+                replacement = "Non-governmental organizations"
+            ) |>
+            gsub(
+                pattern = "Indigenous people", 
+                replacement = "Indigenous Peoples"
+            )   
+    }
 
     saveRDS(actors_overlap, file = fn)
     write.csv(actors_overlap, file = gsub("rds$", "csv", fn))
