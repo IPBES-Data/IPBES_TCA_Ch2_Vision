@@ -1,18 +1,16 @@
 # Transformative Change Assessment - TCA Corpus and Related Tasks
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11447691.svg)](https://doi.org/10.5281/zenodo.11447691)
-[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
+[![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
+TODO: UPLOAD REPO TO https://zenodo.org/uploads/11447691
 
 ## Metadata
 
-UPLOAD TO https://zenodo.org/uploads/11447691
-
-- **Assessment**: Transformative Change
+- **Assessment**: Transformative Change Assessment
 - **Github Repo**: [IPBES_TCA_Corpus](https://github.com/IPBES-Data/IPBES_TCA_Corpus/tree/DMR_final)
 
 ## Technical Reports
-
-
 
 - [ ] [TCA Corpus Report: IPBES_TCA_Corpus.html](IPBES_TCA_Corpus.html)
   - [ ] Data Package DOI [10.5281/zenodo.11447008](https://doi.org/10.5281/zenodo.11447008)
