@@ -23,8 +23,8 @@ copyright:
 citation: 
   type: report
   container-title: IPBES Data Management Report
-  doi: XXXXXX
-doi: XXXXXX
+  doi: 10.5281/zenodo.10251349
+doi: 10.5281/zenodo.10251349
 version: 0.0.1
 format:
     html:

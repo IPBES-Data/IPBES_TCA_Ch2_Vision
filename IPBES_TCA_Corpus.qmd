@@ -32,7 +32,7 @@ citation:
   container-title: Report Transformative Change Assessment Corpus
   doi: 10.5281/zenodo.10251349
 doi: 10.5281/zenodo.10251349
-version: 2.0.0
+version: 2.0.0 
 
 format:
     html:

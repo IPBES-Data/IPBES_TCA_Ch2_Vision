@@ -13,9 +13,9 @@ author:
         city: Frankfurt (Main)
         url: https://www.senckenberg.de/en/institutes/sbik-f/
     roles: [author, editor]
-abstract: > 
-  A short description what this is about.
-  This is not a tracditional abstract, but rather something else ...
+# abstract: > 
+#   A short description what this is about.
+#   This is not a tracditional abstract, but rather something else ...
 # keywords:
 #   - aaaaa
 #   - bbbbb
@@ -26,8 +26,8 @@ copyright:
 citation: 
   type: report
   container-title: IPBES Data Management Report
-  doi: XXXXXX
-doi: XXXXXX
+  doi: 10.5281/zenodo.10251349
+doi: 10.5281/zenodo.10251349
 version: 0.0.1
 
 format:
@@ -82,7 +82,7 @@ library(duckdb)
 library(DBI)
 
 if (!exists("params")) {
-    params <- rmarkdown::yaml_front_matter("ch5_subsidies_reform.qmd")$params
+    params <- rmarkdown::yaml_front_matter("IPBES_TCA_Ch5_subsidies_reform.qmd")$params
 }
 
 build <- as.integer(readLines(file.path("ch5_subsidies_reform", "buildNo")))
@@ -114,17 +114,9 @@ IPBES_TCA_Ch5_Subsidies_Reform
 
 ## Build No: `r build`
 
-%The BuidNo is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same%.
+The Buid No is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same.
 
 # Introduction
-
-### The following steps will be done in documented in this report:
-
-- Do asearch with [params$st_subsidies](input/ch_5_subsidies_refrm/government_financial_support.txt){target=_blank} determine the  number of hits
-- Download Subsidies Corpus
-- Identify works in the subsidies corpus AND TCA corpus
-- Do some analysis
-
 
 
 # Methods
@@ -132,9 +124,37 @@ IPBES_TCA_Ch5_Subsidies_Reform
 The search terms are based on the [shared google doc](https://docs.google.com/document/d/1_FmxYVhpv2Bu2Gbbxb7cWc49f3soFvc64Qau_x2RAqI/edit){target=_blank}. They are cleaned up for the usage in [OpenAlex](https://openalex.org/){target=_blank}.
 
 
+
+## Download of Data Files from Zenodo
+
+The `data` folder is also available in a separate deposit at [10.5281/zenodo.11389148](https://doi.org/10.5281/zenodo.11389258).
+
+To guarantee reproducibility, it will be downloaded and extracted when the folder `ch5_subsidies_reform/data` does not exist
+
+All code to re-generate the data is included but might take a long time to run and produce different numbers as OpenAlex is updated continously.
+
+Disable this block and delete all content in the folder `ch5_subsidies_reform/data` to re-generate the data. The folder `ch5_subsidies_reform/data` has to exist.
+
+This code will only work after the approval of the assessment by the plenary as the repository will remain confidential before.
+
+```{r}
+#| label: download_data
+#| eval: true 
+
+dn <- file.path("ch5_subsidies_reform", "data")
+if (!dir.exists(dn)) {
+    dir.create(dn)
+    url <- paste0("https://zenodo.org/record/", "11389258", "/files/data.zip")
+    destfile <- tempfile(fileext = ".zip")
+    download.file(url, destfile)
+
+    unzip(destfile, exdir = "data")
+}
+```
+
 ## Get and calculate Data from OpenAlex
 
-The search terms is [st](input/ch_5_subsidies_refrm/government_financial_support.txt){target=_blank}
+The search terms is [st](ch_5_subsidies_refrm/input/government_financial_support.txt){target=_blank}
 
 ```{r}
 #| label: get get_st_count
@@ -162,7 +182,7 @@ if (!file.exists(params$fn_count)) {
 
 **The Subsidies Corpus was downloaded at the 11th of April 2024.**
 
-The corpus download will be stored in `data/pages` and the arrow database in `data/corpus`.
+The corpus download will be stored in `data/pages` and the parquet database in `data/corpus`.
 
 This is not on github!
 
@@ -193,7 +213,7 @@ IPBES.R::corpus_download(
 toc()
 ```
 
-Convert downloaded corpus to arrow
+Convert downloaded corpus to parquet
 
 ```{r}
 #| label: convert_subsidies_corpus_arrow
@@ -263,6 +283,27 @@ lapply(
     }
 )
 
+(read_corpus("./data/ch_5_subsidies_reform/corpus_deduplicated") |> 
+    group_by(id) |> 
+    summarize(n = n()) |> 
+    filter(n > 1) |> 
+    collect() |> 
+    nrow()) / (corpus_read("./data/ch_5_subsidies_reform/corpus_deduplicated") |> 
+    nrow())
+
+id_org <- corpus_read("./data/ch_5_subsidies_reform/corpus") |>
+    distinct(id) |>
+    collect()
+
+id_deduplicated <- corpus_read("./data/ch_5_subsidies_reform/corpus_deduplicated") |>
+    distinct(id) |>
+    collect()
+
+(!(id_deduplicated$id %in% id_org$id)) |> sum() |> as.numeric()
+
+NOW IF EVERYTHING IS OK, DELETE THE OLD CORPUS AND RENAME THE NEW ONE
+
+```
 
 
 ```{r}
@@ -283,20 +324,6 @@ corpus_read(params$corpus_dir) |>
 }
 ```
 
-(read_corpus("./data/ch_5_subsidies_reform/corpus_deduplicated") |> group_by(id) |> summarize(n = n()) |> filter(n > 1) |> collect() |> nrow()) / (corpus_read("./data/ch_5_subsidies_reform/corpus_deduplicated") |> nrow())
-
-id_org <- corpus_read("./data/ch_5_subsidies_reform/corpus") |>
-    distinct(id) |>
-    collect()
-
-id_deduplicated <- corpus_read("./data/ch_5_subsidies_reform/corpus_deduplicated") |>
-    distinct(id) |>
-    collect()
-
-(!(id_deduplicated$id %in% id_org$id)) |> sum() |> as.numeric()
-
-NOW IF EVERYTHING IS OK, DELETE THE OLD CORPUS AND RENAME THE NEW ONE
-```
 
 ## Export Data from Subsidies Corpus
 
@@ -502,9 +529,8 @@ if (!file.exists(params$fn_publications_temporal)) {
                     p_oa = count_oa / sum(count_oa),
                     p_oa_cum = cumsum(p_oa)
                 )
-        )
-
-    saveRDS(data)
+        ) |>
+        saveRDS(params$fn_publications_temporal)
 }
 
 ```

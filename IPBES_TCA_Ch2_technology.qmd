@@ -23,8 +23,8 @@ copyright:
 citation: 
   type: report
   container-title: IPBES Data Management Report
-  doi: XXXXXX
-doi: XXXXXX
+  doi: 10.5281/zenodo.10251349
+doi: 10.5281/zenodo.10251349
 version: 0.0.1
 
 format:
@@ -123,14 +123,16 @@ source(file.path("ch2_technology", "R", "functions.R"))
 
 ```
 
-## Working Title
+
+
+# Working Title
 IPBES_TCA_Ch2_technology
 
-## Code repo
+# Code repo
 
 [Github - private](https://github.com/IPBES-Data/IPBES_TCA_Ch2_technology)
 
-## Build No: `r build`
+# Build No: `r build`
 
 The BuidNo is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same.
 
@@ -138,10 +140,38 @@ The BuidNo is automatically increased by one each time the report is rendered. I
 
 All searches are done on all works in OpenAlex. The search in the TCA Corpus is not possibly at the moment, but we are working on it.
 
+
 # Methods
 
 
-### OpenAlex Complete
+## Download of Data Files from Zenodo
+
+The `data` folder is also available in a separate deposit at [10.5281/zenodo.11389148](https://doi.org/10.5281/zenodo.11389207).
+
+To guarantee reproducibility, it will be downloaded and extracted when the folder `ch2_technology/data` does not exist
+
+All code to re-generate the data is included but might take a long time to run and produce different numbers as OpenAlex is updated continously.
+
+Disable this block and delete all content in the folder `ch2_technology/data` to re-generate the data. The folder `ch2_technology/data` has to exist.
+
+This code will only work after the approval of the assessment by the plenary as the repository will remain confidential before.
+
+```{r}
+#| label: download_data
+#| eval: true 
+
+dn <- file.path("ch2_technology", "data")
+if (!dir.exists(dn)) {
+    dir.create(dn)
+    url <- paste0("https://zenodo.org/record/", "11389207", "/files/data.zip")
+    destfile <- tempfile(fileext = ".zip")
+    download.file(url, destfile)
+
+    unzip(destfile, exdir = "data")
+}
+```
+
+## OpenAlex Complete
 
 ```{r}
 #| label: get_oa_count
@@ -185,7 +215,7 @@ if (get_count) {
 }
 ```
 
-### Vision
+## Vision
 
 The search terms is [vision](ch2_technology/input/vision.txt){target=_blank}
 Open Alex search.
@@ -234,7 +264,7 @@ if (get_count) {
 
 
 
-### Technology
+## Technology
 
 The search terms is [technology](ch2_technology/input/technology.txt){target=_blank}
 Open Alex search.
@@ -285,7 +315,7 @@ if (get_count) {
 ```
 
 
-### Vision AND technology
+## Vision AND technology
 Open Alex search.
 
 The search term is [vision](ch2_technology/input/vision.txt){target=_blank} AND [technology](ch2_technology/input/technology.txt){target=_blank}
@@ -367,7 +397,7 @@ if (get_count) {
 
 
 
-### Vision AND technology AND marine
+## Vision AND technology AND marine
 Open Alex search.
 
 The search term is [vision](ch2_technology/input/vision.txt){target=_blank} AND [technology](ch2_technology/input/technology.txt){target=_blank}
@@ -440,7 +470,7 @@ Open Alex search.
 
 The search term is [vision](ch2_technology/input/vision.txt){target=_blank} AND [technology](ch2_technology/input/technology.txt){target=_blank}
 
-#### Count of Publications
+### Count of Publications
 
 ```{r}
 #| label: get_vision_technology_case_count
@@ -487,7 +517,7 @@ if (get_count) {
 ```
 
 
-### Save the counts as `r params$fn_count`
+## Save the counts as `r params$fn_count`
 
 ```{r}
 #| label: save_oa_count
@@ -644,7 +674,12 @@ lapply(
     }
 )
 
-(read_corpus("./ch2_technology/data/corpus_deduplicated") |> group_by(id) |> summarize(n = n()) |> filter(n > 1) |> collect() |> nrow()) / (corpus_read("./ch2_technology/data/corpus_deduplicated") |> nrow())
+(read_corpus("./ch2_technology/data/corpus_deduplicated") |> 
+    group_by(id) |> 
+    summarize(n = n()) |> 
+    filter(n > 1) |> 
+    collect() |> 
+    nrow()) / (corpus_read("./ch2_technology/data/corpus_deduplicated") |> nrow())
 
 rename corpora now 
 
