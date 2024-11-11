@@ -13,9 +13,9 @@ author:
         city: Frankfurt (Main)
         url: https://www.senckenberg.de/en/institutes/sbik-f/
     roles: [author, editor]
-abstract: > 
-  A short description what this is about.
-  This is not a tracditional abstract, but rather something else ...
+# abstract: > 
+#   A short description what this is about.
+#   This is not a tracditional abstract, but rather something else ...
 license: "CC BY"
 copyright: 
   holder: No idea
@@ -132,29 +132,16 @@ IPBES_TCA_Ch2_technology
 
 ## Build No: `r build`
 
-%The BuidNo is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same%.
+The BuidNo is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same.
 
 ## Introduction
 
 All searches are done on all works in OpenAlex. The search in the TCA Corpus is not possibly at the moment, but we are working on it.
 
-
-### The following steps will be done in documented in this report:
-
-- [ ] Do asearch with `vision_st`, `params$st_technology`, and `params$st_vision AND params$st_technology` and determine the  number of hits
-- [ ] Identify sub-fields (in topics) of hits
-- [ ] Check filtering using sub-fields
-- [ ] Should the complete `params$st_vision AND params$st_technology` be downloaded, or only a random subsets? Suggestiopn: 10 sets of 100 random works?
-
 # Methods
 
-## From OpenAlex directly
-The search terms are based on the [shared google doc](https://docs.google.com/document/d/1_FmxYVhpv2Bu2Gbbxb7cWc49f3soFvc64Qau_x2RAqI){target=_blank}. They are cleaned up for the usage in [OpenAlex](https://openalex.org/){target=_blank}.
 
 ### OpenAlex Complete
-
-
-
 
 ```{r}
 #| label: get_oa_count
@@ -202,8 +189,6 @@ if (get_count) {
 
 The search terms is [vision](ch2_technology/input/vision.txt){target=_blank}
 Open Alex search.
-
-
 
 ```{r}
 #| label: get_vision_count
@@ -515,7 +500,7 @@ if (get_count) {
 
 ## Download `technology AND vision` Corpus from OpenAlex
 
-The corpus download will be stored in `ch2_technology/pages` and the arrow database in `ch2_technology/data/corpus_complete`. This one will be filtered with the TCA / G;obal Corpus and get the final name `ch2_technology/data/corpus`.
+The corpus download will be stored in `ch2_technology/pages` and the parquet database in `ch2_technology/data/corpus_complete`. This one will be filtered with the TCA / Global Corpus and get the final name `ch2_technology/data/corpus`.
 
 This is not on github!
 
@@ -550,10 +535,10 @@ toc()
 
 ### Convert Technology Corpus to Parquet datase
 
-The fields `author` and `topics` are serialized in the arrow database and need to be unserialized by using `unserialize_arrow()` on a dataset containing the two columns.
+The fields `author` and `topics` are serialized in the parquet database and need to be unserialized by using `unserialize_arrow()` on a dataset containing the two columns.
 
 ```{r}
-#| label: convert_tca_corpus_arrow
+#| label: convert_tca_corpus_parquet
 #| eval: false
 #| 
 
@@ -671,15 +656,14 @@ NOW IF EVERYTHING IS OK, DELETE THE OLD CORPUS AND RENAME THE NEW ONE
 
 The Sentiment Analysis has been implemented by [Maral Dadvar](mailto://dadvar.maral@gmail.com)
 
-The sentiment analysis was implemented using the abstracts using the [Python NLTK package](https://www.nltk.org/), and [VADER](https://www.nltk.org/_modules/nltk/sentiment/vader.html) which is an NLTK module that provides sentiment scores based on the words used.  Vader is a pre-trained, rule-based sentiment analysis model in which the terms are generally labeled as per their semantic orientation as either positive or negative. The main advantage/reason for using this model was that it doesn't require a labelled training dataset.
+The sentiment analys is based on the abstracts of the works. As not all works has abstracts, the number of datapoints in the sentiment analysis is smaller then the number of works. The sentiment analysis was implemented using the [Python NLTK package](https://www.nltk.org/), and [VADER](https://www.nltk.org/_modules/nltk/sentiment/vader.html) which is an NLTK module that provides sentiment scores based on the words used. Vader is a pre-trained, rule-based sentiment analysis model in which the terms are generally labeled as per their semantic orientation as either positive or negative. The main advantage/reason for using this model was that it doesn't require a labelled training dataset.
 
 It returns a positive, negative, neutral and compound score. The compound score is a composite score that summarizes the overall sentiment of the text, where scores close to 1 indicate a positive sentiment, scores close to -1 indicate a negative sentiment, and scores close to 0 indicate a neutral sentiment. The other three scores show the percentage of each of the sentiments in the text.
 
-The input is in parquet format, containing 124518 entries, including publications’ abstracts, OA ID, and publication year. 
+The input is in parquet format, containing 124,518 entries, including publications’ abstracts, OpenAlex id, and publication year. 
 
 The output of the model is 4 scores: compound, negative, neutral, and positive.
-It is also in parquet format containing 124518 entries, including, OA ID, publication year, compound score, negative score, neutral score, and positive score.
-
+It is also in parquet format containing 124,518 entries, including  OpenAlex id, publication year, compound score, negative score, neutral score, and positive score.
 
 
 ```{python}
@@ -2180,11 +2164,6 @@ A pdf of the graph can be downloaded [here](ch2_technology/figures/publications_
 ![Publications over time of different corpora](ch2_technology/figures/publications_over_time_yearly.png)
 
 A pdf of the graph can be downloaded [here](ch2_technology/figures/publications_over_time_yearly.pdf){target=_blank}.
-
-## `vision AND technology AND marine` in Technology Corpus Corpus
-
-For the Marine subset of the Technologyn Corpus, we do have 
-WILL BE ADDED.
 
 
 ## Sentiment Analysis
