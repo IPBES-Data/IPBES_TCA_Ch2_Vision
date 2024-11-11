@@ -13,11 +13,6 @@ rectangle "TCA / Global Corpus" as box_tca {
     corpus_tca -down-> extract_sectors_tca
     database "TCA Sectors" as corpus_sectors_tca #yellow
     extract_sectors_tca -down-> corpus_sectors_tca
-    ' prim_topics_tca_corpus.rds
-    process "Extract Primary Topics" as prepare_prim_topics_tca
-    corpus_sectors_tca -down-> prepare_prim_topics_tca
-    file "Primary Topics Data\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/data/tca_corpus/prim_topics_tca_corpus.rds prim_topics_tca_corpus.rds]]" as file_prim_topics_tca #yellow
-    prepare_prim_topics_tca -down-> file_prim_topics_tca
 
     ' sectors_over_time_data.rds
     process "Prepare Sectors over time Data" as prepare_sec_time_tca
@@ -40,20 +35,6 @@ rectangle "TCA / Global Corpus" as box_tca {
     file "Publication over Time Figure\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/figures/tca_corpus/publications_over_time.pdf publications_over_time.(pdf / png)]]" as file_pub_time_figure_tca #LightCoral
     file_pub_time_tca -down-> file_pub_time_figure_tca
 
-    ' Countries
-    action "Extract Countries" as extract_countries_tca
-    corpus_tca -down-> extract_countries_tca
-    database "TCA Countries" as corpus_countries_tca #yellow
-    extract_countries_tca -down-> corpus_countries_tca
-    ' countries_tca_corpus.rds
-    process "Prepare Countries Data" as prepare_countries_tca
-    corpus_countries_tca -down-> prepare_countries_tca
-    file "Publication Countries Data\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/data/tca_corpus/countries_tca_corpus.rds countries_tca_corpus.rds]]" as file_countries_tca #yellow
-    prepare_countries_tca -down-> file_countries_tca
-    ' publications_countries maps
-    file "Publication Countries Maps\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Corpus/maps/tca_corpus/publications_countries.pdf publications_countries.(pdf / png)]]" as file_pub_maps_tca #LightCyan
-    file_countries_tca -down-> file_pub_maps_tca
-
 }
 
 ' Cases Corpus
@@ -65,7 +46,7 @@ rectangle "Cases Corpus" as running_1 {
 }
 
 ' Technology Corpus
-rectangle "Technology **Corpus TO CHECK**" as box_technology {
+rectangle "Technology" as box_technology {
     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/input/Ch2_technology/technology.txt TECHNOLOGY]] AND [[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/input/Ch2_technology/vision.txt VISION]]" as search_technology
     database "technology Corpus" as corpus_int_technology
     action "Cross with TCA Corpus" as cross_tca_technology
@@ -85,11 +66,11 @@ rectangle "Technology **Corpus TO CHECK**" as box_technology {
     ' file "Publication over Time Figure\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Ch2_technology/figures/Ch2_technology/publications_over_time.pdf publications_over_time.(pdf / png)]]" as file_pub_time_figure_technology #LightCoral
     ' file_pub_time_technology -down-> file_pub_time_figure_technology
 
-    ' publications_per_country_data.rds
-    process "Prepare Countries Data" as prepare_countries_technology
-    corpus_technology -down-> prepare_countries_technology
-    file "Publication Countries Data\n---\n**Filename**: publications_per_country_data.rds" as file_countries_technology #yellow
-    prepare_countries_technology -down-> file_countries_technology
+    ' ' publications_per_country_data.rds
+    ' process "Prepare Countries Data" as prepare_countries_technology
+    ' corpus_technology -down-> prepare_countries_technology
+    ' file "Publication Countries Data\n---\n**Filename**: publications_per_country_data.rds" as file_countries_technology #yellow
+    ' prepare_countries_technology -down-> file_countries_technology
 
 }
 
@@ -111,30 +92,33 @@ rectangle "Subsidies Corpus" as box_subsidies {
     file "Sentiment Analysis Results\n---\n[[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/input/ch_5_subsidies_reform/SentAnalysis_Scores.rds SentAnalysis_Scores.rds]]" as file_sent_subsidies #yellow
     analysis_sent_subsidies -down-> file_sent_subsidies
 
-    ' sentAnalysis_scores_countries.rds
-    process "Prepare Spatial Sentiment Data" as prepare_sent_countries_subsidies
-    file_sent_subsidies -down-> prepare_sent_countries_subsidies
-    file "Spatial Sentiment Data\n---\n**Filename**: sentAnalysis_scores_countries.rds" as file_sent_countries_subsidies #yellow
-    prepare_sent_countries_subsidies -down-> file_sent_countries_subsidies
-    ' sentiment_[neu/pos/neg/compound]_per_countries maps
-    file file_sent_countries_maps_subsidies #LightCyan [
-        Sentiment Maps Maps
-        ---
-        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neu_per_countries_all.pdf sentiment_neu_per_countries_all.(pdf / png)]]
-        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neu_per_countries_10.pdf sentiment_neu_per_countries_10.(pdf / png)]]
-        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_pos_per_countries_all.pdf sentiment_pos_per_countries_all.(pdf / png)]]
-        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_pos_per_countries_10.pdf sentiment_pos_per_countries_10.(pdf / png)]]
-        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neg_per_countries_all.pdf sentiment_neg_per_countries_all.(pdf / png)]]
-        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neg_per_countries_10.pdf sentiment_neg_per_countries_10.(pdf / png)]]
-        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_comp_per_countries_all.pdf sentiment_comp_per_countries_all.(pdf / png)]]
-        [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_comp_per_countries_10.pdf sentiment_comp_per_countries_10.(pdf / png)]]
-    ]
-    file_sent_countries_subsidies -down-> file_sent_countries_maps_subsidies
+    ' ' sentAnalysis_scores_countries.rds
+    ' process "Prepare Spatial Sentiment Data" as prepare_sent_countries_subsidies
+    ' file_sent_subsidies -down-> prepare_sent_countries_subsidies
+    ' file "Spatial Sentiment Data\n---\n**Filename**: sentAnalysis_scores_countries.rds" as file_sent_countries_subsidies #yellow
+    ' prepare_sent_countries_subsidies -down-> file_sent_countries_subsidies
+
+    ' ' sentiment_[neu/pos/neg/compound]_per_countries maps
+    ' file file_sent_countries_maps_subsidies #LightCyan [
+    '     Sentiment Maps Maps
+    '     ---
+    '     [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neu_per_countries_all.pdf sentiment_neu_per_countries_all.(pdf / png)]]
+    '     [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neu_per_countries_10.pdf sentiment_neu_per_countries_10.(pdf / png)]]
+    '     [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_pos_per_countries_all.pdf sentiment_pos_per_countries_all.(pdf / png)]]
+    '     [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_pos_per_countries_10.pdf sentiment_pos_per_countries_10.(pdf / png)]]
+    '     [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neg_per_countries_all.pdf sentiment_neg_per_countries_all.(pdf / png)]]
+    '     [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_neg_per_countries_10.pdf sentiment_neg_per_countries_10.(pdf / png)]]
+    '     [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_comp_per_countries_all.pdf sentiment_comp_per_countries_all.(pdf / png)]]
+    '     [[https://ipbes-data.github.io/IPBES_TCA_Ch5_subsidies_reform/maps/ch_5_subsidies_reform/sentiment_comp_per_countries_10.pdf sentiment_comp_per_countries_10.(pdf / png)]]
+    ' ]
+    ' file_sent_countries_subsidies -down-> file_sent_countries_maps_subsidies
+    
     ' sentAnalysis_scores_timeseries
     process "Prepare Sentiment over Time Data" as prepare_sent_time_subsidies
     file_sent_subsidies -down-> prepare_sent_time_subsidies
     file "Sentiment over Time Data\n---\n**Filename**: sentAnalysis_scores_timeseries.rds" as file_sent_time_subsidies #yellow
     prepare_sent_time_subsidies -down-> file_sent_time_subsidies
+    
     ' sentiments_over_time[neu/pos/neg/compound/neg_pos] figures
     file file_sent_time_subsidies_figures #LightCoral [
         Sentiment over Time Figures
@@ -173,42 +157,42 @@ rectangle "Subsidies Corpus" as box_subsidies {
 
 }
 
-rectangle "Additional Search Terms" as additional_search_terms {
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_01.txt Ch1 01]]" as search_ch1_01
-    ' openalex -right-> search_ch1_01
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_02.txt Ch1 02]]" as search_ch1_02
-    ' openalex --> search_ch1_02
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_03.txt Ch1 03]]" as search_ch1_03
-    ' openalex -right-> search_ch1_03
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_04.txt Ch1 04]]" as search_ch1_04
-    ' openalex -right-> search_ch1_04
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_05.txt Ch1 05]]" as search_ch1_05
-    ' openalex -right-> search_ch1_05
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_06.txt Ch1 06]]" as search_ch1_06
-    ' openalex -right-> search_ch1_06
+' rectangle "Additional Search Terms" as additional_search_terms {
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_01.txt Ch1 01]]" as search_ch1_01
+'     ' openalex -right-> search_ch1_01
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_02.txt Ch1 02]]" as search_ch1_02
+'     ' openalex --> search_ch1_02
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_03.txt Ch1 03]]" as search_ch1_03
+'     ' openalex -right-> search_ch1_03
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_04.txt Ch1 04]]" as search_ch1_04
+'     ' openalex -right-> search_ch1_04
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_05.txt Ch1 05]]" as search_ch1_05
+'     ' openalex -right-> search_ch1_05
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch1_06.txt Ch1 06]]" as search_ch1_06
+'     ' openalex -right-> search_ch1_06
 
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch2.txt Ch2]]" as search_ch2
-    ' openalex -right-> search_ch2
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch2.txt Ch2]]" as search_ch2
+'     ' openalex -right-> search_ch2
 
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_01.txt Ch3 01]]" as search_ch3_01
-    ' openalex -right-> search_ch3_01
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_02.txt Ch3 02]]" as search_ch3_02
-    ' openalex -right-> search_ch3_02
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_03.txt Ch3 03]]" as search_ch3_03
-    ' openalex -right-> search_ch3_03
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_04.txt Ch3 04]]" as search_ch3_04
-    ' openalex -right-> search_ch3_04
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_05.txt Ch3 05]]" as search_ch3_05
-    ' openalex -right-> search_ch3_05
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_06.txt Ch3 06]]" as search_ch3_06
-    ' openalex -right-> search_ch3_06
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_01.txt Ch3 01]]" as search_ch3_01
+'     ' openalex -right-> search_ch3_01
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_02.txt Ch3 02]]" as search_ch3_02
+'     ' openalex -right-> search_ch3_02
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_03.txt Ch3 03]]" as search_ch3_03
+'     ' openalex -right-> search_ch3_03
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_04.txt Ch3 04]]" as search_ch3_04
+'     ' openalex -right-> search_ch3_04
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_05.txt Ch3 05]]" as search_ch3_05
+'     ' openalex -right-> search_ch3_05
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_06.txt Ch3 06]]" as search_ch3_06
+'     ' openalex -right-> search_ch3_06
 
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_01.txt Ch4 01]]" as search_ch4_01
-    ' openalex -right-> search_ch4_01
-    action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_02.txt Ch4 02]]" as search_ch4_02
-    ' openalex -right-> search_ch4_02
-}
-openalex -up-> additional_search_terms
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_01.txt Ch4 01]]" as search_ch4_01
+'     ' openalex -right-> search_ch4_01
+'     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/ch3_02.txt Ch4 02]]" as search_ch4_02
+'     ' openalex -right-> search_ch4_02
+' }
+' openalex -up-> additional_search_terms
 
 rectangle "Strategies / Options" as options {
     action "Search Term [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/nature.txt NATURE]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/tfc.txt TFC]] AND [[https://ipbes-data.github.io/IPBES_TCA_Corpus/input/tca_corpus/search%20terms/strategies_options.md Strategies / Options (multiple)]]" as search_options
@@ -225,13 +209,6 @@ rectangle "Actors" as actors  {
     database "Actors Corpora\n----\nOne per Actor" as corpus_actors
     search_actors --> corpus_actors
 }
-
-
-rectangle todo #red [
-<size:24><b>TODO</b></size>
----
-- <size:24><b>Chapter 1?</b></size>
-]
 
 
 ' LEGEND

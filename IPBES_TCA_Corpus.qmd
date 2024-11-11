@@ -252,11 +252,11 @@ IPBES_TCA_Corpus
 # Introduction
 The following terminology is used in this document:
 
-- **Individual corpus**: The corpus resulting from one search term, e.g. `transformative` or `nature` or `ChX_Y`
-- **Assessment Corpus**: The corpus resulting from the search terms `transformative AND nature`
-- **Chapter corpus**: The corpus resulting from `transformative AND Nature AND ChX_Y` 
+- **Corpus**: A body of works as based on a search on [OpenAlex](https://openalex.org)
+- **Transformative Change Assessment Corpus**: Short: TCA corpus; The corpus resulting from the search terms `transformative AND nature`
+- **Case corpus**: The corpus resulting from `transformative AND nature AND case` 
 
-The following searches are conducted on Title and Abstrat only as the availability of fulltext drops in 2020. OpenAlex did "inherit" fro Microsoft Academic their initial corpus in 2021 which contained a lot of fulltext for searches. After that time, other sources had to be used which did not include fulltext for searches. To eliminate this bias, we linit the search for terms in abstract and title only.
+The following searches are conducted on Title and Abstrat only as the availability of fulltext drops in 2020. OpenAlex did "inherit" from Microsoft Academic their initial corpus in 2021 which contained a many fulltext articles. After that time, other sources wer used to  which did not include fulltext for searches. To eliminate this bias, we limit the search for terms to search in abstract and title only.
 
 ## Schematic Overview
 
@@ -264,7 +264,7 @@ The following searches are conducted on Title and Abstrat only as the availabili
 #| label: tca_corpus_overview_plantuml
 #|
 
-basename <- file.path("tca_corpus", "figures")
+basename <- file.path("tca_corpus", "figures", "tca_corpus_overview")
 
 nf <- list.files(
     path = dirname(basename),
@@ -279,17 +279,17 @@ if (nf < 3) {
 
     puml |>
         plantuml::get_graph(
-            file = file.path("tca_corpus", "figures", "tca_corpus_overview.pdf")
+            file = paste0(basename, ".pdf")
         )
 
     puml |>
         plantuml::get_graph(
-            file = file.path("tca_corpus", "figures", "tca_corpus_overview.svg")
+            file = paste0(basename, ".svg")
         )
 
     puml |>
         plantuml::get_graph(
-            file = file.path("tca_corpus", "figures", "tca_corpus_overview.png")
+            file = paste0(basename, ".png")
         )
 }
 ```
@@ -301,10 +301,11 @@ if (nf < 3) {
 - To download high resolution svg, [click here](tca_corpus/figures/tca_corpus_overview.svg){target="_blank"}.
 
 
-# Download of Data Files from Zenodo
+## Download of Data Files from Zenodo
 
-The data files of the repository are deposited in a separate Zenodo deposit untder the doi [10.5281/zenodo.11370840](https://doi.org/10.5281/zenodo.11370840). To re-download these, simply delete the `data` directory and run this code (or compile the report).
+The data files of the repository are deposited in a separate Zenodo deposit untder the doi [10.5281/zenodo.11370839](https://doi.org/10.5281/zenodo.11370839). To re-download these, simply delete the `data` directory and run this code (or compile the report).
 
+This code will only work after the approval of the assessment as the repository will remain confidential before.
 
 ```{r}
 #| label: download_data
@@ -320,11 +321,6 @@ for (fn in fns) {
         url <- paste0("https://zenodo.org/record/11370840/files/", fn) |>
             download.file(destfile = fn)
     }
-    if (fn == "gdm.zip") {
-        if (!dir.exists(file.path("data", "gdm"))) {
-            unzip(file.path("data", "gdm.zip"), exdir = "data")
-        }
-    }
 }
 
 ```
@@ -337,7 +333,7 @@ Here are the search terms used in this document. They were provided by the autho
 
 
 ```{r}
-#| label: s_1_transformative_change
+#| label: s_1_transformative_change_selected
 
 cat(params$s_1_transformative_change)
 ```
@@ -349,7 +345,7 @@ cat(params$s_1_transformative_change)
 
 
 ```{r}
-#| label: s_1_nature_environment
+#| label: s_1_nature_environment_selected
 #|
 
 cat(params$s_1_nature_environment)
@@ -359,209 +355,29 @@ cat(params$s_1_nature_environment)
 ### Assessment Corpus {#sec-tca-corpus}
 
 ```{r}
-#| label: s_1_tca_corpus
+#| label: s_1_tca_corpus_selected
 #|
 
 cat(params$s_1_tca_corpus)
 ```
 
 
-### Chapter 1
-
-#### 01 {#sec-ch1-01}
+### Case {#sec-case}
 
 
 
 ```{r}
-#| label: s_1_ch1_01
+#| label: s_1_case_selected
 #|
 
-cat(params$s_1_ch1_01)
+cat(params$s_1_case)
 ```
 
-
-
-#### 02 {#sec-ch1-02}
-
-
-
-```{r}
-#| label: s_1_ch1_02
-#|
-
-cat(params$s_1_ch1_02)
-```
-
-
-
-#### 03 {#sec-ch1-03}
-
-
-
-```{r}
-#| label: s_1_ch1_03
-#|
-
-cat(params$s_1_ch1_03)
-```
-
-
-
-#### 04 {#sec-ch1-04}
-
-
-
-```{r}
-#| label: s_1_ch1_04
-#|
-
-cat(params$s_1_ch1_04)
-```
-
-
-
-#### 05 {#sec-ch1-05}
-
-
-
-```{r}
-#| label: s_1_ch1_05
-#|
-
-cat(params$s_1_ch1_05)
-```
-
-
-
-#### 06 {#sec-ch1-06}
-
-
-
-```{r}
-#| label: s_1_ch1_06
-#|
-
-cat(params$s_1_ch1_06)
-```
-
-
-
-### Chapter 2 {#sec-ch2}
-
-
-
-```{r} 
-#| label: s_1_ch2
-#|
-
-cat(params$s_1_ch2)
-```
-
-
-
-### Chapter 3
-
-#### 01 {#sec-ch3-01}
-
-
-
-```{r}
-#| label: s_1_ch3_01
-#|
-
-cat(params$s_1_ch3_01)
-```
-
-
-
-#### 02 {#sec-ch3-02}
-
-
-
-```{r}
-#| label: s_1_ch3_02
-#|
-
-cat(params$s_1_ch3_02)
-```
-
-
-
-#### 03 {#sec-ch3-03}
-
-
-
-```{r}
-#| label: s_1_ch3_03
-#|
-
-cat(params$s_1_ch3_03)
-```
-
-
-
-#### 04 {#sec-ch3-04}
-
-
-
-```{r}
-#| label: s_1_ch3_04
-#|
-
-cat(params$s_1_ch3_04)
-```
-
-
-
-#### 05 {#sec-ch3-05}
-
-```{r}
-#| label: s_1_ch3_05
-#|
-
-cat(params$s_1_ch3_05)
-```
-
-
-#### 06 {#sec-ch3-06}
-
-
-
-```{r}
-#| label: s_1_ch3_06
-#|
-
-cat(params$s_1_ch3_06)
-```
-
-
-### Chapter 4
-
-#### 01 {#sec-ch4-01}
-
-
-```{r}
-#| label: s_1_ch4_01
-#|
-
-cat(params$s_1_ch4_01)
-```
-
-
-#### 02 {#sec-ch4-02}
-
-
-```{r}
-#| label: s_1_ch4_02
-#|
-
-cat(params$s_1_ch4_02)
-```
 
 ### Art
 
 ```{r}
-#| label: st_art
+#| label: st_art_selected
 #|
 
 cat(params$st_art)
@@ -570,7 +386,7 @@ cat(params$st_art)
 ### Media
 
 ```{r}
-#| label: st_media
+#| label: st_media_selected
 #|
 
 cat(params$st_media)
@@ -578,53 +394,25 @@ cat(params$st_media)
 
 ### Strategies and Options
 
-In contrast to the other search term, this opne contains multiple sets of search terms
+In contrast to the other search term, this one contains multiple sets of search terms
 
 ```{r}
-#| label: sts_strategies_options
+#| label: sts_strategies_options_selected
 #|
 
-cat(params$sts_strategies_options)
+cat(params$sts_strategies_options |> paste0(collapse = "\n"))
 ```
 
-### Chapter 5
+### Actors
 
-#### Vision {#sec-ch5_vision}
-
-
+In contrast to the other search term, this one contains multiple sets of search terms
 
 ```{r}
-#| label: s_1_ch5_vision
+#| label: sts_actors_selected
 #|
 
-cat(params$s_1_ch5_vision)
+cat(params$sts_actors |> paste0(collapse = "\n"))
 ```
-
-
-#### Case {#sec-case}
-
-
-
-```{r}
-#| label: s_1_case
-#|
-
-cat(params$s_1_case)
-```
-
-#### Vision & Case {#sec-ch5_vision_case}
-
-
-
-
-## Topics
-
-OpenAlex assigns topics to each work in a hirarchical manner:
-
-![](images/topic_hirarchy.png)
-
-Please see [here](https://help.openalex.org/how-it-works/topics) for more information and [here](https://docs.google.com/spreadsheets/d/1v-MAq64x4YjhO7RWcB-yrKV5D_2vOOsxl4u6GBKEXY8/edit#gid=983250122) for a complete list of all topics and their corresponding subfields, fields and domains.
-
 
 # Methods
 
@@ -2517,7 +2305,7 @@ if (length(list.files(file.path("tca_corpus", "figures"), pattern = "sectors_pro
 Here we show the number of hits for the key papers in the different individual corpi. The columns represent the different search terms as defined in @sec-search_terms.
 
 ```{r}
-#| label: hits_per_search_term_table
+#| label: hits_per_search_term_table_selected
 
 dat <- cbind(
     search_term_hits
@@ -2548,7 +2336,7 @@ rownames(dat) <- dplyr::recode(
     "case" = "Ch5 Case @sec-case"
 )
 
-dat |>
+dat[c(1, 2, 3, 4, 20), ] |>
     knitr::kable(
         caption = "Number of hits",
     )
@@ -2635,9 +2423,11 @@ detail <- detail |>
 #### Summary
 Each column is a different search term, and each row consists of the key papers of a specific chapter and the author who provided the key papers. The number is the number of key papers occurring in the Individual Corpus.
 ```{r}
+#| label: key_paper_hits_in_corpi_summary_selected
+
 in_summary <- grepl("Total|overall", rownames(detail))
 knitr::kable(
-    detail[in_summary, ]
+    detail[in_summary, c(1, 2, 3, 4, 20)],
 )
 ```
 
@@ -2645,24 +2435,15 @@ knitr::kable(
 
 #### Detail
 ```{r}
+#| label: key_paper_hits_in_corpi_detail_selected
+#| 
+
 knitr::kable(
-    detail
+    detail[, c(1, 2, 3, 4, 20)]
 )
 ```
 
 ## TCA Corpus properties
-
-### Languages in TCA Corpus (from OpenAlex call)
-
-These are the languages of the abstract and title. Articles with multiple languages will be counted not accurate. Also, as this is
-the language of the abstract / title, it might not be the language of the full text.
-
-```{r}
-readRDS(file.path(".", "tca_corpus", "data", "tca_corpus_languages.rds"))$languages |>
-    IPBES.R::table_dt(
-        fn = "languages_tca_corpus"
-    )
-```
 
 
 ### Publications over time
@@ -2678,6 +2459,3233 @@ To download high resolution, [click here](`r file.path("tca_corpus", "figures", 
 readRDS(file.path(".", "tca_corpus", "data", "publications_over_time_tca_corpus.rds")) |>
     IPBES.R::table_dt(fn = "publications_over_time")
 ```
+
+
+### Sectors over time
+
+
+![The graph shows the proportion of the different sectors over time](tca_corpus/figures/sectors_proportions_over_time.png)
+
+To download high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_proportions_over_time.pdf")`){target="_blank"}
+
+
+
+```{r}
+readRDS(file.path(".", "tca_corpus", "data", "sectors_over_time.rds")) |>
+    IPBES.R::table_dt(
+        fn = "sectors_over_time",
+        fixedColumns = list(leftColumns = 3)
+    )
+```
+
+## Additional Searches subsets
+
+```{r}
+file.path(".", "tca_corpus", "data", "additional_search.rds") |>
+    readRDS() |>
+    knitr::kable()
+```
+
+Differences between the used [media search term](tca_corpus/input/search terms/media.txt) and the original media search term:
+```{r}
+diffviewer::visual_diff(
+    "tca_corpus/input/search terms/media.org.txt",
+    "tca_corpus/input/search terms/media.txt"
+)
+```
+
+
+# Strategies/Options/Instruments for transformative change 
+
+The file [strategies_options.md](tca_corpus/input/search terms/strategies_options.md) contains the terms for the different strategies and options.
+
+I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](tca_corpus/input/search terms/tca_corpus.txt).
+
+## Methods
+
+### Prepare Search Terms
+```{r}
+#| label: strategies_options_prepare_searchterms
+
+fn <- file.path("tca_corpus", "data", "strategies_options_terms.rds")
+if (!file.exists(fn)) {
+    sts <- data.frame(
+        "Strategy" = NA,
+        "Option" = NA,
+        term = params$sts_strategies_options
+    )
+    sts <- sts[sts$term != "", ]
+    for (i in 1:nrow(sts)) {
+        if (grepl("^# ", sts$term[i])) {
+            strategy <- gsub("^# ", "", sts$term[i])
+        } else if (grepl("^## ", sts$term[i])) {
+            option <- gsub("^## ", "", sts$term[i])
+        } else {
+            sts$Strategy[i] <- strategy
+            sts$Option[i] <- option
+        }
+    }
+    sts <- sts[!is.na(sts$Strategy), ]
+    sts <- sts[!is.na(sts$Option), ]
+
+    sts$Name <- paste0(sts$Strategy, " ||| ", sts$Option)
+
+    strategies_options_terms <- split(sts$term, sts$Name)
+
+    saveRDS(strategies_options_terms, file = fn)
+}
+```
+
+
+### Run the search terms
+```{r}
+#| label: strategies_options_get_counts
+#|
+
+fn <- file.path("tca_corpus", "data", "strategies_options.rds")
+if (!file.exists(file.path(fn))) {
+    strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
+    strategies_options <- lapply(
+        names(strategies_options_terms),
+        function(strategy) {
+            message("- ", strategy)
+            result <- list()
+            result$term <- paste(strategies_options_terms[[strategy]], collapse = " ")
+            result$count <- NA
+            result$years <- data.frame(publication_year = NA, count = NA)
+            result$assess_search_terms <- assess_search_term(
+                st = strategies_options_terms[[strategy]],
+                AND_term = params$s_1_tca_corpus,
+                remove = " OR$",
+                excl_others = FALSE,
+                verbose = FALSE,
+                mc.cores = 1
+            ) |>
+                dplyr::arrange(desc(count))
+            #
+            try(
+                {
+                    result$count <- openalexR::oa_fetch(
+                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                        count_only = TRUE,
+                        output = "list",
+                        verbose = FALSE
+                    )$count
+                    message("  - ", result$count, " hits")
+                    #
+                    result$years <- openalexR::oa_fetch(
+                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                        group_by = "publication_year",
+                        output = "dataframe",
+                        verbose = FALSE
+                    ) |>
+                        dplyr::select(
+                            publication_year = key_display_name,
+                            count
+                        ) |>
+                        dplyr::arrange(
+                            publication_year
+                        )
+                },
+                silent = FALSE
+            )
+            return(result)
+        }
+    )
+
+    # Assign the names to the first and second level list
+    names(strategies_options) <- names(strategies_options_terms)
+
+    saveRDS(strategies_options, file = fn)
+}
+```
+
+
+### Download Strategies Corpus (only ids)
+
+```{r}
+#| label: download_strategies_corpus
+#| eval: false
+#|
+
+tic()
+
+strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
+lapply(
+    names(strategies_options_terms),
+    function(strategy) {
+        message("- ", strategy)
+        IPBES.R::corpus_download(
+            pages_dir = paste0(params$pages_strategies_dir, "_", make.names(strategy)),
+            title_and_abstract_search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", paste0(strategies_options_terms[[strategy]], collapse = " "), ")")),
+            select_fields = c("id"),
+            continue = TRUE,
+            delete_pages_dir = FALSE,
+            dry_run = FALSE,
+            verbose = TRUE,
+            mc_cores = 8
+        )
+    }
+)
+
+toc()
+```
+
+
+### Convert Strategies Pages to rds (only ids)
+
+```{r}
+#| label: convert_strategies_corpus
+#| eval: false
+#| 
+
+tic()
+
+fn <- file.path("tca_corpus", "data", "strategies_options_ids.rds")
+
+if (!file.exists(fn)) {
+    strategies__options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
+    strategies_options_ids <- lapply(
+        names(strategies__options_terms),
+        function(strategy) {
+            message("- ", strategy)
+            paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
+                list.files(
+                    pattern = ".rds$",
+                    recursive = TRUE,
+                    full.names = TRUE
+                ) |>
+                sapply(
+                    FUN = function(f) {
+                        readRDS(f)
+                    }
+                ) |>
+                unlist() |>
+                as.vector() |>
+                unique()
+        }
+    )
+    names(strategies_options_ids) <- names(strategies__options_terms)
+
+    saveRDS(strategies_options_ids, file = fn)
+}
+
+toc()
+```
+
+
+### Convert Strategies Pages in Cases to rds (only ids)
+
+```{r}
+#| label: convert_strategies_corpus_cases
+#|
+
+fn <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds")
+
+if (!file.exists(fn)) {
+    case_ids <- corpus_read(params$corpus_cases_dir) |>
+        dplyr::distinct(id) |>
+        collect() |>
+        unlist()
+    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
+
+    strategies_options_ids_cases <- lapply(
+        strategies_options_ids,
+        function(strategy) {
+            intersect(strategy, case_ids)
+        }
+    )
+
+    saveRDS(strategies_options_ids_cases, file = fn)
+}
+```
+
+
+### Extract per year from Strategies Pages
+
+```{r}
+#| label: extract_strategies_per_year_corpus
+#|
+
+tic()
+
+fn <- file.path("tca_corpus", "data", "strategies_options_corpus.rds")
+
+if (!file.exists(fn)) {
+    strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
+    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
+
+    strategies_options_corpus <- lapply(
+        names(strategies_options_terms),
+        function(strategy) {
+            message("- ", strategy)
+            years <- paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
+                list.files(
+                    pattern = "^set_publication_year=",
+                    recursive = FALSE,
+                    full.names = FALSE
+                ) |>
+                gsub(
+                    pattern = "set_publication_year=",
+                    replacement = ""
+                ) |>
+                as.integer()
+            #
+            result <- list()
+            result$term <- paste(strategies_options_terms[[strategy]], collapse = " ")
+            result$count <- length(strategies_options_ids[[strategy]])
+
+
+            result$years <- data.frame(
+                publication_year = years,
+                count = sapply(
+                    years,
+                    function(year) {
+                        paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
+                            list.files(
+                                pattern = ".rds$",
+                                recursive = TRUE,
+                                full.names = TRUE
+                            ) |>
+                            grep(
+                                pattern = paste0("set_publication_year=", year),
+                                value = TRUE
+                            ) |>
+                            sapply(
+                                FUN = function(f) {
+                                    readRDS(f)
+                                }
+                            ) |>
+                            unlist() |>
+                            as.vector() |>
+                            unique() |>
+                            length()
+                    }
+                )
+            )
+            return(result)
+        }
+    )
+
+    names(strategies_options_corpus) <- names(strategies_options_terms)
+
+    saveRDS(strategies_options_corpus, file = fn)
+}
+
+toc()
+```
+
+
+### Create Strategies Matrix
+
+```{r}
+#| label: strategies_options_overlap
+#|
+
+fn <- file.path("tca_corpus", "data", "strategies_options_overlap.rds")
+
+if (!file.exists(fn)) {
+    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
+
+    overlap_count <- function(x, y) {
+        length(intersect(x, y))
+    }
+
+    strategies_options_overlap <- outer(
+        strategies_options_ids,
+        strategies_options_ids,
+        Vectorize(overlap_count)
+    )
+
+    saveRDS(strategies_options_overlap, file = fn)
+    write.csv(strategies_options_overlap, file = gsub("rds$", "csv", fn))
+}
+```
+
+### Create Strategies Matrix Cases Only
+
+```{r}
+#| label: strategies_options_overlap_cases
+#|
+
+fn <- file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds")
+
+if (!file.exists(fn)) {
+    strategies_options_overlap_cases <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
+        readRDS()
+
+    strategies_options_overlap_cases <- sapply(
+        names(strategies_options_overlap_cases),
+        FUN = function(s1) {
+            sapply(
+                names(strategies_options_overlap_cases),
+                function(s2) {
+                    length(intersect(strategies_options_overlap_cases[[s1]], strategies_options_overlap_cases[[s2]]))
+                }
+            )
+        }
+    )
+
+    saveRDS(strategies_options_overlap_cases, file = fn)
+    write.csv(strategies_options_overlap_cases, file = gsub("rds$", "csv", fn))
+}
+```
+
+
+### Extract count Strategies
+```{r}
+strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids.rds") |>
+    readRDS()
+
+strategies_options_ids_cases <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
+    readRDS()
+
+count <- data.frame(
+    strategy = names(strategies_options_ids) |> 
+        strsplit(split = " \\|\\|\\| ") |> 
+        sapply(FUN = "[[", 1) |>
+        unique(),
+    count_tca = c(
+        strategy_1 = strategies_options_ids[grepl("Strategy 1", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_2 = strategies_options_ids[grepl("Strategy 2", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_3 = strategies_options_ids[grepl("Strategy 3", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_4 = strategies_options_ids[grepl("Strategy 4", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_5 = strategies_options_ids[grepl("Strategy 5", names(strategies_options_ids))] |>
+            unlist() |>
+            unique() |>
+            length()
+    ),
+    count_cases = c(
+        strategy_1 = strategies_options_ids_cases[grepl("Strategy 1", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_2 = strategies_options_ids_cases[grepl("Strategy 2", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_3 = strategies_options_ids_cases[grepl("Strategy 3", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_4 = strategies_options_ids_cases[grepl("Strategy 4", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length(),
+        strategy_5 = strategies_options_ids_cases[grepl("Strategy 5", names(strategies_options_ids_cases))] |>
+            unlist() |>
+            unique() |>
+            length()
+    )
+)
+
+
+count$p_tca <- count$count_tca / corpus_read(params$corpus_dir) |>
+    dplyr::distinct(id) |>
+    collect() |>
+    nrow()
+
+count$p_cases <- count$count_cases / corpus_read(params$corpus_cases_dir) |>
+    dplyr::distinct(id) |>
+    collect() |>
+    nrow()
+
+count |> 
+    knitr::kable()
+```
+
+
+## Results
+
+### Count of Strategies / Options Table
+```{r}
+#| label: strategies_options_corpus_counts_data
+#|
+
+# data from OpernAlex vie count
+# strategies_options_corpus <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
+
+# data from corpora
+strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
+
+data <- lapply(
+    names(strategies_options),
+    function(strategy) {
+        data.frame(
+            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+            Count = strategies_options[[strategy]]$count,
+            Count_until_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year <= 1992]),
+            Count_after_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year > 1992])
+        )
+    }
+) |>
+    do.call(what = rbind)
+
+data |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_corpus_counts",
+        fixedColumns = list(leftColumns = 0)
+    )
+```
+
+
+### Plot of the Count of the Strategies / Options split at 1992
+
+This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in that perio as reflected on [OpenAlex](https://openalex.org).
+
+```{r}
+#| label: strategies_options_counts_figure
+#|
+
+figname <- file.path("tca_corpus", "figures", "strategies_options_time_split")
+
+figs <- list.files(
+    path = dirname(figname),
+    pattern = basename(figname),
+    recursive = TRUE
+) |>
+    length()
+
+if (figs < 6) {
+    # data from OpernAlex vie count
+    # strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
+
+    # data from corpora
+    strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
+
+    oa <- openalexR::oa_fetch(
+        search = "",
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = FALSE
+    )
+    oa_until_1992 <- sum(oa$count[oa$key <= 1992])
+    oa_after_1992 <- sum(oa$count[oa$key > 1992])
+
+    data <- lapply(
+        names(strategies_options),
+        function(strategy) {
+            data.frame(
+                Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+                Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+                Count = strategies_options[[strategy]]$count,
+                Count_until_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year <= 1992]),
+                Count_after_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year > 1992])
+            )
+        }
+    ) |>
+        do.call(what = rbind)
+
+    ## As in Dendrogram
+    # data$Strategy[grep("Strategy 1", data$Strategy)] <- "Strategy 1: Conserve and regenerate places of value to nature and people"
+    # data$Strategy[grep("Strategy 2", data$Strategy)] <- "Strategy 2: Drive systemic change in the sectors most responsible for nature's decline"
+    # data$Strategy[grep("Strategy 3", data$Strategy)] <- "Strategy 3: Transform economic systems for nature and equity"
+    # data$Strategy[grep("Strategy 4", data$Strategy)] <- "Strategy 4: Transform governance systems to be inclusive, accountable and adaptive"
+    # data$Strategy[grep("Strategy 5", data$Strategy)] <- "Strategy 5: Shift societal views and values to recognise interconnections between humans and nature"
+
+    data$Strategy[grep("Strategy 1", data$Strategy)] <- "Strategy 1"
+    data$Strategy[grep("Strategy 2", data$Strategy)] <- "Strategy 2"
+    data$Strategy[grep("Strategy 3", data$Strategy)] <- "Strategy 3"
+    data$Strategy[grep("Strategy 4", data$Strategy)] <- "Strategy 4"
+    data$Strategy[grep("Strategy 5", data$Strategy)] <- "Strategy 5"
+
+    data$Concept[grep("Action 1.1", data$Concept)] <- "Action 1"
+    data$Concept[grep("Action 1.2", data$Concept)] <- "Action 1.2"
+    data$Concept[grep("Action 1.3a", data$Concept)] <- "Action 1.3a"
+    data$Concept[grep("Action 1.3b", data$Concept)] <- "Action 1.3b"
+    data$Concept[grep("Action 1.4", data$Concept)] <- "Action 1.4"
+    data$Concept[grep("Action 1.5", data$Concept)] <- "Action 1.5"
+    data$Concept[grep("Action 2.1a", data$Concept)] <- "Action 2.1a"
+    data$Concept[grep("Action 2.1b", data$Concept)] <- "Action 2b"
+    data$Concept[grep("Action 2.2a", data$Concept)] <- "Action 2.2a"
+    data$Concept[grep("Action 2.2b", data$Concept)] <- "Action 2.2b"
+    data$Concept[grep("Action 2.3", data$Concept)] <- "Action 2.3"
+    data$Concept[grep("Action 2.4", data$Concept)] <- "Action 2.4"
+    data$Concept[grep("Action 3.1", data$Concept)] <- "Action 3.1"
+    data$Concept[grep("Action 3.2a", data$Concept)] <- "Action 3.2a"
+    data$Concept[grep("Action 3.2b", data$Concept)] <- "Action 3.2b"
+    data$Concept[grep("Action 3.3", data$Concept)] <- "Action 3.3"
+    data$Concept[grep("Action 3.4", data$Concept)] <- "Action 3.4"
+    data$Concept[grep("Action 4.1", data$Concept)] <- "Action 4.1"
+    data$Concept[grep("Action 4.2", data$Concept)] <- "Action 4.2"
+    data$Concept[grep("Action 4.3", data$Concept)] <- "Action 4.3"
+    data$Concept[grep("Action 4.4", data$Concept)] <- "Action 4.4"
+    data$Concept[grep("Action 5.1", data$Concept)] <- "Action 5.1"
+    data$Concept[grep("Action 5.2", data$Concept)] <- "Action 5.2"
+    data$Concept[grep("Action 5.3", data$Concept)] <- "Action 5.3"
+    data$Concept[grep("Action 5.4", data$Concept)] <- "Action 5.4"
+    data$Concept[grep("Action 5.5", data$Concept)] <- "Action 5.5"
+
+    data <- data |>
+        dplyr::mutate(            
+            Strategy = paste0(Strategy, "\n", Concept),
+            Count_until_1992 = Count_until_1992 / oa_until_1992,
+            Count_after_1992 = Count_after_1992 / oa_after_1992,
+        ) |>
+        dplyr::group_by(Strategy) |>
+        dplyr::mutate(
+            Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
+            Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
+        )
+
+    data$Strategy <- data$Strategy |> as.factor()
+    levels(data$Strategy) <- rev(levels(data$Strategy))
+
+    figure <- data |>
+        tidyr::pivot_longer(
+            cols = c(Count_until_1992, Count_after_1992),
+            names_to = "Period",
+            values_to = "Count_year"
+        ) |>
+        # Create the plot
+        ggplot(aes(x = Strategy, y = Count_year, fill = Period)) +
+        geom_bar(stat = "identity") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "Strategy", y = "Count", fill = "Period") +
+        coord_flip() + 
+        theme(legend.position = "bottom")
+
+
+    ggplot2::ggsave(
+        paste0(figname, ".pdf"),
+        width = 8,
+        height = 9,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, ".png"),
+        width = 8,
+        height = 9,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, ".jpg"),
+        width = 8,
+        height = 9,
+        quality = 100,
+        figure
+    )
+
+    figure <- data |>
+        tidyr::pivot_longer(
+            cols = c(Count_until_1992_p, Count_after_1992_p),
+            names_to = "Period",
+            values_to = "Count_p_year"
+        ) |>
+        # Create the plot
+        ggplot(aes(x = Strategy, y = Count_p_year, fill = Period)) +
+        geom_bar(stat = "identity") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "Strategy", y = "Count", fill = "Period") +
+        coord_flip() + 
+        theme(legend.position = "bottom")
+
+
+    ggplot2::ggsave(
+        paste0(figname, "_p.pdf"),
+        width = 8,
+        height = 9,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, "_p.png"),
+        width = 8,
+        height = 9,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, "_p.jpg"),
+        width = 8,
+        height = 9,
+        quality = 100,
+        figure
+    )
+}
+```
+
+![The graph shows the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split.png")`)
+
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split.pdf")`){target="_blank"}
+
+![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.png")`)
+
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.pdf")`){target="_blank"}
+
+### Assesment of individual terms
+
+These numbers are the number of hits of TCA Corpus AND each individual term of the Option
+
+This is based on the data from OpenAlex using API calls to get the count.
+
+```{r}
+#| label: strategies_options_asess
+#| output: asis
+
+strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
+
+lapply(
+    names(strategies_options),
+    function(strategy) {
+        res <- data.frame(
+            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+            Term = strategies_options[[strategy]]$assess_search_terms$term,
+            Count = strategies_options[[strategy]]$assess_search_terms$count
+        )
+    }
+) |>
+    do.call(what = rbind) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_assessment_terms",
+        fixedColumns = list(leftColumns = 2)
+    )
+```
+
+
+### Differences between Original and shortened search terms
+
+Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
+
+The differences the [original search term](./tca_corpus/input/search%20terms/strategies_options.org.md) and the [used search term](./tca_corpus/input/search%20terms/strategies_options.md) is shown below
+
+```{r}
+#| label: strategies_options_diff
+#|
+
+diffviewer::visual_diff(
+    file.path("tca_corpus", "input", "search terms", "strategies_options.org.md"),
+    file.path("tca_corpus", "input", "search terms", "strategies_options.md")
+)
+```
+
+### Counts over Years for each TCA Corpus AND Strategies / Options
+
+```{r}
+#| label: strategies_options_years
+#|
+# data from OpernAlex vie count
+# strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
+
+# data from corpora
+strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
+
+lapply(
+    names(strategies_options),
+    function(strategy) {
+        data.frame(
+            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
+            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
+            Year = strategies_options[[strategy]]$years$publication_year,
+            Count = strategies_options[[strategy]]$years$count
+        )
+    }
+) |>
+    do.call(what = rbind) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_counts_per_year",
+        fixedColumns = list(leftColumns = 2)
+    )
+```
+
+<!-- #### Strategies / Options Works in Case Corpus -->
+
+```{r}
+#| label: actors_strategies_options_table
+#| eval: false
+
+readRDS(file.path("tca_corpus", "data", "strategies_options_cases.rds"))$strategies_options_case |>
+    dplyr::mutate(
+        p_cases = round(p_cases, 4)
+    ) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options__cases",
+        fixedColumns = list(leftColumns = 0)
+    )
+```
+
+
+
+### Matrix showing overlap of Strategies / Options
+
+The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+The nodes can be moved and if selected, the links to / from that node are highlighted.
+
+```{r}
+#| label: strategies_option_overlap_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "strategies_options_interactive_matrix")
+
+if (!file.exists(paste0(fn, ".html"))) {
+    data <- readRDS(file.path("tca_corpus", "data", "strategies_options_overlap.rds"))
+
+    value <- diag(data)
+
+    for (i in 1:ncol(data)) {
+        for (j in 1:nrow(data)){
+            data[i, j] <- data[i, j] / min(value[i], value[j])
+        }
+    }
+
+    # Create a graph from the adjacency matrix
+    g <- igraph::graph_from_adjacency_matrix(
+        data,
+        mode = "max",
+        weighted = TRUE,
+        diag = FALSE
+    )
+
+    # Convert the graph to a data frame
+    nodes <- data.frame(
+        id = igraph::V(g)$name,
+        label = igraph::V(g)$name,
+        value = value
+    ) # |>
+    # arrange(desc(value))
+
+    edges <- igraph::as_data_frame(
+        g,
+        what = "edges"
+    )
+
+    names(edges) <- c("from", "to", "width")
+    edges$width <- (edges$width / max(edges$width)) * 20
+
+    nodes$strategy <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 1)
+    nodes$option <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 2)
+    nodes$option <- sapply(
+        strsplit(nodes$option, "\\. |: "),
+        function(x) {
+            return(x[length(x)])
+        }
+    )
+
+    colors <- rainbow(length(nodes$strategy)) # Generate a color for each strategy
+    names(colors) <- nodes$strategy
+    nodes$color <- colors[nodes$strategy]
+
+
+    nodes$label <- sapply(
+        strsplit(nodes$option, "\\. |: "),
+        function(x) {
+            return(x[length(x)])
+        }
+    )
+
+    # Calculate grid positions for the nodes
+
+    node_x <- 1:length(unique(nodes$strategy))
+    names(node_x) <- unique(nodes$strategy)
+    nodes$x <- node_x[nodes$strategy] * 300
+
+    node_y <- 1:length(unique(nodes$option))
+    offset <- 0
+    for (strategy in unique(nodes$strategy)) {
+        id_s <- nodes$strategy == strategy
+        names(node_y) <- unique(nodes$option[id_s])
+        nodes$y[id_s] <- (node_y[nodes$option[id_s]] + offset) * 200
+        if (offset == 0.4) {
+            offset <- 0
+        } else {
+            offset <- 0.4
+        }
+    }
+
+
+    # Center the nodes
+    nodes$x <- (nodes$x - max(nodes$x) / 2) / 3
+    nodes$y <- (nodes$y - max(nodes$y) / 2) / 3
+
+
+    # Create the interactive network graph
+
+    p <- visNetwork(
+        nodes,
+        edges,
+        height = "900px",
+        width = "1800px"
+    ) |>
+        visNodes(
+            x = nodes$x,
+            y = nodes$y,
+            fixed = FALSE,
+            physics = FALSE,
+            font = list(
+                size = 10
+            )
+        ) |>
+        visEdges(
+            physics = TRUE,
+            color = list(
+                color = "lightgray",
+                highlight = "black"
+            )
+        ) |>
+        visPhysics(
+            solver = "barnesHut",
+            timestep = 0.1,
+            stabilization = list(
+                iterations = 1000
+            )
+        )
+
+
+
+    htmlwidgets::saveWidget(
+        p,
+        file = paste0(fn, ".html")
+    )
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
+
+    unlink(paste0(fn, "_files"), recursive = TRUE)
+}
+```
+
+<iframe src="tca_corpus/figures/strategies_options_interactive_matrix.html" width="100%" height="800px"></iframe>
+
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_interactive_matrix.html){target="_blank"}
+
+To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix.pdf")`){target="_blank"}
+
+```{r}
+#| label: strategies_option_overlap_table
+#|
+
+readRDS(file.path("tca_corpus", "data", "strategies_options_overlap.rds")) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_overlap",
+        fixedColumns = list(leftColumns = 0)
+    )
+```
+
+### Matrix showing overlap of Strategies / Options Cases Only
+
+The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+The nodes can be moved and if selected, the links to / from that node are highlighted.
+
+```{r}
+#| label: strategies_option_overlap_cases_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "strategies_options_interactive_matrix_cases")
+
+if (!file.exists(paste0(fn, ".html"))) {
+    data <- readRDS(file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds"))
+
+    value <- diag(data)
+
+    for (i in 1:ncol(data)) {
+        for (j in 1:nrow(data)){
+            data[i, j] <- data[i, j] / min(value[i], value[j])
+        }
+    }
+
+    # Create a graph from the adjacency matrix
+    g <- igraph::graph_from_adjacency_matrix(
+        data,
+        mode = "max",
+        weighted = TRUE,
+        diag = FALSE
+    )
+
+    # Convert the graph to a data frame
+    nodes <- data.frame(
+        id = igraph::V(g)$name,
+        label = igraph::V(g)$name,
+        value = value
+    ) # |>
+    # arrange(desc(value))
+
+    edges <- igraph::as_data_frame(
+        g,
+        what = "edges"
+    )
+
+    names(edges) <- c("from", "to", "width")
+    edges$width <- (edges$width / max(edges$width)) * 20
+
+    nodes$strategy <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 1)
+    nodes$option <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 2)
+    nodes$option <- sapply(
+        strsplit(nodes$option, "\\. |: "),
+        function(x) {
+            return(x[length(x)])
+        }
+    )
+
+    colors <- rainbow(length(nodes$strategy)) # Generate a color for each strategy
+    names(colors) <- nodes$strategy
+    nodes$color <- colors[nodes$strategy]
+
+
+    nodes$label <- sapply(
+        strsplit(nodes$option, "\\. |: "),
+        function(x) {
+            return(x[length(x)])
+        }
+    )
+
+    # Calculate grid positions for the nodes
+
+    node_x <- 1:length(unique(nodes$strategy))
+    names(node_x) <- unique(nodes$strategy)
+    nodes$x <- node_x[nodes$strategy] * 300
+
+    node_y <- 1:length(unique(nodes$option))
+    offset <- 0
+    for (strategy in unique(nodes$strategy)) {
+        id_s <- nodes$strategy == strategy
+        names(node_y) <- unique(nodes$option[id_s])
+        nodes$y[id_s] <- (node_y[nodes$option[id_s]] + offset) * 200
+        if (offset == 0.4) {
+            offset <- 0
+        } else {
+            offset <- 0.4
+        }
+    }
+
+
+    # Center the nodes
+    nodes$x <- (nodes$x - max(nodes$x) / 2) / 3
+    nodes$y <- (nodes$y - max(nodes$y) / 2) / 3
+
+
+    # Create the interactive network graph
+
+    p <- visNetwork(
+        nodes,
+        edges,
+        height = "900px",
+        width = "1800px"
+    ) |>
+        visNodes(
+            x = nodes$x,
+            y = nodes$y,
+            fixed = FALSE,
+            physics = FALSE,
+            font = list(
+                size = 10
+            )
+        ) |>
+        visEdges(
+            physics = TRUE,
+            color = list(
+                color = "lightgray",
+                highlight = "black"
+            )
+        ) |>
+        visPhysics(
+            solver = "barnesHut",
+            timestep = 0.1,
+            stabilization = list(
+                iterations = 1000
+            )
+        )
+
+
+    htmlwidgets::saveWidget(
+        p,
+        file = paste0(fn, ".html")
+    )
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
+
+    unlink(paste0(fn, "_files"), recursive = TRUE)
+}
+```
+
+<iframe src="tca_corpus/figures/strategies_options_interactive_matrix_cases.html" width="100%" height="800px"></iframe>
+
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_interactive_matrix_cases.html){target="_blank"}
+
+To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix_cases.pdf")`){target="_blank"}
+
+```{r}
+#| label: strategies_option_overlap_cases_cases_table
+#|
+
+readRDS(file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds")) |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_overlap_cases",
+        fixedColumns = list(leftColumns = 1)
+    )
+```
+
+# Actors for transformative change 
+
+The file [actors.md](tca_corpus/input/search terms/actors.md) contains the terms for the different actors.
+
+I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](tca_corpus/input/search terms/tca_corpus.txt).
+
+## Methods
+
+### Prepare Search Terms
+```{r}
+#| label: actors_prepare_searchterms
+
+fn <- file.path("tca_corpus", "data", "actors_terms.rds")
+if (!file.exists(fn)) {
+
+     sts <- data.frame(
+        "Sector" = NA,
+        "Actor_Group" = NA,
+        term = params$sts_actors
+    )
+    sts <- sts[sts$term != "", ]
+    for (i in 1:nrow(sts)) {
+        if (grepl("^# ", sts$term[i])) {
+            sector <- gsub("^# ", "", sts$term[i])
+        } else if (grepl("^## ", sts$term[i])) {
+            actor_group <- gsub("^## ", "", sts$term[i])
+        } else {
+            sts$Sector[i] <- sector
+            sts$Actor_Group[i] <- actor_group
+        }
+    }
+    sts <- sts[!is.na(sts$Sector), ]
+    sts <- sts[!is.na(sts$Actor_Group), ]
+
+    sts$Name <- paste0(sts$Sector, " ||| ", sts$Actor_Group)
+
+    actors_terms <- split(sts$term, sts$Name)
+    #############
+
+    saveRDS(actors_terms, file = fn)
+}
+```
+
+### Run the search terms
+```{r}
+#| label: actors_get_counts
+
+fn <- file.path("tca_corpus", "data", "actors.rds")
+if (!file.exists(file.path(fn))) {
+    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
+    actors_options <- lapply(
+        names(actors_terms),
+        function(actor) {
+            message("- ", actor)
+            result <- list()
+            result$term <- paste(actors_terms[[actor]], collapse = " ")
+            result$count <- NA
+            result$years <- data.frame(publication_year = NA, count = NA)
+            result$assess_search_terms <- assess_search_term(
+                st = actors_terms[[actor]],
+                AND_term = params$s_1_tca_corpus,
+                remove = " OR$",
+                excl_others = FALSE,
+                verbose = FALSE,
+                mc.cores = params$mc.cores
+            ) |>
+                dplyr::arrange(desc(count))
+            #
+            try(
+                {
+                    result$count <- openalexR::oa_fetch(
+                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                        count_only = TRUE,
+                        output = "list",
+                        verbose = FALSE
+                    )$count
+                    message("  - ", result$count, " hits")
+                    #
+                    result$years <- openalexR::oa_fetch(
+                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
+                        group_by = "publication_year",
+                        output = "dataframe",
+                        verbose = FALSE
+                    ) |>
+                        dplyr::select(
+                            publication_year = key_display_name,
+                            count
+                        ) |>
+                        dplyr::arrange(
+                            publication_year
+                        )
+                },
+                silent = FALSE
+            )
+            return(result)
+        }
+    )
+
+    # Assign the names to the first and second level list
+    names(actors_options) <- names(actors_terms)
+
+    saveRDS(actors_options, file = fn)
+}
+```
+
+### Download Actors Corpus (only ids)
+
+```{r}
+#| label: download_actors_corpus
+#| eval: false
+#|
+
+tic()
+
+actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
+lapply(
+    names(actors_terms),
+    function(actor) {
+        message("- ", actor)
+        IPBES.R::corpus_download(
+            pages_dir = paste0(params$pages_actors_dir, "_", make.names(actor)),
+            title_and_abstract_search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", paste0(actors_terms[[actor]], collapse = " "), ")")),
+            select_fields = c("id"),
+            continue = TRUE,
+            delete_pages_dir = FALSE,
+            dry_run = FALSE,
+            verbose = FALSE,
+            mc_cores = 8
+        )
+    }
+)
+
+toc()
+```
+
+### Convert Actors Pages to rds (only ids)
+
+```{r}
+#| label: convert_actors_corpus
+#|
+
+tic()
+
+fn <- file.path("tca_corpus", "data", "actors_ids.rds")
+
+if (!file.exists(fn)) {
+    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
+    actors_ids <- lapply(
+        names(actors_terms),
+        function(actor) {
+            message("- ", actor)
+            paste0(params$pages_actors_dir, "_", make.names(actor)) |>
+                list.files(
+                    pattern = ".rds$",
+                    recursive = TRUE,
+                    full.names = TRUE
+                ) |>
+                sapply(
+                    FUN = function(f) {
+                        readRDS(f)
+                    }
+                ) |>
+                unlist() |>
+                as.vector() |>
+                unique()
+        }
+    )
+    names(actors_ids) <- names(actors_terms)
+
+    saveRDS(actors_ids, file = fn)
+}
+
+toc()
+```
+
+
+
+### Convert Actors Pages in Cases to rds (only ids)
+
+```{r}
+#| label: convert_avtors_corpus_cases
+#|
+
+fn <- file.path("tca_corpus", "data", "actors_ids_cases.rds")
+
+if (!file.exists(fn)) {
+    case_ids <- corpus_read(params$corpus_cases_dir) |>
+        dplyr::distinct(id) |>
+        collect() |>
+        unlist()
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
+
+    actors_ids_cases <- lapply(
+        actors_ids,
+        function(actor) {
+            intersect(actor, case_ids)
+        }
+    )
+
+    saveRDS(actors_ids_cases, file = fn)
+}
+```
+
+
+
+### Extract per year from Actors Pages
+
+```{r}
+#| label: extract_actors_per_year_corpus
+#|
+
+tic()
+
+fn <- file.path("tca_corpus", "data", "actors_corpus.rds")
+
+if (!file.exists(fn)) {
+    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
+
+    actors_corpus <- lapply(
+        names(actors_terms),
+        function(actor) {
+            message("- ", actor)
+            years <- paste0(params$pages_actors_dir, "_", make.names(actor)) |>
+                list.files(
+                    pattern = "^set_publication_year=",
+                    recursive = FALSE,
+                    full.names = FALSE
+                ) |>
+                gsub(
+                    pattern = "set_publication_year=",
+                    replacement = ""
+                ) |>
+                as.integer()
+            #
+            result <- list()
+            result$term <- paste(actors_terms[[actor]], collapse = " ")
+            result$count <- length(actors_ids[[actor]])
+
+
+            result$years <- data.frame(
+                publication_year = years,
+                count = sapply(
+                    years,
+                    function(year) {
+                        paste0(params$pages_actors_dir, "_", make.names(actor)) |>
+                            list.files(
+                                pattern = ".rds$",
+                                recursive = TRUE,
+                                full.names = TRUE
+                            ) |>
+                            grep(
+                                pattern = paste0("set_publication_year=", year),
+                                value = TRUE
+                            ) |>
+                            sapply(
+                                FUN = function(f) {
+                                    readRDS(f)
+                                }
+                            ) |>
+                            unlist() |>
+                            as.vector() |>
+                            unique() |>
+                            length()
+                    }
+                )
+            )
+            return(result)
+        }
+    )
+
+    names(actors_corpus) <- names(actors_terms)
+
+    saveRDS(actors_corpus, file = fn)
+}
+
+toc()
+```
+
+### Create Actors Matrix
+
+```{r}
+#| label: actors_overlap
+#|
+
+fn <- file.path("tca_corpus", "data", "actors_overlap.rds")
+
+if (!file.exists(fn)) {
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
+
+    overlap_count <- function(x, y) {
+        length(intersect(x, y))
+    }
+
+    actors_overlap <- outer(
+        actors_ids,
+        actors_ids,
+        Vectorize(overlap_count)
+    )
+    
+    for (i in 1:length(dimnames(actors_overlap))) {
+        dimnames(actors_overlap)[[i]] <- dimnames(actors_overlap)[[i]] |>
+            gsub(
+                pattern = "NGO", 
+                replacement = "Non-governmental organizations"
+            ) |>
+            gsub(
+                pattern = "Indigenous people", 
+                replacement = "Indigenous Peoples"
+            )   
+    }
+
+    saveRDS(actors_overlap, file = fn)
+    write.csv(actors_overlap, file = gsub("rds$", "csv", fn))
+}
+```
+
+
+### Actors in Case Corpus
+
+```{r}
+#| label: cases_actors_corpus
+#| eval: false
+
+fn <- file.path("tca_corpus", "data", "actors_case.rds")
+
+if (!file.exists(fn)) {
+    case_ids <- corpus_read(params$corpus_cases_dir) |>
+        dplyr::distinct(id) |>
+        collect() |>
+        unlist()
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
+
+    actors_case <- lapply(
+        names(actors_ids),
+        function(actor) {
+            message("- ", actor)
+            count <- sum(actors_ids[[actor]] %in% case_ids)
+            data.frame(
+                actor = actor,
+                count_cases = count,
+                count_tca = length(actors_ids[[actor]]),
+                p_cases = count / length(actors_ids[[actor]])
+            )
+        }
+    ) |>
+        do.call(what = rbind)
+
+    actors_cases <- list(
+        timestamp = Sys.time(),
+        actors_case = actors_case
+    )
+
+    saveRDS(actors_cases, file = fn)
+}
+```
+### Create Actors Matrix Cases Only
+
+```{r}
+#| label: actors_overlap_cases
+#|
+
+fn <- file.path("tca_corpus", "data", "actors_overlap_cases.rds")
+
+if (!file.exists(fn)) {
+    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds"))
+
+    overlap_count <- function(x, y) {
+        length(intersect(x, y))
+    }
+
+    actors_overlap <- outer(
+        actors_ids,
+        actors_ids,
+        Vectorize(overlap_count)
+    )
+
+    for (i in 1:length(dimnames(actors_overlap))) {
+        dimnames(actors_overlap)[[i]] <- dimnames(actors_overlap)[[i]] |>
+            gsub(
+                pattern = "NGO", 
+                replacement = "Non-governmental organizations"
+            ) |>
+            gsub(
+                pattern = "Indigenous people", 
+                replacement = "Indigenous Peoples"
+            )   
+    }
+
+    saveRDS(actors_overlap, file = fn)
+    write.csv(actors_overlap, file = gsub("rds$", "csv", fn))
+    
+    rm(actors_overlap)
+}
+```
+
+
+## Results
+
+### Count of Actors Table
+```{r}
+#| label: actors_counts_data
+#|
+
+# data from OpernAlex vie count
+# actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
+
+# data from corpora
+actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
+
+data <- lapply(
+    names(actors),
+    function(actor) {
+        data.frame(
+            Actor = actor,
+            Count = actors[[actor]]$count,
+            Count_until_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year <= 1992]),
+            Count_after_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year > 1992])
+        )
+    }
+) |>
+    do.call(what = rbind)
+
+data |>
+    IPBES.R::table_dt(
+        fn = "strategies_options_counts",
+        fixedColumns = list(leftColumns = 2)
+    )
+```
+
+
+### Assesment of individual terms
+
+These numbers are the number of hits of TCA Corpus AND each individual term of the Option
+
+```{r}
+#| label: actors_asess
+#| output: asis
+
+actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
+
+lapply(
+    names(actors),
+    function(actor) {
+        res <- data.frame(
+            Actor = actor,
+            Term = actors[[actor]]$assess_search_terms$term,
+            Count = actors[[actor]]$assess_search_terms$count
+        )
+    }
+) |>
+    do.call(what = rbind) |>
+    IPBES.R::table_dt(
+        fn = "actors_assessment_terms",
+        fixedColumns = list(leftColumns = 2)
+    )
+```
+
+
+### Differences between Original and shortened search terms
+
+Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
+
+The differences the [original search term](./tca_corpus/input/search%20terms/actors.org.md) and the [used search term](./tca_corpus/input/search%20terms/actors.md) is shown below
+
+```{r}
+#| label: diff_actors
+#|
+
+diffviewer::visual_diff(
+    file.path("tca_corpus", "input", "search terms", "actors.org.md"),
+    file.path("tca_corpus", "input", "search terms", "actors.md")
+)
+```
+
+
+### Counts over Years for each TCA Corpus AND Actors
+
+```{r}
+#| label: actors_years
+#|
+
+# data from OpernAlex vie count
+# actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
+
+# data from corpora
+actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
+
+lapply(
+    names(actors),
+    function(actor) {
+        data.frame(
+            Actor = actor,
+            Year = actors[[actor]]$years$publication_year,
+            Count = actors[[actor]]$years$count
+        )
+    }
+) |>
+    do.call(what = rbind) |>
+    IPBES.R::table_dt(
+        fn = "actors_counts_per_year",
+        fixedColumns = list(leftColumns = 2)
+    )
+```
+
+
+### Plot of the Count of the Actors split at 1992
+
+This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in that perio as reflected on [OpenAlex](https://openalex.org).
+
+```{r}
+#| label: actors_counts_figure
+#|
+
+figname <- file.path("tca_corpus", "figures", "actors_time_split")
+
+figs <- list.files(
+    path = dirname(figname),
+    pattern = basename(figname),
+    recursive = TRUE
+) |> length()
+
+if (figs < 6) {
+    # data from OpernAlex vie count
+    # actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
+
+    # data from corpora
+    actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
+
+
+    oa <- openalexR::oa_fetch(
+        search = "",
+        group_by = "publication_year",
+        output = "dataframe",
+        verbose = FALSE
+    )
+    oa_until_1992 <- sum(oa$count[oa$key <= 1992])
+    oa_after_1992 <- sum(oa$count[oa$key > 1992])
+
+    data <- lapply(
+        names(actors),
+        function(actor) {
+            data.frame(
+                Actor = actor,
+                Count = actors[[actor]]$count,
+                Count_until_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year <= 1992]),
+                Count_after_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year > 1992])
+            )
+        }
+    ) |>
+        do.call(what = rbind) |>
+        dplyr::mutate(
+            Count_until_1992 = Count_until_1992 / oa_until_1992,
+            Count_after_1992 = Count_after_1992 / oa_after_1992,
+        ) |>
+        dplyr::group_by(
+            Actor
+        ) |>
+        dplyr::mutate(
+            Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
+            Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
+        )
+
+
+    data$Actor <- gsub("Indigenous people", "Indigenous Peoples", data$Actor)
+    data$Actor <- gsub("NGO", "Non-governmental organizations", data$Actor)
+    data$Actor <- gsub("\\|\\|\\|", "\n", data$Actor)
+    data$Actor <- data$Actor |> as.factor()
+    levels(data$Actor) <- rev(levels(data$Actor))
+
+    figure <- data |>
+        tidyr::pivot_longer(
+            cols = c(Count_until_1992, Count_after_1992),
+            names_to = "Period",
+            values_to = "Count_year"
+        ) |>
+        # Create the plot
+        ggplot(aes(x = Actor, y = Count_year, fill = Period)) +
+        geom_bar(stat = "identity") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "Actors", y = "Count", fill = "Period") +
+        coord_flip() + 
+        theme(legend.position = "bottom")
+
+
+    ggplot2::ggsave(
+        paste0(figname, ".pdf"),
+        width = 8,
+        height = 8,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, ".png"),
+        width = 8,
+        height = 8,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, ".jpg"),
+        width = 8,
+        height = 8,
+        quality = 100,
+        figure
+    )
+
+    figure <- data |>
+        tidyr::pivot_longer(
+            cols = c(Count_until_1992_p, Count_after_1992_p),
+            names_to = "Period",
+            values_to = "Count_p_year"
+        ) |>
+        # Create the plot
+        ggplot(aes(x = Actor, y = Count_p_year, fill = Period)) +
+        geom_bar(stat = "identity") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+        labs(x = "Actor", y = "Count", fill = "Period") +
+        coord_flip() + 
+        theme(legend.position = "bottom")
+
+    ggplot2::ggsave(
+        paste0(figname, "_p.pdf"),
+        width = 8,
+        height = 8,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, "_p.png"),
+        width = 8,
+        height = 8,
+        figure
+    )
+    ggplot2::ggsave(
+        paste0(figname, "_p.jpg"),
+        width = 8,
+        height = 8,
+        quality = 100,
+        figure
+    )
+
+}
+
+```
+
+![The graph shows the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split.png")`)
+
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split.pdf")`){target="_blank"}
+
+![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split_p.png")`)
+
+To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split_p.pdf")`){target="_blank"}
+
+<!-- #### Actors Works in Case Corpus -->
+
+```{r}
+#| label: actors_cases_table
+#| eval: false
+
+readRDS(file.path("tca_corpus", "data", "actors_case.rds"))$actors_case |>
+    dplyr::mutate(
+        p_cases = round(p_cases, 4)
+    ) |>
+    IPBES.R::table_dt(
+        fn = "actors_cases",
+        fixedColumns = list(leftColumns = 0)
+    )
+```
+
+
+### Matrix showing overlap of Actors
+
+The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+
+The nodes can be moved and if selected, the links to / from that node are highlighted.
+
+```{r}
+#| label: actors_overlap_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_interactive_matrix")
+
+if (!file.exists(paste0(fn, ".html"))) {
+    data <- readRDS(file.path("tca_corpus", "data", "actors_overlap.rds"))
+
+    value <- diag(data)
+
+    for (i in 1:ncol(data)) {
+        for (j in 1:nrow(data)) {
+            data[i, j] <- data[i, j] / min(value[i], value[j])
+        }
+    }
+
+
+    # Create a graph from the adjacency matrix
+    g <- igraph::graph_from_adjacency_matrix(
+        data,
+        mode = "max",
+        weighted = TRUE,
+        diag = FALSE
+    )
+
+    # Convert the graph to a data frame
+    nodes <- data.frame(
+        id = igraph::V(g)$name,
+        label = igraph::V(g)$name,
+        value = value
+    )
+    edges <- igraph::as_data_frame(
+        g,
+        what = "edges"
+    )
+
+    names(edges) <- c("from", "to", "width")
+    edges$width <- (edges$width / max(edges$width)) * 20
+
+    nodes$sector <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 1)
+    nodes$actor_group <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 2)
+
+    colors <- rainbow(length(nodes$sector)) # Generate a color for each sector
+    names(colors) <- nodes$sector
+    nodes$color <- colors[nodes$sector]
+
+    nodes$label <- nodes$option
+
+    # Calculate grid positions for the nodes
+    node_x <- 1:length(unique(nodes$sector))
+    names(node_x) <- unique(nodes$sector)
+    nodes$x <- node_x[nodes$sector] * 300
+
+    node_y <- 1:length(unique(nodes$actor_group))
+    offset <- 0
+    for (sector in unique(nodes$sector)) {
+        id_s <- nodes$sector == sector
+        names(node_y) <- unique(nodes$actor_group[id_s])
+        nodes$y[id_s] <- (node_y[nodes$actor_group[id_s]] + offset) * 200
+        if (offset == 0.5) {
+            offset <- 0
+        } else {
+            offset <- 0.5
+        }
+    }
+
+    # Center the nodes
+    nodes$x <- nodes$x - max(nodes$x) / 2
+    nodes$y <- nodes$y - max(nodes$y) / 2
+
+    nodes$label <- nodes$actor_group
+
+    # Create the interactive network graph
+
+    p <- visNetwork(
+        nodes,
+        edges,
+        height = "900px",
+        width = "1800px"
+    ) |>
+        visNodes(
+            x = nodes$x,
+            y = nodes$y,
+            fixed = FALSE,
+            physics = FALSE,
+            font = list(
+                size = 24
+            )
+        ) |>
+        visEdges(
+            physics = TRUE,
+            color = list(
+                color = "lightgray",
+                highlight = "black"
+            )
+        ) |>
+        visPhysics(
+            solver = "barnesHut",
+            timestep = 0.1,
+            stabilization = list(
+                iterations = 1000
+            )
+        )
+
+    htmlwidgets::saveWidget(
+        p,
+        file = paste0(fn, ".html")
+    )
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".jpg"), delay = 3)
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".png"), delay = 3)
+    unlink(paste0(fn, "_files"), recursive = TRUE)
+}
+```
+
+<iframe src="tca_corpus/figures/actors_interactive_matrix.html" width="100%" height="800px"></iframe>
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_interactive_matrix.html){target="_blank"}
+
+To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix.pdf")`){target="_blank"}
+
+
+```{r}
+#| label: actors_overlap_table
+#|
+
+readRDS(file.path("tca_corpus", "data", "actors_overlap.rds")) |>
+    IPBES.R::table_dt(
+        fn = "actors_overlap",
+        fixedColumns = list(leftColumns = 0)
+    )
+```
+
+
+### Matrix showing overlap of Actors Cases Only
+
+The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+
+The nodes can be moved and if selected, the links to / from that node are highlighted.
+
+```{r}
+#| label: actors_overlap_cases_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_interactive_matrix_cases")
+
+if (!file.exists(paste0(fn, ".html"))) {
+    data <- readRDS(file.path("tca_corpus", "data", "actors_overlap_cases.rds"))
+
+    value <- diag(data)
+
+    for (i in 1:ncol(data)) {
+        for (j in 1:nrow(data)) {
+            data[i, j] <- data[i, j] / min(value[i], value[j])
+        }
+    }
+
+
+    # Create a graph from the adjacency matrix
+    g <- igraph::graph_from_adjacency_matrix(
+        data,
+        mode = "max",
+        weighted = TRUE,
+        diag = FALSE
+    )
+
+    # Convert the graph to a data frame
+    nodes <- data.frame(
+        id = igraph::V(g)$name,
+        label = igraph::V(g)$name,
+        value = value
+    )
+    edges <- igraph::as_data_frame(
+        g,
+        what = "edges"
+    )
+
+    names(edges) <- c("from", "to", "width")
+    edges$width <- (edges$width / max(edges$width)) * 20
+
+    nodes$sector <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 1)
+    nodes$actor_group <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 2)
+
+    colors <- rainbow(length(nodes$sector)) # Generate a color for each sector
+    names(colors) <- nodes$sector
+    nodes$color <- colors[nodes$sector]
+
+    nodes$label <- nodes$option
+
+    # Calculate grid positions for the nodes
+    node_x <- 1:length(unique(nodes$sector))
+    names(node_x) <- unique(nodes$sector)
+    nodes$x <- node_x[nodes$sector] * 300
+
+    node_y <- 1:length(unique(nodes$actor_group))
+    offset <- 0
+    for (sector in unique(nodes$sector)) {
+        id_s <- nodes$sector == sector
+        names(node_y) <- unique(nodes$actor_group[id_s])
+        nodes$y[id_s] <- (node_y[nodes$actor_group[id_s]] + offset) * 200
+        if (offset == 0.5) {
+            offset <- 0
+        } else {
+            offset <- 0.5
+        }
+    }
+
+    # Center the nodes
+    nodes$x <- nodes$x - max(nodes$x) / 2
+    nodes$y <- nodes$y - max(nodes$y) / 2
+
+    nodes$label <- nodes$actor_group
+
+    # Create the interactive network graph
+
+    p <- visNetwork(
+        nodes,
+        edges,
+        height = "900px",
+        width = "1800px"
+    ) |>
+        visNodes(
+            x = nodes$x,
+            y = nodes$y,
+            fixed = FALSE,
+            physics = FALSE,
+            font = list(
+                size = 24
+            )
+        ) |>
+        visEdges(
+            physics = TRUE,
+            color = list(
+                color = "lightgray",
+                highlight = "black"
+            )
+        ) |>
+        visPhysics(
+            solver = "barnesHut",
+            timestep = 0.1,
+            stabilization = list(
+                iterations = 1000
+            )
+        )
+
+    htmlwidgets::saveWidget(
+        p,
+        file = paste0(fn, ".html")
+    )
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".jpg"), delay = 3)
+    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".png"), delay = 3)
+    unlink(paste0(fn, "_files"), recursive = TRUE)
+}
+```
+
+<iframe src="tca_corpus/figures/actors_interactive_matrix_cases.html" width="100%" height="800px"></iframe>
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_interactive_matrix_cases.html){target="_blank"}
+
+To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix_cases.pdf")`){target="_blank"}
+
+
+```{r}
+#| label: actors_overlap_cases_table
+#|
+
+readRDS(file.path("tca_corpus", "data", "actors_overlap_cases.rds")) |>
+    IPBES.R::table_dt(
+        fn = "actors_overlap",
+        fixedColumns = list(leftColumns = 1)
+    )
+```
+
+
+
+# Actors x Stategies / Options
+
+```{r}
+#| label: actors_strategies_options_overlap_data
+
+fn <- file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")
+
+if (!file.exists(fn)) {
+    actors_ids <- file.path("tca_corpus", "data", "actors_ids.rds") |> readRDS()
+    strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids.rds") |> readRDS()
+    sapply(actors_ids, function(actor) {
+        sapply(strategies_options_ids, function(strategy_option) {
+            length(intersect(actor, strategy_option))
+        })
+    }) |>
+        saveRDS(file = fn)
+}
+```
+
+```{r}
+#| label: actors_strategies_options_overlap_table
+readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")) |>
+    IPBES.R::table_dt(
+        fn = "actors_strategies_options_overlap",
+        fixedColumns = list(leftColumns = 0)
+    )
+```
+
+The colour indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+```{r}
+#| label: actors_strategies_options_overlap_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix")
+
+n <- list.files(
+  path = dirname(fn),
+  pattern = paste0(basename(fn), "\\."),
+  recursive = TRUE
+) |> length()
+
+if (n < 4) {
+  plot_heatmap <- function(data, actors_ids, strategies_options_ids, plot_data = NULL) {
+    if (is.null(plot_data)) {
+      actors_count <- sapply(
+        actors_ids,
+        length
+      )
+      strategies_options_count <- sapply(
+        strategies_options_ids,
+        length
+      )
+
+      for (i in 1:length(strategies_options_count)) {
+        for (j in 1:length(actors_count)) {
+          data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
+        }
+      }
+    } else {
+      data <- plot_data
+    }
+
+    sector <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
+    strategy <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
+
+    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |>
+      sapply(FUN = "[[", 2)
+    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |>
+      sapply(FUN = "[[", 2)
+
+    dat_ggplot <- as.data.frame(as.table(data)) |>
+      dplyr::rename("y" = Var1, "x" = Var2, "Proportion" = Freq)
+
+    levels(dat_ggplot$y) <- rownames(data) |>
+      gsub(pattern = "Action ", replacement = "")
+
+    p <- dat_ggplot |>
+      ggplot(
+        aes(x = x, y = y, fill = Proportion)
+      ) +
+      geom_tile() +
+      scale_fill_gradient2(
+        low = "#196C71", # Blue color for negative values
+        mid = "#f7f7f7", # Light beige color for zero
+        high = "#B65719", # Red color for positive values
+        midpoint = 0 # Set the midpoint to zero
+      ) +
+      theme(
+        axis.text.x = element_text(angle = 90, hjust = 1)
+      ) +
+      ggplot2::ylab("Strategies / Actions") +
+      ggplot2::xlab("Actors")
+
+    vline <- c(0, diff(as.numeric(factor(sector))) != 0)
+    hline <- c(0, diff(as.numeric(factor(strategy))) != 0)
+
+    p <- p + geom_vline(xintercept = 0.5, color = "black")
+    for (i in vline * 1:(length(vline))) {
+      if (i > 0) {
+        p <- p + geom_vline(xintercept = i - 0.5, color = "black")
+      }
+    }
+    p <- p + geom_vline(xintercept = length(vline) + 0.5, color = "black")
+
+    p <- p + geom_hline(yintercept = 0.5, color = "black")
+    for (i in hline * 1:(length(hline))) {
+      if (i > 0) {
+        p <- p + geom_hline(yintercept = i - 0.5, color = "black")
+      }
+    }
+    p <- p + geom_hline(yintercept = length(hline) + 0.5, color = "black")
+
+
+    text_data <- data.frame(
+      text_y = c(24, 19.5, 15, 9, 3.5),
+      label = c(
+        "1. Place-based actions",
+        "2. Changing direct drivers",
+        "3. Transforming economic systems",
+        "4. Transforming governance systems",
+        "5. Shifting vies, values, and paradigms"
+      )
+    )
+    for (i in 1:nrow(text_data)) {
+      p <- p +
+        geom_text(
+          y = text_data$text_y[[i]],
+          x = 0.6,
+          label = text_data$label[[i]],
+          size = 3,
+          hjust = 0
+        )
+    }
+
+    text_data <- data.frame(
+      text_x = c(3.5, 8, 11.5, 15.5),
+      label = c(
+        "Civil society",
+        "Private sector",
+        "Government sector",
+        "Communication and\nknowledge sector"
+      )
+    )
+    for (i in 1:nrow(text_data)) {
+      p <- p +
+        geom_text(
+          y = 25.5,
+          x = text_data$text_x[[i]],
+          label = text_data$label[[i]],
+          size = 3,
+          hjust = "middle"
+        )
+    }
+
+    p <- p +
+      scale_y_discrete(
+        limits = rev(levels(dat_ggplot$y))
+      )
+
+    return(p)
+  }
+
+  if (n < 12) {
+    p <- plot_heatmap(
+      data = readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")),
+      actors_ids = readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
+      strategies_options_ids = readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
+    )
+
+    saveRDS(p, paste0(fn, ".ggp"))
+
+    ggplot2::ggsave(
+      plot = p,
+      paste0(fn, ".pdf"),
+      width = 12,
+      height = 6
+    )
+    ggplot2::ggsave(
+      plot = p,
+      paste0(fn, ".svg"),
+      width = 12,
+      height = 6
+    )
+    ggplot2::ggsave(
+      plot = p,
+      paste0(fn, ".png"),
+      width = 12,
+      height = 6
+    )
+  }
+}
+```
+
+
+![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix.png")`)
+
+To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix.pdf){target="_blank"}
+
+
+
+
+# Actors x Stategies / Options Cases Only
+
+```{r}
+#| label: actors_strategies_options_overlap_cases_data
+
+fn <- file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")
+
+if (!file.exists(fn)) {
+    actors_ids <- file.path("tca_corpus", "data", "actors_ids_cases.rds") |>
+        readRDS()
+
+    strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
+        readRDS()
+
+    sapply(actors_ids, function(actor) {
+        sapply(strategies_options_ids, function(strategy_option) {
+            length(intersect(actor, strategy_option))
+        })
+    }) |>
+        saveRDS(file = fn)
+}
+```
+
+```{r}
+#| label: actors_strategies_options_overlap_cases_table
+readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")) |>
+    IPBES.R::table_dt(
+        fn = "actors_strategies_options_overlap_cases",
+        fixedColumns = list(leftColumns = 0)
+    )
+```
+
+The colour indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+```{r}
+#| label: actors_strategies_options_overlap_cases_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases")
+
+n <- list.files(
+    path = dirname(fn),
+    pattern = paste0(basename(fn), "\\."),
+    recursive = TRUE
+) |> length()
+
+if (n < 4) {
+    p <- plot_heatmap(
+        data = readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")),
+        actors_ids = readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds")),
+        strategies_options_ids = readRDS(file.path("tca_corpus", "data", "strategies_options_ids_cases.rds"))
+    )
+
+    saveRDS(p, paste0(fn, ".ggp"))
+
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".svg"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".png"),
+        width = 12,
+        height = 6
+    )
+}
+```
+
+
+![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases.png")`)
+
+To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_cases.pdf){target="_blank"}
+
+
+# Differenct Cases / all
+
+
+The colour indicates s indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
+
+```{r}
+#| label: actors_strategies_options_overlap_difference_figure
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference")
+
+n <- list.files(
+    path = dirname(fn),
+    pattern = basename(fn),
+    recursive = TRUE
+) |> length()
+
+if (n < 4) {
+    data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
+
+    actors_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
+        length
+    )
+    strategies_options_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds")),
+        length
+    )
+
+    for (i in 1:length(strategies_options_count)) {
+        for (j in 1:length(actors_count)) {
+            data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
+        }
+    }
+
+    rm(actors_count, strategies_options_count)
+
+    ####
+
+    data_cases <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds"))
+
+    actors_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds")),
+        length
+    )
+    strategies_options_count <- sapply(
+        readRDS(file.path("tca_corpus", "data", "strategies_options_ids_cases.rds")),
+        length
+    )
+
+    for (i in 1:length(strategies_options_count)) {
+        for (j in 1:length(actors_count)) {
+            data_cases[i, j] <- data_cases[i, j] / min(strategies_options_count[i], actors_count[j])
+        }
+    }
+    rm(actors_count, strategies_options_count)
+
+    ####
+
+    data <- data - data_cases
+    rm(data_cases)
+
+    ####
+
+
+    p <- plot_heatmap(
+        plot_data = data
+    )
+
+    saveRDS(p, paste0(fn, ".ggp"))
+
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".svg"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        paste0(fn, ".png"),
+        width = 12,
+        height = 6
+    )
+}
+```
+
+
+![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference.png")`)
+
+To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_difference.pdf){target="_blank"}
+
+# Combined Actors x Stategies Panel
+
+```{r}
+#| label: actors_strategies_options_combined_panel
+#|
+
+fn <- file.path("tca_corpus", "figures", "actors_strategies_options_combined_panel")
+
+no_bn <- list.files(
+  path = dirname(fn),
+  pattern = basename(fn)
+) |> length()
+
+if (no_bn < 4) {
+  p_tca <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix.ggp")) +
+    theme(
+      legend.position = "none"
+    )
+  p_cases <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases.ggp")) +
+    theme(
+      axis.title.y = element_blank(),
+      axis.text.y = element_blank()
+    )
+  p_diff <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference.ggp"))
+
+  p <- (p_tca | p_cases) /
+    p_diff +
+    plot_layout(
+      heights = c(0.5, 1)
+    )
+
+  ####
+
+  saveRDS(
+    p,
+    paste0(fn, ".ggp")
+  )
+
+  ggplot2::ggsave(
+    plot = p,
+    paste0(fn, ".pdf"),
+    width = 17,
+    height = 18
+  )
+  ggplot2::ggsave(
+    plot = p,
+    paste0(fn, ".svg"),
+    width = 17,
+    height = 18
+  )
+  ggplot2::ggsave(
+    plot = p,
+    paste0(fn, ".png"),
+    width = 17,
+    height = 18
+  )
+}
+```
+
+![](`r file.path("tca_corpus", "figures", "actors_strategies_options_combined_panel.png")`)
+
+To download high resolution pdf, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
+
+To download high resolution svg, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
+
+# Works not mentioning Actors and Strategies / Options
+
+```{r}
+#| label: works_not_mentioning_actors_strategies_options
+#|
+fn <- file.path("tca_corpus", "data", "works_not_mentioning_actors_strategies_options.rds")
+
+if (file.exists(fn)) {
+  data <- readRDS(fn)
+} else {
+  ids <- list(
+    strategies = file.path("tca_corpus", "data", "strategies_options_ids.rds") |>
+      readRDS() |>
+      unlist(),
+    actors = file.path("tca_corpus", "data", "actors_ids.rds") |>
+      readRDS() |>
+      unlist(),
+    strategies_cases = file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
+      readRDS() |>
+      unlist(),
+    actors_cases = file.path("tca_corpus", "data", "actors_ids_cases.rds") |>
+      readRDS() |>
+      unlist()
+  )
+
+  data <- list(
+    data.frame(
+      type = "TCA Corpus not in Strategies / Options",
+      not_in_corpus = params$corpus_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        filter(!id %in% ids$strategies) |>
+        collect() |>
+        nrow(),
+      corpus_size = params$corpus_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        collect() |>
+        nrow()
+    ),
+    data.frame(
+      type = "TCA Corpus not in Actors",
+      not_in_corpus = params$corpus_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        filter(!id %in% ids$actors) |>
+        collect() |>
+        nrow(),
+      corpus_size = params$corpus_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        collect() |>
+        nrow()
+    ),
+    data.frame(
+      type = "TCA Corpus not in neither",
+      not_in_corpus = params$corpus_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        filter(!id %in% c(ids$strategies, ids$actors)) |>
+        collect() |>
+        nrow(),
+      corpus_size = params$corpus_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        collect() |>
+        nrow()
+    ),
+    data.frame(
+      type = "Cases Corpus not in Strategies / Options",
+      not_in_corpus = params$corpus_cases_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        filter(!id %in% ids$strategies_cases) |>
+        collect() |>
+        nrow(),
+      corpus_size = params$corpus_cases_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        collect() |>
+        nrow()
+    ),
+    data.frame(
+      type = "Cases Corpus not in Actors",
+      not_in_corpus = params$corpus_cases_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        filter(!id %in% ids$actors_cases) |>
+        collect() |>
+        nrow(),
+      corpus_size = params$corpus_cases_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        collect() |>
+        nrow()
+    ),
+    data.frame(
+      type = "Cases Corpus not in neither",
+      not_in_corpus = params$corpus_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        filter(!id %in% c(ids$strategies, ids$actors)) |>
+        collect() |>
+        nrow(),
+      corpus_size = params$corpus_cases_dir |>
+        corpus_read() |>
+        distinct(id) |>
+        collect() |>
+        nrow()
+    )
+  ) |>
+    do.call(what = rbind) |>
+    mutate(
+      proportion = not_in_corpus / corpus_size
+    )
+
+  saveRDS(data, file = fn)
+}
+
+data |>
+  knitr::kable()
+```
+
+
+# Dendrograms
+## Strategies Dendrogram
+
+```{r}
+#| label: strategies_options_tree_data
+#|
+sts <- data.frame(
+    "Strategy" = NA,
+    "Option" = NA,
+    term = params$sts_strategies_options |>
+        gsub(pattern = "\"", replacement = "") |>
+        gsub(pattern = " OR$", replacement = "")
+)
+
+sts <- sts[sts$term != "", ]
+for (i in 1:nrow(sts)) {
+    if (grepl("^# ", sts$term[i])) {
+        strategy <- gsub("^# ", "", sts$term[i]) |>
+            gsub(pattern = "\"", replacement = "") |>
+            gsub(pattern = " OR$", replacement = "")
+    } else if (grepl("^## ", sts$term[i])) {
+        option <- gsub("^## ", "", sts$term[i]) |>
+            gsub(pattern = "\"", replacement = "") |>
+            gsub(pattern = " OR$", replacement = "")
+    } else {
+        sts$Strategy[i] <- strategy
+        sts$Option[i] <- option
+    }
+}
+sts <- sts[!is.na(sts$Strategy), ]
+sts <- sts[!is.na(sts$Option), ]
+```
+
+```{r}
+#| label: strategies_options_tree
+#| eval: true
+#|
+
+
+fn <- file.path("tca_corpus", "figures", "strategies_options_dendrogram_interactive.html")
+if (!file.exists(fn)) {
+    p <- collapsibleTree::collapsibleTree(
+        sts,
+        hierarchy = c("Strategy", "Option", "term")
+    )
+
+    htmlwidgets::saveWidget(
+        p,
+        file = fn
+    )
+
+    unlink(file.path("tca_corpus", "figures", "strategies_options_dendrogram_interactive_files"), recursive = TRUE)
+}
+```
+
+<iframe src="tca_corpus/figures/strategies_options_dendrogram_interactive.html" width="100%" height="800px"></iframe>
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_dendrogram_interactive.html){target="_blank"}
+
+```{r}
+#| label: strategies_options_static_tree_plot
+#| fig.height: 10
+#| fig.width: 10
+
+
+if (length(list.files(file.path("tca_corpus", "figures"), pattern = "strategies_options_dendrogram_circular")) < 2) {
+    strategies_options_tree <- data.frame(
+        from = c(rep("x", length(sts$Strategy)), sts$Strategy),
+        to = c(sts$Strategy, sts$Option)
+    ) |>
+        dplyr::distinct()
+
+    vertices <- data.frame(
+        names = unique(c(strategies_options_tree$from, strategies_options_tree$to)),
+        to = unique(c(strategies_options_tree$from, strategies_options_tree$to))
+    )
+    vertices$color <- ifelse(vertices$names %in% sts$Strategy, "blue", "red")
+    vertices$hjust <- 0.5
+    vertices$vjust <- 0
+    vertices$vjust[grep("5)", vertices$to)] <- -0.3
+    # vertices$hjust[grep("5)", vertices$to)] <- 1
+    vertices$vjust[grep("1)", vertices$to)] <- 1
+    vertices$to[grep("5)", vertices$to)] <- gsub(", and", ",\nand", vertices$to[grep("5)", vertices$to)])
+    vertices$to[grep("5)", vertices$to)] <- gsub("ion and", "ion\nand", vertices$to[grep("5)", vertices$to)])
+
+
+    tree <- igraph::graph_from_data_frame(
+        d = strategies_options_tree,
+        vertices = vertices
+    )
+
+
+    p <- ggraph::ggraph(
+        tree,
+        layout = "dendrogram",
+        circular = TRUE
+    ) +
+        ggraph::geom_edge_diagonal() +
+        ggraph::geom_node_label(
+            ggplot2::aes(
+                label = to,
+                colour = color,
+                vjust = vjust,
+                hjust = hjust
+            ),
+            angle = 0
+        ) +
+        ggplot2::ylim(-1, 1) +
+        ggplot2::xlim(-1.5, 1.5)
+
+    ggplot2::ggsave(
+        plot = p,
+        file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.png"),
+        width = 12,
+        height = 6
+    )
+}
+```
+
+![](`r file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.png")`)
+
+To download high resolution, [click here](tca_corpus/figures/strategies_options_dendrogram_circular.pdf`){target="_blank"}
+
+## Actors Dendrogram
+
+```{r}
+#| label: actors_tree_data
+#|
+sts <- data.frame(
+    "Sector" = NA,
+    "Actor_Group" = NA,
+    term = params$sts_actors |>
+        gsub(pattern = "\"", replacement = "") |>
+        gsub(pattern = " OR$", replacement = "")
+)
+
+sts <- sts[sts$term != "", ]
+for (i in 1:nrow(sts)) {
+    if (grepl("^# ", sts$term[i])) {
+        sector <- gsub("^# ", "", sts$term[i]) |>
+            gsub(pattern = "\"", replacement = "") |>
+            gsub(pattern = " OR$", replacement = "")
+    } else if (grepl("^## ", sts$term[i])) {
+        actor <- gsub("^## ", "", sts$term[i]) |>
+            gsub(pattern = "\"", replacement = "") |>
+            gsub(pattern = " OR$", replacement = "")
+    } else {
+        sts$Sector[i] <- sector
+        sts$Actor_Group[i] <- actor
+    }
+}
+sts <- sts[!is.na(sts$Sector), ]
+sts <- sts[!is.na(sts$Actor_Group), ]
+```
+
+```{r}
+#| label: actors_tree
+#| eval: true
+#|
+
+
+fn <- file.path("tca_corpus", "figures", "actors_dendrogram_interactive.html")
+if (!file.exists(fn)) {
+    p <- collapsibleTree::collapsibleTree(
+        sts,
+        hierarchy = c("Sector", "Actor_Group", "term")
+    )
+
+    htmlwidgets::saveWidget(
+        p,
+        file = fn
+    )
+
+    unlink(file.path("tca_corpus", "figures", "actors_dendrogram_interactive_files"), recursive = TRUE)
+}
+```
+
+<iframe src="tca_corpus/figures/actors_dendrogram_interactive.html" width="100%" height="800px"></iframe>
+
+To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_dendrogram_interactive.html){target="_blank"}
+
+```{r}
+#| label: actors_static_tree_plot
+#| fig.height: 10
+#| fig.width: 10
+
+
+if (length(list.files(file.path("tca_corpus", "figures"), pattern = "actors_dendrogram_circular")) < 2) {
+    actors_tree <- data.frame(
+        from = c(rep("x", length(sts$Sector)), sts$Sector),
+        to = c(sts$Sector, sts$Actor_Group)
+    ) |>
+        dplyr::distinct()
+
+    vertices <- data.frame(
+        names = unique(c(actors_tree$from, actors_tree$to)),
+        to = unique(c(actors_tree$from, actors_tree$to))
+    )
+    vertices$color <- ifelse(vertices$names %in% sts$Sector, "blue", "red")
+    vertices$hjust <- 0.5
+    vertices$vjust <- 0
+    vertices$vjust[grep("5)", vertices$to)] <- -0.3
+    # vertices$hjust[grep("5)", vertices$to)] <- 1
+    vertices$vjust[grep("1)", vertices$to)] <- 1
+    vertices$to[grep("5)", vertices$to)] <- gsub(", and", ",\nand", vertices$to[grep("5)", vertices$to)])
+    vertices$to[grep("5)", vertices$to)] <- gsub("ion and", "ion\nand", vertices$to[grep("5)", vertices$to)])
+
+
+    tree <- igraph::graph_from_data_frame(
+        d = actors_tree,
+        vertices = vertices
+    )
+
+
+    p <- ggraph::ggraph(
+        tree,
+        layout = "dendrogram",
+        circular = TRUE
+    ) +
+        ggraph::geom_edge_diagonal() +
+        ggraph::geom_node_label(
+            ggplot2::aes(
+                label = to,
+                colour = color,
+                vjust = vjust,
+                hjust = hjust
+            ),
+            angle = 0
+        ) +
+        ggplot2::ylim(-1, 1) +
+        ggplot2::xlim(-1.5, 1.5)
+
+    ggplot2::ggsave(
+        plot = p,
+        file.path("tca_corpus", "figures", "actors_dendrogram_circular.pdf"),
+        width = 12,
+        height = 6
+    )
+    ggplot2::ggsave(
+        plot = p,
+        file.path("tca_corpus", "figures", "actors_dendrogram_circular.png"),
+        width = 12,
+        height = 6
+    )
+}
+```
+
+![](`r file.path("tca_corpus", "figures", "actors_dendrogram_circular.png")`)
+
+To download high resolution, [click here](tca_corpus/figures/actors_dendrogram_circular.pdf`){target="_blank"}
+
+
+
+# === Not used additional plots and tables ===
+
+
+## Assessment of Search Terms Using OpenAlex
+
+
+
+## Search Terms 
+Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu to adopt them for OpenAlex.
+
+### Transformative Change
+
+
+
+```{r}
+#| label: s_1_transformative_change
+
+cat(params$s_1_transformative_change)
+```
+
+
+
+### Nature
+
+
+
+```{r}
+#| label: s_1_nature_environment
+#|
+
+cat(params$s_1_nature_environment)
+```
+
+
+### Assessment Corpus 
+
+```{r}
+#| label: s_1_tca_corpus
+#|
+
+cat(params$s_1_tca_corpus)
+```
+
+
+### Chapter 1
+
+#### 01 {#sec-ch1-01}
+
+
+
+```{r}
+#| label: s_1_ch1_01
+#|
+
+cat(params$s_1_ch1_01)
+```
+
+
+
+#### 02 {#sec-ch1-02}
+
+
+
+```{r}
+#| label: s_1_ch1_02
+#|
+
+cat(params$s_1_ch1_02)
+```
+
+
+
+#### 03 {#sec-ch1-03}
+
+
+
+```{r}
+#| label: s_1_ch1_03
+#|
+
+cat(params$s_1_ch1_03)
+```
+
+
+
+#### 04 {#sec-ch1-04}
+
+
+
+```{r}
+#| label: s_1_ch1_04
+#|
+
+cat(params$s_1_ch1_04)
+```
+
+
+
+#### 05 {#sec-ch1-05}
+
+
+
+```{r}
+#| label: s_1_ch1_05
+#|
+
+cat(params$s_1_ch1_05)
+```
+
+
+
+#### 06 {#sec-ch1-06}
+
+
+
+```{r}
+#| label: s_1_ch1_06
+#|
+
+cat(params$s_1_ch1_06)
+```
+
+
+
+### Chapter 2 {#sec-ch2}
+
+
+
+```{r} 
+#| label: s_1_ch2
+#|
+
+cat(params$s_1_ch2)
+```
+
+
+
+### Chapter 3
+
+#### 01 {#sec-ch3-01}
+
+
+
+```{r}
+#| label: s_1_ch3_01
+#|
+
+cat(params$s_1_ch3_01)
+```
+
+
+
+#### 02 {#sec-ch3-02}
+
+
+
+```{r}
+#| label: s_1_ch3_02
+#|
+
+cat(params$s_1_ch3_02)
+```
+
+
+
+#### 03 {#sec-ch3-03}
+
+
+
+```{r}
+#| label: s_1_ch3_03
+#|
+
+cat(params$s_1_ch3_03)
+```
+
+
+
+#### 04 {#sec-ch3-04}
+
+
+
+```{r}
+#| label: s_1_ch3_04
+#|
+
+cat(params$s_1_ch3_04)
+```
+
+
+
+#### 05 {#sec-ch3-05}
+
+```{r}
+#| label: s_1_ch3_05
+#|
+
+cat(params$s_1_ch3_05)
+```
+
+
+#### 06 {#sec-ch3-06}
+
+
+
+```{r}
+#| label: s_1_ch3_06
+#|
+
+cat(params$s_1_ch3_06)
+```
+
+
+### Chapter 4
+
+#### 01 {#sec-ch4-01}
+
+
+```{r}
+#| label: s_1_ch4_01
+#|
+
+cat(params$s_1_ch4_01)
+```
+
+
+#### 02 {#sec-ch4-02}
+
+
+```{r}
+#| label: s_1_ch4_02
+#|
+
+cat(params$s_1_ch4_02)
+```
+
+### Art
+
+```{r}
+#| label: st_art
+#|
+
+cat(params$st_art)
+```
+
+### Media
+
+```{r}
+#| label: st_media
+#|
+
+cat(params$st_media)
+```
+
+### Strategies and Options
+
+In contrast to the other search term, this opne contains multiple sets of search terms
+
+```{r}
+#| label: sts_strategies_options
+#|
+
+cat(params$sts_strategies_options)
+```
+
+### Chapter 5
+
+#### Vision
+
+
+
+```{r}
+#| label: s_1_ch5_vision
+#|
+
+cat(params$s_1_ch5_vision)
+```
+
+
+#### Case
+
+
+
+```{r}
+#| label: s_1_case
+#|
+
+cat(params$s_1_case)
+```
+
+
+### Number of Hits per Individual Corpus
+
+Here we show the number of hits for the key papers in the different individual corpi. The columns represent the different search terms as defined in @sec-search_terms.
+
+```{r}
+#| label: hits_per_search_term_table
+
+dat <- cbind(
+    search_term_hits
+)
+
+rownames(dat) <- dplyr::recode(
+    rownames(dat),
+    "transformative change" = "Transformative Change @sec-transform",
+    "nature environment" = "Nature @sec-nature",
+    "tca corpus" = "Assessment Corpus @sec-tca-corpus",
+    "Chapter 1 01" = "Ch1 01 @sec-ch1-01",
+    "Chapter 1 02" = "Ch1 02 @sec-ch1-02",
+    "Chapter 1 03" = "Ch1 03 @sec-ch1-03",
+    "Chapter 1 04" = "Ch1 04 @sec-ch1-04",
+    "Chapter 1 05" = "Ch1 05 @sec-ch1-05",
+    "Chapter 1 06" = "Ch1 06 @sec-ch1-06",
+    "Chapter 2" = "Ch2  @sec-ch2",
+    "Chapter 3 01" = "Ch3 01 @sec-ch3-01",
+    "Chapter 3 02" = "Ch3 02 @sec-ch3-02",
+    "Chapter 3 03" = "Ch3 03 @sec-ch3-03",
+    "Chapter 3 04" = "Ch3 04 @sec-ch3-04",
+    "Chapter 3 05" = "Ch3 05 @sec-ch3-05",
+    "Chapter 3 06" = "Ch3 06 @sec-ch3-06",
+    "Chapter 4 01" = "Ch4 01 @sec-ch4-01",
+    "Chapter 4 02" = "Ch4 02 @sec-ch4-02",
+    "Chapter 5 vision" = "Ch5 Vision @sec-ch5_vision",
+    "Chapter 5 vision case" = "Ch5 Vision Case @sec-ch5_vision_case",
+    "case" = "Ch5 Case @sec-case"
+)
+
+dat |>
+    knitr::kable(
+        caption = "Number of hits",
+    )
+
+rm(dat)
+```
+
+
+### Key Papers in Individual Corpi
+
+#### Summary
+Each column is a different search term, and each row consists of the key papers of a specific chapter and the author who provided the key papers. The number is the number of key papers occurring in the Individual Corpus.
+```{r}
+#| label: key_paper_hits_in_corpi_summary
+
+in_summary <- grepl("Total|overall", rownames(detail))
+knitr::kable(
+    detail[in_summary, ]
+)
+```
+
+
+
+#### Detail
+```{r}
+#| label: key_paper_hits_in_corpi_detail
+
+knitr::kable(
+    detail
+)
+```
+
+
+
+
+## TCA Corpus properties
+
+### Languages in TCA Corpus (from OpenAlex call)
+
+These are the languages of the abstract and title. Articles with multiple languages will be counted not accurate. Also, as this is
+the language of the abstract / title, it might not be the language of the full text.
+
+```{r}
+readRDS(file.path(".", "tca_corpus", "data", "tca_corpus_languages.rds"))$languages |>
+    IPBES.R::table_dt(
+        fn = "languages_tca_corpus"
+    )
+```
+
 
 ### Countries in TCA Corpus
 
@@ -2882,2819 +5890,4 @@ prim_topics_tca_corpus |>
     )
 ```
 
-
-## Additional Searches subsets
-
-```{r}
-file.path(".", "tca_corpus", "data", "additional_search.rds") |>
-    readRDS() |>
-    knitr::kable()
-```
-
-Differences between the used [media search term](tca_corpus/input/search terms/media.txt) and the original media search term:
-```{r}
-diffviewer::visual_diff(
-    "tca_corpus/input/search terms/media.org.txt",
-    "tca_corpus/input/search terms/media.txt"
-)
-```
-
-
-# ==== APPENDIX ====
-
-## Strategies/Options/Instruments for transformative change 
-
-The file [strategies_options.md](tca_corpus/input/search terms/strategies_options.md) contains the terms for the different strategies and options.
-
-I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](tca_corpus/input/search terms/tca_corpus.txt).
-
-### Methods
-
-#### Prepare Search Terms
-```{r}
-#| label: strategies_options_prepare_searchterms
-
-fn <- file.path("tca_corpus", "data", "strategies_options_terms.rds")
-if (!file.exists(fn)) {
-    sts <- data.frame(
-        "Strategy" = NA,
-        "Option" = NA,
-        term = params$sts_strategies_options
-    )
-    sts <- sts[sts$term != "", ]
-    for (i in 1:nrow(sts)) {
-        if (grepl("^# ", sts$term[i])) {
-            strategy <- gsub("^# ", "", sts$term[i])
-        } else if (grepl("^## ", sts$term[i])) {
-            option <- gsub("^## ", "", sts$term[i])
-        } else {
-            sts$Strategy[i] <- strategy
-            sts$Option[i] <- option
-        }
-    }
-    sts <- sts[!is.na(sts$Strategy), ]
-    sts <- sts[!is.na(sts$Option), ]
-
-    sts$Name <- paste0(sts$Strategy, " ||| ", sts$Option)
-
-    strategies_options_terms <- split(sts$term, sts$Name)
-
-    saveRDS(strategies_options_terms, file = fn)
-}
-```
-
-
-#### Run the search terms
-```{r}
-#| label: strategies_options_get_counts
-#|
-
-fn <- file.path("tca_corpus", "data", "strategies_options.rds")
-if (!file.exists(file.path(fn))) {
-    strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
-    strategies_options <- lapply(
-        names(strategies_options_terms),
-        function(strategy) {
-            message("- ", strategy)
-            result <- list()
-            result$term <- paste(strategies_options_terms[[strategy]], collapse = " ")
-            result$count <- NA
-            result$years <- data.frame(publication_year = NA, count = NA)
-            result$assess_search_terms <- assess_search_term(
-                st = strategies_options_terms[[strategy]],
-                AND_term = params$s_1_tca_corpus,
-                remove = " OR$",
-                excl_others = FALSE,
-                verbose = FALSE,
-                mc.cores = 1
-            ) |>
-                dplyr::arrange(desc(count))
-            #
-            try(
-                {
-                    result$count <- openalexR::oa_fetch(
-                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
-                        count_only = TRUE,
-                        output = "list",
-                        verbose = FALSE
-                    )$count
-                    message("  - ", result$count, " hits")
-                    #
-                    result$years <- openalexR::oa_fetch(
-                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
-                        group_by = "publication_year",
-                        output = "dataframe",
-                        verbose = FALSE
-                    ) |>
-                        dplyr::select(
-                            publication_year = key_display_name,
-                            count
-                        ) |>
-                        dplyr::arrange(
-                            publication_year
-                        )
-                },
-                silent = FALSE
-            )
-            return(result)
-        }
-    )
-
-    # Assign the names to the first and second level list
-    names(strategies_options) <- names(strategies_options_terms)
-
-    saveRDS(strategies_options, file = fn)
-}
-```
-
-
-#### Download Strategies Corpus (only ids)
-
-```{r}
-#| label: download_strategies_corpus
-#| eval: false
-#|
-
-tic()
-
-strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
-lapply(
-    names(strategies_options_terms),
-    function(strategy) {
-        message("- ", strategy)
-        IPBES.R::corpus_download(
-            pages_dir = paste0(params$pages_strategies_dir, "_", make.names(strategy)),
-            title_and_abstract_search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", paste0(strategies_options_terms[[strategy]], collapse = " "), ")")),
-            select_fields = c("id"),
-            continue = TRUE,
-            delete_pages_dir = FALSE,
-            dry_run = FALSE,
-            verbose = TRUE,
-            mc_cores = 8
-        )
-    }
-)
-
-toc()
-```
-
-
-#### Convert Strategies Pages to rds (only ids)
-
-```{r}
-#| label: convert_strategies_corpus
-#| eval: false
-#| 
-
-tic()
-
-fn <- file.path("tca_corpus", "data", "strategies_options_ids.rds")
-
-if (!file.exists(fn)) {
-    strategies__options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
-    strategies_options_ids <- lapply(
-        names(strategies__options_terms),
-        function(strategy) {
-            message("- ", strategy)
-            paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
-                list.files(
-                    pattern = ".rds$",
-                    recursive = TRUE,
-                    full.names = TRUE
-                ) |>
-                sapply(
-                    FUN = function(f) {
-                        readRDS(f)
-                    }
-                ) |>
-                unlist() |>
-                as.vector() |>
-                unique()
-        }
-    )
-    names(strategies_options_ids) <- names(strategies__options_terms)
-
-    saveRDS(strategies_options_ids, file = fn)
-}
-
-toc()
-```
-
-
-#### [x] Convert Strategies Pages in Cases to rds (only ids)
-
-```{r}
-#| label: convert_strategies_corpus_cases
-#|
-
-fn <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds")
-
-if (!file.exists(fn)) {
-    case_ids <- corpus_read(params$corpus_cases_dir) |>
-        dplyr::distinct(id) |>
-        collect() |>
-        unlist()
-    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
-
-    strategies_options_ids_cases <- lapply(
-        strategies_options_ids,
-        function(strategy) {
-            intersect(strategy, case_ids)
-        }
-    )
-
-    saveRDS(strategies_options_ids_cases, file = fn)
-}
-```
-
-
-#### Extract per year from Strategies Pages
-
-```{r}
-#| label: extract_strategies_per_year_corpus
-#|
-
-tic()
-
-fn <- file.path("tca_corpus", "data", "strategies_options_corpus.rds")
-
-if (!file.exists(fn)) {
-    strategies_options_terms <- readRDS(file.path("tca_corpus", "data", "strategies_options_terms.rds"))
-    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
-
-    strategies_options_corpus <- lapply(
-        names(strategies_options_terms),
-        function(strategy) {
-            message("- ", strategy)
-            years <- paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
-                list.files(
-                    pattern = "^set_publication_year=",
-                    recursive = FALSE,
-                    full.names = FALSE
-                ) |>
-                gsub(
-                    pattern = "set_publication_year=",
-                    replacement = ""
-                ) |>
-                as.integer()
-            #
-            result <- list()
-            result$term <- paste(strategies_options_terms[[strategy]], collapse = " ")
-            result$count <- length(strategies_options_ids[[strategy]])
-
-
-            result$years <- data.frame(
-                publication_year = years,
-                count = sapply(
-                    years,
-                    function(year) {
-                        paste0(params$pages_strategies_dir, "_", make.names(strategy)) |>
-                            list.files(
-                                pattern = ".rds$",
-                                recursive = TRUE,
-                                full.names = TRUE
-                            ) |>
-                            grep(
-                                pattern = paste0("set_publication_year=", year),
-                                value = TRUE
-                            ) |>
-                            sapply(
-                                FUN = function(f) {
-                                    readRDS(f)
-                                }
-                            ) |>
-                            unlist() |>
-                            as.vector() |>
-                            unique() |>
-                            length()
-                    }
-                )
-            )
-            return(result)
-        }
-    )
-
-    names(strategies_options_corpus) <- names(strategies_options_terms)
-
-    saveRDS(strategies_options_corpus, file = fn)
-}
-
-toc()
-```
-
-
-#### Create Strategies Matrix
-
-```{r}
-#| label: strategies_options_overlap
-#|
-
-fn <- file.path("tca_corpus", "data", "strategies_options_overlap.rds")
-
-if (!file.exists(fn)) {
-    strategies_options_ids <- readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
-
-    overlap_count <- function(x, y) {
-        length(intersect(x, y))
-    }
-
-    strategies_options_overlap <- outer(
-        strategies_options_ids,
-        strategies_options_ids,
-        Vectorize(overlap_count)
-    )
-
-    saveRDS(strategies_options_overlap, file = fn)
-    write.csv(strategies_options_overlap, file = gsub("rds$", "csv", fn))
-}
-```
-
-#### [x] Create Strategies Matrix Cases Only
-
-```{r}
-#| label: strategies_options_overlap_cases
-#|
-
-fn <- file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds")
-
-if (!file.exists(fn)) {
-    strategies_options_overlap_cases <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
-        readRDS()
-
-    strategies_options_overlap_cases <- sapply(
-        names(strategies_options_overlap_cases),
-        FUN = function(s1) {
-            sapply(
-                names(strategies_options_overlap_cases),
-                function(s2) {
-                    length(intersect(strategies_options_overlap_cases[[s1]], strategies_options_overlap_cases[[s2]]))
-                }
-            )
-        }
-    )
-
-    saveRDS(strategies_options_overlap_cases, file = fn)
-    write.csv(strategies_options_overlap_cases, file = gsub("rds$", "csv", fn))
-}
-```
-
-
-## Extract count Strategies
-```{r}
-strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids.rds") |>
-    readRDS()
-
-strategies_options_ids_cases <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
-    readRDS()
-
-count <- data.frame(
-    strategy = names(strategies_options_ids) |> 
-        strsplit(split = " \\|\\|\\| ") |> 
-        sapply(FUN = "[[", 1) |>
-        unique(),
-    count_tca = c(
-        strategy_1 = strategies_options_ids[grepl("Strategy 1", names(strategies_options_ids))] |>
-            unlist() |>
-            unique() |>
-            length(),
-        strategy_2 = strategies_options_ids[grepl("Strategy 2", names(strategies_options_ids))] |>
-            unlist() |>
-            unique() |>
-            length(),
-        strategy_3 = strategies_options_ids[grepl("Strategy 3", names(strategies_options_ids))] |>
-            unlist() |>
-            unique() |>
-            length(),
-        strategy_4 = strategies_options_ids[grepl("Strategy 4", names(strategies_options_ids))] |>
-            unlist() |>
-            unique() |>
-            length(),
-        strategy_5 = strategies_options_ids[grepl("Strategy 5", names(strategies_options_ids))] |>
-            unlist() |>
-            unique() |>
-            length()
-    ),
-    count_cases = c(
-        strategy_1 = strategies_options_ids_cases[grepl("Strategy 1", names(strategies_options_ids_cases))] |>
-            unlist() |>
-            unique() |>
-            length(),
-        strategy_2 = strategies_options_ids_cases[grepl("Strategy 2", names(strategies_options_ids_cases))] |>
-            unlist() |>
-            unique() |>
-            length(),
-        strategy_3 = strategies_options_ids_cases[grepl("Strategy 3", names(strategies_options_ids_cases))] |>
-            unlist() |>
-            unique() |>
-            length(),
-        strategy_4 = strategies_options_ids_cases[grepl("Strategy 4", names(strategies_options_ids_cases))] |>
-            unlist() |>
-            unique() |>
-            length(),
-        strategy_5 = strategies_options_ids_cases[grepl("Strategy 5", names(strategies_options_ids_cases))] |>
-            unlist() |>
-            unique() |>
-            length()
-    )
-)
-
-
-count$p_tca <- count$count_tca / corpus_read(params$corpus_dir) |>
-    dplyr::distinct(id) |>
-    collect() |>
-    nrow()
-
-count$p_cases <- count$count_cases / corpus_read(params$corpus_cases_dir) |>
-    dplyr::distinct(id) |>
-    collect() |>
-    nrow()
-
-count |> 
-    knitr::kable()
-```
-
-
-### Results
-
-#### Count of Strategies / Options Table
-```{r}
-#| label: strategies_options_corpus_counts_data
-#|
-
-# data from OpernAlex vie count
-# strategies_options_corpus <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
-
-# data from corpora
-strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
-
-data <- lapply(
-    names(strategies_options),
-    function(strategy) {
-        data.frame(
-            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
-            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
-            Count = strategies_options[[strategy]]$count,
-            Count_until_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year <= 1992]),
-            Count_after_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year > 1992])
-        )
-    }
-) |>
-    do.call(what = rbind)
-
-data |>
-    IPBES.R::table_dt(
-        fn = "strategies_options_corpus_counts",
-        fixedColumns = list(leftColumns = 0)
-    )
-```
-
-
-#### Plot of the Count of the Strategies / Options split at 1992
-
-This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in that perio as reflected on [OpenAlex](https://openalex.org).
-
-```{r}
-#| label: strategies_options_counts_figure
-#|
-
-figname <- file.path("tca_corpus", "figures", "strategies_options_time_split")
-
-figs <- list.files(
-    path = dirname(figname),
-    pattern = basename(figname),
-    recursive = TRUE
-) |>
-    length()
-
-if (figs < 6) {
-    # data from OpernAlex vie count
-    # strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
-
-    # data from corpora
-    strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
-
-    oa <- openalexR::oa_fetch(
-        search = "",
-        group_by = "publication_year",
-        output = "dataframe",
-        verbose = FALSE
-    )
-    oa_until_1992 <- sum(oa$count[oa$key <= 1992])
-    oa_after_1992 <- sum(oa$count[oa$key > 1992])
-
-    data <- lapply(
-        names(strategies_options),
-        function(strategy) {
-            data.frame(
-                Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
-                Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
-                Count = strategies_options[[strategy]]$count,
-                Count_until_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year <= 1992]),
-                Count_after_1992 = sum(strategies_options[[strategy]]$years$count[strategies_options[[strategy]]$years$publication_year > 1992])
-            )
-        }
-    ) |>
-        do.call(what = rbind)
-
-    ## As in Dendrogram
-    # data$Strategy[grep("Strategy 1", data$Strategy)] <- "Strategy 1: Conserve and regenerate places of value to nature and people"
-    # data$Strategy[grep("Strategy 2", data$Strategy)] <- "Strategy 2: Drive systemic change in the sectors most responsible for nature's decline"
-    # data$Strategy[grep("Strategy 3", data$Strategy)] <- "Strategy 3: Transform economic systems for nature and equity"
-    # data$Strategy[grep("Strategy 4", data$Strategy)] <- "Strategy 4: Transform governance systems to be inclusive, accountable and adaptive"
-    # data$Strategy[grep("Strategy 5", data$Strategy)] <- "Strategy 5: Shift societal views and values to recognise interconnections between humans and nature"
-
-    data$Strategy[grep("Strategy 1", data$Strategy)] <- "Strategy 1"
-    data$Strategy[grep("Strategy 2", data$Strategy)] <- "Strategy 2"
-    data$Strategy[grep("Strategy 3", data$Strategy)] <- "Strategy 3"
-    data$Strategy[grep("Strategy 4", data$Strategy)] <- "Strategy 4"
-    data$Strategy[grep("Strategy 5", data$Strategy)] <- "Strategy 5"
-
-    data$Concept[grep("Action 1.1", data$Concept)] <- "Action 1"
-    data$Concept[grep("Action 1.2", data$Concept)] <- "Action 1.2"
-    data$Concept[grep("Action 1.3a", data$Concept)] <- "Action 1.3a"
-    data$Concept[grep("Action 1.3b", data$Concept)] <- "Action 1.3b"
-    data$Concept[grep("Action 1.4", data$Concept)] <- "Action 1.4"
-    data$Concept[grep("Action 1.5", data$Concept)] <- "Action 1.5"
-    data$Concept[grep("Action 2.1a", data$Concept)] <- "Action 2.1a"
-    data$Concept[grep("Action 2.1b", data$Concept)] <- "Action 2b"
-    data$Concept[grep("Action 2.2a", data$Concept)] <- "Action 2.2a"
-    data$Concept[grep("Action 2.2b", data$Concept)] <- "Action 2.2b"
-    data$Concept[grep("Action 2.3", data$Concept)] <- "Action 2.3"
-    data$Concept[grep("Action 2.4", data$Concept)] <- "Action 2.4"
-    data$Concept[grep("Action 3.1", data$Concept)] <- "Action 3.1"
-    data$Concept[grep("Action 3.2a", data$Concept)] <- "Action 3.2a"
-    data$Concept[grep("Action 3.2b", data$Concept)] <- "Action 3.2b"
-    data$Concept[grep("Action 3.3", data$Concept)] <- "Action 3.3"
-    data$Concept[grep("Action 3.4", data$Concept)] <- "Action 3.4"
-    data$Concept[grep("Action 4.1", data$Concept)] <- "Action 4.1"
-    data$Concept[grep("Action 4.2", data$Concept)] <- "Action 4.2"
-    data$Concept[grep("Action 4.3", data$Concept)] <- "Action 4.3"
-    data$Concept[grep("Action 4.4", data$Concept)] <- "Action 4.4"
-    data$Concept[grep("Action 5.1", data$Concept)] <- "Action 5.1"
-    data$Concept[grep("Action 5.2", data$Concept)] <- "Action 5.2"
-    data$Concept[grep("Action 5.3", data$Concept)] <- "Action 5.3"
-    data$Concept[grep("Action 5.4", data$Concept)] <- "Action 5.4"
-    data$Concept[grep("Action 5.5", data$Concept)] <- "Action 5.5"
-
-    data <- data |>
-        dplyr::mutate(            
-            Strategy = paste0(Strategy, "\n", Concept),
-            Count_until_1992 = Count_until_1992 / oa_until_1992,
-            Count_after_1992 = Count_after_1992 / oa_after_1992,
-        ) |>
-        dplyr::group_by(Strategy) |>
-        dplyr::mutate(
-            Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
-            Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
-        )
-
-    data$Strategy <- data$Strategy |> as.factor()
-    levels(data$Strategy) <- rev(levels(data$Strategy))
-
-    figure <- data |>
-        tidyr::pivot_longer(
-            cols = c(Count_until_1992, Count_after_1992),
-            names_to = "Period",
-            values_to = "Count_year"
-        ) |>
-        # Create the plot
-        ggplot(aes(x = Strategy, y = Count_year, fill = Period)) +
-        geom_bar(stat = "identity") +
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "Strategy", y = "Count", fill = "Period") +
-        coord_flip() + 
-        theme(legend.position = "bottom")
-
-
-    ggplot2::ggsave(
-        paste0(figname, ".pdf"),
-        width = 8,
-        height = 9,
-        figure
-    )
-    ggplot2::ggsave(
-        paste0(figname, ".png"),
-        width = 8,
-        height = 9,
-        figure
-    )
-    ggplot2::ggsave(
-        paste0(figname, ".jpg"),
-        width = 8,
-        height = 9,
-        quality = 100,
-        figure
-    )
-
-    figure <- data |>
-        tidyr::pivot_longer(
-            cols = c(Count_until_1992_p, Count_after_1992_p),
-            names_to = "Period",
-            values_to = "Count_p_year"
-        ) |>
-        # Create the plot
-        ggplot(aes(x = Strategy, y = Count_p_year, fill = Period)) +
-        geom_bar(stat = "identity") +
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "Strategy", y = "Count", fill = "Period") +
-        coord_flip() + 
-        theme(legend.position = "bottom")
-
-
-    ggplot2::ggsave(
-        paste0(figname, "_p.pdf"),
-        width = 8,
-        height = 9,
-        figure
-    )
-    ggplot2::ggsave(
-        paste0(figname, "_p.png"),
-        width = 8,
-        height = 9,
-        figure
-    )
-    ggplot2::ggsave(
-        paste0(figname, "_p.jpg"),
-        width = 8,
-        height = 9,
-        quality = 100,
-        figure
-    )
-}
-```
-
-![The graph shows the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split.png")`)
-
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split.pdf")`){target="_blank"}
-
-![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.png")`)
-
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.pdf")`){target="_blank"}
-
-#### Assesment of individual terms
-
-These numbers are the number of hits of TCA Corpus AND each individual term of the Option
-
-This is based on the data from OpenAlex using API calls to get the count.
-
-```{r}
-#| label: strategies_options_asess
-#| output: asis
-
-strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
-
-lapply(
-    names(strategies_options),
-    function(strategy) {
-        res <- data.frame(
-            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
-            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
-            Term = strategies_options[[strategy]]$assess_search_terms$term,
-            Count = strategies_options[[strategy]]$assess_search_terms$count
-        )
-    }
-) |>
-    do.call(what = rbind) |>
-    IPBES.R::table_dt(
-        fn = "strategies_options_assessment_terms",
-        fixedColumns = list(leftColumns = 2)
-    )
-```
-
-
-#### Differences between Original and shortened search terms
-
-Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
-
-The differences the [original search term](./tca_corpus/input/search%20terms/strategies_options.org.md) and the [used search term](./tca_corpus/input/search%20terms/strategies_options.md) is shown below
-
-```{r}
-#| label: strategies_options_diff
-#|
-
-diffviewer::visual_diff(
-    file.path("tca_corpus", "input", "search terms", "strategies_options.org.md"),
-    file.path("tca_corpus", "input", "search terms", "strategies_options.md")
-)
-```
-
-#### Counts over Years for each TCA Corpus AND Strategies / Options
-
-```{r}
-#| label: strategies_options_years
-#|
-# data from OpernAlex vie count
-# strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options.rds"))
-
-# data from corpora
-strategies_options <- readRDS(file.path("tca_corpus", "data", "strategies_options_corpus.rds"))
-
-lapply(
-    names(strategies_options),
-    function(strategy) {
-        data.frame(
-            Strategy = strsplit(strategy, " \\|\\|\\| ")[[1]][1],
-            Concept = strsplit(strategy, " \\|\\|\\| ")[[1]][2],
-            Year = strategies_options[[strategy]]$years$publication_year,
-            Count = strategies_options[[strategy]]$years$count
-        )
-    }
-) |>
-    do.call(what = rbind) |>
-    IPBES.R::table_dt(
-        fn = "strategies_options_counts_per_year",
-        fixedColumns = list(leftColumns = 2)
-    )
-```
-
-<!-- #### [ ] Strategies / Options Works in Case Corpus -->
-
-```{r}
-#| label: actors_strategies_options_table
-#| eval: false
-
-readRDS(file.path("tca_corpus", "data", "strategies_options_cases.rds"))$strategies_options_case |>
-    dplyr::mutate(
-        p_cases = round(p_cases, 4)
-    ) |>
-    IPBES.R::table_dt(
-        fn = "strategies_options__cases",
-        fixedColumns = list(leftColumns = 0)
-    )
-```
-
-
-
-#### Matrix showing overlap of Strategies / Options
-
-The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
-
-The nodes can be moved and if selected, the links to / from that node are highlighted.
-
-```{r}
-#| label: strategies_option_overlap_figure
-#|
-
-fn <- file.path("tca_corpus", "figures", "strategies_options_interactive_matrix")
-
-if (!file.exists(paste0(fn, ".html"))) {
-    data <- readRDS(file.path("tca_corpus", "data", "strategies_options_overlap.rds"))
-
-    value <- diag(data)
-
-    for (i in 1:ncol(data)) {
-        for (j in 1:nrow(data)){
-            data[i, j] <- data[i, j] / min(value[i], value[j])
-        }
-    }
-
-    # Create a graph from the adjacency matrix
-    g <- igraph::graph_from_adjacency_matrix(
-        data,
-        mode = "max",
-        weighted = TRUE,
-        diag = FALSE
-    )
-
-    # Convert the graph to a data frame
-    nodes <- data.frame(
-        id = igraph::V(g)$name,
-        label = igraph::V(g)$name,
-        value = value
-    ) # |>
-    # arrange(desc(value))
-
-    edges <- igraph::as_data_frame(
-        g,
-        what = "edges"
-    )
-
-    names(edges) <- c("from", "to", "width")
-    edges$width <- (edges$width / max(edges$width)) * 20
-
-    nodes$strategy <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 1)
-    nodes$option <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 2)
-    nodes$option <- sapply(
-        strsplit(nodes$option, "\\. |: "),
-        function(x) {
-            return(x[length(x)])
-        }
-    )
-
-    colors <- rainbow(length(nodes$strategy)) # Generate a color for each strategy
-    names(colors) <- nodes$strategy
-    nodes$color <- colors[nodes$strategy]
-
-
-    nodes$label <- sapply(
-        strsplit(nodes$option, "\\. |: "),
-        function(x) {
-            return(x[length(x)])
-        }
-    )
-
-    # Calculate grid positions for the nodes
-
-    node_x <- 1:length(unique(nodes$strategy))
-    names(node_x) <- unique(nodes$strategy)
-    nodes$x <- node_x[nodes$strategy] * 300
-
-    node_y <- 1:length(unique(nodes$option))
-    offset <- 0
-    for (strategy in unique(nodes$strategy)) {
-        id_s <- nodes$strategy == strategy
-        names(node_y) <- unique(nodes$option[id_s])
-        nodes$y[id_s] <- (node_y[nodes$option[id_s]] + offset) * 200
-        if (offset == 0.4) {
-            offset <- 0
-        } else {
-            offset <- 0.4
-        }
-    }
-
-
-    # Center the nodes
-    nodes$x <- (nodes$x - max(nodes$x) / 2) / 3
-    nodes$y <- (nodes$y - max(nodes$y) / 2) / 3
-
-
-    # Create the interactive network graph
-
-    p <- visNetwork(
-        nodes,
-        edges,
-        height = "900px",
-        width = "1800px"
-    ) |>
-        visNodes(
-            x = nodes$x,
-            y = nodes$y,
-            fixed = FALSE,
-            physics = FALSE,
-            font = list(
-                size = 10
-            )
-        ) |>
-        visEdges(
-            physics = TRUE,
-            color = list(
-                color = "lightgray",
-                highlight = "black"
-            )
-        ) |>
-        visPhysics(
-            solver = "barnesHut",
-            timestep = 0.1,
-            stabilization = list(
-                iterations = 1000
-            )
-        )
-
-
-
-    htmlwidgets::saveWidget(
-        p,
-        file = paste0(fn, ".html")
-    )
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
-
-    unlink(paste0(fn, "_files"), recursive = TRUE)
-}
-```
-
-<iframe src="tca_corpus/figures/strategies_options_interactive_matrix.html" width="100%" height="800px"></iframe>
-
-
-To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_interactive_matrix.html){target="_blank"}
-
-To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix.pdf")`){target="_blank"}
-
-```{r}
-#| label: strategies_option_overlap_table
-#|
-
-readRDS(file.path("tca_corpus", "data", "strategies_options_overlap.rds")) |>
-    IPBES.R::table_dt(
-        fn = "strategies_options_overlap",
-        fixedColumns = list(leftColumns = 0)
-    )
-```
-
-#### [x] Matrix showing overlap of Strategies / Options Cases Only
-
-The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
-
-The nodes can be moved and if selected, the links to / from that node are highlighted.
-
-```{r}
-#| label: strategies_option_overlap_cases_figure
-#|
-
-fn <- file.path("tca_corpus", "figures", "strategies_options_interactive_matrix_cases")
-
-if (!file.exists(paste0(fn, ".html"))) {
-    data <- readRDS(file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds"))
-
-    value <- diag(data)
-
-    for (i in 1:ncol(data)) {
-        for (j in 1:nrow(data)){
-            data[i, j] <- data[i, j] / min(value[i], value[j])
-        }
-    }
-
-    # Create a graph from the adjacency matrix
-    g <- igraph::graph_from_adjacency_matrix(
-        data,
-        mode = "max",
-        weighted = TRUE,
-        diag = FALSE
-    )
-
-    # Convert the graph to a data frame
-    nodes <- data.frame(
-        id = igraph::V(g)$name,
-        label = igraph::V(g)$name,
-        value = value
-    ) # |>
-    # arrange(desc(value))
-
-    edges <- igraph::as_data_frame(
-        g,
-        what = "edges"
-    )
-
-    names(edges) <- c("from", "to", "width")
-    edges$width <- (edges$width / max(edges$width)) * 20
-
-    nodes$strategy <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 1)
-    nodes$option <- sapply(strsplit(nodes$id, " \\|\\|\\| "), `[`, 2)
-    nodes$option <- sapply(
-        strsplit(nodes$option, "\\. |: "),
-        function(x) {
-            return(x[length(x)])
-        }
-    )
-
-    colors <- rainbow(length(nodes$strategy)) # Generate a color for each strategy
-    names(colors) <- nodes$strategy
-    nodes$color <- colors[nodes$strategy]
-
-
-    nodes$label <- sapply(
-        strsplit(nodes$option, "\\. |: "),
-        function(x) {
-            return(x[length(x)])
-        }
-    )
-
-    # Calculate grid positions for the nodes
-
-    node_x <- 1:length(unique(nodes$strategy))
-    names(node_x) <- unique(nodes$strategy)
-    nodes$x <- node_x[nodes$strategy] * 300
-
-    node_y <- 1:length(unique(nodes$option))
-    offset <- 0
-    for (strategy in unique(nodes$strategy)) {
-        id_s <- nodes$strategy == strategy
-        names(node_y) <- unique(nodes$option[id_s])
-        nodes$y[id_s] <- (node_y[nodes$option[id_s]] + offset) * 200
-        if (offset == 0.4) {
-            offset <- 0
-        } else {
-            offset <- 0.4
-        }
-    }
-
-
-    # Center the nodes
-    nodes$x <- (nodes$x - max(nodes$x) / 2) / 3
-    nodes$y <- (nodes$y - max(nodes$y) / 2) / 3
-
-
-    # Create the interactive network graph
-
-    p <- visNetwork(
-        nodes,
-        edges,
-        height = "900px",
-        width = "1800px"
-    ) |>
-        visNodes(
-            x = nodes$x,
-            y = nodes$y,
-            fixed = FALSE,
-            physics = FALSE,
-            font = list(
-                size = 10
-            )
-        ) |>
-        visEdges(
-            physics = TRUE,
-            color = list(
-                color = "lightgray",
-                highlight = "black"
-            )
-        ) |>
-        visPhysics(
-            solver = "barnesHut",
-            timestep = 0.1,
-            stabilization = list(
-                iterations = 1000
-            )
-        )
-
-
-    htmlwidgets::saveWidget(
-        p,
-        file = paste0(fn, ".html")
-    )
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
-
-    unlink(paste0(fn, "_files"), recursive = TRUE)
-}
-```
-
-<iframe src="tca_corpus/figures/strategies_options_interactive_matrix_cases.html" width="100%" height="800px"></iframe>
-
-
-To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_interactive_matrix_cases.html){target="_blank"}
-
-To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix_cases.pdf")`){target="_blank"}
-
-```{r}
-#| label: strategies_option_overlap_cases_cases_table
-#|
-
-readRDS(file.path("tca_corpus", "data", "strategies_options_overlap_cases.rds")) |>
-    IPBES.R::table_dt(
-        fn = "strategies_options_overlap_cases",
-        fixedColumns = list(leftColumns = 1)
-    )
-```
-
-## Actors for transformative change 
-
-The file [actors.md](tca_corpus/input/search terms/actors.md) contains the terms for the different actors.
-
-I will now iterate through all of them and identify the number of hits per individual search term. This can be used as a result in itself in interpreting the importance of each term as well as to shorten the search term to be able to use it together with the [TCA search term](tca_corpus/input/search terms/tca_corpus.txt).
-
-### Methods
-
-#### Prepare Search Terms
-```{r}
-#| label: actors_prepare_searchterms
-
-fn <- file.path("tca_corpus", "data", "actors_terms.rds")
-if (!file.exists(fn)) {
-
-     sts <- data.frame(
-        "Sector" = NA,
-        "Actor_Group" = NA,
-        term = params$sts_actors
-    )
-    sts <- sts[sts$term != "", ]
-    for (i in 1:nrow(sts)) {
-        if (grepl("^# ", sts$term[i])) {
-            sector <- gsub("^# ", "", sts$term[i])
-        } else if (grepl("^## ", sts$term[i])) {
-            actor_group <- gsub("^## ", "", sts$term[i])
-        } else {
-            sts$Sector[i] <- sector
-            sts$Actor_Group[i] <- actor_group
-        }
-    }
-    sts <- sts[!is.na(sts$Sector), ]
-    sts <- sts[!is.na(sts$Actor_Group), ]
-
-    sts$Name <- paste0(sts$Sector, " ||| ", sts$Actor_Group)
-
-    actors_terms <- split(sts$term, sts$Name)
-    #############
-
-    saveRDS(actors_terms, file = fn)
-}
-```
-
-#### Run the search terms
-```{r}
-#| label: actors_get_counts
-
-fn <- file.path("tca_corpus", "data", "actors.rds")
-if (!file.exists(file.path(fn))) {
-    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
-    actors_options <- lapply(
-        names(actors_terms),
-        function(actor) {
-            message("- ", actor)
-            result <- list()
-            result$term <- paste(actors_terms[[actor]], collapse = " ")
-            result$count <- NA
-            result$years <- data.frame(publication_year = NA, count = NA)
-            result$assess_search_terms <- assess_search_term(
-                st = actors_terms[[actor]],
-                AND_term = params$s_1_tca_corpus,
-                remove = " OR$",
-                excl_others = FALSE,
-                verbose = FALSE,
-                mc.cores = params$mc.cores
-            ) |>
-                dplyr::arrange(desc(count))
-            #
-            try(
-                {
-                    result$count <- openalexR::oa_fetch(
-                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
-                        count_only = TRUE,
-                        output = "list",
-                        verbose = FALSE
-                    )$count
-                    message("  - ", result$count, " hits")
-                    #
-                    result$years <- openalexR::oa_fetch(
-                        title_and_abstract.search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", result$term, ")")),
-                        group_by = "publication_year",
-                        output = "dataframe",
-                        verbose = FALSE
-                    ) |>
-                        dplyr::select(
-                            publication_year = key_display_name,
-                            count
-                        ) |>
-                        dplyr::arrange(
-                            publication_year
-                        )
-                },
-                silent = FALSE
-            )
-            return(result)
-        }
-    )
-
-    # Assign the names to the first and second level list
-    names(actors_options) <- names(actors_terms)
-
-    saveRDS(actors_options, file = fn)
-}
-```
-
-#### Download Actors Corpus (only ids)
-
-```{r}
-#| label: download_actors_corpus
-#| eval: false
-#|
-
-tic()
-
-actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
-lapply(
-    names(actors_terms),
-    function(actor) {
-        message("- ", actor)
-        IPBES.R::corpus_download(
-            pages_dir = paste0(params$pages_actors_dir, "_", make.names(actor)),
-            title_and_abstract_search = IPBES.R::compact(paste0("(", params$s_1_tca_corpus, ") AND (", paste0(actors_terms[[actor]], collapse = " "), ")")),
-            select_fields = c("id"),
-            continue = TRUE,
-            delete_pages_dir = FALSE,
-            dry_run = FALSE,
-            verbose = FALSE,
-            mc_cores = 8
-        )
-    }
-)
-
-toc()
-```
-
-#### Convert Actors Pages to rds (only ids)
-
-```{r}
-#| label: convert_actors_corpus
-#|
-
-tic()
-
-fn <- file.path("tca_corpus", "data", "actors_ids.rds")
-
-if (!file.exists(fn)) {
-    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
-    actors_ids <- lapply(
-        names(actors_terms),
-        function(actor) {
-            message("- ", actor)
-            paste0(params$pages_actors_dir, "_", make.names(actor)) |>
-                list.files(
-                    pattern = ".rds$",
-                    recursive = TRUE,
-                    full.names = TRUE
-                ) |>
-                sapply(
-                    FUN = function(f) {
-                        readRDS(f)
-                    }
-                ) |>
-                unlist() |>
-                as.vector() |>
-                unique()
-        }
-    )
-    names(actors_ids) <- names(actors_terms)
-
-    saveRDS(actors_ids, file = fn)
-}
-
-toc()
-```
-
-
-
-#### [x] Convert Actors Pages in Cases to rds (only ids)
-
-```{r}
-#| label: convert_avtors_corpus_cases
-#|
-
-fn <- file.path("tca_corpus", "data", "actors_ids_cases.rds")
-
-if (!file.exists(fn)) {
-    case_ids <- corpus_read(params$corpus_cases_dir) |>
-        dplyr::distinct(id) |>
-        collect() |>
-        unlist()
-    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
-
-    actors_ids_cases <- lapply(
-        actors_ids,
-        function(actor) {
-            intersect(actor, case_ids)
-        }
-    )
-
-    saveRDS(actors_ids_cases, file = fn)
-}
-```
-
-
-
-#### Extract per year from Actors Pages
-
-```{r}
-#| label: extract_actors_per_year_corpus
-#|
-
-tic()
-
-fn <- file.path("tca_corpus", "data", "actors_corpus.rds")
-
-if (!file.exists(fn)) {
-    actors_terms <- readRDS(file.path("tca_corpus", "data", "actors_terms.rds"))
-    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
-
-    actors_corpus <- lapply(
-        names(actors_terms),
-        function(actor) {
-            message("- ", actor)
-            years <- paste0(params$pages_actors_dir, "_", make.names(actor)) |>
-                list.files(
-                    pattern = "^set_publication_year=",
-                    recursive = FALSE,
-                    full.names = FALSE
-                ) |>
-                gsub(
-                    pattern = "set_publication_year=",
-                    replacement = ""
-                ) |>
-                as.integer()
-            #
-            result <- list()
-            result$term <- paste(actors_terms[[actor]], collapse = " ")
-            result$count <- length(actors_ids[[actor]])
-
-
-            result$years <- data.frame(
-                publication_year = years,
-                count = sapply(
-                    years,
-                    function(year) {
-                        paste0(params$pages_actors_dir, "_", make.names(actor)) |>
-                            list.files(
-                                pattern = ".rds$",
-                                recursive = TRUE,
-                                full.names = TRUE
-                            ) |>
-                            grep(
-                                pattern = paste0("set_publication_year=", year),
-                                value = TRUE
-                            ) |>
-                            sapply(
-                                FUN = function(f) {
-                                    readRDS(f)
-                                }
-                            ) |>
-                            unlist() |>
-                            as.vector() |>
-                            unique() |>
-                            length()
-                    }
-                )
-            )
-            return(result)
-        }
-    )
-
-    names(actors_corpus) <- names(actors_terms)
-
-    saveRDS(actors_corpus, file = fn)
-}
-
-toc()
-```
-
-#### Create Actors Matrix
-
-```{r}
-#| label: actors_overlap
-#|
-
-fn <- file.path("tca_corpus", "data", "actors_overlap.rds")
-
-if (!file.exists(fn)) {
-    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
-
-    overlap_count <- function(x, y) {
-        length(intersect(x, y))
-    }
-
-    actors_overlap <- outer(
-        actors_ids,
-        actors_ids,
-        Vectorize(overlap_count)
-    )
-    
-    for (i in 1:length(dimnames(actors_overlap))) {
-        dimnames(actors_overlap)[[i]] <- dimnames(actors_overlap)[[i]] |>
-            gsub(
-                pattern = "NGO", 
-                replacement = "Non-governmental organizations"
-            ) |>
-            gsub(
-                pattern = "Indigenous people", 
-                replacement = "Indigenous Peoples"
-            )   
-    }
-
-    saveRDS(actors_overlap, file = fn)
-    write.csv(actors_overlap, file = gsub("rds$", "csv", fn))
-}
-```
-
-
-<!-- #### [ ] Actors in Case Corpus -->
-
-```{r}
-#| label: cases_actors_corpus
-#| eval: false
-
-fn <- file.path("tca_corpus", "data", "actors_case.rds")
-
-if (!file.exists(fn)) {
-    case_ids <- corpus_read(params$corpus_cases_dir) |>
-        dplyr::distinct(id) |>
-        collect() |>
-        unlist()
-    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids.rds"))
-
-    actors_case <- lapply(
-        names(actors_ids),
-        function(actor) {
-            message("- ", actor)
-            count <- sum(actors_ids[[actor]] %in% case_ids)
-            data.frame(
-                actor = actor,
-                count_cases = count,
-                count_tca = length(actors_ids[[actor]]),
-                p_cases = count / length(actors_ids[[actor]])
-            )
-        }
-    ) |>
-        do.call(what = rbind)
-
-    actors_cases <- list(
-        timestamp = Sys.time(),
-        actors_case = actors_case
-    )
-
-    saveRDS(actors_cases, file = fn)
-}
-```
-#### [x] Create Actors Matrix Cases Only
-
-```{r}
-#| label: actors_overlap_cases
-#|
-
-fn <- file.path("tca_corpus", "data", "actors_overlap_cases.rds")
-
-if (!file.exists(fn)) {
-    actors_ids <- readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds"))
-
-    overlap_count <- function(x, y) {
-        length(intersect(x, y))
-    }
-
-    actors_overlap <- outer(
-        actors_ids,
-        actors_ids,
-        Vectorize(overlap_count)
-    )
-
-    for (i in 1:length(dimnames(actors_overlap))) {
-        dimnames(actors_overlap)[[i]] <- dimnames(actors_overlap)[[i]] |>
-            gsub(
-                pattern = "NGO", 
-                replacement = "Non-governmental organizations"
-            ) |>
-            gsub(
-                pattern = "Indigenous people", 
-                replacement = "Indigenous Peoples"
-            )   
-    }
-
-    saveRDS(actors_overlap, file = fn)
-    write.csv(actors_overlap, file = gsub("rds$", "csv", fn))
-    
-    rm(actors_overlap)
-}
-```
-
-
-### Results
-
-#### Count of Actors Table
-```{r}
-#| label: actors_counts_data
-#|
-
-# data from OpernAlex vie count
-# actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
-
-# data from corpora
-actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
-
-data <- lapply(
-    names(actors),
-    function(actor) {
-        data.frame(
-            Actor = actor,
-            Count = actors[[actor]]$count,
-            Count_until_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year <= 1992]),
-            Count_after_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year > 1992])
-        )
-    }
-) |>
-    do.call(what = rbind)
-
-data |>
-    IPBES.R::table_dt(
-        fn = "strategies_options_counts",
-        fixedColumns = list(leftColumns = 2)
-    )
-```
-
-
-#### Assesment of individual terms
-
-These numbers are the number of hits of TCA Corpus AND each individual term of the Option
-
-```{r}
-#| label: actors_asess
-#| output: asis
-
-actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
-
-lapply(
-    names(actors),
-    function(actor) {
-        res <- data.frame(
-            Actor = actor,
-            Term = actors[[actor]]$assess_search_terms$term,
-            Count = actors[[actor]]$assess_search_terms$count
-        )
-    }
-) |>
-    do.call(what = rbind) |>
-    IPBES.R::table_dt(
-        fn = "actors_assessment_terms",
-        fixedColumns = list(leftColumns = 2)
-    )
-```
-
-
-#### Differences between Original and shortened search terms
-
-Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
-
-The differences the [original search term](./tca_corpus/input/search%20terms/actors.org.md) and the [used search term](./tca_corpus/input/search%20terms/actors.md) is shown below
-
-```{r}
-#| label: diff_actors
-#|
-
-diffviewer::visual_diff(
-    file.path("tca_corpus", "input", "search terms", "actors.org.md"),
-    file.path("tca_corpus", "input", "search terms", "actors.md")
-)
-```
-
-
-#### Counts over Years for each TCA Corpus AND Actors
-
-```{r}
-#| label: actors_years
-#|
-
-# data from OpernAlex vie count
-# actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
-
-# data from corpora
-actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
-
-lapply(
-    names(actors),
-    function(actor) {
-        data.frame(
-            Actor = actor,
-            Year = actors[[actor]]$years$publication_year,
-            Count = actors[[actor]]$years$count
-        )
-    }
-) |>
-    do.call(what = rbind) |>
-    IPBES.R::table_dt(
-        fn = "actors_counts_per_year",
-        fixedColumns = list(leftColumns = 2)
-    )
-```
-
-
-#### Plot of the Count of the Actors split at 1992
-
-This data is corrected for different research oputput before and after 1992 by dividing by the overall reasarch output in that perio as reflected on [OpenAlex](https://openalex.org).
-
-```{r}
-#| label: actors_counts_figure
-#|
-
-figname <- file.path("tca_corpus", "figures", "actors_time_split")
-
-figs <- list.files(
-    path = dirname(figname),
-    pattern = basename(figname),
-    recursive = TRUE
-) |> length()
-
-if (figs < 6) {
-    # data from OpernAlex vie count
-    # actors <- readRDS(file.path("tca_corpus", "data", "actors.rds"))
-
-    # data from corpora
-    actors <- readRDS(file.path("tca_corpus", "data", "actors_corpus.rds"))
-
-
-    oa <- openalexR::oa_fetch(
-        search = "",
-        group_by = "publication_year",
-        output = "dataframe",
-        verbose = FALSE
-    )
-    oa_until_1992 <- sum(oa$count[oa$key <= 1992])
-    oa_after_1992 <- sum(oa$count[oa$key > 1992])
-
-    data <- lapply(
-        names(actors),
-        function(actor) {
-            data.frame(
-                Actor = actor,
-                Count = actors[[actor]]$count,
-                Count_until_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year <= 1992]),
-                Count_after_1992 = sum(actors[[actor]]$years$count[actors[[actor]]$years$publication_year > 1992])
-            )
-        }
-    ) |>
-        do.call(what = rbind) |>
-        dplyr::mutate(
-            Count_until_1992 = Count_until_1992 / oa_until_1992,
-            Count_after_1992 = Count_after_1992 / oa_after_1992,
-        ) |>
-        dplyr::group_by(
-            Actor
-        ) |>
-        dplyr::mutate(
-            Count_until_1992_p = Count_until_1992 / sum(Count_until_1992 + Count_after_1992),
-            Count_after_1992_p = Count_after_1992 / sum(Count_until_1992 + Count_after_1992)
-        )
-
-
-    data$Actor <- gsub("Indigenous people", "Indigenous Peoples", data$Actor)
-    data$Actor <- gsub("NGO", "Non-governmental organizations", data$Actor)
-    data$Actor <- gsub("\\|\\|\\|", "\n", data$Actor)
-    data$Actor <- data$Actor |> as.factor()
-    levels(data$Actor) <- rev(levels(data$Actor))
-
-    figure <- data |>
-        tidyr::pivot_longer(
-            cols = c(Count_until_1992, Count_after_1992),
-            names_to = "Period",
-            values_to = "Count_year"
-        ) |>
-        # Create the plot
-        ggplot(aes(x = Actor, y = Count_year, fill = Period)) +
-        geom_bar(stat = "identity") +
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "Actors", y = "Count", fill = "Period") +
-        coord_flip() + 
-        theme(legend.position = "bottom")
-
-
-    ggplot2::ggsave(
-        paste0(figname, ".pdf"),
-        width = 8,
-        height = 8,
-        figure
-    )
-    ggplot2::ggsave(
-        paste0(figname, ".png"),
-        width = 8,
-        height = 8,
-        figure
-    )
-    ggplot2::ggsave(
-        paste0(figname, ".jpg"),
-        width = 8,
-        height = 8,
-        quality = 100,
-        figure
-    )
-
-    figure <- data |>
-        tidyr::pivot_longer(
-            cols = c(Count_until_1992_p, Count_after_1992_p),
-            names_to = "Period",
-            values_to = "Count_p_year"
-        ) |>
-        # Create the plot
-        ggplot(aes(x = Actor, y = Count_p_year, fill = Period)) +
-        geom_bar(stat = "identity") +
-        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-        labs(x = "Actor", y = "Count", fill = "Period") +
-        coord_flip() + 
-        theme(legend.position = "bottom")
-
-    ggplot2::ggsave(
-        paste0(figname, "_p.pdf"),
-        width = 8,
-        height = 8,
-        figure
-    )
-    ggplot2::ggsave(
-        paste0(figname, "_p.png"),
-        width = 8,
-        height = 8,
-        figure
-    )
-    ggplot2::ggsave(
-        paste0(figname, "_p.jpg"),
-        width = 8,
-        height = 8,
-        quality = 100,
-        figure
-    )
-
-}
-
-```
-
-![The graph shows the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split.png")`)
-
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split.pdf")`){target="_blank"}
-
-![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split_p.png")`)
-
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split_p.pdf")`){target="_blank"}
-
-<!-- #### [ ] Actors Works in Case Corpus -->
-
-```{r}
-#| label: actors_cases_table
-#| eval: false
-
-readRDS(file.path("tca_corpus", "data", "actors_case.rds"))$actors_case |>
-    dplyr::mutate(
-        p_cases = round(p_cases, 4)
-    ) |>
-    IPBES.R::table_dt(
-        fn = "actors_cases",
-        fixedColumns = list(leftColumns = 0)
-    )
-```
-
-
-#### Matrix showing overlap of Actors
-
-The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
-
-
-The nodes can be moved and if selected, the links to / from that node are highlighted.
-
-```{r}
-#| label: actors_overlap_figure
-#|
-
-fn <- file.path("tca_corpus", "figures", "actors_interactive_matrix")
-
-if (!file.exists(paste0(fn, ".html"))) {
-    data <- readRDS(file.path("tca_corpus", "data", "actors_overlap.rds"))
-
-    value <- diag(data)
-
-    for (i in 1:ncol(data)) {
-        for (j in 1:nrow(data)) {
-            data[i, j] <- data[i, j] / min(value[i], value[j])
-        }
-    }
-
-
-    # Create a graph from the adjacency matrix
-    g <- igraph::graph_from_adjacency_matrix(
-        data,
-        mode = "max",
-        weighted = TRUE,
-        diag = FALSE
-    )
-
-    # Convert the graph to a data frame
-    nodes <- data.frame(
-        id = igraph::V(g)$name,
-        label = igraph::V(g)$name,
-        value = value
-    )
-    edges <- igraph::as_data_frame(
-        g,
-        what = "edges"
-    )
-
-    names(edges) <- c("from", "to", "width")
-    edges$width <- (edges$width / max(edges$width)) * 20
-
-    nodes$sector <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 1)
-    nodes$actor_group <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 2)
-
-    colors <- rainbow(length(nodes$sector)) # Generate a color for each sector
-    names(colors) <- nodes$sector
-    nodes$color <- colors[nodes$sector]
-
-    nodes$label <- nodes$option
-
-    # Calculate grid positions for the nodes
-    node_x <- 1:length(unique(nodes$sector))
-    names(node_x) <- unique(nodes$sector)
-    nodes$x <- node_x[nodes$sector] * 300
-
-    node_y <- 1:length(unique(nodes$actor_group))
-    offset <- 0
-    for (sector in unique(nodes$sector)) {
-        id_s <- nodes$sector == sector
-        names(node_y) <- unique(nodes$actor_group[id_s])
-        nodes$y[id_s] <- (node_y[nodes$actor_group[id_s]] + offset) * 200
-        if (offset == 0.5) {
-            offset <- 0
-        } else {
-            offset <- 0.5
-        }
-    }
-
-    # Center the nodes
-    nodes$x <- nodes$x - max(nodes$x) / 2
-    nodes$y <- nodes$y - max(nodes$y) / 2
-
-    nodes$label <- nodes$actor_group
-
-    # Create the interactive network graph
-
-    p <- visNetwork(
-        nodes,
-        edges,
-        height = "900px",
-        width = "1800px"
-    ) |>
-        visNodes(
-            x = nodes$x,
-            y = nodes$y,
-            fixed = FALSE,
-            physics = FALSE,
-            font = list(
-                size = 24
-            )
-        ) |>
-        visEdges(
-            physics = TRUE,
-            color = list(
-                color = "lightgray",
-                highlight = "black"
-            )
-        ) |>
-        visPhysics(
-            solver = "barnesHut",
-            timestep = 0.1,
-            stabilization = list(
-                iterations = 1000
-            )
-        )
-
-    htmlwidgets::saveWidget(
-        p,
-        file = paste0(fn, ".html")
-    )
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".jpg"), delay = 3)
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".png"), delay = 3)
-    unlink(paste0(fn, "_files"), recursive = TRUE)
-}
-```
-
-<iframe src="tca_corpus/figures/actors_interactive_matrix.html" width="100%" height="800px"></iframe>
-
-To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_interactive_matrix.html){target="_blank"}
-
-To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix.pdf")`){target="_blank"}
-
-
-```{r}
-#| label: actors_overlap_table
-#|
-
-readRDS(file.path("tca_corpus", "data", "actors_overlap.rds")) |>
-    IPBES.R::table_dt(
-        fn = "actors_overlap",
-        fixedColumns = list(leftColumns = 0)
-    )
-```
-
-
-#### [x] Matrix showing overlap of Actors Cases Only
-
-The size of the nodes indicates the number of works in each node, while the thicknes of the edges (lines) indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
-
-
-The nodes can be moved and if selected, the links to / from that node are highlighted.
-
-```{r}
-#| label: actors_overlap_cases_figure
-#|
-
-fn <- file.path("tca_corpus", "figures", "actors_interactive_matrix_cases")
-
-if (!file.exists(paste0(fn, ".html"))) {
-    data <- readRDS(file.path("tca_corpus", "data", "actors_overlap_cases.rds"))
-
-    value <- diag(data)
-
-    for (i in 1:ncol(data)) {
-        for (j in 1:nrow(data)) {
-            data[i, j] <- data[i, j] / min(value[i], value[j])
-        }
-    }
-
-
-    # Create a graph from the adjacency matrix
-    g <- igraph::graph_from_adjacency_matrix(
-        data,
-        mode = "max",
-        weighted = TRUE,
-        diag = FALSE
-    )
-
-    # Convert the graph to a data frame
-    nodes <- data.frame(
-        id = igraph::V(g)$name,
-        label = igraph::V(g)$name,
-        value = value
-    )
-    edges <- igraph::as_data_frame(
-        g,
-        what = "edges"
-    )
-
-    names(edges) <- c("from", "to", "width")
-    edges$width <- (edges$width / max(edges$width)) * 20
-
-    nodes$sector <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 1)
-    nodes$actor_group <- sapply(strsplit(nodes$label, " \\|\\|\\| "), `[`, 2)
-
-    colors <- rainbow(length(nodes$sector)) # Generate a color for each sector
-    names(colors) <- nodes$sector
-    nodes$color <- colors[nodes$sector]
-
-    nodes$label <- nodes$option
-
-    # Calculate grid positions for the nodes
-    node_x <- 1:length(unique(nodes$sector))
-    names(node_x) <- unique(nodes$sector)
-    nodes$x <- node_x[nodes$sector] * 300
-
-    node_y <- 1:length(unique(nodes$actor_group))
-    offset <- 0
-    for (sector in unique(nodes$sector)) {
-        id_s <- nodes$sector == sector
-        names(node_y) <- unique(nodes$actor_group[id_s])
-        nodes$y[id_s] <- (node_y[nodes$actor_group[id_s]] + offset) * 200
-        if (offset == 0.5) {
-            offset <- 0
-        } else {
-            offset <- 0.5
-        }
-    }
-
-    # Center the nodes
-    nodes$x <- nodes$x - max(nodes$x) / 2
-    nodes$y <- nodes$y - max(nodes$y) / 2
-
-    nodes$label <- nodes$actor_group
-
-    # Create the interactive network graph
-
-    p <- visNetwork(
-        nodes,
-        edges,
-        height = "900px",
-        width = "1800px"
-    ) |>
-        visNodes(
-            x = nodes$x,
-            y = nodes$y,
-            fixed = FALSE,
-            physics = FALSE,
-            font = list(
-                size = 24
-            )
-        ) |>
-        visEdges(
-            physics = TRUE,
-            color = list(
-                color = "lightgray",
-                highlight = "black"
-            )
-        ) |>
-        visPhysics(
-            solver = "barnesHut",
-            timestep = 0.1,
-            stabilization = list(
-                iterations = 1000
-            )
-        )
-
-    htmlwidgets::saveWidget(
-        p,
-        file = paste0(fn, ".html")
-    )
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".pdf"), delay = 3)
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".jpg"), delay = 3)
-    webshot::webshot(paste0(fn, ".html"), file = paste0(fn, ".png"), delay = 3)
-    unlink(paste0(fn, "_files"), recursive = TRUE)
-}
-```
-
-<iframe src="tca_corpus/figures/actors_interactive_matrix_cases.html" width="100%" height="800px"></iframe>
-
-To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_interactive_matrix_cases.html){target="_blank"}
-
-To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix_cases.pdf")`){target="_blank"}
-
-
-```{r}
-#| label: actors_overlap_cases_table
-#|
-
-readRDS(file.path("tca_corpus", "data", "actors_overlap_cases.rds")) |>
-    IPBES.R::table_dt(
-        fn = "actors_overlap",
-        fixedColumns = list(leftColumns = 1)
-    )
-```
-
-
-
-## Actors x Stategies / Options
-
-```{r}
-#| label: actors_strategies_options_overlap_data
-
-fn <- file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")
-
-if (!file.exists(fn)) {
-    actors_ids <- file.path("tca_corpus", "data", "actors_ids.rds") |> readRDS()
-    strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids.rds") |> readRDS()
-    sapply(actors_ids, function(actor) {
-        sapply(strategies_options_ids, function(strategy_option) {
-            length(intersect(actor, strategy_option))
-        })
-    }) |>
-        saveRDS(file = fn)
-}
-```
-
-```{r}
-#| label: actors_strategies_options_overlap_table
-readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")) |>
-    IPBES.R::table_dt(
-        fn = "actors_strategies_options_overlap",
-        fixedColumns = list(leftColumns = 0)
-    )
-```
-
-The colour indicates s indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
-
-```{r}
-#| label: actors_strategies_options_overlap_figure
-#|
-
-fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix")
-
-n <- list.files(
-    path = dirname(fn),
-    pattern = basename(fn),
-    recursive = TRUE
-) |> length()
-
-plot_heatmap <- function(data, actors_ids, strategies_options_ids, plot_data = NULL) {
-    if (is.null(plot_data)) {
-        actors_count <- sapply(
-            actors_ids,
-            length
-        )
-        strategies_options_count <- sapply(
-            strategies_options_ids,
-            length
-        )
-
-        for (i in 1:length(strategies_options_count)) {
-            for (j in 1:length(actors_count)) {
-                data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
-            }
-        }
-    } else {
-        data <- plot_data
-    }
-
-    sector <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
-    strategy <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |> sapply(FUN = "[[", 1)
-
-    colnames(data) <- strsplit(colnames(data), split = "\\ \\|\\|\\|\\ ") |>
-        sapply(FUN = "[[", 2)
-    rownames(data) <- strsplit(rownames(data), split = "\\ \\|\\|\\|\\ ") |>
-        sapply(FUN = "[[", 2)
-
-    dat_ggplot <- as.data.frame(as.table(data)) |>
-        dplyr::rename("y" = Var1, "x" = Var2, "Proportion" = Freq)
-
-    levels(dat_ggplot$y) <- rownames(data) |>
-        gsub(pattern = "Action ", replacement = "")
-
-    p <- dat_ggplot |>
-        ggplot(
-            aes(x = x, y = y, fill = Proportion)
-        ) +
-        geom_tile() +
-        scale_fill_gradient2(
-            low = "#196C71", # Blue color for negative values
-            mid = "#f7f7f7", # Light beige color for zero
-            high = "#B65719", # Red color for positive values
-            midpoint = 0 # Set the midpoint to zero
-        ) +
-        theme(
-            axis.text.x = element_text(angle = 90, hjust = 1)
-        ) +
-        ggplot2::ylab("Strategies / Actions") +
-        ggplot2::xlab("Actors")
-
-    vline <- c(0, diff(as.numeric(factor(sector))) != 0)
-    hline <- c(0, diff(as.numeric(factor(strategy))) != 0)
-
-    p <- p + geom_vline(xintercept = 0.5, color = "black")
-    for (i in vline * 1:(length(vline))) {
-        if (i > 0) {
-            p <- p + geom_vline(xintercept = i - 0.5, color = "black")
-        }
-    }
-    p <- p + geom_vline(xintercept = length(vline) + 0.5, color = "black")
-
-    p <- p + geom_hline(yintercept = 0.5, color = "black")
-    for (i in hline * 1:(length(hline))) {
-        if (i > 0) {
-            p <- p + geom_hline(yintercept = i - 0.5, color = "black")
-        }
-    }
-    p <- p + geom_hline(yintercept = length(hline) + 0.5, color = "black")
-
-
-    text_data <- data.frame(
-        text_y = c(24, 19.5, 15, 9, 3.5),
-        label = c(
-            "1. Place-based actions",
-            "2. Changing direct drivers",
-            "3. Transforming economic systems",
-            "4. Transforming governance systems",
-            "5. Shifting vies, values, and paradigms"
-        )
-    )
-    for (i in 1:nrow(text_data)) {
-        p <- p +
-            geom_text(
-                y = text_data$text_y[[i]],
-                x = 0.6,
-                label = text_data$label[[i]],
-                size = 3,
-                hjust = 0
-            )
-    }
-
-    text_data <- data.frame(
-        text_x = c(3.5, 8, 11.5, 15.5),
-        label = c(
-            "Civil society",
-            "Private sector",
-            "Government sector",
-            "Communication and\nknowledge sector"
-        )
-    )
-    for (i in 1:nrow(text_data)) {
-        p <- p +
-            geom_text(
-                y = 25.5,
-                x = text_data$text_x[[i]],
-                label = text_data$label[[i]],
-                size = 3,
-                hjust = "middle"
-            )
-    }
-
-    p <- p +
-        scale_y_discrete(
-            limits = rev(levels(dat_ggplot$y))
-        )
-
-    return(p)
-}
-
-if (n < 12) {
-    p <- plot_heatmap(
-        data = readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds")),
-        actors_ids = readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
-        strategies_options_ids = readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds"))
-    )
-
-    saveRDS(p, paste0(fn, ".ggp"))
-
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".pdf"),
-        width = 12,
-        height = 6
-    )
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".svg"),
-        width = 12,
-        height = 6
-    )
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".png"),
-        width = 12,
-        height = 6
-    )
-}
-```
-
-
-![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix.png")`)
-
-To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix.pdf){target="_blank"}
-
-
-
-
-## [x] Actors x Stategies / Options Cases Only
-
-```{r}
-#| label: actors_strategies_options_overlap_cases_data
-
-fn <- file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")
-
-if (!file.exists(fn)) {
-    actors_ids <- file.path("tca_corpus", "data", "actors_ids_cases.rds") |>
-        readRDS()
-
-    strategies_options_ids <- file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
-        readRDS()
-
-    sapply(actors_ids, function(actor) {
-        sapply(strategies_options_ids, function(strategy_option) {
-            length(intersect(actor, strategy_option))
-        })
-    }) |>
-        saveRDS(file = fn)
-}
-```
-
-```{r}
-#| label: actors_strategies_options_overlap_cases_table
-readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")) |>
-    IPBES.R::table_dt(
-        fn = "actors_strategies_options_overlap_cases",
-        fixedColumns = list(leftColumns = 0)
-    )
-```
-
-The colour indicates s indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
-
-```{r}
-#| label: actors_strategies_options_overlap_cases_figure
-#|
-
-fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases")
-
-n <- list.files(
-    path = dirname(fn),
-    pattern = basename(fn),
-    recursive = TRUE
-) |> length()
-
-if (n < 8) {
-    p <- plot_heatmap(
-        data = readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds")),
-        actors_ids = readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds")),
-        strategies_options_ids = readRDS(file.path("tca_corpus", "data", "strategies_options_ids_cases.rds"))
-    )
-
-    saveRDS(p, paste0(fn, ".ggp"))
-
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".pdf"),
-        width = 12,
-        height = 6
-    )
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".svg"),
-        width = 12,
-        height = 6
-    )
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".png"),
-        width = 12,
-        height = 6
-    )
-}
-```
-
-
-![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases.png")`)
-
-To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_cases.pdf){target="_blank"}
-
-
-## Differenct Cases / all
-
-
-The colour indicates s indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
-
-```{r}
-#| label: actors_strategies_options_overlap_difference_figure
-#|
-
-fn <- file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference")
-
-n <- list.files(
-    path = dirname(fn),
-    pattern = basename(fn),
-    recursive = TRUE
-) |> length()
-
-if (n < 4) {
-    data <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap.rds"))
-
-    actors_count <- sapply(
-        readRDS(file.path("tca_corpus", "data", "actors_ids.rds")),
-        length
-    )
-    strategies_options_count <- sapply(
-        readRDS(file.path("tca_corpus", "data", "strategies_options_ids.rds")),
-        length
-    )
-
-    for (i in 1:length(strategies_options_count)) {
-        for (j in 1:length(actors_count)) {
-            data[i, j] <- data[i, j] / min(strategies_options_count[i], actors_count[j])
-        }
-    }
-
-    rm(actors_count, strategies_options_count)
-
-    ####
-
-    data_cases <- readRDS(file.path("tca_corpus", "data", "actors_strategies_options_overlap_cases.rds"))
-
-    actors_count <- sapply(
-        readRDS(file.path("tca_corpus", "data", "actors_ids_cases.rds")),
-        length
-    )
-    strategies_options_count <- sapply(
-        readRDS(file.path("tca_corpus", "data", "strategies_options_ids_cases.rds")),
-        length
-    )
-
-    for (i in 1:length(strategies_options_count)) {
-        for (j in 1:length(actors_count)) {
-            data_cases[i, j] <- data_cases[i, j] / min(strategies_options_count[i], actors_count[j])
-        }
-    }
-    rm(actors_count, strategies_options_count)
-
-    ####
-
-    data <- data - data_cases
-    rm(data_cases)
-
-    ####
-
-
-    p <- plot_heatmap(
-        plot_data = data
-    )
-
-    saveRDS(p, paste0(fn, ".ggp"))
-
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".pdf"),
-        width = 12,
-        height = 6
-    )
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".svg"),
-        width = 12,
-        height = 6
-    )
-    ggplot2::ggsave(
-        plot = p,
-        paste0(fn, ".png"),
-        width = 12,
-        height = 6
-    )
-}
-```
-
-
-![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference.png")`)
-
-To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_difference.pdf){target="_blank"}
-
-## Combined Actors x Stategies Panel
-
-```{r}
-#| label: actors_strategies_options_combined_panel
-#|
-
-p_tca <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix.ggp")) +
-    theme(
-        legend.position = "none"
-    )
-p_cases <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases.ggp")) +
-    theme(
-        axis.title.y = element_blank(),
-        axis.text.y = element_blank()
-    )
-p_diff <- readRDS(file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference.ggp"))
-
-p <- (p_tca | p_cases) /
-    p_diff +
-    plot_layout(
-        heights = c(0.5, 1)
-    )
-
-####
-
-fn <- file.path("tca_corpus", "figures", "actors_strategies_options_combined_panel")
-
-saveRDS(
-    p, 
-    paste0(fn, ".ggp")
-)
-
-ggplot2::ggsave(
-    plot = p,
-    paste0(fn, ".pdf"),
-    width = 17,
-    height = 18
-)
-ggplot2::ggsave(
-    plot = p,
-    paste0(fn, ".svg"),
-    width = 17,
-    height = 18
-)
-ggplot2::ggsave(
-    plot = p,
-    paste0(fn, ".png"),
-    width = 17,
-    height = 18
-)
-
-```
-
-![](`r file.path("tca_corpus", "figures", "actors_strategies_options_combined_panel.png")`)
-
-To download high resolution pdf, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
-
-To download high resolution svg, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
-
-## Works not mentioning Actors and Strategies / Options
-
-```{r}
-#| label: works_not_mentioning_actors_strategies_options
-#| 
-
-ids <- list(
-    strategies = file.path("tca_corpus", "data", "strategies_options_ids.rds") |>
-        readRDS() |>
-        unlist(),
-    actors = file.path("tca_corpus", "data", "actors_ids.rds") |>
-        readRDS() |>
-        unlist(),
-    strategies_cases = file.path("tca_corpus", "data", "strategies_options_ids_cases.rds") |>
-        readRDS() |>
-        unlist(),
-    actors_cases = file.path("tca_corpus", "data", "actors_ids_cases.rds") |>
-        readRDS() |>
-        unlist()
-)
-
-list(
-    data.frame(
-        type = "TCA Corpus not in Strategies / Options",
-        not_in_corpus = params$corpus_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            filter(!id %in% ids$strategies) |>
-            collect() |>
-            nrow(),
-        corpus_size = params$corpus_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            collect() |>
-            nrow()
-    ),
-    data.frame(
-        type = "TCA Corpus not in Actors",
-        not_in_corpus = params$corpus_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            filter(!id %in% ids$actors) |>
-            collect() |>
-            nrow(),
-        corpus_size = params$corpus_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            collect() |>
-            nrow()
-    ),
-    data.frame(
-        type = "TCA Corpus not in neither",
-        not_in_corpus = params$corpus_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            filter(!id %in% c(ids$strategies, ids$actors)) |>
-            collect() |>
-            nrow(),
-        corpus_size = params$corpus_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            collect() |>
-            nrow()
-    ),
-    data.frame(
-        type = "Cases Corpus not in Strategies / Options",
-        not_in_corpus = params$corpus_cases_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            filter(!id %in% ids$strategies_cases) |>
-            collect() |>
-            nrow(),
-        corpus_size = params$corpus_cases_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            collect() |>
-            nrow()
-    ),
-    data.frame(
-        type = "Cases Corpus not in Actors",
-        not_in_corpus = params$corpus_cases_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            filter(!id %in% ids$actors_cases) |>
-            collect() |>
-            nrow(),
-        corpus_size = params$corpus_cases_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            collect() |>
-            nrow()
-    ),
-    data.frame(
-        type = "Cases Corpus not in neither",
-        not_in_corpus = params$corpus_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            filter(!id %in% c(ids$strategies, ids$actors)) |>
-            collect() |>
-            nrow(),
-        corpus_size = params$corpus_cases_dir |>
-            corpus_read() |>
-            distinct(id) |>
-            collect() |>
-            nrow()
-    )
-) |>
-    do.call(what = rbind) |>
-    mutate(
-        proportion = not_in_corpus / corpus_size
-    ) |>
-    knitr::kable()
-```
-
-# Tries
-
-## Dendrograms
-### Strategies Dendrogram
-
-```{r}
-#| label: strategies_options_tree_data
-#|
-sts <- data.frame(
-    "Strategy" = NA,
-    "Option" = NA,
-    term = params$sts_strategies_options |>
-        gsub(pattern = "\"", replacement = "") |>
-        gsub(pattern = " OR$", replacement = "")
-)
-
-sts <- sts[sts$term != "", ]
-for (i in 1:nrow(sts)) {
-    if (grepl("^# ", sts$term[i])) {
-        strategy <- gsub("^# ", "", sts$term[i]) |>
-            gsub(pattern = "\"", replacement = "") |>
-            gsub(pattern = " OR$", replacement = "")
-    } else if (grepl("^## ", sts$term[i])) {
-        option <- gsub("^## ", "", sts$term[i]) |>
-            gsub(pattern = "\"", replacement = "") |>
-            gsub(pattern = " OR$", replacement = "")
-    } else {
-        sts$Strategy[i] <- strategy
-        sts$Option[i] <- option
-    }
-}
-sts <- sts[!is.na(sts$Strategy), ]
-sts <- sts[!is.na(sts$Option), ]
-```
-
-```{r}
-#| label: strategies_options_tree
-#| eval: true
-#|
-
-
-fn <- file.path("tca_corpus", "figures", "strategies_options_dendrogram_interactive.html")
-if (!file.exists(fn)) {
-    p <- collapsibleTree::collapsibleTree(
-        sts,
-        hierarchy = c("Strategy", "Option", "term")
-    )
-
-    htmlwidgets::saveWidget(
-        p,
-        file = fn
-    )
-
-    unlink(file.path("tca_corpus", "figures", "strategies_options_dendrogram_interactive_files"), recursive = TRUE)
-}
-```
-
-<iframe src="tca_corpus/figures/strategies_options_dendrogram_interactive.html" width="100%" height="800px"></iframe>
-
-To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_dendrogram_interactive.html){target="_blank"}
-
-```{r}
-#| label: strategies_options_static_tree_plot
-#| fig.height: 10
-#| fig.width: 10
-
-
-if (length(list.files(file.path("tca_corpus", "figures"), pattern = "strategies_options_dendrogram_circular")) < 2) {
-    strategies_options_tree <- data.frame(
-        from = c(rep("x", length(sts$Strategy)), sts$Strategy),
-        to = c(sts$Strategy, sts$Option)
-    ) |>
-        dplyr::distinct()
-
-    vertices <- data.frame(
-        names = unique(c(strategies_options_tree$from, strategies_options_tree$to)),
-        to = unique(c(strategies_options_tree$from, strategies_options_tree$to))
-    )
-    vertices$color <- ifelse(vertices$names %in% sts$Strategy, "blue", "red")
-    vertices$hjust <- 0.5
-    vertices$vjust <- 0
-    vertices$vjust[grep("5)", vertices$to)] <- -0.3
-    # vertices$hjust[grep("5)", vertices$to)] <- 1
-    vertices$vjust[grep("1)", vertices$to)] <- 1
-    vertices$to[grep("5)", vertices$to)] <- gsub(", and", ",\nand", vertices$to[grep("5)", vertices$to)])
-    vertices$to[grep("5)", vertices$to)] <- gsub("ion and", "ion\nand", vertices$to[grep("5)", vertices$to)])
-
-
-    tree <- igraph::graph_from_data_frame(
-        d = strategies_options_tree,
-        vertices = vertices
-    )
-
-
-    p <- ggraph::ggraph(
-        tree,
-        layout = "dendrogram",
-        circular = TRUE
-    ) +
-        ggraph::geom_edge_diagonal() +
-        ggraph::geom_node_label(
-            ggplot2::aes(
-                label = to,
-                colour = color,
-                vjust = vjust,
-                hjust = hjust
-            ),
-            angle = 0
-        ) +
-        ggplot2::ylim(-1, 1) +
-        ggplot2::xlim(-1.5, 1.5)
-
-    ggplot2::ggsave(
-        plot = p,
-        file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.pdf"),
-        width = 12,
-        height = 6
-    )
-    ggplot2::ggsave(
-        plot = p,
-        file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.png"),
-        width = 12,
-        height = 6
-    )
-}
-```
-
-![](`r file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.png")`)
-
-To download high resolution, [click here](tca_corpus/figures/strategies_options_dendrogram_circular.pdf`){target="_blank"}
-
-### Actors Dendrogram
-
-```{r}
-#| label: actors_tree_data
-#|
-sts <- data.frame(
-    "Sector" = NA,
-    "Actor_Group" = NA,
-    term = params$sts_actors |>
-        gsub(pattern = "\"", replacement = "") |>
-        gsub(pattern = " OR$", replacement = "")
-)
-
-sts <- sts[sts$term != "", ]
-for (i in 1:nrow(sts)) {
-    if (grepl("^# ", sts$term[i])) {
-        sector <- gsub("^# ", "", sts$term[i]) |>
-            gsub(pattern = "\"", replacement = "") |>
-            gsub(pattern = " OR$", replacement = "")
-    } else if (grepl("^## ", sts$term[i])) {
-        actor <- gsub("^## ", "", sts$term[i]) |>
-            gsub(pattern = "\"", replacement = "") |>
-            gsub(pattern = " OR$", replacement = "")
-    } else {
-        sts$Sector[i] <- sector
-        sts$Actor_Group[i] <- actor
-    }
-}
-sts <- sts[!is.na(sts$Sector), ]
-sts <- sts[!is.na(sts$Actor_Group), ]
-```
-
-```{r}
-#| label: actors_tree
-#| eval: true
-#|
-
-
-fn <- file.path("tca_corpus", "figures", "actors_dendrogram_interactive.html")
-if (!file.exists(fn)) {
-    p <- collapsibleTree::collapsibleTree(
-        sts,
-        hierarchy = c("Sector", "Actor_Group", "term")
-    )
-
-    htmlwidgets::saveWidget(
-        p,
-        file = fn
-    )
-
-    unlink(file.path("tca_corpus", "figures", "actors_dendrogram_interactive_files"), recursive = TRUE)
-}
-```
-
-<iframe src="tca_corpus/figures/actors_dendrogram_interactive.html" width="100%" height="800px"></iframe>
-
-To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_dendrogram_interactive.html){target="_blank"}
-
-```{r}
-#| label: actors_static_tree_plot
-#| fig.height: 10
-#| fig.width: 10
-
-
-if (length(list.files(file.path("tca_corpus", "figures"), pattern = "actors_dendrogram_circular")) < 2) {
-    actors_tree <- data.frame(
-        from = c(rep("x", length(sts$Sector)), sts$Sector),
-        to = c(sts$Sector, sts$Actor_Group)
-    ) |>
-        dplyr::distinct()
-
-    vertices <- data.frame(
-        names = unique(c(actors_tree$from, actors_tree$to)),
-        to = unique(c(actors_tree$from, actors_tree$to))
-    )
-    vertices$color <- ifelse(vertices$names %in% sts$Sector, "blue", "red")
-    vertices$hjust <- 0.5
-    vertices$vjust <- 0
-    vertices$vjust[grep("5)", vertices$to)] <- -0.3
-    # vertices$hjust[grep("5)", vertices$to)] <- 1
-    vertices$vjust[grep("1)", vertices$to)] <- 1
-    vertices$to[grep("5)", vertices$to)] <- gsub(", and", ",\nand", vertices$to[grep("5)", vertices$to)])
-    vertices$to[grep("5)", vertices$to)] <- gsub("ion and", "ion\nand", vertices$to[grep("5)", vertices$to)])
-
-
-    tree <- igraph::graph_from_data_frame(
-        d = actors_tree,
-        vertices = vertices
-    )
-
-
-    p <- ggraph::ggraph(
-        tree,
-        layout = "dendrogram",
-        circular = TRUE
-    ) +
-        ggraph::geom_edge_diagonal() +
-        ggraph::geom_node_label(
-            ggplot2::aes(
-                label = to,
-                colour = color,
-                vjust = vjust,
-                hjust = hjust
-            ),
-            angle = 0
-        ) +
-        ggplot2::ylim(-1, 1) +
-        ggplot2::xlim(-1.5, 1.5)
-
-    ggplot2::ggsave(
-        plot = p,
-        file.path("tca_corpus", "figures", "actors_dendrogram_circular.pdf"),
-        width = 12,
-        height = 6
-    )
-    ggplot2::ggsave(
-        plot = p,
-        file.path("tca_corpus", "figures", "actors_dendrogram_circular.png"),
-        width = 12,
-        height = 6
-    )
-}
-```
-
-![](`r file.path("tca_corpus", "figures", "actors_dendrogram_circular.png")`)
-
-To download high resolution, [click here](tca_corpus/figures/actors_dendrogram_circular.pdf`){target="_blank"}
 
