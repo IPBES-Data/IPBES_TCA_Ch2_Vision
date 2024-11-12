@@ -12,12 +12,12 @@ TODO: UPLOAD REPO TO https://zenodo.org/uploads/11447691
 
 ## Technical Reports
 	
-- [ ] [TCA Corpus Report: IPBES_TCA_Corpus.html](IPBES_TCA_Corpus.html)
+- [x] [TCA Corpus Report: IPBES_TCA_Corpus.html](IPBES_TCA_Corpus.html)
   - [x] Data Package DOI [10.5281/zenodo.11370839](https://doi.org/10.5281/zenodo.11370839)
 - [x] [TCA Chapter 1 Evidence Causes: IPBES_TCA_Ch1_evidence_causes.html](IPBES_TCA_Ch1_evidence_causes.html)
   - [x] Data Package DOI [10.5281/zenodo.11389148](https://doi.org/10.5281/zenodo.11389147)
-- [ ] [TCA Chapter 2 Technology: IPBES_TCA_Ch2_technology.html](IPBES_TCA_Ch2_technology.html)
+- [x] [TCA Chapter 2 Technology: IPBES_TCA_Ch2_technology.html](IPBES_TCA_Ch2_technology.html)
   - [x] Data Package DOI [10.5281/zenodo.11389207](https://doi.org/10.5281/zenodo.11389207)
-- [ ] [TCA Chapter 5 Subsidies Reform: IPBES_TCA_Ch5_subsidies_reform.html](IPBES_TCA_Ch5_subsidies_reform.html)
+- [x] [TCA Chapter 5 Subsidies Reform: IPBES_TCA_Ch5_subsidies_reform.html](IPBES_TCA_Ch5_subsidies_reform.html)
   - [x] Data Package DOI [10.5281/zenodo.11447149](https://doi.org/10.5281/zenodo.11389258)
 

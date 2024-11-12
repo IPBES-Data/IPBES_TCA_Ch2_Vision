@@ -7,18 +7,44 @@ author:
         given: Rainer M.    
     id: rmk
     orcid: 0000-0002-7490-0066
-    email: Rainer.Krug@Senckenberg.de, Rainer@Krugs.de
-    affiliation: 
-      - name: Senckenberg
-        city: Frankfurt (Main)
-        url: https://www.senckenberg.de/en/institutes/sbik-f/
+    email: Rainer@Krugs.de
     roles: [author, editor]
-# abstract: > 
-#   A short description what this is about.
-#   This is not a tracditional abstract, but rather something else ...
-# keywords:
-#   - aaaaa
-#   - bbbbb
+  - name: 
+        family: Reyes Garcia
+        given: Victoria    
+    id: rgv
+    orcid: 
+    roles: [author] 
+  - name: 
+        family: Villasante
+        given: Sebastian    
+    id: sv
+    orcid: 0000-0001-6296-4479
+    roles: [author] 
+#   - name: 
+#         family: Lambertucci
+#         given: Sergio    
+#     id: ls
+#     orcid: 0000-0002-2624-2185
+#     roles: [author] 
+#   - name: 
+#         family: Agrawal
+#         given: Arun    
+#     id: aa
+#     orcid: 0000-0001-6796-2958
+#     roles: [author] 
+#   - name: 
+#         family: O'Brien
+#         given: Karen    
+#     id: ok
+#     orcid: 
+#     roles: [author] 
+#   - name: 
+#         family: Garibaldi
+#         given: Lucas    
+#     id: 
+#     orcid: 0000-0002-7032-8330
+#     roles: [author] 
 license: "CC BY"
 copyright: 
   holder: No idea
@@ -26,8 +52,8 @@ copyright:
 citation: 
   type: report
   container-title: IPBES Data Management Report
-  doi: 10.5281/zenodo.10251349
-doi: 10.5281/zenodo.10251349
+  doi: 10.5281/zenodo.11389482
+doi: 10.5281/zenodo.11389482
 version: 0.0.1
 
 format:
@@ -66,6 +92,38 @@ params:
     # figures parameter
     min_count_sentiment_timeseries: 10
 ---
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11389482.svg)](https://doi.org/10.5281/zenodo.11389482)
+[![GitHub release](https://img.shields.io/github/release/IPBES-Data/IPBES_TCA_Corpus.svg)](https://github.com/IPBES-Data/IPBES_TCA_Corpus/releases/latest)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+
+Part of the Data Management Report [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251349.svg)](https://doi.org/10.5281/zenodo.10251349)
+
+# Disclaimer
+This document is part of the Thematic assessment of the underlying causes of biodiversity loss, determinants of transformative change and options for achieving the 2050 vision for biodiversity. It is a technical background document to the [Data Management Report for the Transformative Change Assessment Corpus](https://doi.org/10.5281/zenodo.10251349). This document is a working document which is not approved by the plenary. For statements pelase see the approved version of the assessment. This document has the sole purpose to document the workflows used to obtain some statements, figures and maps, document the source of the data and make the process reproducible.
+
+# Contributors
+<!-- ## Assessment Experts
+
+- Shannon, Lynne
+- Liao, Chuan
+- Zinngrebe, Yves [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0003-1731-2222) 
+- Frantzeskaki, Niki [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0002-6983-448X)
+- Gurung, Janita [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0003-1053-4412)
+- Leventon, Julia [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0002-2447-8522) 
+- Wickson, Fern
+- Biggs, Oonsie
+- Bennett, Elena
+- Calderón-Contreras, Rafael [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0001-8709-4502)
+- Gosnell, Hannah
+- Cantu Fernandez, Mariana
+- Carr, Edward [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0001-7784-471X)
+- Benessaiah, Karina [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0001-9959-554X) -->
+
+## Data and Knowledge tsu
+
+- Niamir, Aidin [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0003-4511-3407)
+- Gudde, Renske  [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0003-4727-1011)
+
 
 ```{r}
 #| label: setup
