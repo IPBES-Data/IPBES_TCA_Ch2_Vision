@@ -1,6 +1,5 @@
 ---
-title: 'Data Management Report Transformative Change Assessment Corpus - SOD'
-date: today
+title: 'Thematic assessment of the underlying causes of biodiversity loss, determinants of transformative change and options for achieving the 2050 vision for biodiversity - Transformative Change Assessment Corpus - Technical Background Report'
 author:
   - name: 
         family: Krug
@@ -8,30 +7,53 @@ author:
     id: rmk
     orcid: 0000-0002-7490-0066
     email: Rainer.Krug@Senckenberg.de, Rainer@Krugs.de
-    affiliation: 
-      - name: Senckenberg
-        city: Frankfurt (Main)
-        url: https://www.senckenberg.de/en/institutes/sbik-f/
-    roles: [author, editor]
+    roles: [author, editor] 
+  - name: 
+        family: Villasante
+        given: Sebastian    
+    id: sv
+    orcid: 0000-0001-6296-4479
+    roles: [author] 
+  - name: 
+        family: Lambertucci
+        given: Sergio    
+    id: ls
+    orcid: 0000-0002-2624-2185
+    roles: [author] 
+  - name: 
+        family: Reyes Garcia
+        given: Victoria    
+    id: rgv
+    orcid: 
+    roles: [author] 
+  - name: 
+        family: Agrawal
+        given: Arun    
+    id: aa
+    orcid: 0000-0001-6796-2958
+    roles: [author] 
+  - name: 
+        family: O'Brien
+        given: Karen    
+    id: ok
+    orcid: 
+    roles: [author] 
+  - name: 
+        family: Garibaldi
+        given: Lucas    
+    id: 
+    orcid: 0000-0002-7032-8330
+    roles: [author] 
+
 abstract: > 
-    The literature search for the assessment corpus was conducted using search terms provided by the experts and refined in co-operation with the Knowldge and Data task force.
-    The search was conducted using [OpenAlex](https://openalex.org), scripted from [R](https://cran.r-project.org) to use  the [API](https://docs.openalex.org). Search terms for the following searches were defined:
-    **Transformative Change**,
-    **Nature / Environment** and 
-    **additional search terms for individual chapters and sub-chapters**
-    To assess the quality of the corpus, sets of key-papers were selected by the experts to verify if these are in the corpus. 
-    These key-papers were selected per chapter / sub-chapter to ensure that the corpus is representative of each chapter.  
-keywords:
-  - DMR
-  - TCA
-  - Assessment Corpus
+ 
 license: "CC BY"
 
 citation: 
   type: report
   container-title: Report Transformative Change Assessment Corpus
-  doi: 10.5281/zenodo.10251349
-doi: 10.5281/zenodo.10251349
+  doi: 10.5281/zenodo.11389482
+doi: 10.5281/zenodo.11389482
 version: 2.0.0 
 
 format:
@@ -148,13 +170,39 @@ params:
 
 
  
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251349.svg)](https://doi.org/10.5281/zenodo.10251349)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11389482.svg)](https://doi.org/10.5281/zenodo.11389482)
 [![GitHub release](https://img.shields.io/github/release/IPBES-Data/IPBES_TCA_Corpus.svg)](https://github.com/IPBES-Data/IPBES_TCA_Corpus/releases/latest)
-[![GitHub commits since latest release](https://img.shields.io/github/commits-since/IPBES-Data/IPBES_TCA_Corpus/latest)](https://github.com/IPBES-Data/IPBES_TCA_Corpus/commits/main)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
- 
+Part of the Data Management Report [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251349.svg)](https://doi.org/10.5281/zenodo.10251349)
+
+# Disclaimer
+This document is part of the Thematic assessment of the underlying causes of biodiversity loss, determinants of transformative change and options for achieving the 2050 vision for biodiversity. It is a technical background document to the [Data Management Report for the Transformative Change Assessment Corpus](https://doi.org/10.5281/zenodo.10251349). This document is a working document which is not approved by the plenary. For statements pelase see the approved version of the assessment. This document has the sole purpose to document the workflows used to obtain some statements, figures and maps, document the source of the data and make the process reproducible.
+
+# Contributors
+## Assessment Experts
+
+- Shannon, Lynne
+- Liao, Chuan
+- Zinngrebe, Yves [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0003-1731-2222) 
+- Frantzeskaki, Niki [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0002-6983-448X)
+- Gurung, Janita [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0003-1053-4412)
+- Leventon, Julia [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0002-2447-8522) 
+- Wickson, Fern
+- Biggs, Oonsie
+- Bennett, Elena
+- Calderón-Contreras, Rafael [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0001-8709-4502)
+- Gosnell, Hannah
+- Cantu Fernandez, Mariana
+- Carr, Edward [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0001-7784-471X)
+- Benessaiah, Karina [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0001-9959-554X)
+
+## Data and Knowledge tsu
+
+- Niamir, Aidin [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0003-4511-3407)
+- Gudde, Renske  [![ORCID](./images/ORCID-iD_icon-16x16.png)](https://orcid.org/0000-0003-4727-1011)
+
+
 ```{r}
 #| label: setup
 #| include: false
@@ -250,6 +298,18 @@ IPBES_TCA_Corpus
 ## Build No: ``r build``
 
 # Introduction
+
+The literature search for the assessment corpus was conducted using search terms provided by the experts and refined in co-operation with the Knowldge and Data task force.
+The search was conducted using [OpenAlex](https://openalex.org), scripted from [R](https://cran.r-project.org) to use  the [OpenAlex API](https://docs.openalex.org). Search terms for the following searches were defined:
+
+- **Transformative Change**,
+- **Nature / Environment**
+- **case studies** and 
+- **additional search terms** for specific corpora
+
+To assess the quality of the corpus, sets of key-papers were selected by the experts to verify if these are in the corpus. 
+These key-papers were selected per chapter / sub-chapter to ensure that the corpus is representative of each chapter.  
+
 The following terminology is used in this document:
 
 - **Corpus**: A body of works as based on a search on [OpenAlex](https://openalex.org)
@@ -4480,7 +4540,7 @@ readRDS(file.path("tca_corpus", "data", "actors_overlap_cases.rds")) |>
 
 
 
-# Actors x Stategies / Options
+# Actors versus Stategies / Options
 
 ```{r}
 #| label: actors_strategies_options_overlap_data
@@ -4861,7 +4921,7 @@ if (n < 4) {
 
 To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_difference.pdf){target="_blank"}
 
-# Combined Actors x Stategies Panel
+# Combined Actors versus Stategies Panel
 
 ```{r}
 #| label: actors_strategies_options_combined_panel
@@ -5309,7 +5369,7 @@ To download high resolution, [click here](tca_corpus/figures/actors_dendrogram_c
 
 
 
-# === Not used additional plots and tables ===
+# Parking Lot - Additional Analysis
 
 
 ## Assessment of Search Terms Using OpenAlex
