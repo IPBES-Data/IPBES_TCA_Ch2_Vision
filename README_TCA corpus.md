@@ -10,8 +10,8 @@
 ## Metadata
 
 - **Assessment**: Transformative Change Assessment
-- **Project name**: Define, Downloiad and Analyse TCA Corpus 
-- **Chapter**: all
+- **Project name**: Define, Download and Analyse TCA Corpus 
+- **Chapter**: all chapters
 - **Short Name**: IPBES_TCA_Corpus
 - **Github Repo**: [IPBES_TCA_Corpus](https://github.com/IPBES-Data/IPBES_TCA_Corpus/tree/DMR_final)
 
@@ -45,8 +45,8 @@
 
 ## Folders
 
-- **`data`**: data files created during the running of the code file and contains cached as well as final data files. Can be downloaded from []()
-- **`figures`**: figures created during the running of the code` file in low-res as well as high-res.
+- **`data`**: data files created during the running of the code file, containing cached as well as final data files. Can be downloaded from []()
+- **`figures`**: figures created during the running of the code` file in low-resolution as well as high-resolution.
 - **`R`**: R scripts used to run the code in the repo. Files in this folder will be sourced initially.
 
 ## Description
