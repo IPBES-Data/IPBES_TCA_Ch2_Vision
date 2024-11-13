@@ -27,12 +27,12 @@
 
 ## Folders
 
-- **`ch2_technology/data`**: data files created during the running of the `IPBES_TCA_Ch2_technology.qmd` file and contain cached as well as final data files. The data folder can be downloaded from [10.5281/zenodo.11352062](https://doi.org/10.5281/zenodo.11352062)
-- **`ch2_technology/data/corpus*`**: Corpora downloaded ftom OpenAlex. The code is in the `IPBES_TCA_Ch2_technology.qmd` file but not executed automatically. Re-downloading will take a long time (hours to days).
+- **`ch2_technology/data`**: data files created during the running of the `IPBES_TCA_Ch2_technology.qmd` file, containing cached as well as final data files. The data folder can be downloaded from [10.5281/zenodo.11352062](https://doi.org/10.5281/zenodo.11352062)
+- **`ch2_technology/data/corpus*`**: Corpora downloaded ftom OpenAlex. The code is in the `IPBES_TCA_Ch2_technology.qmd` file, but is not executed automatically. Re-downloading will take a long time (hours to days).
 - **`ch2_technology/input`**: input files for the `IPBES_TCA_Ch2_technology.qmd` file, including results from the sentiment analysis.
 - **`ch2_technology/input/search_terms`**: Search terms for specific searches within this report.
-- **`ch2_technology/figures`**: figures created during the running of the `IPBES_TCA_Ch2_technology.qmd` file in low-res as well as high-res.
-- **`ch2_technology/maps`**: maps created during the running of the `IPBES_TCA_Ch2_technology.qmd` file in low-res as well as high-res.
+- **`ch2_technology/figures`**: figures created during the running of the `IPBES_TCA_Ch2_technology.qmd` file in low-resolution as well as high-resolution.
+- **`ch2_technology/maps`**: maps created during the running of the `IPBES_TCA_Ch2_technology.qmd` file in low-resolution as well as high-resolution.
 
 ## Technical Reports
 
