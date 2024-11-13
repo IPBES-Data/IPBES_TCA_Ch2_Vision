@@ -1,6 +1,6 @@
 ---
-title: 'Report Assessment Ch2 Technology Visions'
-subtitle: 'Data Management Report'
+title: 'Chapter 2 Technology Visions - Technical Background Report'
+subtitle: 'IPBES Transformative Change Assessment'
 author:
   - name: 
         family: Krug
@@ -58,7 +58,7 @@ copyright:
   year: 2024
 citation: 
   type: report
-  container-title: IPBES Data Management Report
+  container-title: 'IPBES Transformative Change Assessment'
   doi: 10.5281/zenodo.11389482
 doi: 10.5281/zenodo.11389482
 version: 0.0.1

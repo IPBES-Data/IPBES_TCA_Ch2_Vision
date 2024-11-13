@@ -1,6 +1,6 @@
 ---
-title: 'Report Assessment Ch1 Evidence Causes'
-subtitle: 'Data Management Report'
+title: 'Chapter 1 Evidence Causes - Technical Background Report'
+subtitle: 'IPBES Transformative Change Assessment'
 author:
   - name: 
         family: Krug
@@ -51,7 +51,7 @@ copyright:
   year: 2024
 citation: 
   type: report
-  container-title: IPBES Data Management Report
+  container-title: 'IPBES Transformative Change Assessment'
   doi: 10.5281/zenodo.11389482
 doi: 10.5281/zenodo.11389482
 version: 2.0.0

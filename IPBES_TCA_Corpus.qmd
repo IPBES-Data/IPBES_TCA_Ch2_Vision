@@ -1,5 +1,6 @@
 ---
-title: 'Thematic assessment of the underlying causes of biodiversity loss, determinants of transformative change and options for achieving the 2050 vision for biodiversity - Transformative Change Assessment Corpus - Technical Background Report'
+title: 'Transformative Change Assessment Corpus - Technical Background Report'
+subtitle: 'IPBES Transformative Change Assessment'
 author:
   - name: 
         family: Krug
@@ -51,7 +52,7 @@ license: "CC BY"
 
 citation: 
   type: report
-  container-title: Report Transformative Change Assessment Corpus
+  container-title: 'IPBES Transformative Change Assessment'
   doi: 10.5281/zenodo.11389482
 doi: 10.5281/zenodo.11389482
 version: 2.0.0 
@@ -314,7 +315,8 @@ The following terminology is used in this document:
 
 - **Corpus**: A body of works as based on a search on [OpenAlex](https://openalex.org)
 - **Transformative Change Assessment Corpus**: Short: TCA corpus; The corpus resulting from the search terms `transformative AND nature`
-- **Case corpus**: The corpus resulting from `transformative AND nature AND case` 
+- **Case corpus**: The corpus resulting from `transformative AND nature AND case`
+- **work**: terminology used for a single document in their datasewt. Each work has a unique OpenAlex id, but not necesarily a DOI.
 
 The following searches are conducted on Title and Abstrat only as the availability of fulltext drops in 2020. OpenAlex did "inherit" from Microsoft Academic their initial corpus in 2021 which contained a many fulltext articles. After that time, other sources wer used to  which did not include fulltext for searches. To eliminate this bias, we limit the search for terms to search in abstract and title only.
 
@@ -5369,7 +5371,7 @@ To download high resolution, [click here](tca_corpus/figures/actors_dendrogram_c
 
 
 
-# Parking Lot - Additional Analysis
+# Parking Lot - Analysis amd Figures
 
 
 ## Assessment of Search Terms Using OpenAlex
