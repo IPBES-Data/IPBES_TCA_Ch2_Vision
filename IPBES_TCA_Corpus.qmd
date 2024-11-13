@@ -178,7 +178,7 @@ params:
 Part of the Data Management Report [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251349.svg)](https://doi.org/10.5281/zenodo.10251349)
 
 # Disclaimer
-This document is part of the Thematic assessment of the underlying causes of biodiversity loss, determinants of transformative change and options for achieving the 2050 vision for biodiversity. It is a technical background document to the [Data Management Report for the Transformative Change Assessment Corpus](https://doi.org/10.5281/zenodo.10251349). This document is a working document which is not approved by the plenary. For statements pelase see the approved version of the assessment. This document has the sole purpose to document the workflows used to obtain some statements, figures and maps, document the source of the data and make the process reproducible.
+This document is part of the Thematic assessment of the underlying causes of biodiversity loss, determinants of transformative change and options for achieving the 2050 vision for biodiversity. It is a technical background document to the [Data Management Report for the Transformative Change Assessment Corpus](https://doi.org/10.5281/zenodo.10251349). This document is a working document which is not approved by the Plenary. For statements please see the approved version of the assessment. This document has the sole purpose to document the workflows used to obtain some statements, figures and maps, to document the source of the data and to make the process reproducible.
 
 # Contributors
 ## Assessment Experts
@@ -300,7 +300,7 @@ IPBES_TCA_Corpus
 
 # Introduction
 
-The literature search for the assessment corpus was conducted using search terms provided by the experts and refined in co-operation with the Knowldge and Data task force.
+The literature search for the Transformative Change assessment corpus was conducted using search terms provided by the experts and refined in co-operation with the IPBES task force for data and knowledge management.
 The search was conducted using [OpenAlex](https://openalex.org), scripted from [R](https://cran.r-project.org) to use  the [OpenAlex API](https://docs.openalex.org). Search terms for the following searches were defined:
 
 - **Transformative Change**,
@@ -308,8 +308,8 @@ The search was conducted using [OpenAlex](https://openalex.org), scripted from [
 - **case studies** and 
 - **additional search terms** for specific corpora
 
-To assess the quality of the corpus, sets of key-papers were selected by the experts to verify if these are in the corpus. 
-These key-papers were selected per chapter / sub-chapter to ensure that the corpus is representative of each chapter.  
+To assess the quality of the corpus, sets of key papers were selected by the experts to verify if these are in the corpus. 
+These key papers were selected per chapter / sub-chapter to ensure that the corpus is representative of each chapter.  
 
 The following terminology is used in this document:
 
@@ -318,7 +318,7 @@ The following terminology is used in this document:
 - **Case corpus**: The corpus resulting from `transformative AND nature AND case`
 - **work**: terminology used for a single document in their datasewt. Each work has a unique OpenAlex id, but not necesarily a DOI.
 
-The following searches are conducted on Title and Abstrat only as the availability of fulltext drops in 2020. OpenAlex did "inherit" from Microsoft Academic their initial corpus in 2021 which contained a many fulltext articles. After that time, other sources wer used to  which did not include fulltext for searches. To eliminate this bias, we limit the search for terms to search in abstract and title only.
+The following searches are conducted on Title and Abstract only as the availability of fulltexts drops in 2020. OpenAlex "inherited" their initial corpus from Microsoft Academic, which contained a many fulltext articles. After that initial start, other sources were used which did not all include fulltext versions. To eliminate a bias towards fulltext articles, we limited the search to abstracts and titles only.
 
 ## Schematic Overview
 
@@ -359,15 +359,15 @@ if (nf < 3) {
 ![Schematic overview of the TCA Corpus as well as othher corpora using the TCA Corpus](tca_corpus/figures/tca_corpus_overview.png)
 
 - To download png, [click here](tca_corpus/tca_corpus_overview.png){target="_blank"}.
-- To download high resolution pdf, [click here](tca_corpus/figures/tca_corpus_overview.pdf){target="_blank"}.
-- To download high resolution svg, [click here](tca_corpus/figures/tca_corpus_overview.svg){target="_blank"}.
+- To download a high resolution pdf, [click here](tca_corpus/figures/tca_corpus_overview.pdf){target="_blank"}.
+- To download a high resolution svg, [click here](tca_corpus/figures/tca_corpus_overview.svg){target="_blank"}.
 
 
 ## Download of Data Files from Zenodo
 
-The data files of the repository are deposited in a separate Zenodo deposit untder the doi [10.5281/zenodo.11370839](https://doi.org/10.5281/zenodo.11370839). To re-download these, simply delete the `data` directory and run this code (or compile the report).
+The data files of the repository are deposited in a separate Zenodo deposit under the doi [10.5281/zenodo.11370839](https://doi.org/10.5281/zenodo.11370839). To re-download these, simply delete the `data` directory and run this code (or compile the report).
 
-This code will only work after the approval of the assessment as the repository will remain confidential before.
+This code will only work after the approval of the assessment, until then, the repository will remain confidential.
 
 ```{r}
 #| label: download_data
@@ -388,7 +388,7 @@ for (fn in fns) {
 ```
 
 ## Search Terms {#sec-search_terms}
-Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu to adopt them for OpenAlex.
+Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu for data and knowledge management to adapt them to be suitable for a search in OpenAlex.
 
 ### Transformative Change {#sec-transform}
 
@@ -456,7 +456,7 @@ cat(params$st_media)
 
 ### Strategies and Options
 
-In contrast to the other search term, this one contains multiple sets of search terms
+In contrast to the other search terms, this one contains multiple sets of search terms
 
 ```{r}
 #| label: sts_strategies_options_selected
@@ -467,7 +467,7 @@ cat(params$sts_strategies_options |> paste0(collapse = "\n"))
 
 ### Actors
 
-In contrast to the other search term, this one contains multiple sets of search terms
+In contrast to the other search terms, this one contains multiple sets of search terms
 
 ```{r}
 #| label: sts_actors_selected
@@ -862,7 +862,7 @@ if (!file.exists(fn)) {
 
 ### Works over Time
 
-Get works over time for different search terms
+Get works over time for the different search terms
 
 ```{r}
 #| label: get_count_years
@@ -995,9 +995,9 @@ if (!file.exists(fn)) {
 
 The corpus download will be stored in `data/pages` and the arrow database in `data/corpus`.
 
-This is not on github!
+This is not on GitHub!
 
-The corpus can be read by running `get_corpus()` which o[pens the database so that then it can be fed into a `dplyr` pipeline. After most `dplyr` functions, the actual data needs to be collected via `collect()`.
+The corpus can be read by running `get_corpus()` which opens the database, so that then it can be fed into a `dplyr` pipeline. After most `dplyr` functions, the actual data needs to be collected via `collect()`.
 
 Only then is the actual data read!
 
@@ -1103,7 +1103,7 @@ corpus_read(params$corpus_dir) |>
     )
 ```
 
-## Download TCA AND CASE Corpus
+## Download TCA and CASE Corpi
 
 ```{r}
 #| label: download_tca_cases_corpus
@@ -1655,7 +1655,7 @@ if (!file.exists(fn)) {
 }
 ```
 
-Some check of the data
+Some checks of the data
 
 ```{r}
 #| label: countries_tca_corpus_check
@@ -2364,7 +2364,7 @@ if (length(list.files(file.path("tca_corpus", "figures"), pattern = "sectors_pro
 
 ### Number of Hits per Individual Corpus
 
-Here we show the number of hits for the key papers in the different individual corpi. The columns represent the different search terms as defined in @sec-search_terms.
+Here we show the number of hits for the key papers in the individual corpi. The columns represent the different search terms as defined in @sec-search_terms.
 
 ```{r}
 #| label: hits_per_search_term_table_selected
@@ -2406,7 +2406,7 @@ dat[c(1, 2, 3, 4, 20), ] |>
 rm(dat)
 ```
 
-### Key papers in different Individual Corpi {#key_papers_in_corpi}
+### Key papers in the different Individual Corpi {#key_papers_in_corpi}
 
 
 ```{r}
@@ -2510,12 +2510,12 @@ knitr::kable(
 
 ### Publications over time
 
-The red line is the cumulative proportion of publications, the blue line the cumulative proportion of all of the Op[enAlex corpus. Both use the secondeary (red) axis.
+The red line is the cumulative proportion of publications, the blue line the cumulative proportion of all of the OpenAlex corpus. Both lines use the secondary (red) axis.
 
 
 ![](`r file.path("tca_corpus", "figures", "publications_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "publications_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "figures", "publications_over_time.pdf")`){target="_blank"}
 
 ```{r}
 readRDS(file.path(".", "tca_corpus", "data", "publications_over_time_tca_corpus.rds")) |>
@@ -2528,7 +2528,7 @@ readRDS(file.path(".", "tca_corpus", "data", "publications_over_time_tca_corpus.
 
 ![The graph shows the proportion of the different sectors over time](tca_corpus/figures/sectors_proportions_over_time.png)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_proportions_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_proportions_over_time.pdf")`){target="_blank"}
 
 
 
@@ -2540,7 +2540,7 @@ readRDS(file.path(".", "tca_corpus", "data", "sectors_over_time.rds")) |>
     )
 ```
 
-## Additional Searches subsets
+## Additional Searches Subsets
 
 ```{r}
 file.path(".", "tca_corpus", "data", "additional_search.rds") |>
@@ -2557,7 +2557,7 @@ diffviewer::visual_diff(
 ```
 
 
-# Strategies/Options/Instruments for transformative change 
+# Strategies/Options/Instruments for Transformative Change 
 
 The file [strategies_options.md](tca_corpus/input/search terms/strategies_options.md) contains the terms for the different strategies and options.
 
@@ -2599,7 +2599,7 @@ if (!file.exists(fn)) {
 ```
 
 
-### Run the search terms
+### Run the Search Terms
 ```{r}
 #| label: strategies_options_get_counts
 #|
@@ -3180,13 +3180,13 @@ if (figs < 6) {
 
 ![The graph shows the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split.png")`)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split.pdf")`){target="_blank"}
 
 ![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Strategy ||| Option`](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.png")`)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "figures", "strategies_options_time_split_p.pdf")`){target="_blank"}
 
-### Assesment of individual terms
+### Assessment of individual terms
 
 These numbers are the number of hits of TCA Corpus AND each individual term of the Option
 
@@ -3422,7 +3422,7 @@ if (!file.exists(paste0(fn, ".html"))) {
 
 To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_interactive_matrix.html){target="_blank"}
 
-To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix.pdf")`){target="_blank"}
+To download a high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix.pdf")`){target="_blank"}
 
 ```{r}
 #| label: strategies_option_overlap_table
@@ -3576,7 +3576,7 @@ if (!file.exists(paste0(fn, ".html"))) {
 
 To open the interactive graph or to download it, [click here](tca_corpus/figures/strategies_options_interactive_matrix_cases.html){target="_blank"}
 
-To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix_cases.pdf")`){target="_blank"}
+To download a high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "strategies_options_interactive_matrix_cases.pdf")`){target="_blank"}
 
 ```{r}
 #| label: strategies_option_overlap_cases_cases_table
@@ -4020,7 +4020,7 @@ data |>
 ```
 
 
-### Assesment of individual terms
+### Assessment of individual terms
 
 These numbers are the number of hits of TCA Corpus AND each individual term of the Option
 
@@ -4048,9 +4048,9 @@ lapply(
 ```
 
 
-### Differences between Original and shortened search terms
+### Differences between original and shortened search terms
 
-Due to length constraints, search terms were removed by removing the ones with the mallest number of hits.
+Due to length constraints, search terms were removed by removing the ones with the smallest number of hits.
 
 The differences the [original search term](./tca_corpus/input/search%20terms/actors.org.md) and the [used search term](./tca_corpus/input/search%20terms/actors.md) is shown below
 
@@ -4234,11 +4234,11 @@ if (figs < 6) {
 
 ![The graph shows the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split.png")`)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split.pdf")`){target="_blank"}
 
 ![The second graph shows the proportion of the by overall research output corrected publications before and after 1992 for each `Actor`](`r file.path("tca_corpus", "figures", "actors_time_split_p.png")`)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split_p.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "figures", "actors_time_split_p.pdf")`){target="_blank"}
 
 <!-- #### Actors Works in Case Corpus -->
 
@@ -4384,7 +4384,7 @@ if (!file.exists(paste0(fn, ".html"))) {
 
 To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_interactive_matrix.html){target="_blank"}
 
-To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix.pdf")`){target="_blank"}
+To download a high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix.pdf")`){target="_blank"}
 
 
 ```{r}
@@ -4526,7 +4526,7 @@ if (!file.exists(paste0(fn, ".html"))) {
 
 To open the interactive graph or to download it, [click here](tca_corpus/figures/actors_interactive_matrix_cases.html){target="_blank"}
 
-To download high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix_cases.pdf")`){target="_blank"}
+To download a high resolution pdf, [click here](`r file.path("tca_corpus", "figures", "actors_interactive_matrix_cases.pdf")`){target="_blank"}
 
 
 ```{r}
@@ -4739,7 +4739,7 @@ if (n < 4) {
 
 ![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix.png")`)
 
-To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix.pdf){target="_blank"}
+To download in high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix.pdf){target="_blank"}
 
 
 
@@ -4823,10 +4823,10 @@ if (n < 4) {
 
 ![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_cases.png")`)
 
-To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_cases.pdf){target="_blank"}
+To download in high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_cases.pdf){target="_blank"}
 
 
-# Differenct Cases / all
+# Different Cases / all
 
 
 The colour indicates s indicates the proportion of overlapping works of the maximum possible, i.e. $p_{i,j} = \frac{n_{\text{links}(i,j)}}{\min(n_i, n_j)}$
@@ -4921,7 +4921,7 @@ if (n < 4) {
 
 ![](`r file.path("tca_corpus", "figures", "actors_strategies_options_matrix_difference.png")`)
 
-To download high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_difference.pdf){target="_blank"}
+To download in high resolution, [click here](tca_corpus/figures/actors_strategies_options_matrix_difference.pdf){target="_blank"}
 
 # Combined Actors versus Stategies Panel
 
@@ -4984,9 +4984,9 @@ if (no_bn < 4) {
 
 ![](`r file.path("tca_corpus", "figures", "actors_strategies_options_combined_panel.png")`)
 
-To download high resolution pdf, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
+To download in high resolution pdf, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
 
-To download high resolution svg, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
+To download in high resolution svg, [click here](tca_corpus/figures/actors_strategies_options_combined_panel.pdf){target="_blank"}
 
 # Works not mentioning Actors and Strategies / Options
 
@@ -5239,7 +5239,7 @@ if (length(list.files(file.path("tca_corpus", "figures"), pattern = "strategies_
 
 ![](`r file.path("tca_corpus", "figures", "strategies_options_dendrogram_circular.png")`)
 
-To download high resolution, [click here](tca_corpus/figures/strategies_options_dendrogram_circular.pdf`){target="_blank"}
+To download in high resolution, [click here](tca_corpus/figures/strategies_options_dendrogram_circular.pdf`){target="_blank"}
 
 ## Actors Dendrogram
 
@@ -5367,7 +5367,7 @@ if (length(list.files(file.path("tca_corpus", "figures"), pattern = "actors_dend
 
 ![](`r file.path("tca_corpus", "figures", "actors_dendrogram_circular.png")`)
 
-To download high resolution, [click here](tca_corpus/figures/actors_dendrogram_circular.pdf`){target="_blank"}
+To download in high resolution, [click here](tca_corpus/figures/actors_dendrogram_circular.pdf`){target="_blank"}
 
 
 
@@ -5379,7 +5379,7 @@ To download high resolution, [click here](tca_corpus/figures/actors_dendrogram_c
 
 
 ## Search Terms 
-Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu to adopt them for OpenAlex.
+Here are the search terms used in this document. They were provided by the authors, and some adaptations were done by the tsu for data and knowledge management to adopt them for OpenAlex.
 
 ### Transformative Change
 
@@ -5627,7 +5627,7 @@ cat(params$st_media)
 
 ### Strategies and Options
 
-In contrast to the other search term, this opne contains multiple sets of search terms
+In contrast to the other search terms, this option contains multiple sets of search terms
 
 ```{r}
 #| label: sts_strategies_options
@@ -5738,7 +5738,7 @@ knitr::kable(
 
 ### Languages in TCA Corpus (from OpenAlex call)
 
-These are the languages of the abstract and title. Articles with multiple languages will be counted not accurate. Also, as this is
+These are the languages of the abstracts and titles. Articles with multiple languages will be regarded as not being accurate. Also, as this is
 the language of the abstract / title, it might not be the language of the full text.
 
 ```{r}
@@ -5774,7 +5774,7 @@ readRDS(file.path(".", "tca_corpus", "data", "countries_tca_corpus.rds")) |>
 
 ![](`r file.path("tca_corpus", "maps", "publications_countries.png")`)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "maps", "publications_countries.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "maps", "publications_countries.pdf")`){target="_blank"}
 
 
 ### Sectors over time
@@ -5784,12 +5784,12 @@ For clarity, the log of the cumulative sum of the sectors over time are shown he
 
 ![The top graph shows only the primary sector assigned, the bottom graph all sectors (first, secondary and tertiary)](tca_corpus/figures/sectors_over_time.png)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_over_time.pdf")`){target="_blank"}
 
 
 ![The graph shows the proportion of the different sectors over time](tca_corpus/figures/sectors_proportions_over_time.png)
 
-To download high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_proportions_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("tca_corpus", "maps", "sectors_proportions_over_time.pdf")`){target="_blank"}
 
 
 
@@ -5801,7 +5801,7 @@ readRDS(file.path(".", "tca_corpus", "data", "sectors_over_time.rds")) |>
     )
 ```
 
-### Topics in corpus
+### Topics in Corpus
 
 ```{r}
 #| label: prim_topics_tca_corpus_plot
