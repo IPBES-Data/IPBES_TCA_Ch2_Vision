@@ -26,13 +26,13 @@
 
 ## Folders
 
-- **`ch5_subsidies_reform/data`**: data files created during the running of the `IPBES_TCA_Ch5_subsidies_reform.qmd` file and contain cached as well as final data files. The data folder can be downloaded from [10.5281/zenodo.11352062](https://doi.org/10.5281/zenodo.11352062)
+- **`ch5_subsidies_reform/data`**: data files created during the running of the `IPBES_TCA_Ch5_subsidies_reform.qmd` file, containing cached as well as final data files. The data folder can be downloaded from [10.5281/zenodo.11352062](https://doi.org/10.5281/zenodo.11352062)
   - `gdm`: Folder containing data for Maps
-- **`ch5_subsidies_reform/data/corpus*`**: Corpora downloaded ftom OpenAlex. The code is in the `IPBES_TCA_Ch5_subsidies_reform.qmd` file but not executed automatically. Re-downloading will take a long time (hours to days).
+- **`ch5_subsidies_reform/data/corpus*`**: Corpora downloaded from OpenAlex. The code is in the `IPBES_TCA_Ch5_subsidies_reform.qmd` file, but is not executed automatically. Re-downloading will take a long time (hours to days).
 - **`ch5_subsidies_reform/input`**: input files for the `IPBES_TCA_Ch5_subsidies_reform.qmd` file, including results from the sentiment analysis.
 - **`ch5_subsidies_reform/input/search_terms`**: Search terms for specific searches within this report.
-- **`ch5_subsidies_reform/figures`**: figures created during the running of the `IPBES_TCA_Ch5_subsidies_reform.qmd` file in low-res as well as high-res.
-- **`ch5_subsidies_reform/maps`**: maps created during the running of the `IPBES_TCA_Ch5_subsidies_reform.qmd` file in low-res as well as high-res.
+- **`ch5_subsidies_reform/figures`**: figures created during the running of the `IPBES_TCA_Ch5_subsidies_reform.qmd` file in low-resolution as well as high-resolution.
+- **`ch5_subsidies_reform/maps`**: maps created during the running of the `IPBES_TCA_Ch5_subsidies_reform.qmd` file in low-resolution as well as high-resolution.
 
 ## Technical Reports
 
