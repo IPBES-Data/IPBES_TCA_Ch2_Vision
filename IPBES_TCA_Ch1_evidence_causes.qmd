@@ -222,11 +222,11 @@ The `data` folder is also available in a separate deposit at [10.5281/zenodo.113
 
 To guarantee reproducibility, it will be downloaded and extracted when the folder `ch1_evidence_causes/data` does not exist
 
-All code to re-generate the data is included but might take a long time to run and produce different numbers as OpenAlex is updated continously.
+All code to re-generate the data is included, but it might take a long time to run and produce different numbers as OpenAlex is updated continously.
 
 Disable this block and delete all content in the folder `ch1_evidence_causes/data` to re-generate the data. The folder `ch1_evidence_causes/data` has to exist.
 
-This code will only work after the approval of the assessment by the plenary as the repository will remain confidential before.
+This code will only work after the approval of the assessment by the Plenary as the repository will remain confidential before.
 
 ```{r}
 #| label: download_data
@@ -261,9 +261,9 @@ The BuidNo is automatically increased by one each time the report is rendered. I
 
 ![Overview of the analysis and results.](ch1_evidence_causes/figures/Ch1_evidence_causes.svg){width=100% height=100%}
 
-- To download png, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.png){target="_blank"}.
-- To download high resolution pdf, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.pdf){target="_blank"}.
-- To download high resolution svg, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.svg){target="_blank"}.
+- To download a png, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.png){target="_blank"}.
+- To download a high resolution pdf, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.pdf){target="_blank"}.
+- To download a high resolution svg, [click here](ch1_evidence_causes/figures/Ch1_evidence_causes.svg){target="_blank"}.
 
 All searches are done on OpenAlex directly. 
 The downloaded TCA Corpus is not used directly due to methodological and technical limitations.
@@ -333,7 +333,7 @@ count$ethical_tca <- openalexR::oa_fetch(
 The search terms is [concepts_1](ch1_evidence_causes/input/concepts_1.txt){target=_blank}
 Open Alex search.
 
-The [concepts_1](ch1_evidence_causes/input/concepts_1.txt){target=_blank} search returns a subset of the [nature corpus](tca_corpus/input/search terms/nature.txt){target=_blank} as `biodiversity` is a subset of the nature corpus. Therefore, it is not nbecessary to subset the nature corpus and the search can be done on the complete OpenAlex corpus
+The [concepts_1](ch1_evidence_causes/input/concepts_1.txt){target=_blank} search returns a subset of the [nature corpus](tca_corpus/input/search terms/nature.txt){target=_blank} as `biodiversity` is a subset of the nature corpus. Therefore, it is not necessary to subset the nature corpus and the search can be done on the complete OpenAlex corpus.
 .
 ```{r}
 #| label: get_concepts_1_count

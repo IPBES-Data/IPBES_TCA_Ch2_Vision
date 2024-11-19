@@ -172,7 +172,7 @@ IPBES_TCA_Ch5_Subsidies_Reform
 
 ## Build No: `r build`
 
-The Buid No is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same.
+The Build No is automatically increased by one each time the report is rendered. It is used to indicate different renderings when the version stays the same.
 
 # Introduction
 
@@ -189,11 +189,11 @@ The `data` folder is also available in a separate deposit at [10.5281/zenodo.113
 
 To guarantee reproducibility, it will be downloaded and extracted when the folder `ch5_subsidies_reform/data` does not exist
 
-All code to re-generate the data is included but might take a long time to run and produce different numbers as OpenAlex is updated continously.
+All code to re-generate the data is included, but it might take a long time to run and produce different numbers as OpenAlex is updated continuously.
 
 Disable this block and delete all content in the folder `ch5_subsidies_reform/data` to re-generate the data. The folder `ch5_subsidies_reform/data` has to exist.
 
-This code will only work after the approval of the assessment by the plenary as the repository will remain confidential before.
+This code will only work after the approval of the assessment by the Plenary as the repository will remain restricted before.
 
 ```{r}
 #| label: download_data
@@ -242,7 +242,7 @@ if (!file.exists(params$fn_count)) {
 
 The corpus download will be stored in `data/pages` and the parquet database in `data/corpus`.
 
-This is not on github!
+This is not on GitHub!
 
 The corpus can be read by running `read_corpus()` which opens the database so that then it can be fed into a `dplyr` pipeline. After most `dplyr` functions, the actual data needs to be collected via `dplyr::collect()`.
 
@@ -292,14 +292,14 @@ IPBES.R::corpus_pages_to_arrow(
 toc()
 ```
 
-Check the number of dulicates before running this next block, and then verify the new corpus afterwards. RUN ONLY MANUALY!
+Check the number of duplicates before running this next block, and then verify the new corpus afterwards. RUN MANUALLY ONLY!
 
 ```{r}
 #| label: fix_duplicate_ids_TEMPORARY
 #| eval: false
 #|
 
-ONLY RUN MANUALLY!!!!!!!!!!!!!!!!!!!!!!!
+ONLY RUN MANUALLY!
 
 (read_corpus("./data/ch_5_subsidies_reform/corpus") |> group_by(id) |> summarize(n = n()) |> filter(n > 1) |> collect() |> nrow()) / (corpus_read("./data/ch_5_subsidies_reform/corpus") |> nrow())
 
@@ -400,7 +400,7 @@ if (!file.exists(fn)) {
 }
 ```
 
-### Export 250 random papers for manual analysis
+### Export 250 papers for manual analysis randomly
 
 ```{r}
 #| label: export_random
@@ -640,7 +640,7 @@ if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), patte
 }
 ```
 
-## Countries of Authors Spatial
+## Spatial overview of the countries of the authors
 
 
 
@@ -1427,13 +1427,13 @@ if (length(list.files(path = file.path("ch5_subsidies_reform", "figures"), patte
 
 ## Number of hits
 
-The number of hits are hits of the terms of the whole of the OpenAlex corpus. Due to methodological issues, the number of `R1 AND R2` are overestimates and contain some double counting.
+The number of hits are hits of the terms of the whole of the OpenAlex corpus. Due to methodological issues, the number of `R1 AND R2` are overestimates and contain some duplicates.
 
 - **`government_financial_subsidies`** in OpenAlex: `r formatC(st_count$st_count, format="f", big.mark=",", digits=0)` hits
 - **`government_financial_subsidies`** in downloaded corpus: `r formatC(nrow(IPBES.R::corpus_read(params$corpus_dir)), format="f", big.mark=",", digits=0)` hits
 - **Subsidies corpus**: `r formatC(nrow(IPBES.R::corpus_read(params$corpus_dir)), format="f", big.mark=",", digits=0)` hits
 
-## Manual review 50 paper
+## Manual review of 50 references
 
 The file contains the `id`, `doi`, `author_abbr` and `abstract` of the papers. Two samples were generated:
 
@@ -1444,14 +1444,14 @@ The file contains the `id`, `doi`, `author_abbr` and `abstract` of the papers. T
 
 ## Publications over time
 
-The red line is the cumulative proportion of publications, the blue line the cumulative proportion of all of the OpenAlex corpus. Both use the secondeary (red) axis.
+The red line is the cumulative proportion of publications, the blue line the cumulative proportion of all of the OpenAlex corpus. Both use the secondary (red) axis.
 
 
 
 
 ![](`r file.path("ch5_subsidies_reform", "figures", "publications_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "publications_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "publications_over_time.pdf")`){target="_blank"}
 
 ```{r}
 #| label: publications_per_year_table
@@ -1530,50 +1530,50 @@ This graphs shows the sentiment scores of the sentiment analysis over time.
 
 ![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time.pdf")`){target="_blank"}
 
 
-For clarity, here only the positive and egative sentiments.
+For clarity, here only the positive and negative sentiments.
 
 ![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time_neg_pos.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time_neg_pos.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_over_time_neg_pos.pdf")`){target="_blank"}
 
 
 ### Negative Sentiment
 
 #### Over Time
 
-This graphs shows the **negative score** of the sentiment analysis over time. It only 
+This graphs shows the **negative score** of the sentiment analysis over time. 
 
 
 ![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neg_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neg_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neg_over_time.pdf")`){target="_blank"}
 
 
 #### Per country
 
 ![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_all.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_all.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_all.pdf")`){target="_blank"}
 
 ![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_10.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_10.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neg_per_countries_10.pdf")`){target="_blank"}
 
 
 ### Neutral Sentiment
 
 #### Over Time
 
-This graphs shows the **compound score** of the sentiment analysis over time. It only 
+This graphs shows the **compound score** of the sentiment analysis over time.  
 
 
 
 ![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neu_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neu_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_neu_over_time.pdf")`){target="_blank"}
 
 
 #### Per country
@@ -1581,11 +1581,11 @@ To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "
 
 ![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_all.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_all.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_all.pdf")`){target="_blank"}
 
 ![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.pdf")`){target="_blank"}
 
 
 
@@ -1594,21 +1594,21 @@ To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "
 
 #### Over Time
 
-This graphs shows the **compound score** of the sentiment analysis over time. It only 
+This graphs shows the **compound score** of the sentiment analysis over time.  
 
 ![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_pos_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_pos_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_pos_over_time.pdf")`){target="_blank"}
 
 #### Per country
 
 ![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_all.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_all.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_all.pdf")`){target="_blank"}
 
 ![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_pos_per_countries_10.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_neu_per_countries_10.pdf")`){target="_blank"}
 
 
 
@@ -1617,20 +1617,20 @@ To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "
 
 #### Over Time
 
-This graphs shows the **compound score** of the sentiment analysis over time. It only 
+This graphs shows the **compound score** of the sentiment analysis over time. 
 
 ![](`r file.path("ch5_subsidies_reform", "figures", "sentiments_comp_over_time.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_comp_over_time.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "figures", "sentiments_comp_over_time.pdf")`){target="_blank"}
 
 #### Per country
 
 
 ![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_all.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_all.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_all.pdf")`){target="_blank"}
 
 ![](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_10.png")`)
 
-To download high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_10.pdf")`){target="_blank"}
+To download in high resolution, [click here](`r file.path("ch5_subsidies_reform", "maps", "sentiment_comp_per_countries_10.pdf")`){target="_blank"}
 
