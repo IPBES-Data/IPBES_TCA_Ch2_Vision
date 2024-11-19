@@ -81,7 +81,7 @@ params:
 Part of the Data Management Report [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10251349.svg)](https://doi.org/10.5281/zenodo.10251349)
 
 # Disclaimer
-This document is part of the Thematic assessment of the underlying causes of biodiversity loss, determinants of transformative change and options for achieving the 2050 vision for biodiversity. It is a technical background document to the [Data Management Report for the Transformative Change Assessment Corpus](https://doi.org/10.5281/zenodo.10251349). This document is a working document which is not approved by the plenary. For statements pelase see the approved version of the assessment. This document has the sole purpose to document the workflows used to obtain some statements, figures and maps, document the source of the data and make the process reproducible.
+This is a technical background document for the IPBES Thematic assessment of the underlying causes of biodiversity loss, determinants of transformative change and options for achieving the 2050 vision for biodiversity. It provides technical details and implementation settings for the data management report of the [Transformative Change Assessment Corpus and its usage](https://doi.org/10.5281/zenodo.10251349). The sole purpose of this document is to document the workflows used to produce statistics, figures and maps, to document the source of the data and to make the process transparent and reproducible.
 
 # Contributors
 <!-- ## Assessment Experts
